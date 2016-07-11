@@ -1,0 +1,107 @@
+#!/bin/sh
+
+set -e
+unset CDPATH
+unset IFS
+
+show_usage() {
+  cat <<USAGE
+Usage: [PROJECTS_PATH=<PATH>] $(basename "$0") [--exclude-sessions] [--exclude-workspaces]
+
+Workspaces:
+
+  The following paths are searched for workspaces:
+
+  1. ./*.sublime-workspace
+  2. ./*/*.sublime-workspace
+
+  If the PROJECTS_PATH environment variable is specified then the following
+  paths will **also** be searched:
+
+  3. PROJECTS_PATH/*.sublime-workspace
+  4. PROJECTS_PATH/*/*.sublime-workspace
+  5. PROJECTS_PATH/*/*/*.sublime-workspace
+  6. PROJECTS_PATH/.sublime/*.sublime-workspace
+  7. PROJECTS_PATH/.sublime-workspaces/*.sublime-workspace
+  8. PROJECTS_PATH/.sublime-projects/*.sublime-workspace
+
+Examples:
+
+    $ sublime-clean
+    $ sublime-clean --exclude-workspaces
+    $ sublime-clean --exclude-workspaces --exclude-sessions
+    $ PROJECTS_PATH=~/projects sublime-clean
+    $ PROJECTS_PATH=~/projects sublime-clean --exclude-sessions
+USAGE
+}
+
+SUBLIME_CLEAN_INCLUDE_SESSIONS=y
+SUBLIME_CLEAN_INCLUDE_WORKSPACES=y
+while test "$#" != 0; do
+    case "$1" in
+        --help|-h) show_usage; exit 0 ;;
+        --exclude-sessions) SUBLIME_CLEAN_INCLUDE_SESSIONS= ;;
+        --exclude-workspaces) SUBLIME_CLEAN_INCLUDE_WORKSPACES= ;;
+        --) shift; break ;; # standard end of options list
+        -*) echo >&2 "$(basename "$0"): unknown option '$1'"; exit 1 ;;
+        *) echo >&2 "$(basename "$0"): unknown argument '$1'"; exit 1 ;;
+    esac
+    shift
+done
+
+echo "=> cleaning sublime text 2 installation ..."
+
+# @todo check that an instance of sublime is not currently running, otherwise exit
+
+# ST2 Linux
+rm -rfv ~/.config/sublime-text-2/Installed\ Packages/
+rm -rfv ~/.config/sublime-text-2/Packages/
+rm -rfv ~/.config/sublime-text-2/Pristine\ Packages/
+
+# ST2 OSX
+rm -rfv ~/Library/Application\ Support/Sublime\ Text\ 2/Installed\ Packages/
+rm -rfv ~/Library/Application\ Support/Sublime\ Text\ 2/Packages/
+rm -rfv ~/Library/Application\ Support/Sublime\ Text\ 2/Pristine\ Packages/
+
+if [ "$SUBLIME_CLEAN_INCLUDE_SESSIONS" = "y" ]; then
+    # ST2 Linux sessions
+    rm -fv ~/.config/sublime-text-2/Settings/*.sublime_session
+    # ST2 OSX sessions
+    rm -fv ~/Library/Application\ Support/Sublime\ Text\ 2/Settings/*.sublime_session
+fi
+
+echo "=> cleaning sublime text 3 installation ..."
+
+# ST3 Linux
+rm -rfv ~/.config/sublime-text-3/Packages/.logs/
+rm -rfv ~/.config/sublime-text-3/Backup/
+rm -rfv ~/.config/sublime-text-3/Cache/
+rm -rfv ~/.config/sublime-text-3/Index/
+rm -rfv ~/.config/sublime-text-3/Settings/
+
+# ST3 OSX
+rm -rfv ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/.logs/
+rm -rfv ~/Library/Application\ Support/Sublime\ Text\ 3/Backup/
+rm -rfv ~/Library/Application\ Support/Sublime\ Text\ 3/Cache/
+rm -rfv ~/Library/Application\ Support/Sublime\ Text\ 3/Index/
+rm -rfv ~/Library/Application\ Support/Sublime\ Text\ 3/Settings/
+
+if [ "$SUBLIME_CLEAN_INCLUDE_SESSIONS" = "y" ]; then
+    # ST3 Linux sessions
+    rm -fv ~/.config/sublime-text-3/Local/*.sublime_session
+    # ST3 OSX sessions
+    rm -fv ~/Library/Application\ Support/Sublime\ Text\ 3/Local/*.sublime_session
+fi
+
+if [ "$SUBLIME_CLEAN_INCLUDE_WORKSPACES" = "y" ]; then
+    rm -fv ./*.sublime-workspace
+    rm -fv ./*/*.sublime-workspace
+    if [ -d "$PROJECTS_PATH" ]; then
+        rm -fv "$PROJECTS_PATH"/*.sublime-workspace
+        rm -fv "$PROJECTS_PATH"/*/*.sublime-workspace
+        rm -fv "$PROJECTS_PATH"/*/*/*.sublime-workspace
+        rm -fv "$PROJECTS_PATH"/.sublime/*.sublime-workspace
+        rm -fv "$PROJECTS_PATH"/.sublime-workspaces/*.sublime-workspace
+        rm -fv "$PROJECTS_PATH"/.sublime-projects/*.sublime-workspace
+    fi
+fi

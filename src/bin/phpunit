@@ -1,0 +1,130 @@
+#!/bin/sh
+#
+# .phpenv travis-like emulation. Runs unit tests with all .phpenv versions with
+# trailing literal ".x" e.g. 5.x, 5.5.x, 5.6.x, 7.x, 7.0.x, 7.1.x
+
+set -e
+unset CDPATH
+unset IFS
+
+show_usage() {
+    "$PHP_BIN" "$PHPUNIT_BIN" --help
+    echo "  --phpenv                  Travis-like emulation for .phpenv"
+    echo "  --phpenv-version <number> Run with specified phpenv version"
+}
+
+run_phpunit_with_phpenv_version() {
+    php_bin="$1/bin/php"
+
+    if test ! -f "$php_bin" || ! test -x "$php_bin"; then
+        return
+    fi
+
+    "$php_bin" "$PHPUNIT_BIN" --colors --no-coverage "$2" && exit_status=0 || exit_status=1
+    echo
+
+    resolved_version="$(readlink -f "$php_bin")"
+    if test "$php_bin" = "$resolved_version"; then
+        version_info="${php_bin}"
+    else
+        version_info="${php_bin} -> ${resolved_version}"
+    fi
+
+    if test -n "$VERSIONS_TESTED_INFO"; then
+        VERSIONS_TESTED_INFO="$VERSIONS_TESTED_INFO\n"
+    fi
+
+    VERSIONS_TESTED_INFO="${VERSIONS_TESTED_INFO}${version_info}"
+    TEST_COUNT=$(($TEST_COUNT + 1))
+
+    if [ "$exit_status" = 1 ]; then
+        VERSIONS_FAILED="$VERSIONS_FAILED\n${version_info}"
+        FAILURE_COUNT=$(($FAILURE_COUNT + 1))
+    fi
+}
+
+PHP_BIN=php
+
+if test -f ./vendor/bin/phpunit && test -x ./vendor/bin/phpunit; then
+    PHPUNIT_BIN=./vendor/bin/phpunit
+elif test -f /usr/local/bin/phpunit && test -x /usr/local/bin/phpunit; then
+    PHPUNIT_BIN=/usr/local/bin/phpunit
+else
+    echo >&2 "$(basename "$0"): phpunit not found"
+    exit 1
+fi
+
+PHPENV=
+PHPENV_VERSION=
+while test "$#" != 0; do
+    case "$1" in
+        --help|-h) show_usage; exit 0 ;;
+        --phpenv) PHPENV=yes ;;
+        --phpenv-version)
+            PHP_BIN="$HOME/.phpenv/versions/${2:?'version parameter is required'}/bin/php"
+            shift
+            if test ! -f "$PHP_BIN" || test ! -x "$PHP_BIN"; then
+                echo >&2 "$(basename "$0"): phpenv version not found"
+                exit 1
+            fi
+            ;;
+        --) shift; break ;; # standard end of options list
+        -*) break ;; # the remaining options are passed to phpunit executable
+        *) break ;; # the remaining options are passed to phpunit executable
+    esac
+    shift
+done
+
+if test "$PHPENV" = "yes"; then
+
+    TEST_COUNT=0
+    FAILURE_COUNT=0
+    VERSIONS_TESTED_INFO=
+    VERSIONS_FAILED=
+
+    PHPENV_VERSIONS=$(ls -1d ~/.phpenv/versions/* | sort -V)
+
+    PHPENV_SEMVER_VERSIONS=$(echo "$PHPENV_VERSIONS" |\
+        # Grep semver-like versions e.g. x.x.x and with trailing literal ".x"
+        grep 'versions/[0-9]\.\(0\|[1-9][1-9]*\|x\)\(\.\(0\|x\|[1-9][1-9]*\)\)\?$' |\
+        sort -V)
+
+    # Grep only versions with trailing literal ".x". All of these versions are
+    # used to run unit tests when the --phpenv option is selected.
+    VERSIONS=$(echo "$PHPENV_SEMVER_VERSIONS" |\
+        grep 'versions/[1-9]\.\(x\|\(0\|[0-9][1-9]*\.x\)\)$' |\
+        sort -V)
+
+    # @todo Add specific versions (if they exist) based on the versions
+    # specified in the project travis configurations.
+
+    for version in $VERSIONS; do
+        run_phpunit_with_phpenv_version "$version"
+    done
+fi
+
+"$PHP_BIN" "$PHPUNIT_BIN" --colors "$@"
+
+if test "$PHPENV" = "yes"; then
+    if test "$FAILURE_COUNT" -gt 0; then
+        echo
+        echo ".phpenv"
+        echo
+        echo "\033[37m\033[41mFAILURES!\033[0m"
+        echo "\033[37m\033[41mVersions: $TEST_COUNT, Failures: $FAILURE_COUNT\033[0m"
+        echo
+        echo "$VERSIONS_TESTED_INFO"
+        echo
+        echo "FAILED ($FAILURE_COUNT):"
+        echo "$VERSIONS_FAILED"
+        echo
+    else
+        echo
+        echo ".phpenv"
+        echo
+        echo "$(echo "$VERSIONS_TESTED_INFO" | sed 's/^/\\033[30m\\033[42mOK\\033[0m /')"
+        echo
+        echo "\033[30m\033[42mOK ($TEST_COUNT versions)\033[0m"
+        echo
+    fi
+fi

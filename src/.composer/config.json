@@ -1,0 +1,7 @@
+{
+    "config": {
+        "github-protocols": ["https", "ssh"],
+        "notify-on-install": false,
+        "github-expose-hostname": false
+    }
+}

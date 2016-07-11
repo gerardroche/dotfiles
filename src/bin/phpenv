@@ -1,0 +1,104 @@
+#!/bin/sh
+
+set -e
+unset CDPATH
+unset IFS
+
+show_usage() {
+    cat <<EOT
+Usage: $(basename "$0") <COMMAND> [<ARGS>]
+    or $(basename "$0") [-h|--help]
+    or $(basename "$0") [--version]
+    or $(basename "$0") [-V]
+
+Some useful $(basename "$0") commands are:"
+
+  install <version>   Install a PHP version using $(basename "$BUILD_BIN")
+  versions            List all PHP versions available to $(basename "$0")
+EOT
+}
+
+list_available_versions() {
+    if test -d "$PREFIX/versions"; then
+        for version in "$PREFIX/versions/"*; do
+            prefix="  "
+            postfix=""
+
+            if test -d "$version"; then
+                name="${version##*/}"
+
+                if test -L "$version"; then
+                    resolved="$(readlink -nf "$version")"
+                    postfix=" -> ${resolved##*/}"
+                fi
+            fi
+
+            echo "${prefix}${name}${postfix}"
+        done | sort -V
+    fi
+}
+
+install_version() {
+    version="$1"
+
+    if test -z "$version"; then
+        echo >&2 "$(basename "$0"): version is required"
+        exit 1
+    fi
+
+    if test ! -d "$PREFIX/versions"; then
+        mkdir -p "$PREFIX/versions"
+    fi
+
+    prefix="$PREFIX/versions/$(basename "$version")"
+
+    if test -e "$prefix"; then
+        echo >&2 "$(basename "$0"): version already exists"
+        exit 1
+    fi
+
+    # TODO auto create/update symlinks for latest .x versions i.e. if 7.x
+    # points to 7.0.5 and installing 7.0.6 and it is latest 7.x version then
+    # point 7.x at 7.0.6.
+
+    echo "=> bin: $BUILD_BIN"
+    echo "=> prefix: $prefix"
+    echo "=> version: $version"
+
+    exec "$BUILD_BIN" "$version" "$prefix"
+}
+
+readonly VERSION="0.4.0"
+readonly PREFIX="$HOME/.phpenv"
+readonly BUILD_BIN="$HOME/bin/php-build"
+
+if test ! -f "$BUILD_BIN" || test ! -x "$BUILD_BIN"; then
+    echo >&2 "$(basename "$0"): $(basename "$BUILD_BIN") not found"
+    exit 1
+fi
+
+test "$#" = 0 && show_usage && exit 0
+
+while test "$#" != 0; do
+    case "$1" in
+        -h|--help) show_usage; exit 0 ;;
+        --version) echo "$(basename "$0"): $VERSION"; exit 0 ;;
+        -V) echo "$VERSION"; exit 0 ;;
+        install)
+            if test "$2" = "--complete"; then
+                exec "$BUILD_BIN" --definitions
+            fi
+            shift
+            install_version "$@"
+            exit 0
+            ;;
+        versions)
+            list_available_versions
+            exit 0
+            ;;
+        --) shift; break ;; # standard end of options list
+        -*) echo >&2 "$(basename "$0"): unknown option '$1'"; exit 1 ;;
+        *)  echo >&2 "$(basename "$0"): unknown argument '$1'"; exit 1 ;;
+    esac
+    shift
+done

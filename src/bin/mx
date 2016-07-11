@@ -1,0 +1,45 @@
+#!/bin/sh
+
+set -e
+unset CDPATH
+unset IFS
+
+show_usage() {
+    echo "Usage: $(basename "$0") [<NAME>]"
+    echo "       $(basename "$0") [-h|--help]"
+}
+
+case "$1" in
+    --help|-h) show_usage; exit 0 ;;
+esac
+
+SESSION_NAME="${1:-mx}"
+
+tmux has-session -t "$SESSION_NAME" > /dev/null 2>&1 && HAS_SESSION=y || HAS_SESSION=n
+
+if [ "$HAS_SESSION" = y ]; then
+    tmux attach -t "$SESSION_NAME"
+else
+
+    CONFIG_FILE=
+    if test -d "$PROJECTS_PATH"; then
+        cd "$PROJECTS_PATH"
+
+        SESSION_PATH="$PROJECTS_PATH/$SESSION_NAME"
+
+        if test -d "$SESSION_PATH"; then
+            cd "$SESSION_PATH"
+
+            SESSION_CONFIG_FILE="$SESSION_PATH/.mx"
+            if test -f "$SESSION_CONFIG_FILE"; then
+                CONFIG_FILE="$SESSION_CONFIG_FILE"
+            fi
+        fi
+    fi
+
+    if test -n "$CONFIG_FILE" && test -f "$CONFIG_FILE"; then
+        tmux -2 new-session -n "mx" -s "$SESSION_NAME" \; source-file "$CONFIG_FILE"
+    else
+        tmux -2 new-session -n "mx" -s "$SESSION_NAME"
+    fi
+fi

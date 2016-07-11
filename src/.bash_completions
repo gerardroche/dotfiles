@@ -1,0 +1,45 @@
+
+__dotfiles_completion_reply_with() {
+    compopt -o nospace
+    COMPREPLY=( $( compgen -W "$1" -- "${COMP_WORDS[COMP_CWORD]}"  ) )
+}
+
+__dotfiles_completion_projects() {
+    __dotfiles_completion_reply_with "$(projects)" 2>/dev/null
+}
+
+__dotfiles_completion_vendors() {
+    __dotfiles_completion_reply_with "$(vendors)" 2>/dev/null
+}
+
+__dotfiles_completion_phpenv() {
+    if test "$COMP_CWORD" = 1; then
+        __dotfiles_completion_reply_with "install versions" 2>/dev/null
+    elif test "$COMP_CWORD" = 2; then
+        if test "${COMP_WORDS[1]}" = "install"; then
+            __dotfiles_completion_reply_with "$(phpenv install --complete)" 2>/dev/null
+        fi
+    fi
+}
+
+complete -F __dotfiles_completion_phpenv phpenv
+complete -F __dotfiles_completion_projects c
+complete -F __dotfiles_completion_projects mx
+complete -F __dotfiles_completion_vendors v
+
+# Git Aliases http://stackoverflow.com/a/15009611
+if [ -f /usr/share/bash-completion/completions/git ]; then
+    . /usr/share/bash-completion/completions/git
+    __git_complete g _git
+    __git_complete gap _git_add
+    __git_complete gc _git_checkout
+    __git_complete gd _git_diff
+    __git_complete go _git_checkout
+    __git_complete gp _git_commit
+    __git_complete gs _git_status
+fi
+
+# rbenv https://github.com/rbenv/rbenv
+if [ -f ~/.rbenv/completions/rbenv.bash ]; then
+    . ~/.rbenv/completions/rbenv.bash
+fi

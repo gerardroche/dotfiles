@@ -1,0 +1,62 @@
+#!/bin/sh
+
+set -e
+unset CDPATH
+unset IFS
+
+echo "Configuring Firefox search plugins... "
+
+if test "$1" = "--prune"; then
+    sudo rm /usr/lib/firefox/distribution/searchplugins/locale/*/*.bak
+fi
+
+# Clear caches. The search.json.mozlz4 file stores the user-installed search
+# engines that are available in the Firefox Search bar.
+# https://support.mozilla.org/en-US/kb/profiles-where-firefox-stores-user-data
+rm -rf ~/.mozilla/firefox/*/search.json.mozlz4
+
+for searchplugin_file in /usr/lib/firefox/distribution/searchplugins/locale/*/*.xml; do
+    echo -n "=> configuring $searchplugin_file... "
+
+    # Backup
+    sudo cp "$searchplugin_file" "$searchplugin_file.$(date +%Y%m%d%H%M%S).bak"
+
+    # * Use https
+    # * UTF-8 everywhere
+    # * amazon.com -> amazon.co.uk
+    # * google.com -> google.ie
+    # * Remove search and lookup params; opt-out
+    # * Remove url search and lookup params; opt-out
+    sudo sed -i '
+
+        s/http:\/\/www\.google/https:\/\/www\.google/g
+        s/http:\/\/suggest/https:\/\/suggest/g
+        s/http:\/\/www\.amazon/https:\/\/www\.amazon/g
+
+        s/ISO-8859-1/UTF-8/g
+
+        s/google\.com/google\.ie/g
+        s/mazon\.com/mazon\.co\.uk/g
+
+        /Param name="tag"/d
+        /Param name="client"/d
+        /Param name="channel"/d
+        /Param name="ie"/d
+        /Param name="oe"/d
+        /Param name="t"/d
+        /Param name="sourceid"/d
+        /Param name="partner"/d
+        /Param name="source"/d
+        /Param name=":n:noe"/d
+        /Param name="gl"/d
+
+        s/client=.*&amp;//g
+        s/output=.*&amp;//g
+        s/&amp;t=canonical//g
+        s/gl=.*&amp;//g
+    ' "$searchplugin_file"
+
+    echo "done."
+done
+
+echo "done."

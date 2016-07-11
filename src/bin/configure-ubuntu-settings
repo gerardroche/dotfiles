@@ -1,0 +1,123 @@
+#!/bin/sh
+
+set -e
+unset CDPATH
+unset IFS
+
+echo -n "Configuring Ubuntu settings... "
+
+# gsettings set com.ubuntu.geoip geoip-url ""
+gsettings set com.canonical.desktop.interface scrollbar-mode 'normal'
+gsettings set com.canonical.indicator.appmenu.hud store-usage-data false
+gsettings set com.canonical.indicator.datetime locations "['UTC']"
+gsettings set com.canonical.indicator.datetime show-auto-detected-location false
+gsettings set com.canonical.indicator.datetime show-calendar false
+gsettings set com.canonical.indicator.datetime show-clock true
+gsettings set com.canonical.indicator.datetime show-date true
+gsettings set com.canonical.indicator.datetime show-day true
+gsettings set com.canonical.indicator.datetime show-events false
+gsettings set com.canonical.indicator.datetime show-locations true
+gsettings set com.canonical.indicator.datetime show-seconds true
+gsettings set com.canonical.indicator.datetime show-week-numbers false
+gsettings set com.canonical.indicator.datetime show-year true
+gsettings set com.canonical.indicator.datetime time-format 'locale-default'
+gsettings set com.canonical.indicator.datetime timezone-name 'UTC'
+gsettings set com.canonical.indicator.power show-percentage true
+gsettings set com.canonical.indicator.power show-time true
+gsettings set com.canonical.indicator.session show-real-name-on-panel false
+gsettings set com.canonical.indicator.session suppress-logout-menuitem false
+gsettings set com.canonical.indicator.session suppress-logout-restart-shutdown false
+gsettings set com.canonical.indicator.session suppress-restart-menuitem false
+gsettings set com.canonical.indicator.session suppress-shutdown-menuitem false
+gsettings set com.canonical.indicator.sound interested-media-players "['banshee']"
+gsettings set com.canonical.indicator.sound preferred-media-players "['banshee']"
+gsettings set com.canonical.unity-greeter show-hostname false
+gsettings set com.canonical.unity-greeter theme-name 'Adwaita'
+gsettings set com.canonical.Unity.ApplicationsLens display-available-apps false
+gsettings set com.canonical.Unity.ApplicationsLens display-recent-apps true
+gsettings set com.canonical.Unity.Dash scopes "['applications.scope']"
+gsettings set com.canonical.Unity.Lenses always-search "['applications.scope']"
+gsettings set com.canonical.Unity.Lenses disabled-scopes "['more_suggestions-amazon.scope', 'more_suggestions-u1ms.scope', 'more_suggestions-populartracks.scope', 'music-musicstore.scope', 'more_suggestions-ebay.scope', 'more_suggestions-ubuntushop.scope', 'more_suggestions-skimlinks.scope']"
+gsettings set com.canonical.Unity.Lenses home-lens-default-view "['applications.scope', 'files.scope']"
+gsettings set com.canonical.Unity.Lenses remote-content-search 'none'
+gsettings set com.ubuntu.sound allow-amplified-volume false
+gsettings set com.ubuntu.touch.network gps false
+gsettings set com.ubuntu.update-manager autoclose-install-window false
+gsettings set com.ubuntu.update-manager show-details true
+gsettings set com.ubuntu.update-manager show-versions true
+gsettings set com.ubuntu.update-manager summary-before-name true
+gsettings set com.ubuntu.update-notifier show-apport-crashes false
+gsettings set net.sf.liferea browse-inside-application false
+gsettings set net.sf.liferea browser 'x-www-browser %s'
+gsettings set net.sf.liferea browser-id 'firefox'
+gsettings set net.sf.liferea browser-place 3
+gsettings set net.sf.liferea default-update-interval 8640
+gsettings set net.sf.liferea default-view-mode 0
+gsettings set net.sf.liferea disable-javascript true
+gsettings set net.sf.liferea disable-toolbar false
+gsettings set net.sf.liferea dont-minimize-to-tray true
+gsettings set net.sf.liferea download-tool 0
+gsettings set net.sf.liferea enable-fetch-retries false
+gsettings set net.sf.liferea enable-plugins false
+gsettings set net.sf.liferea folder-display-hide-read true
+gsettings set net.sf.liferea folder-display-mode 1
+gsettings set net.sf.liferea maxitemcount 50
+gsettings set net.sf.liferea reduced-feedlist false
+gsettings set net.sf.liferea show-popup-windows false
+gsettings set net.sf.liferea start-in-tray false
+gsettings set net.sf.liferea startup-feed-action 1
+gsettings set net.sf.liferea toolbar-style ''
+gsettings set net.sf.liferea trayicon false
+gsettings set net.sf.liferea trayicon-new-count false
+gsettings set org.gnome.clocks geolocation false
+gsettings set org.gnome.desktop.background show-desktop-icons false
+gsettings set org.gnome.desktop.datetime automatic-timezone false
+gsettings set org.gnome.desktop.interface clock-format '24h'
+gsettings set org.gnome.desktop.interface clock-show-date true
+gsettings set org.gnome.desktop.interface clock-show-seconds false
+gsettings set org.gnome.desktop.interface cursor-blink true
+gsettings set org.gnome.desktop.interface cursor-theme 'Adwaita'
+gsettings set org.gnome.desktop.interface enable-animations false
+gsettings set org.gnome.desktop.interface gtk-key-theme 'Default'
+gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita'
+gsettings set org.gnome.desktop.interface icon-theme 'gnome'
+gsettings set org.gnome.desktop.notifications show-in-lock-screen false
+gsettings set org.gnome.desktop.privacy hide-identity true
+gsettings set org.gnome.desktop.privacy recent-files-max-age 0
+gsettings set org.gnome.desktop.privacy remember-app-usage false
+gsettings set org.gnome.desktop.privacy remember-recent-files false
+gsettings set org.gnome.desktop.privacy remove-old-temp-files true
+gsettings set org.gnome.desktop.privacy remove-old-trash-files true
+gsettings set org.gnome.desktop.privacy show-full-name-in-top-bar false
+gsettings set org.gnome.desktop.screensaver show-full-name-in-top-bar false
+gsettings set org.gnome.desktop.screensaver show-notifications false
+gsettings set org.gnome.desktop.screensaver ubuntu-lock-on-suspend true
+gsettings set org.gnome.desktop.sound event-sounds false
+gsettings set org.gnome.desktop.wm.preferences audible-bell true
+gsettings set org.gnome.desktop.wm.preferences button-layout 'close,minimize,maximize:'
+gsettings set org.gnome.desktop.wm.preferences disable-workarounds false
+gsettings set org.gnome.desktop.wm.preferences theme 'Adwaita'
+gsettings set org.gnome.desktop.wm.preferences visual-bell true
+gsettings set org.gnome.desktop.wm.preferences visual-bell-type 'fullscreen-flash'
+gsettings set org.gnome.gedit.plugins active-plugins "['codecomment', 'modelines', 'spell', 'filebrowser', 'docinfo', 'bracketcompletion', 'time']"
+gsettings set org.gnome.gedit.plugins.terminal audible-bell false
+gsettings set org.gnome.gedit.plugins.terminal cursor-shape 'block'
+gsettings set org.gnome.mutter workspaces-only-on-primary false
+gsettings set org.gnome.nautilus.list-view use-tree-view true
+gsettings set org.gnome.nautilus.preferences confirm-trash true
+gsettings set org.gnome.nautilus.preferences default-folder-viewer 'list-view'
+gsettings set org.gnome.nautilus.preferences enable-delete false
+gsettings set org.gnome.nautilus.preferences show-directory-item-counts 'never'
+gsettings set org.gnome.nautilus.preferences show-hidden-files true
+gsettings set org.gnome.nautilus.preferences show-image-thumbnails 'local-only'
+gsettings set org.gnome.nautilus.preferences sort-directories-first true
+gsettings set org.gnome.settings-daemon.plugins.remote-display active false
+gsettings set org.gnome.settings-daemon.plugins.updates active false
+gsettings set org.gnome.settings-daemon.plugins.updates auto-download-updates false
+gsettings set org.gnome.shell.calendar show-weekdate false
+gsettings set org.gnome.shell.extensions.user-theme name 'galactica'
+gsettings set org.gnome.shell.overrides button-layout ":close"
+gsettings set org.gnome.shell.overrides workspaces-only-on-primary false
+gsettings set org.gtk.Settings.FileChooser show-hidden true
+
+echo "done."

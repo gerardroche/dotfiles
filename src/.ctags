@@ -1,0 +1,17 @@
+--exclude=*.min.js
+--exclude=.git
+--exclude=.svn
+--exclude=build
+--exclude=bundle
+--exclude=cache
+--exclude=data
+--exclude=dist
+--exclude=etc
+--exclude=jquery-*.js
+--exclude=jquery.*.js
+--exclude=log
+--exclude=logs
+--exclude=script
+--exclude=tmp
+--exclude=vendor
+--tag-relative=yes

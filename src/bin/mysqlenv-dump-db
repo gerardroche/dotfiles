@@ -1,0 +1,27 @@
+#!/bin/sh
+#
+# Dump database.
+#
+# * removes auto increment values
+# * strips MySQL-specific comments
+
+set -e
+unset CDPATH
+unset IFS
+
+show_usage() {
+    echo "usage: $(basename "$0") [options]"
+    mysqldump --help
+}
+
+test "$#" = 0 && show_usage && exit 0
+
+exec mysqldump --skip-add-drop-table --skip-add-locks --compact --no-data "$@" | \
+    # Remove MySQL-specific code comments e.g. "/*! !40101 */"
+    # https://dev.mysql.com/doc/refman/5.6/en/comments.html
+    egrep -v "(^SET|^/\*\!)" | \
+    # Remove the AUTO_INCREMENT values. This is five year old bug in MySQL
+    # http://bugs.mysql.com/bug.php?id=20786
+    sed 's/ AUTO_INCREMENT=[0-9]\+//' | \
+    # Add an extra newline
+    sed s/COLLATE=utf8_unicode_ci\;/COLLATE=utf8_unicode_ci\;\\n/

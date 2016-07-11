@@ -1,0 +1,20 @@
+#!/bin/sh
+
+set -e
+unset CDPATH
+unset IFS
+
+sed -i '
+
+    s/^;\?error_reporting \?=.*/error_reporting = -1/
+    s/^;\?display_errors \?=.*/display_errors = On/
+    s/^;\?display_startup_errors \?=.*/display_startup_errors = On/
+    s/^;\?track_errors \?=.*/track_errors = On/
+    s/^;\?zend.assertions \?=.*/zend.assertions = -1/
+    s/^;\?opcache.huge_code_pages \?=.*/opcache.huge_code_pages = 1/
+
+    s/^;\?user_agent \?=.*/user_agent = /
+    s/^;\?mail\.add_x_header \?=.*/mail\.add_x_header = 0/
+    s/^;\?session.name \?=.*/session.name = PHPDEVSESSID/
+
+' ~/.phpenv/versions/*/etc/php.ini

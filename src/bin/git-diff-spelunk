@@ -1,0 +1,168 @@
+#!/bin/sh
+
+set -e
+unset CDPATH
+unset IFS
+readonly SOURCE=$(readlink -nf "$0")
+readonly SOURCE_PATH=$(dirname "$SOURCE")
+readonly SOURCE_NAME=$(basename "$SOURCE")
+readonly VERSION="0.2.0"
+
+show_usage() {
+    echo "usage: $(basename "$0") <options> [<commit>]
+
+OPTIONS
+
+  --name-only
+     Show only names of changed files.
+
+  --name-status
+    Show only names and status of changed files. See the description of
+    the --diff-filter option on what the status letters mean.
+
+  --diff-filter=[(A|C|D|M|R|T|U|X|B)...[*]]
+
+    Select only files that are Added (A), Copied (C), Deleted (D),
+    Modified (M), Renamed (R), have their type (i.e. regular file,
+    symlink, submodule, ...) changed (T), are Unmerged (U), are Unknown
+    (X), or have had their pairing Broken (B). Any combination of the
+    filter characters (including none) can be used. When *
+    (All-or-none) is added to the combination, all paths are selected
+    if there is any file that matches other criteria in the comparison;
+    if there is no file that matches other criteria, nothing is
+    selected.
+
+See 'git help diff' for more information on options. (only options specified above apply)"
+}
+
+show_version() {
+    echo "$0 version $VERSION"
+}
+
+is_verbose() {
+    if $VERBOSE; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+verbose_msg() {
+    if is_verbose; then
+        echo "$1"
+    fi
+}
+
+cd_to_superproject_toplevel() {
+    cd_to_dir "$SUPERPROJECT_TOPLEVEL_PATH" "The toplevel of the working tree"
+}
+
+cd_to_submodulelevel() {
+    cd_to_dir "$1" "A submodule of the working tree"
+}
+
+cd_to_dir() {
+    cd "$1" || {
+        echo >&2 "Cannot chdir to '$1', $2"
+        exit 1
+    }
+}
+
+diff_superproject() {
+    verbose_msg "Listing superproject changes..."
+    git diff --ignore-submodules $DIFF_OPTIONS $SUPERPROJECT_COMMIT_1 $SUPERPROJECT_COMMIT_2
+}
+
+diff_superproject_submodules() {
+
+    verbose_msg "Listing changes for superproject submodules..."
+
+    cd_to_superproject_toplevel
+    submodules=$(git submodule | awk '{print $2}')
+    for submodule_rel_path in $submodules; do
+
+        verbose_msg "Listing changes for superproject submodule '$submodule_rel_path'..."
+
+        cd_to_superproject_toplevel
+
+        submodule_commit_1=$(
+            git diff $SUPERPROJECT_COMMIT_1 $submodule_rel_path\
+            | fgrep "Subproject"\
+            | head -n1\
+            | awk '{print $3}'
+        )
+
+        if [ -n "$SUPERPROJECT_COMMIT_2" ]; then
+
+            submodule_commit_2=$(
+                git diff $SUPERPROJECT_COMMIT_2 $submodule_rel_path\
+                | fgrep "Subproject"\
+                | head -n1\
+                | awk '{print $3}'
+            )
+
+        else
+            submodule_commit_2=""
+        fi
+
+        cd_to_submodulelevel "$submodule_rel_path"
+
+        # submodule file path names should be relative to superproject
+        if $DIFF_OPTION_NAME_ONLY; then
+            git diff $submodule_commit_1 $submodule_commit_2 $DIFF_OPTIONS | sed 's,^,'"$submodule_rel_path/"','
+        elif $DIFF_OPTION_NAME_STATUS; then
+            git diff $submodule_commit_1 $submodule_commit_2 $DIFF_OPTIONS | sed 's,\t,'"\t$submodule_rel_path/"','
+        else
+            git diff $submodule_commit_1 $submodule_commit_2 $DIFF_OPTIONS
+        fi
+
+    done
+
+    cd_to_superproject_toplevel
+}
+
+test "$#" = 0 && show_usage && exit 0
+
+# Defaults
+VERBOSE=false
+SUPERPROJECT_TOPLEVEL_PATH=$(git rev-parse --show-toplevel)
+SUPERPROJECT_COMMIT_1=""
+SUPERPROJECT_COMMIT_2=""
+DIFF_OPTIONS=""
+DIFF_OPTION_NAME_ONLY=false
+DIFF_OPTION_NAME_STATUS=false
+
+while test "$#" != 0; do
+    case "$1" in
+        --name-only)
+            DIFF_OPTIONS="$DIFF_OPTIONS $1"
+            DIFF_OPTION_NAME_ONLY=true
+            ;;
+        --name-status)
+            DIFF_OPTIONS="$DIFF_OPTIONS $1"
+            DIFF_OPTION_NAME_STATUS=true
+            ;;
+        --diff-filter*)
+            DIFF_OPTIONS="$DIFF_OPTIONS $1"
+            ;;
+        --verbose|-v) VERBOSE=true ;;
+        --version)  show_version; exit 0 ;;
+        --help|-h)  show_usage; exit 0 ;;
+        --) shift; break ;; # standard end of options list
+        -*) die "$0: Unknown option '$1'" ;;
+        *)
+            if [ -z "$SUPERPROJECT_COMMIT_1" ]; then
+                SUPERPROJECT_COMMIT_1=${1##--}
+            else
+                SUPERPROJECT_COMMIT_2=${1##--}
+            fi
+            ;;
+    esac
+    shift
+done
+
+test -z "$SUPERPROJECT_COMMIT_1" && show_usage && exit 1
+
+cd_to_superproject_toplevel
+diff_superproject
+diff_superproject_submodules

@@ -1,0 +1,76 @@
+#!/bin/sh
+
+set -e
+unset CDPATH
+unset IFS
+
+OPEN_BASEDIR="/usr/local/bin/composer.phar"
+OPEN_BASEDIR="$OPEN_BASEDIR:/tmp"
+OPEN_BASEDIR="$OPEN_BASEDIR:/etc/pki/certs"
+OPEN_BASEDIR="$OPEN_BASEDIR:/etc/ssl/certs"
+OPEN_BASEDIR="$OPEN_BASEDIR:$HOME/.cache"
+OPEN_BASEDIR="$OPEN_BASEDIR:$HOME/.config"
+
+# Newer versions of composer don't need this one because configurations are
+# stored in .config/composer.
+OPEN_BASEDIR="$OPEN_BASEDIR:$HOME/.composer"
+
+# Projects
+if test -n "$PROJECTS_PATH" && test -d "$PROJECTS_PATH"; then
+    OPEN_BASEDIR="$OPEN_BASEDIR:$PROJECTS_PATH"
+fi
+
+# Vendors
+if test -n "$VENDOR_PATH" && test -d "$VENDOR_PATH"; then
+    OPEN_BASEDIR="$OPEN_BASEDIR:$VENDOR_PATH"
+fi
+
+DISABLE_FUNCTIONS="apache_child_terminate"
+DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,assert"
+DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,curl_exec,curl_multi_exec"
+DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,define_syslog_variables"
+DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,dl"
+DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,eval"
+DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,exec"
+DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,ftp_alloc,ftp_cdup,ftp_chdir,ftp_chmod,ftp_close,ftp_connect,ftp_delete,ftp_exec,ftp_fget,ftp_fput,ftp_get_option,ftp_get,ftp_login,ftp_mdtm,ftp_mkdir,ftp_nb_continue,ftp_nb_fget,ftp_nb_fput,ftp_nb_get,ftp_nb_put,ftp_nlist,ftp_pasv,ftp_put,ftp_pwd,ftp_quit,ftp_raw,ftp_rawlist,ftp_rename,ftp_rmdir,ftp_set_option,ftp_site,ftp_size,ftp_ssl_connect,ftp_systype"
+DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,passthru"
+DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,pcntl_alarm,pcntl_errno,pcntl_exec,pcntl_fork,pcntl_get_last_error,pcntl_getpriority,pcntl_setpriority,pcntl_signal_dispatch,pcntl_signal,pcntl_sigprocmask,pcntl_sigtimedwait,pcntl_sigwaitinfo,pcntl_strerror,pcntl_wait,pcntl_waitpid,pcntl_wexitstatus,pcntl_wifexited,pcntl_wifsignaled,pcntl_wifstopped,pcntl_wstopsig,pcntl_wtermsig,popen,proc_nice,proc_terminate"
+DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,shell_exec"
+DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,show_source"
+DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,syslog,system"
+DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,allow_url_include"
+
+if test "$1" = "--phpenv"; then
+    shift
+
+    PHPENV_VERSION="${1:?'phpenv version parameter required'}"
+    shift
+
+    PHP_BIN="$HOME/.phpenv/versions/$PHPENV_VERSION/bin/php"
+    if test ! -f "$PHP_BIN" || test ! -x "$PHP_BIN"; then
+        echo >&2 "$(basename :"$0"): phpenv version not found"
+        exit 1
+    fi
+else
+    PHP_BIN=php
+fi
+
+if test ! -f /usr/local/bin/composer || test ! -x /usr/local/bin/composer; then
+    echo >&2 "$(basename :"$0"): composer not found"
+    exit 1
+fi
+
+exec "$PHP_BIN"\
+    -d detect_unicode=0\
+    -d allow_url_fopen=1\
+    -d xdebug.default_enable=0\
+    -d xdebug.enable=0\
+    -d xdebug.profiler_enable=0\
+    -d xdebug.remote_autostart=0\
+    -d xdebug.remote_enable=0\
+    -d xdebug.scream=0\
+    -d open_basedir="$OPEN_BASEDIR"\
+    -d disable_functions="$DISABLE_FUNCTIONS"\
+    -d memory_limit=1G\
+    /usr/local/bin/composer "$@"
+

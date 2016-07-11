@@ -1,0 +1,68 @@
+#!/bin/sh
+
+set -e
+unset CDPATH
+unset IFS
+readonly SOURCE=$(readlink -nf "$0")
+readonly SOURCE_PATH=$(dirname "$SOURCE")
+
+create_home_dir_symlink() {
+    target="$1"
+    target_basename="$(basename "$target")"
+
+    if test "$target_basename" = "."; then
+        continue
+    fi
+
+    if test "$target_basename" = ".."; then
+        continue
+    fi
+
+    if test "$HOME/$target_basename" = "$SOURCE_PATH"; then
+        echo >&2 "$0: logic error, cannot link to self"
+        exit 1
+    fi
+
+    link_target="./${target#$HOME/}"
+    link_name="$HOME/$target_basename"
+
+    if test -L "$link_name" -o ! -e "$link_name"; then
+        ln -sfnv "$link_target" "$link_name"
+    else
+        echo "NOTICE => file already exists, move the existing file and rerun the install script: $f"
+    fi
+}
+
+cd "$SOURCE_PATH"
+echo "=> cd $SOURCE_PATH"
+
+echo "=> initialising Git submodule(s)..."
+# git submodule update --init --recursive
+
+if test "$1" != "--skip-update"; then
+    echo "=> updating Git submodule(s)..."
+#     git submodule foreach git fetchs
+#     git submodule foreach git merge --ff-only origin/master
+fi
+
+for file in "$SOURCE_PATH/src/".*; do
+    create_home_dir_symlink "$file"
+done
+
+for file in "$SOURCE_PATH"/src/*; do
+    create_home_dir_symlink "$file"
+done
+
+# Link vendor scripts
+ln -sfv ~/.dotfiles/vendor/paulirish/git-open/git-open ~/bin/git-open
+ln -sfv ~/.dotfiles/vendor/php-build/php-build/bin/php-build  ~/bin/php-build
+
+# Rbenv plugins
+mkdir -p ~/.rbenv/plugins
+touch ~/.rbenv/plugins/ruby-build
+rm ~/.rbenv/plugins/ruby-build
+ln -sfv ~/.dotfiles/vendor/rbenv/ruby-build ~/.rbenv/plugins/ruby-build
+
+if test -f ~/.dotfiles-private/install; then
+    ~/.dotfiles-private/install
+fi

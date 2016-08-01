@@ -2,6 +2,8 @@
 
 My configuration files for bash, vim, git, and more.
 
+![Screenshot](screenshot.png)
+
 ## Installation
 
 **All bets are off. Install at your own risk.**

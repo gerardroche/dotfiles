@@ -5,7 +5,7 @@ unset CDPATH
 unset IFS
 
 show_usage() {
-  cat <<USAGE
+    cat <<USAGE
 Usage: [PROJECTS_PATH=<PATH>] $(basename "$0") [--exclude-sessions] [--exclude-workspaces]
 
 Workspaces:
@@ -15,8 +15,8 @@ Workspaces:
   1. ./*.sublime-workspace
   2. ./*/*.sublime-workspace
 
-  If the PROJECTS_PATH environment variable is specified then the following
-  paths will **also** be searched:
+  The following paths will also be searched if a PROJECTS_PATH environment
+  variable specifies a location of where projects are organised.
 
   3. PROJECTS_PATH/*.sublime-workspace
   4. PROJECTS_PATH/*/*.sublime-workspace
@@ -49,9 +49,9 @@ while test "$#" != 0; do
     shift
 done
 
-echo "=> cleaning sublime text 2 installation ..."
-
 # @todo check that an instance of sublime is not currently running, otherwise exit
+
+echo "=> cleaning sublime text 2 installation ..."
 
 # ST2 Linux
 rm -rfv ~/.config/sublime-text-2/Installed\ Packages/

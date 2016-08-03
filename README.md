@@ -11,3 +11,5 @@ My configuration files for bash, vim, git, and more.
 ```
 git clone https://github.com/gerardroche/dotfiles.git ~/.dotfiles && ~/.dotfiles/install
 ```
+
+<3

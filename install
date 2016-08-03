@@ -37,12 +37,12 @@ cd "$SOURCE_PATH"
 echo "=> cd $SOURCE_PATH"
 
 echo "=> initialising Git submodule(s)..."
-# git submodule update --init --recursive
+git submodule update --init --recursive
 
 if test "$1" != "--skip-update"; then
     echo "=> updating Git submodule(s)..."
-#     git submodule foreach git fetchs
-#     git submodule foreach git merge --ff-only origin/master
+    git submodule foreach git fetch
+    git submodule foreach git merge --ff-only origin/master
 fi
 
 for file in "$SOURCE_PATH/src/".*; do

@@ -4,7 +4,9 @@
 # operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile ~/.gitignore_global
 
-/*.log
+*.cache
+*.log
+*.bak
 /tmp/
 
 # VIM
@@ -31,3 +33,9 @@ nppBackup
 
 # ctags
 tags
+
+# LibreOffice locks
+.~lock.*#
+
+# Linux trash folder which might appear on any partition or disk
+.Trash-*

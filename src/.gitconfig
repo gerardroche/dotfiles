@@ -24,7 +24,7 @@
 	s = status
 	t = tag -l
 	w = "!f() { git add -A && test -n \"$1\" && git commit -m \"$1\" || git commit -m \"SAVEPOINT\"; }; f"
-	zap = "!f() { git add -A && test -n \"$1\" && git commit -m \":zap: $1\" || git commit -m \":zap: :sparkles: :sparkles:\"; }; f"
+	zap = "!f() { git add -A && test -n \"$1\" && git commit -m \":zap: $1\" || git commit -m \":zap: :zap: :sparkles:\"; }; f"
 
 [bash]
 

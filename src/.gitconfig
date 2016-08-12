@@ -2,9 +2,11 @@
 [alias]
 
 	a = add
+	al = add .
 	ap = add --patch
 	b = branch -v -a
 	c = commit
+	co = checkout
 	changelog = "!f() { git log --no-merges $1 --not $2 --format=\"%h %s%+b\"; }; f"
 	cl = "!f() { test -n \"$1\" && git commit -m \":lipstick: $1\" || git commit -m \":lipstick:\"; }; f"
 	contributors = shortlog --summary --numbered # List contributors with number of commits https://github.com/mathiasbynens/dotfiles/blob/e32bc6cc07e1e25ba0821c3c20b488ead2133e0a/.gitconfig
@@ -27,7 +29,7 @@
 
 [color]
 
-	ui = true
+	ui = auto
 
 [color "branch"]
 
@@ -36,17 +38,14 @@
 	remote = green
 
 [color "diff"]
+	frag = cyan reverse
+	meta = cyan reverse
+	new = green
+	old = red
+	whitespace = red reverse
 
-    meta = yellow bold
-    frag = magenta bold # line info
-	# old = red # deletions
-	# new = green # additions
-
-[color "status"]
-
-	# added = yellow
-	# changed = green
-	# untracked = cyan
+[color "interactive"]
+	prompt = blue reverse
 
 [core]
 
@@ -85,3 +84,7 @@
 
 [fetch]
 	prune = true
+[merge]
+	stat = true
+[advice]
+	statusHints = false

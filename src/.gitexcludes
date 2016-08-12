@@ -4,9 +4,10 @@
 # operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile ~/.gitignore_global
 
+*.bak
 *.cache
 *.log
-*.bak
+*.sqlite3
 /tmp/
 
 # VIM

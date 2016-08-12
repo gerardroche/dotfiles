@@ -19,7 +19,7 @@ create_home_dir_symlink() {
     fi
 
     if test "$HOME/$target_basename" = "$SOURCE_PATH"; then
-        echo >&2 "$0: logic error, cannot link to self"
+        echo >&2 "$0:create_home_dir_symlink() cannot link to self"
         exit 1
     fi
 
@@ -29,21 +29,22 @@ create_home_dir_symlink() {
     if test -L "$link_name" -o ! -e "$link_name"; then
         ln -sfnv "$link_target" "$link_name"
     else
-        echo "NOTICE => file already exists, move the existing file and rerun the install script: $f"
+        echo >&2 "=> NOTICE Could not create home directory symlink."
+        echo >&2 "          File alreay exists {target: \"$link_target\", name: \"$link_name\"}."
+        echo >&2 "          Move the existing file and rerun the install script."
     fi
 }
 
 cd "$SOURCE_PATH"
 echo "=> cd $SOURCE_PATH"
 
-echo "=> initialising Git submodule(s)..."
-git submodule update --init --recursive
+echo "=> installing submodules modules..."
 
-if test "$1" != "--skip-update"; then
-    echo "=> updating Git submodule(s)..."
-    git submodule foreach git fetch
-    git submodule foreach git merge --ff-only origin/master
-fi
+# git submodule update --init --recursive
+# git submodule foreach git fetch
+# git submodule foreach git merge --ff-only origin/master
+
+echo "=> creating symlinks..."
 
 for file in "$SOURCE_PATH/src/".*; do
     create_home_dir_symlink "$file"
@@ -53,11 +54,11 @@ for file in "$SOURCE_PATH"/src/*; do
     create_home_dir_symlink "$file"
 done
 
-# Link vendor scripts
+echo "=> configuring vendors..."
+
 ln -sfv ~/.dotfiles/vendor/paulirish/git-open/git-open ~/bin/git-open
 ln -sfv ~/.dotfiles/vendor/php-build/php-build/bin/php-build  ~/bin/php-build
 
-# Rbenv plugins
 mkdir -p ~/.rbenv/plugins
 touch ~/.rbenv/plugins/ruby-build
 rm ~/.rbenv/plugins/ruby-build

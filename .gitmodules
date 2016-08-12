@@ -94,3 +94,6 @@
 [submodule "vendor/php-build/php-build"]
 	path = vendor/php-build/php-build
 	url = https://github.com/php-build/php-build.git
+[submodule "src/.vim/bundle/vim-git"]
+	path = src/.vim/bundle/vim-git
+	url = https://github.com/tpope/vim-git.git

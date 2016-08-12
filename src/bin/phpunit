@@ -9,8 +9,8 @@ unset IFS
 
 show_usage() {
     "$PHP_BIN" "$PHPUNIT_BIN" --help
-    echo "  --phpenv                  Travis-like emulation for .phpenv"
-    echo "  --phpenv-version <number> Run with specified phpenv version"
+    echo "  --ci                      .phpenv continuous integration emulation"
+    echo "  --php-version <number>    Use .phpenv php version"
 }
 
 run_phpunit_with_phpenv_version() {
@@ -30,20 +30,28 @@ run_phpunit_with_phpenv_version() {
         version_info="${php_bin} -> ${resolved_version}"
     fi
 
-    if test -n "$VERSIONS_TESTED_INFO"; then
-        VERSIONS_TESTED_INFO="$VERSIONS_TESTED_INFO\n"
+    if test -n "$CI_VERSIONS_TESTED_INFO"; then
+        CI_VERSIONS_TESTED_INFO="$CI_VERSIONS_TESTED_INFO\n"
     fi
 
-    VERSIONS_TESTED_INFO="${VERSIONS_TESTED_INFO}${version_info}"
-    TEST_COUNT=$(($TEST_COUNT + 1))
+    CI_VERSIONS_TESTED_INFO="${CI_VERSIONS_TESTED_INFO}${version_info}"
+    CI_TEST_COUNT=$(($CI_TEST_COUNT + 1))
 
     if [ "$exit_status" = 1 ]; then
-        VERSIONS_FAILED="$VERSIONS_FAILED\n${version_info}"
-        FAILURE_COUNT=$(($FAILURE_COUNT + 1))
+        CI_VERSIONS_FAILED="$CI_VERSIONS_FAILED\n${version_info}"
+        CI_FAILURE_COUNT=$(($CI_FAILURE_COUNT + 1))
     fi
 }
 
-PHP_BIN=php
+if test -f ./.php-version-7.x; then
+    PHP_BIN="$HOME/.phpenv/versions/7.x/bin/php"
+    if test ! -f "$PHP_BIN" || test ! -x "$PHP_BIN"; then
+        echo >&2 "$(basename "$0"): phpenv version not found"
+        exit 1
+    fi
+else
+    PHP_BIN=php
+fi
 
 if test -f ./vendor/bin/phpunit && test -x ./vendor/bin/phpunit; then
     PHPUNIT_BIN=./vendor/bin/phpunit
@@ -54,13 +62,14 @@ else
     exit 1
 fi
 
-PHPENV=
-PHPENV_VERSION=
+CI=
 while test "$#" != 0; do
     case "$1" in
         --help|-h) show_usage; exit 0 ;;
-        --phpenv) PHPENV=yes ;;
-        --phpenv-version)
+        --ci)
+            CI=true
+            ;;
+        --php-version)
             PHP_BIN="$HOME/.phpenv/versions/${2:?'version parameter is required'}/bin/php"
             shift
             if test ! -f "$PHP_BIN" || test ! -x "$PHP_BIN"; then
@@ -75,56 +84,51 @@ while test "$#" != 0; do
     shift
 done
 
-if test "$PHPENV" = "yes"; then
+if test -n "$CI"; then
 
-    TEST_COUNT=0
-    FAILURE_COUNT=0
-    VERSIONS_TESTED_INFO=
-    VERSIONS_FAILED=
+    CI_TEST_COUNT=0
+    CI_FAILURE_COUNT=0
+    CI_VERSIONS_TESTED_INFO=
+    CI_VERSIONS_FAILED=
 
     PHPENV_VERSIONS=$(ls -1d ~/.phpenv/versions/* | sort -V)
 
+    # Grep semver-like versions e.g. x.x.x and with trailing literal ".x"
     PHPENV_SEMVER_VERSIONS=$(echo "$PHPENV_VERSIONS" |\
-        # Grep semver-like versions e.g. x.x.x and with trailing literal ".x"
         grep 'versions/[0-9]\.\(0\|[1-9][1-9]*\|x\)\(\.\(0\|x\|[1-9][1-9]*\)\)\?$' |\
         sort -V)
 
     # Grep only versions with trailing literal ".x". All of these versions are
     # used to run unit tests when the --phpenv option is selected.
-    VERSIONS=$(echo "$PHPENV_SEMVER_VERSIONS" |\
+    PHPENV_X_VERSIONS=$(echo "$PHPENV_SEMVER_VERSIONS" |\
         grep 'versions/[1-9]\.\(x\|\(0\|[0-9][1-9]*\.x\)\)$' |\
         sort -V)
 
-    # @todo Add specific versions (if they exist) based on the versions
-    # specified in the project travis configurations.
+    # @todo Add specific versions (if they exist) based on the versions specified in the project travis configurations.
 
-    for version in $VERSIONS; do
+    for version in $PHPENV_X_VERSIONS; do
         run_phpunit_with_phpenv_version "$version"
     done
-fi
 
-"$PHP_BIN" "$PHPUNIT_BIN" --colors "$@"
+    "$PHP_BIN" "$PHPUNIT_BIN" --colors "$@"
 
-if test "$PHPENV" = "yes"; then
-    if test "$FAILURE_COUNT" -gt 0; then
-        echo
-        echo ".phpenv"
+    if test "$CI_FAILURE_COUNT" -gt 0; then
         echo
         echo "\033[37m\033[41mFAILURES!\033[0m"
-        echo "\033[37m\033[41mVersions: $TEST_COUNT, Failures: $FAILURE_COUNT\033[0m"
+        echo "\033[37m\033[41mVersions: $CI_TEST_COUNT, Failures: $CI_FAILURE_COUNT\033[0m"
         echo
-        echo "$VERSIONS_TESTED_INFO"
+        echo "$CI_VERSIONS_TESTED_INFO"
         echo
-        echo "FAILED ($FAILURE_COUNT):"
-        echo "$VERSIONS_FAILED"
+        echo "FAILED ($CI_FAILURE_COUNT):"
+        echo "$CI_VERSIONS_FAILED"
         echo
     else
         echo
-        echo ".phpenv"
+        echo "$(echo "$CI_VERSIONS_TESTED_INFO" | sed 's/^/\\033[30m\\033[42mOK\\033[0m /')"
         echo
-        echo "$(echo "$VERSIONS_TESTED_INFO" | sed 's/^/\\033[30m\\033[42mOK\\033[0m /')"
-        echo
-        echo "\033[30m\033[42mOK ($TEST_COUNT versions)\033[0m"
+        echo "\033[30m\033[42mOK ($CI_TEST_COUNT versions)\033[0m"
         echo
     fi
+else
+    "$PHP_BIN" "$PHPUNIT_BIN" --colors "$@"
 fi

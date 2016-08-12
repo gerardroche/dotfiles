@@ -30,13 +30,16 @@ complete -F __dotfiles_completion_vendors v
 # Git Aliases http://stackoverflow.com/a/15009611
 if [ -f /usr/share/bash-completion/completions/git ]; then
     . /usr/share/bash-completion/completions/git
+    __git_complete d _git_diff
     __git_complete g _git
+    __git_complete ga _git_add
+    __git_complete gal _git_add
     __git_complete gap _git_add
-    __git_complete gc _git_checkout
-    __git_complete gd _git_diff
+    __git_complete gc _git_commit
+    __git_complete gca _git_commit
+    __git_complete gm _git_merge
     __git_complete go _git_checkout
-    __git_complete gp _git_commit
-    __git_complete gs _git_status
+    __git_complete s _git_status
 fi
 
 # rbenv https://github.com/rbenv/rbenv

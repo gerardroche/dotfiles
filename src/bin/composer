@@ -40,19 +40,24 @@ DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,show_source"
 DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,syslog,system"
 DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,allow_url_include"
 
-if test "$1" = "--phpenv"; then
-    shift
-
-    PHPENV_VERSION="${1:?'phpenv version parameter required'}"
-    shift
-
-    PHP_BIN="$HOME/.phpenv/versions/$PHPENV_VERSION/bin/php"
+if test -f ./.php-version-7.x; then
+    PHP_BIN="$HOME/.phpenv/versions/7.x/bin/php"
     if test ! -f "$PHP_BIN" || test ! -x "$PHP_BIN"; then
-        echo >&2 "$(basename :"$0"): phpenv version not found"
+        echo >&2 "$(basename "$0"): phpenv version not found"
         exit 1
     fi
 else
     PHP_BIN=php
+fi
+
+if test "$1" = "--php-version"; then
+    shift
+    PHP_BIN="$HOME/.phpenv/versions/${1:?'version parameter is required'}/bin/php"
+    shift
+    if test ! -f "$PHP_BIN" || test ! -x "$PHP_BIN"; then
+        echo >&2 "$(basename :"$0"): phpenv version not found"
+        exit 1
+    fi
 fi
 
 if test ! -f /usr/local/bin/composer || test ! -x /usr/local/bin/composer; then

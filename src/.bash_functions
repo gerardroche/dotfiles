@@ -38,6 +38,42 @@ rbenv() {
     esac
 }
 
+appconsole() {
+    if test -f ./bin/appconsole; then
+        cmd=./bin/appconsole
+    elif test -f ./vendor/bin/appconsole; then
+        cmd=./vendor/bin/appconsole
+    else
+        cmd=appconsole
+    fi
+
+    command "$cmd" "$@"
+}
+
+dbtasks() {
+    if test -f ./bin/dbtasks; then
+        cmd=./bin/dbtasks
+    elif test -f ./vendor/bin/dbtasks; then
+        cmd=./vendor/bin/dbtasks
+    else
+        cmd=dbtasks
+    fi
+
+    command "$cmd" "$@"
+}
+
+pdoc() {
+    if test -f ./bin/pdoc; then
+        cmd=./bin/pdoc
+    elif test -f ./vendor/bin/pdoc; then
+        cmd=./vendor/bin/pdoc
+    else
+        cmd=pdoc
+    fi
+
+    command "$cmd" "$@"
+}
+
 title() {
     echo -n -e "\033]0;$*\007"
 }

@@ -4,11 +4,11 @@
 	a = add
 	al = add .
 	ap = add --patch
-	b = branch -v -a
+	b = branch -av
 	c = commit
-	co = checkout
 	changelog = "!f() { git log --no-merges $1 --not $2 --format=\"%h %s%+b\"; }; f"
 	cl = "!f() { test -n \"$1\" && git commit -m \":lipstick: $1\" || git commit -m \":lipstick:\"; }; f"
+	co = checkout
 	contributors = shortlog --summary --numbered # List contributors with number of commits https://github.com/mathiasbynens/dotfiles/blob/e32bc6cc07e1e25ba0821c3c20b488ead2133e0a/.gitconfig
 	d = diff
 	f = fetch
@@ -21,7 +21,9 @@
 	pt = "!f() { git push && git push --tags; }; f"
 	r = remote -v
 	s = status
+	t = tag -l
 	w = "!f() { git add -A && test -n \"$1\" && git commit -m \"$1\" || git commit -m \"SAVEPOINT\"; }; f"
+	zap = "!f() { git add -A && test -n \"$1\" && git commit -m \"$1\" || git commit -m \":zap:\"; }; f"
 
 [bash]
 
@@ -39,7 +41,7 @@
 
 [color "diff"]
 	frag = cyan reverse
-	meta = cyan reverse
+	meta = normal reverse
 	new = green
 	old = red
 	whitespace = red reverse

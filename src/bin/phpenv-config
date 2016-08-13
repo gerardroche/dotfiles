@@ -4,17 +4,164 @@ set -e
 unset CDPATH
 unset IFS
 
-sed -i '
+php_configurations() {
+    cat <<PHP_CONFIGURATIONS
+[PHP]
 
-    s/^;\?error_reporting \?=.*/error_reporting = -1/
-    s/^;\?display_errors \?=.*/display_errors = On/
-    s/^;\?display_startup_errors \?=.*/display_startup_errors = On/
-    s/^;\?track_errors \?=.*/track_errors = On/
-    s/^;\?zend.assertions \?=.*/zend.assertions = -1/
-    s/^;\?opcache.huge_code_pages \?=.*/opcache.huge_code_pages = 1/
+; This is a development INI file.
 
-    s/^;\?user_agent \?=.*/user_agent = /
-    s/^;\?mail\.add_x_header \?=.*/mail\.add_x_header = 0/
-    s/^;\?session.name \?=.*/session.name = PHPDEVSESSID/
+user_ini.filename =
 
-' ~/.phpenv/versions/*/etc/php.ini
+;;;;;;;;;;;;;;;;;;;;
+; Language Options ;
+;;;;;;;;;;;;;;;;;;;;
+short_open_tag = Off
+asp_tags = Off
+
+; open_basedir
+; > The restriction specified with open_basedir is a directory name since PHP
+; > 5.2.16 and 5.3.4. Previous versions used it as a prefix. This means that
+; > "open_basedir = /dir/incl" also allowed access to "/dir/include" and
+; > "/dir/incls" if they exist. When you want to restrict access to only the
+; > specified directory, end with a slash. For example:
+; > open_basedir = /dir/incl/
+
+; disable_functions
+; Dependency - PHPUnit:             pcntl_alarm,pcntl_signal
+; Dependency - PHPUnit with zf:     proc_open
+; Dependency - Symfony Console:     exec,php_uname,shell_exec
+disable_functions = "allow_url_fopen,allow_url_include,apache_child_terminate,assert,curl_exec,curl_multi_exec,define_syslog_variables,dl,eval,ftp_alloc,ftp_cdup,ftp_chdir,ftp_chmod,ftp_close,ftp_connect,ftp_delete,ftp_exec,ftp_fget,ftp_fpoESTS_ZEND_CACHE_MEMCACHED_ENABLEDut,ftp_get_option,ftp_get,ftp_login,ftp_mdtm,ftp_mkdir,ftp_nb_continue,ftp_nb_fget,ftp_nb_fput,ftp_nb_get,ftp_nb_put,ftp_nlist,ftp_pasv,ftp_put,ftp_pwd,ftp_quit,ftp_raw,ftp_rawlist,ftp_rename,ftp_rmdir,ftp_set_option,ftp_site,ftp_size,ftp_ssl_connect,ftp_systype,passthru,pcntl_errno,pcntl_exec,pcntl_fork,pcntl_get_last_error,pcntl_getpriority,pcntl_setpriority,pcntl_signal_dispatch,pcntl_sigprocmask,pcntl_sigtimedwait,pcntl_sigwaitinfo,pcntl_strerror,pcntl_wait,pcntl_waitpid,pcntl_wexitstatus,pcntl_wifexited,pcntl_wifsignaled,pcntl_wifstopped,pcntl_wstopsig,pcntl_wtermsig,popen,proc_nice,proc_terminate,show_source,syslog,system"
+
+disable_classes=
+realpath_cache_size = 180k
+
+;;;;;;;;;;;;;;;;;
+; Miscellaneous ;
+;;;;;;;;;;;;;;;;;
+expose_php = Off
+
+;;;;;;;;;;;;;;;;;;;
+; Resource Limits ;
+;;;;;;;;;;;;;;;;;;;
+max_execution_time = 30
+memory_limit = 40M
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Error handling and logging ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+error_reporting = -1
+display_errors = On
+display_startup_errors = On
+log_errors = On
+report_memleaks = On
+report_zend_debug = Off
+track_errors = On
+html_errors = On
+docref_root = http://www.php.man/
+docref_ext = .html
+
+;;;;;;;;;;;;;;;;;
+; Data Handling ;
+;;;;;;;;;;;;;;;;;
+magic_quotes_gpc = Off
+magic_quotes_sybase = Off
+magic_quotes_runtime = Off
+post_max_size = 1M
+auto_prepend_file =
+auto_append_file =
+default_mimetype = "text/html"
+default_charset = "UTF-8"
+
+;;;;;;;;;;;;;;;;;;;;;;;;;
+; Paths and Directories ;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+include_path = "."
+user_dir =
+
+;;;;;;;;;;;;;;;;
+; File Uploads ;
+;;;;;;;;;;;;;;;;
+file_uploads = Off
+upload_max_filesize = 1M
+max_file_uploads = 2
+
+;;;;;;;;;;;;;;;;;;
+; Fopen Wrappers ;
+;;;;;;;;;;;;;;;;;;
+allow_url_fopen = Off
+allow_url_include = Off
+user_agent =
+
+;;;;;;;;;;;;;;;;;;;
+; Module Settings ;
+;;;;;;;;;;;;;;;;;;;
+
+[Date]
+date.timezone = UTC
+
+[iconv]
+iconv.input_encoding = "UTF-8"
+iconv.internal_encoding = "UTF-8"
+iconv.output_encoding = "UTF-8"
+
+[mail function]
+; Redirecting email on dev boxes
+; http://akrabat.com/php/redirecting-email-whilst-developing/)
+; http://seancoates.com/blogs/mail-replacement----a-better-hack
+sendmail_path = "/usr/local/bin/lde-sendmail"
+mail.add_x_header = Off
+;mail.log = /tmp/lde-php-mail.log
+
+[mysqlnd]
+mysqlnd.collect_statistics = Off
+mysqlnd.collect_memory_statistics = Off
+
+[bcmath]
+bcmath.scale = On
+
+[Session]
+session.use_strict_mode = On
+session.use_cookies = On
+session.use_only_cookies = On
+session.name = PHPDEVSESSID
+session.auto_start = 0
+session.cookie_httponly = On
+
+[Assertion]
+zend.assertions = On
+
+[mbstring]
+mbstring.language = Neutral
+mbstring.internal_encoding = UTF-8
+mbstring.http_input = auto
+mbstring.http_output = UTF-8
+mbstring.encoding_translation = On
+mbstring.detect_order = auto
+mbstring.substitute_character = none
+mbstring.strict_detection = Off
+
+[opcache]
+opcache.enable = On
+opcache.enable_cli = Off
+
+[xdebug]
+xdebug.cli_color = On
+xdebug.idekey = netbeans-xdebug
+xdebug.overload_var_dump = 2
+xdebug.profiler_enable = Off
+xdebug.profiler_enable_trigger = Off
+xdebug.remote_autostart = Off
+xdebug.remote_enable = Off
+xdebug.remote_handler = dbgp
+xdebug.remote_host = 127.0.1.1
+xdebug.remote_mode = req
+xdebug.scream = On
+xdebug.var_display_max_depth = 6
+
+PHP_CONFIGURATIONS
+}
+
+for phpenv_version_etc_conf_d in ~/.phpenv/versions/*/etc/conf.d; do
+    test -d "$phpenv_version_etc_conf_d" || ftp_nb_continue
+    echo "$(php_configurations)" > "$phpenv_version_etc_conf_d/90-phpenv.ini"
+done

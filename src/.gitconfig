@@ -1,30 +1,47 @@
+[advice]
+
+	statusHints = false
 
 [alias]
 
 	a = add
 	al = add .
 	ap = add --patch
-	b = branch -av
+	b = branch -v -a
 	c = commit
-	changelog = "!f() { git log --no-merges $1 --not $2 --format=\"%h %s%+b\"; }; f"
-	cl = "!f() { test -n \"$1\" && git commit -m \":lipstick: $1\" || git commit -m \":lipstick:\"; }; f"
+	ca = commit
+	cam = commit -m
+	cm = commit -m
 	co = checkout
-	contributors = shortlog --summary --numbered # List contributors with number of commits https://github.com/mathiasbynens/dotfiles/blob/e32bc6cc07e1e25ba0821c3c20b488ead2133e0a/.gitconfig
 	d = diff
-	f = fetch
+	f = fetch -v
 	fa = fetch --all
 	ff = merge --ff-only
+	ffom = merge --ff-only origin/master
 	l = log --pretty=format:\"%C(yellow)%h %ad%Cred%d %Creset%s%Cblue [%cn]\" --decorate --date=relative --all
 	lg = log --pretty=format:\"%C(yellow)%h %ad%Cred%d %Creset%s%Cblue [%cn]\" --decorate --date=relative --graph --all
-	memo = "!f() { git add -A && git commit -m \":pencil: :sparkles: :sparkles:\"; }; f"
+	ls = log --pretty=format:\"%C(yellow)%h %ad%Cred%d %Creset%s%Cblue [%cn]\" --decorate --date=relative --all
+	m = merge
+	com = checkout master
+	cod = checkout develop
 	p = push
-	pr = pull --rebase
-	pt = "!f() { git push && git push --tags; }; f"
+	pt = push --tags
 	r = remote -v
 	s = status
 	t = tag -l
-	w = "!f() { git add -A && test -n \"$1\" && git commit -m \"$1\" || git commit -m \"SAVEPOINT\"; }; f"
-	zap = "!f() { git add -A && test -n \"$1\" && git commit -m \":zap: $1\" || git commit -m \":zap: :zap: :sparkles:\"; }; f"
+
+	changelog = "!f() { git log --no-merges $1 --not $2 --format=\"%h %s%+b\"; }; f"
+	contributors = shortlog --summary --numbered # List contributors with number of commits https://github.com/mathiasbynens/dotfiles/blob/e32bc6cc07e1e25ba0821c3c20b488ead2133e0a/.gitconfig
+
+	doc     = "!f() { git commit -m \"doc: :pencil: $1\"; }; f"
+	fix     = "!f() { git commit -m \":bug: fix $1\" -v; }; f"
+	hi5     = "!f() { git commit -m \"^5 $1\"; }; f"
+
+	batman  = "!f() { git add -A . && git commit -m \"Batman! $1\"; }; f"
+	kapow   = "!f() { git add -A . && git commit -m \":zap: :facepunch: :zap: $1\"; }; f"
+	wa     	= "!f() { git add -A . && git commit -m \"Pedal to the :metal: $1\"; }; f"
+	wip     = "!f() { git add -A . && git commit -m \"wip: :construction: $1\"; }; f"
+	zap     = "!f() { git add -A . && git commit -m \":zap: :zap: :sparkles: $1\"; }; f"
 
 [bash]
 
@@ -41,6 +58,7 @@
 	remote = green
 
 [color "diff"]
+
 	frag = cyan reverse
 	meta = normal reverse
 	new = green
@@ -48,6 +66,7 @@
 	whitespace = red reverse
 
 [color "interactive"]
+
 	prompt = blue reverse
 
 [core]
@@ -56,16 +75,19 @@
 	editor = vi
 	excludesfile = ~/.gitexcludes
 
+[fetch]
+
+	prune = true
+
 [help]
 
 	autocorrect = 1
 
 [merge]
 
-	# branchdesc = true
-	# Include summaries of merged commits in newly created merge commit messages
-	# https://github.com/mathiasbynens/dotfiles/blob/e32bc6cc07e1e25ba0821c3c20b488ead2133e0a/.gitconfig
-	# log = 65
+	branchdesc = true
+	log = 65
+	stat = true
 
 [mergetool]
 
@@ -77,17 +99,10 @@
 
 [url "https://github"]
 
-	# git:// urls causing major performance issues
+	# Because "git://" urls are causing major performance issues (ubuntu)
 	insteadOf = git://github
 
 [user]
 
 	name = Gerard Roche
 	email = gerardroche@users.noreply.github.com
-
-[fetch]
-	prune = true
-[merge]
-	stat = true
-[advice]
-	statusHints = false

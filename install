@@ -38,11 +38,15 @@ create_home_dir_symlink() {
 cd "$SOURCE_PATH"
 echo "=> cd $SOURCE_PATH"
 
-echo "=> installing submodules modules..."
+echo "=> installing dependencies..."
 
-# git submodule update --init --recursive
-# git submodule foreach git fetch
-# git submodule foreach git merge --ff-only origin/master
+echo "=> installing dependency: xclip for tmux 'copy to system clipboard'..."
+sudo apt-get install xclip
+
+echo "=> installing submodules..."
+
+git submodule update --init --recursive
+git submodule foreach 'git fetch && git merge --ff-only origin/master'
 
 echo "=> creating symlinks..."
 

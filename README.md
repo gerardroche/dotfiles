@@ -1,6 +1,6 @@
 # gerardroche/dotfiles
 
-My configuration files for bash, vim, git, and more.
+My configuration files for bash, vim, git, and more. :zap: :zap:
 
 ![Screenshot](screenshot.png)
 
@@ -8,8 +8,8 @@ My configuration files for bash, vim, git, and more.
 
 **All bets are off. Install at your own risk.**
 
-```
+```sh
 git clone https://github.com/gerardroche/dotfiles.git ~/.dotfiles && ~/.dotfiles/install
 ```
 
-<3
+&lt;3

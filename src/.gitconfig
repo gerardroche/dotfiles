@@ -6,12 +6,13 @@
 
 	a = add
 	al = add .
+	aliases = config --get-regexp alias
 	ap = add --patch
 	b = branch -v -a
 	c = commit
-	ca = commit
-	cam = commit -m
-	cm = commit -m
+	ca = commit -a
+	cam = "!f() { git commit -a -m \"$*\"; }; f"
+	cm = "!f() { git commit -m \"$*\"; }; f"
 	co = checkout
 	d = diff
 	f = fetch -v
@@ -33,15 +34,15 @@
 	changelog = "!f() { git log --no-merges $1 --not $2 --format=\"%h %s%+b\"; }; f"
 	contributors = shortlog --summary --numbered # List contributors with number of commits https://github.com/mathiasbynens/dotfiles/blob/e32bc6cc07e1e25ba0821c3c20b488ead2133e0a/.gitconfig
 
-	doc     = "!f() { git commit -m \"doc: :pencil: $1\"; }; f"
-	fix     = "!f() { git commit -m \":bug: fix $1\" -v; }; f"
-	hi5     = "!f() { git commit -m \"^5 $1\"; }; f"
+	doc     = "!f() { git commit -m \"doc: :pencil: $*\"; }; f"
+	fix     = "!f() { git commit -m \":bug: fix $*\" -v; }; f"
+	hi5     = "!f() { git commit -m \"^5 $*\"; }; f"
 
-	batman  = "!f() { git add -A . && git commit -m \"Batman! $1\"; }; f"
-	kapow   = "!f() { git add -A . && git commit -m \":zap: :facepunch: :zap: $1\"; }; f"
-	wa     	= "!f() { git add -A . && git commit -m \"Pedal to the :metal: $1\"; }; f"
-	wip     = "!f() { git add -A . && git commit -m \"wip: :construction: $1\"; }; f"
-	zap     = "!f() { git add -A . && git commit -m \":zap: :zap: :sparkles: $1\"; }; f"
+	batman  = "!f() { git add -A . && git commit -m \"Batman! $*\"; }; f"
+	kapow   = "!f() { git add -A . && git commit -m \":zap: :facepunch: :zap: $*\"; }; f"
+	wa     	= "!f() { git add -A . && git commit -m \"Pedal to the :metal: $*\"; }; f"
+	wip     = "!f() { git add -A . && git commit -m \"wip: :construction: $*\"; }; f"
+	zap     = "!f() { git add -A . && git commit -m \":zap: :zap: :sparkles: $*\"; }; f"
 
 [bash]
 

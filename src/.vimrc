@@ -9,7 +9,9 @@ set backspace=indent,eol,start
 set complete-=i
 set cursorline
 set display+=lastline
-set encoding=utf-8
+if !has('nvim')
+    set encoding=utf-8
+endif
 set expandtab
 set foldmethod=marker
 set foldopen+=jump

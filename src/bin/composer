@@ -26,6 +26,7 @@ if test -n "$VENDOR_PATH" && test -d "$VENDOR_PATH"; then
 fi
 
 DISABLE_FUNCTIONS="apache_child_terminate"
+DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,allow_url_include"
 DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,assert"
 DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,curl_exec,curl_multi_exec"
 DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,define_syslog_variables"
@@ -38,8 +39,8 @@ DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,pcntl_alarm,pcntl_errno,pcntl_exec,pcntl_f
 DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,shell_exec"
 DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,show_source"
 DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,syslog,system"
-DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,allow_url_include"
 
+# Allow picking php 7.x version via phpenv
 if test -f ./.php-version-7.x; then
     PHP_BIN="$HOME/.phpenv/versions/7.x/bin/php"
     if test ! -f "$PHP_BIN" || test ! -x "$PHP_BIN"; then
@@ -50,6 +51,7 @@ else
     PHP_BIN=php
 fi
 
+# Allow picking a php version to use via phpenv
 if test "$1" = "--php-version"; then
     shift
     PHP_BIN="$HOME/.phpenv/versions/${1:?'version parameter is required'}/bin/php"
@@ -64,6 +66,11 @@ if test ! -f /usr/local/bin/composer || test ! -x /usr/local/bin/composer; then
     echo >&2 "$(basename :"$0"): composer not found"
     exit 1
 fi
+
+# Disable the warning about having xdebug enabled
+# https://getcomposer.org/doc/03-cli.md#composer-disable-xdebug-warn
+# https://getcomposer.org/doc/articles/troubleshooting.md#xdebug-impact-on-composer
+export COMPOSER_DISABLE_XDEBUG_WARN=1
 
 exec "$PHP_BIN"\
     -d detect_unicode=0\

@@ -284,15 +284,6 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 inoremap <F1> <ESC>
 nnoremap <F1> <ESC>
 vnoremap <F1> <ESC>
-command E e
-command Q q
-command Qa qa
-command QA qa
-command W w
-command Wa wa
-command WA wa
-command WQ wq
-command Wq wq
 " }}}
 " Mappings: Disable arrow keys {{{
 " http://stevelosh.com/blog/2010/09/coming-home-to-vim/

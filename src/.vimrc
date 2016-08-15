@@ -84,6 +84,7 @@ set wildmenu
 set wildmode=longest:full
 " }}}
 " Options: Plugins {{{
+let NERDTreeMinimalUI = 1
 let g:SuperTabDefaultCompletionType = "<c-p>"
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_left_sep = ''
@@ -98,6 +99,12 @@ let g:ctrlp_show_hidden = 1
 let g:gitgutter_highlight_lines = 0
 let g:gitgutter_map_keys = 1
 let g:gitgutter_sign_column_always = 1
+let g:multi_cursor_next_key='j'
+let g:multi_cursor_prev_key='k'
+let g:multi_cursor_quit_key='J'
+let g:multi_cursor_skip_key='l'
+let g:multi_cursor_start_key='gh'
+let g:multi_cursor_use_default_mapping=0
 let g:php_baselib = 1
 let g:php_folding = 1
 let g:php_sql_query = 1
@@ -106,9 +113,7 @@ let g:syntastic_auto_jump = 0
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
-"let g:tablabel = "%N%{flagship#tabmodified()} %{flagship#tabcwds('shorten',',')}"
 let g:vim_markdown_folding_disabled = 1
-let NERDTreeMinimalUI = 1
 " }}}
 " Visual {{{
 syntax enable

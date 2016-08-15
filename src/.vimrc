@@ -238,10 +238,6 @@ map <leader>p "+p
 map <leader>P "+P
 noremap <leader>yy "+Y
 
-noremap <leader>? :call pathogen#helptags()
-
-noremap <leader>d :NERDTreeToggle<CR>
-
 " Idea from : http://www.charlietanksley.net/blog/blog/2011/10/18/vim-navigation-with-lustyexplorer-and-lustyjuggler/
 " Open CtrlP starting from a particular path, making it much
 " more likely to find the correct thing first. mnemonic 'jump to [something]'
@@ -259,19 +255,18 @@ map <leader>jV :CtrlP vendor<CR>
 map <leader>jF :CtrlP factories<CR>
 map <leader>jT :CtrlP test<CR>
 
-" Run a single PHPUnit test case via tmux.
+" PHPUnit
+nnoremap <leader>t :call PHPUnitRunTests()<CR>
 nnoremap <leader>r :call PHPUnitRunSingleTest()<CR>
 
-" Toggle invisibles.
-" http://vimcasts.org/episodes/show-invisibles/
-nnoremap <leader>s :set nolist!<CR>
-
-" Run PHPUnit tests via tmux.
-nnoremap <leader>t :call PHPUnitRunTests()<CR>
-
-" Open .vimrc.
-" http://vimcasts.org/episodes/updating-your-vimrc-file-on-the-fly/
-nnoremap <leader>v :split $MYVIMRC<CR>
+" Misc.
+nnoremap <leader>? :call pathogen#helptags()
+nnoremap <leader>ov :split $MYVIMRC<CR>
+nnoremap <leader>sa ggVG:sort<CR>:w<CR>
+nnoremap <leader>sv :source $MYVIMRC<CR>
+nnoremap <leader>va ggVG<CR>
+noremap <leader>d :NERDTreeToggle<CR>
+noremap <leader>s :set nolist!<CR>
 
 " Show colorscheme information
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'

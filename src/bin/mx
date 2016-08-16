@@ -5,8 +5,10 @@ unset CDPATH
 unset IFS
 
 show_usage() {
-    echo "Usage: $(basename "$0") [<NAME>]"
-    echo "       $(basename "$0") [-h|--help]"
+    cat <<USAGE
+Usage: $(basename "$0") [<NAME>]
+       $(basename "$0") [-h|--help]
+USAGE
 }
 
 case "$1" in
@@ -23,7 +25,6 @@ else
 
     CONFIG_FILE=
     if test -d "$PROJECTS_PATH"; then
-        cd "$PROJECTS_PATH"
 
         SESSION_PATH="$PROJECTS_PATH/$SESSION_NAME"
 

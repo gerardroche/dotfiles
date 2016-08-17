@@ -37,6 +37,10 @@ if [ -f /usr/share/bash-completion/completions/git ]; then
     __git_complete gc _git_commit
     __git_complete gca _git_commit
     __git_complete gf _git_fetch
+    __git_complete gl _git_log
+    __git_complete glg _git_log
+    __git_complete gll _git_log
+    __git_complete gls _git_log
     __git_complete gm _git_merge
     __git_complete go _git_checkout
     __git_complete s _git_status

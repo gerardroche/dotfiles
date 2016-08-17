@@ -17,14 +17,15 @@
 	d = diff
 	f = fetch -v
 	fa = fetch --all
+	cod = checkout develop
+	com = checkout master
 	ff = merge --ff-only
 	ffom = merge --ff-only origin/master
-	l = log --pretty=format:\"%C(yellow)%h %ad%Cred%d %Creset%s%Cblue [%cn]\" --decorate --date=relative --all
-	lg = log --pretty=format:\"%C(yellow)%h %ad%Cred%d %Creset%s%Cblue [%cn]\" --decorate --date=relative --graph --all
-	ls = log --pretty=format:\"%C(yellow)%h %ad%Cred%d %Creset%s%Cblue [%cn]\" --decorate --date=relative --all
+	l = "!f() { git log --pretty=format:\"%C(auto)%h %ad%d %s%C(reset)\" --decorate --date=relative -n "${1:-10}"; }; f"
+	lg = "!f() { git log --pretty=format:\"%C(auto)%h %ad%d %s%C(reset) [%C(blue)%cn%C(reset)]\" --decorate --date=relative --graph -n "${1:-10}"; }; f"
+	ll = "!f() { git log --pretty=format:\"%C(auto)%h %ad%d %s%C(reset) [%C(blue)%cn%C(reset)]\" --decorate --date=relative -n "${1:-10}"; }; f"
+	ls = "!f() { git log --oneline --decorate; }; f"
 	m = merge
-	com = checkout master
-	cod = checkout develop
 	p = push
 	pt = push --tags
 	r = remote -v

@@ -157,14 +157,14 @@ xdebug.dump_once = Off
 xdebug.dump_undefined = On
 xdebug.force_display_errors = On
 xdebug.force_error_reporting = On
-xdebug.overload_var_dump = 2
-xdebug.scream = On
-xdebug.var_display_max_depth = 6
 xdebug.idekey = pugdebug
+xdebug.overload_var_dump = 2
 xdebug.profiler_enable = Off
 xdebug.profiler_enable_trigger = Off
 xdebug.remote_autostart = Off
 xdebug.remote_enable = On
+xdebug.scream = On
+xdebug.var_display_max_depth = 6
 
 PHP_CONFIGURATIONS
 }

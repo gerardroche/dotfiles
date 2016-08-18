@@ -141,22 +141,30 @@ mbstring.substitute_character = none
 mbstring.strict_detection = Off
 
 [opcache]
-opcache.enable = On
+opcache.enable = Off
 opcache.enable_cli = Off
 
 [xdebug]
 xdebug.cli_color = On
-xdebug.idekey = netbeans-xdebug
+xdebug.dump.COOKIE = *
+xdebug.dump.FILES = *
+xdebug.dump.GET = *
+xdebug.dump.POST = *
+xdebug.dump.SERVER = REMOTE_ADDR,REQUEST_METHOD,APP_ENV,APP_DEBUG,APPLICATION_ENV,APPLICATION_DEBUG,GO_FAST_ENV,GO_FAST_DEBUG
+xdebug.dump.SESSION = *
+xdebug.dump_globals = On
+xdebug.dump_once = Off
+xdebug.dump_undefined = On
+xdebug.force_display_errors = On
+xdebug.force_error_reporting = On
 xdebug.overload_var_dump = 2
+xdebug.scream = On
+xdebug.var_display_max_depth = 6
+xdebug.idekey = pugdebug
 xdebug.profiler_enable = Off
 xdebug.profiler_enable_trigger = Off
 xdebug.remote_autostart = Off
-xdebug.remote_enable = Off
-xdebug.remote_handler = dbgp
-xdebug.remote_host = 127.0.1.1
-xdebug.remote_mode = req
-xdebug.scream = On
-xdebug.var_display_max_depth = 6
+xdebug.remote_enable = On
 
 PHP_CONFIGURATIONS
 }

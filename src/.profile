@@ -53,3 +53,4 @@ export GO_FAST_DEBUG=true
 export GO_FAST_ENV=development
 export PROJECTS_PATH=~/projects
 export VENDOR_PATH=~/vendor
+export XDEBUG_CONFIG="idekey=pugdebug"

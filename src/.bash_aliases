@@ -59,6 +59,7 @@ alias osublimefiles='subl --project ~/.config/sublime-text-3/Packages/_.sublime-
 alias otoolbox='subl --project "$PROJECTS_PATH/.sublime/toolbox.sublime-project"'
 alias p='phpunit'
 alias ports='netstat -lntpau'
+alias pugdebug='_pugdebug &'
 alias q='exit'
 alias reloadaliases="source ~/.bash_aliases"
 alias reloadcompletions="source ~/.bash_completions"

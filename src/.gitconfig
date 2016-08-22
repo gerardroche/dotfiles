@@ -22,8 +22,8 @@
 	ff = merge --ff-only
 	ffom = merge --ff-only origin/master
 	l = "!f() { git log --pretty=format:\"%C(auto)%h %ad%d %s%C(reset)\" --decorate --date=relative -n "${1:-10}"; }; f"
-	lg = "!f() { git log --pretty=format:\"%C(auto)%h %ad %C(green)%cn%C(reset)%C(auto)%d %s%C(reset) \" --decorate --date=relative --graph -n "${1:-10}"; }; f"
-	ll = "!f() { git log --pretty=format:\"%C(auto)%h %ad %C(green)%cn%C(reset)%C(auto)%d %s%C(reset) \" --decorate --date=relative -n "${1:-10}"; }; f"
+	lg = "!f() { git log --pretty=format:\"%C(auto)%h %ad %C(green)%cn%C(reset)%C(auto)%d %s%C(reset)\" --decorate --date=relative --graph -n "${1:-10}"; }; f"
+	ll = "!f() { git log --pretty=format:\"%C(auto)%h %ad %C(green)%cn%C(reset)%C(auto)%d %s%C(reset)\" --decorate --date=relative -n "${1:-10}"; }; f"
 	ls = "!f() { git log --oneline --decorate; }; f"
 	m = merge
 	p = push

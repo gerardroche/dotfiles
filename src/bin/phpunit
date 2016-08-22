@@ -130,5 +130,5 @@ if test -n "$CI"; then
         echo
     fi
 else
-    "$PHP_BIN" "$PHPUNIT_BIN" --colors "$@"
+    "$PHP_BIN" "$PHPUNIT_BIN" --colors --verbose "$@"
 fi

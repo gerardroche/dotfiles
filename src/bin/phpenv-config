@@ -170,6 +170,6 @@ PHP_CONFIGURATIONS
 }
 
 for phpenv_version_etc_conf_d in ~/.phpenv/versions/*/etc/conf.d; do
-    test -d "$phpenv_version_etc_conf_d" || ftp_nb_continue
+    test -d "$phpenv_version_etc_conf_d" || continue
     echo "$(php_configurations)" > "$phpenv_version_etc_conf_d/90-phpenv.ini"
 done

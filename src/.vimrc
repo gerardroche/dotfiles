@@ -132,7 +132,7 @@ let g:rehash256=1
 let g:solarized_termcolors=16
 let g:solarized_termtrans=1 " Fix some tmux colour issues.
 
-silent! colorscheme solarized
+silent! colorscheme molokai
 
 " Make the sign column background the same
 " colour as the colorscheme background.

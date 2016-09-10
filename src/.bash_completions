@@ -22,10 +22,15 @@ __dotfiles_completion_phpenv() {
     fi
 }
 
+__dotfiles_completion_todos() {
+    __dotfiles_completion_reply_with "$(todo --complete)" 2>/dev/null
+}
+
 complete -F __dotfiles_completion_phpenv phpenv
 complete -F __dotfiles_completion_projects c
 complete -F __dotfiles_completion_projects mx
 complete -F __dotfiles_completion_vendors v
+complete -F __dotfiles_completion_todos todo
 
 # Git Aliases http://stackoverflow.com/a/15009611
 if [ -f /usr/share/bash-completion/completions/git ]; then

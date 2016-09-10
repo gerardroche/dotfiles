@@ -33,7 +33,8 @@ asp_tags = Off
 disable_functions = "allow_url_fopen,allow_url_include,apache_child_terminate,assert,curl_exec,curl_multi_exec,define_syslog_variables,dl,eval,ftp_alloc,ftp_cdup,ftp_chdir,ftp_chmod,ftp_close,ftp_connect,ftp_delete,ftp_exec,ftp_fget,ftp_fpoESTS_ZEND_CACHE_MEMCACHED_ENABLEDut,ftp_get_option,ftp_get,ftp_login,ftp_mdtm,ftp_mkdir,ftp_nb_continue,ftp_nb_fget,ftp_nb_fput,ftp_nb_get,ftp_nb_put,ftp_nlist,ftp_pasv,ftp_put,ftp_pwd,ftp_quit,ftp_raw,ftp_rawlist,ftp_rename,ftp_rmdir,ftp_set_option,ftp_site,ftp_size,ftp_ssl_connect,ftp_systype,passthru,pcntl_errno,pcntl_exec,pcntl_fork,pcntl_get_last_error,pcntl_getpriority,pcntl_setpriority,pcntl_signal_dispatch,pcntl_sigprocmask,pcntl_sigtimedwait,pcntl_sigwaitinfo,pcntl_strerror,pcntl_wait,pcntl_waitpid,pcntl_wexitstatus,pcntl_wifexited,pcntl_wifsignaled,pcntl_wifstopped,pcntl_wstopsig,pcntl_wtermsig,popen,proc_nice,proc_terminate,show_source,syslog,system"
 
 disable_classes=
-realpath_cache_size = 180k
+realpath_cache_size = 180K
+realpath_cache_ttl = 120
 
 ;;;;;;;;;;;;;;;;;
 ; Miscellaneous ;

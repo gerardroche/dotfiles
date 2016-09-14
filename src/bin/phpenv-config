@@ -98,7 +98,7 @@ user_agent =
 ;;;;;;;;;;;;;;;;;;;
 
 [Date]
-date.timezone = UTC
+date.timezone = "UTC"
 
 [iconv]
 iconv.input_encoding = "UTF-8"

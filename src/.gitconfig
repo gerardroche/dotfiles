@@ -40,11 +40,12 @@
 	hi5     = "!f() { git commit -m \"^5 $*\"; }; f"
 
 	batman  = "!f() { git add -A . && git commit -m \"Batman! $*\"; }; f"
-	kapow   = "!f() { git add -A . && git commit -m \":zap: :facepunch: :zap: $*\"; }; f"
+	kapow   = "!f() { git add -A . && git commit -m \":facepunch: $*\"; }; f"
 	w      	= "!f() { git add -A . && git commit -m \"$*\"; }; f"
-	wa     	= "!f() { git add -A . && git commit -m \"Pedal to the :metal: $*\"; }; f"
+	wa     	= "!f() { git add -A . && git commit -m \":metal: $*\"; }; f"
 	wip     = "!f() { git add -A . && git commit -m \"wip: :construction: $*\"; }; f"
-	zap     = "!f() { git add -A . && git commit -m \":zap: :zap: :sparkles: $*\"; }; f"
+	zap     = "!f() { git add -A . && git commit -m \":zap: $*\"; }; f"
+	zap2    = "!f() { git add -A . && git commit -m \":zap: :zap: $*\"; }; f"
 
 [bash]
 

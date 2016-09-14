@@ -70,8 +70,8 @@ magic_quotes_runtime = Off
 post_max_size = 1M
 auto_prepend_file =
 auto_append_file =
-default_mimetype = text/html
-default_charset = UTF-8
+default_mimetype = "text/html"
+default_charset = "UTF-8"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Paths and Directories ;
@@ -101,9 +101,9 @@ user_agent =
 date.timezone = UTC
 
 [iconv]
-iconv.input_encoding = UTF-8
-iconv.internal_encoding = UTF-8
-iconv.output_encoding = UTF-8
+iconv.input_encoding = "UTF-8"
+iconv.internal_encoding = "UTF-8"
+iconv.output_encoding = "UTF-8"
 
 [mail function]
 ; Redirecting email on dev boxes
@@ -111,7 +111,7 @@ iconv.output_encoding = UTF-8
 ; http://seancoates.com/blogs/mail-replacement----a-better-hack
 sendmail_path = "/usr/local/bin/lde-sendmail"
 mail.add_x_header = Off
-;mail.log = /tmp/lde-php-mail.log
+;mail.log = "/tmp/lde-php-mail.log"
 
 [mysqlnd]
 mysqlnd.collect_statistics = Off
@@ -133,9 +133,9 @@ zend.assertions = On
 
 [mbstring]
 mbstring.language = Neutral
-mbstring.internal_encoding = UTF-8
+mbstring.internal_encoding = "UTF-8"
 mbstring.http_input = auto
-mbstring.http_output = UTF-8
+mbstring.http_output = "UTF-8"
 mbstring.encoding_translation = On
 mbstring.detect_order = auto
 mbstring.substitute_character = none

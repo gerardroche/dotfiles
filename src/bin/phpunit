@@ -9,6 +9,9 @@ unset IFS
 
 show_usage() {
     "$PHP_BIN" "$PHPUNIT_BIN" --help
+    echo ""
+    echo "PHP Environment:"
+    echo ""
     echo "  --ci                      .phpenv continuous integration emulation"
     echo "  --php-version <number>    Use .phpenv php version"
 }

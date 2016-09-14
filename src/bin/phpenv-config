@@ -70,13 +70,13 @@ magic_quotes_runtime = Off
 post_max_size = 1M
 auto_prepend_file =
 auto_append_file =
-default_mimetype = "text/html"
-default_charset = "UTF-8"
+default_mimetype = text/html
+default_charset = UTF-8
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Paths and Directories ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
-include_path = "."
+include_path = .
 user_dir =
 
 ;;;;;;;;;;;;;;;;
@@ -101,9 +101,9 @@ user_agent =
 date.timezone = UTC
 
 [iconv]
-iconv.input_encoding = "UTF-8"
-iconv.internal_encoding = "UTF-8"
-iconv.output_encoding = "UTF-8"
+iconv.input_encoding = UTF-8
+iconv.internal_encoding = UTF-8
+iconv.output_encoding = UTF-8
 
 [mail function]
 ; Redirecting email on dev boxes

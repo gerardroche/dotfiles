@@ -30,7 +30,7 @@
 	pt = push --tags
 	r = remote -v
 	s = status
-	t = tag -l
+	t = "!f() { git tag -l | sort -V | tail; }; f"
 
 	changelog = "!f() { git log --no-merges $1 --not $2 --format=\"%h %s%+b\"; }; f"
 	contributors = shortlog --summary --numbered # List contributors with number of commits https://github.com/mathiasbynens/dotfiles/blob/e32bc6cc07e1e25ba0821c3c20b488ead2133e0a/.gitconfig

@@ -1,9 +1,12 @@
 --exclude=*.min.js
---exclude=.git
+--exclude=*.sublime*
+--exclude=.git*
 --exclude=.svn
+--exclude=[Cc]ache
+--exclude=bower_components
 --exclude=build
 --exclude=bundle
---exclude=cache
+--exclude=composer.*
 --exclude=data
 --exclude=dist
 --exclude=etc
@@ -11,7 +14,11 @@
 --exclude=jquery.*.js
 --exclude=log
 --exclude=logs
+--exclude=node_modules
 --exclude=script
+--exclude=tags
 --exclude=tmp
---exclude=vendor
+--exclude=vendor/*/*/[Tt]ests
+--exclude=vendor/*/*/spec
+--languages=-html,sql
 --tag-relative=yes

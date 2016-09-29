@@ -10,7 +10,7 @@ unset CDPATH
 unset IFS
 
 show_usage() {
-    echo "usage: $(basename "$0") [options]"
+    echo "Usage: $(basename "$0") [OPTIONS]"
     mysqldump --help
 }
 

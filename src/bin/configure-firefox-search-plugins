@@ -54,6 +54,7 @@ for searchplugin_file in /usr/lib/firefox/distribution/searchplugins/locale/*/*.
         s/output=.*&amp;//g
         s/&amp;t=canonical//g
         s/gl=.*&amp;//g
+
     ' "$searchplugin_file"
 
     echo "done."

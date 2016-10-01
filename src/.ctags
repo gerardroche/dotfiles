@@ -9,6 +9,7 @@
 --exclude=composer.*
 --exclude=data
 --exclude=dist
+--exclude=doc*
 --exclude=etc
 --exclude=jquery-*.js
 --exclude=jquery.*.js
@@ -20,5 +21,14 @@
 --exclude=tmp
 --exclude=vendor/*/*/[Tt]ests
 --exclude=vendor/*/*/spec
+--exclude=vendor/autoload.php
+--exclude=vendor/bin
+--exclude=vendor/composer
+--exclude=vendor/phpdocumentor
+--exclude=vendor/phpspec
+--exclude=vendor/phpunit
+--exclude=vendor/sebastian
+--exclude=vendor/squizlabs
+--exclude=vendor/webmozart
 --languages=-html,sql
 --tag-relative=yes

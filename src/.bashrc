@@ -89,10 +89,8 @@ if [ "$color_prompt" = yes ]; then
                 prompt_char="\[\033[41m\]\[\033[30m\]\$\[\033[0m\]"
             fi
 
-            # @todo ideally would use a different respository indicator
-            # icon for github vs bitbucket, etc.
             # void __git_ps1 {pre} {post} {status}
-            __git_ps1 "╭─ \w" "\n╰$prompt_char " "  %s"
+            __git_ps1 "╭─ \w" "\n╰$prompt_char " "  %s"
         }
 
         PROMPT_COMMAND="prompt_command_callback"

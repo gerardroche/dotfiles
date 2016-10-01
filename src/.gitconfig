@@ -35,6 +35,8 @@
 	changelog = "!f() { git log --no-merges $1 --not $2 --format=\"%h %s%+b\"; }; f"
 	contributors = shortlog --summary --numbered # List contributors with number of commits https://github.com/mathiasbynens/dotfiles/blob/e32bc6cc07e1e25ba0821c3c20b488ead2133e0a/.gitconfig
 
+	ctags = "!.git/hooks/ctags"
+
 	doc     = "!f() { git commit -m \"doc: :pencil: $*\"; }; f"
 	fix     = "!f() { git commit -m \":bug: fix $*\" -v; }; f"
 	hi5     = "!f() { git commit -m \"^5 $*\"; }; f"
@@ -86,6 +88,9 @@
 [help]
 
 	autocorrect = 1
+
+[init]
+	templatedir = ~/.git_template
 
 [merge]
 

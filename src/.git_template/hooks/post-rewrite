@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -e
+unset CDPATH
+unset IFS
+
+case "$1" in
+  rebase) exec .git/hooks/post-merge ;;
+esac

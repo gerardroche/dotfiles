@@ -6,6 +6,7 @@ unset IFS
 
 OPEN_BASEDIR="/usr/local/bin/composer.phar"
 OPEN_BASEDIR="$OPEN_BASEDIR:/tmp"
+OPEN_BASEDIR="$OPEN_BASEDIR:/usr/bin/php5"
 OPEN_BASEDIR="$OPEN_BASEDIR:/etc/pki/certs"
 OPEN_BASEDIR="$OPEN_BASEDIR:/etc/ssl/certs"
 OPEN_BASEDIR="$OPEN_BASEDIR:$HOME/.cache"

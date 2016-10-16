@@ -21,9 +21,9 @@ Workspaces:
   3. PROJECTS_PATH/*.sublime-workspace
   4. PROJECTS_PATH/*/*.sublime-workspace
   5. PROJECTS_PATH/*/*/*.sublime-workspace
-  6. PROJECTS_PATH/.sublime/*.sublime-workspace
-  7. PROJECTS_PATH/.sublime-workspaces/*.sublime-workspace
-  8. PROJECTS_PATH/.sublime-projects/*.sublime-workspace
+  6. PROJECTS_PATH/.{sublime,st}/*.sublime-workspace
+  7. PROJECTS_PATH/.{sublime,st}-workspaces/*.sublime-workspace
+  8. PROJECTS_PATH/.{sublime,st}-projects/*.sublime-workspace
 
 Examples:
 
@@ -74,6 +74,7 @@ echo "=> cleaning sublime text 3 installation ..."
 
 # ST3 Linux
 rm -rfv ~/.config/sublime-text-3/Packages/.logs/
+rm -rfv ~/.config/sublime-text-3/Packages/User/SublimeLinter/*.tmTheme
 rm -rfv ~/.config/sublime-text-3/Backup/
 rm -rfv ~/.config/sublime-text-3/Cache/
 rm -rfv ~/.config/sublime-text-3/Index/
@@ -81,6 +82,7 @@ rm -rfv ~/.config/sublime-text-3/Settings/
 
 # ST3 OSX
 rm -rfv ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/.logs/
+rm -rfv ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/SublimeLinter/*.tmTheme
 rm -rfv ~/Library/Application\ Support/Sublime\ Text\ 3/Backup/
 rm -rfv ~/Library/Application\ Support/Sublime\ Text\ 3/Cache/
 rm -rfv ~/Library/Application\ Support/Sublime\ Text\ 3/Index/
@@ -103,5 +105,8 @@ if [ "$SUBLIME_CLEAN_INCLUDE_WORKSPACES" = "y" ]; then
         rm -fv "$PROJECTS_PATH"/.sublime/*.sublime-workspace
         rm -fv "$PROJECTS_PATH"/.sublime-workspaces/*.sublime-workspace
         rm -fv "$PROJECTS_PATH"/.sublime-projects/*.sublime-workspace
+        rm -fv "$PROJECTS_PATH"/.st/*.sublime-workspace
+        rm -fv "$PROJECTS_PATH"/.st-workspaces/*.sublime-workspace
+        rm -fv "$PROJECTS_PATH"/.st-projects/*.sublime-workspace
     fi
 fi

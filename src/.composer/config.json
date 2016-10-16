@@ -7,6 +7,8 @@
     "repositories": [
         { "type": "path", "url": "$PROJECTS_PATH/gofast/pdo" },
         { "type": "path", "url": "$PROJECTS_PATH/gofast/dbtasks" },
+        { "type": "path", "url": "$PROJECTS_PATH/gofast/rack" },
+        { "type": "path", "url": "$PROJECTS_PATH/gofast/application" },
         { "type": "path", "url": "$PROJECTS_PATH/gerardroche/appconsole" },
         { "type": "path", "url": "$PROJECTS_PATH/gerardroche/php-ary" },
         { "type": "path", "url": "$PROJECTS_PATH/gerardroche/php-str" }

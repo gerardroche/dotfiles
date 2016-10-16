@@ -3,8 +3,8 @@
 set -e
 unset CDPATH
 unset IFS
-readonly SOURCE=$(readlink -nf "$0")
-readonly SOURCE_PATH=$(dirname "$SOURCE")
+readonly SOURCE="$(readlink -nf "$0")"
+readonly SOURCE_PATH="$(dirname "$SOURCE")"
 
 create_home_dir_symlink() {
     target="$1"
@@ -36,19 +36,23 @@ create_home_dir_symlink() {
 }
 
 cd "$SOURCE_PATH"
-echo "=> cd $SOURCE_PATH"
+echo "command: cd $SOURCE_PATH"
 
-echo "=> installing dependencies..."
+echo "Installing dependencies..."
+command -v git >/dev/null 2>&1 || sudo apt-get install git
+command -v gitk >/dev/null 2>&1 || sudo apt-get install gitk
+command -v vim.basic >/dev/null 2>&1 || sudo apt-get install vim
+command -v firefox >/dev/null 2>&1 || sudo apt-get install firefox firefox-locale-en
+command -v tmux >/dev/null 2>&1 || sudo apt-get install tmux
+command -v xclip >/dev/null 2>&1 || sudo apt-get install xclip
+command -v ctags >/dev/null 2>&1 || sudo apt-get install ctags
+command -v tree >/dev/null 2>&1 || sudo apt-get install tree
 
-echo "=> installing dependency: xclip for tmux 'copy to system clipboard'..."
-sudo apt-get install xclip
-
-echo "=> installing submodules..."
-
+echo "Updating dependencies..."
 git submodule update --init --recursive
 git submodule foreach 'git fetch && git merge --ff-only origin/master'
 
-echo "=> creating symlinks..."
+echo "Configuring home directory $HOME symbolic links..."
 
 for file in "$SOURCE_PATH/src/".*; do
     create_home_dir_symlink "$file"
@@ -57,8 +61,6 @@ done
 for file in "$SOURCE_PATH"/src/*; do
     create_home_dir_symlink "$file"
 done
-
-echo "=> configuring vendors..."
 
 ln -sfv ~/.dotfiles/vendor/paulirish/git-open/git-open ~/bin/git-open
 ln -sfv ~/.dotfiles/vendor/php-build/php-build/bin/php-build  ~/bin/php-build

@@ -51,7 +51,7 @@ done
 
 # @todo check that an instance of sublime is not currently running, otherwise exit
 
-echo "=> cleaning sublime text 2 installation ..."
+echo "cleaning sublime text 2 installation..."
 
 # ST2 Linux
 rm -rfv ~/.config/sublime-text-2/Installed\ Packages/
@@ -70,7 +70,7 @@ if [ "$SUBLIME_CLEAN_INCLUDE_SESSIONS" = "y" ]; then
     rm -fv ~/Library/Application\ Support/Sublime\ Text\ 2/Settings/*.sublime_session
 fi
 
-echo "=> cleaning sublime text 3 installation ..."
+echo "cleaning sublime text 3 installation..."
 
 # ST3 Linux
 rm -rfv ~/.config/sublime-text-3/Packages/.logs/
@@ -89,6 +89,7 @@ rm -rfv ~/Library/Application\ Support/Sublime\ Text\ 3/Index/
 rm -rfv ~/Library/Application\ Support/Sublime\ Text\ 3/Settings/
 
 if [ "$SUBLIME_CLEAN_INCLUDE_SESSIONS" = "y" ]; then
+    echo "cleaning sublime text sessions..."
     # ST3 Linux sessions
     rm -fv ~/.config/sublime-text-3/Local/*.sublime_session
     # ST3 OSX sessions
@@ -96,6 +97,7 @@ if [ "$SUBLIME_CLEAN_INCLUDE_SESSIONS" = "y" ]; then
 fi
 
 if [ "$SUBLIME_CLEAN_INCLUDE_WORKSPACES" = "y" ]; then
+    echo "cleaning sublime text workspaces..."
     rm -fv ./*.sublime-workspace
     rm -fv ./*/*.sublime-workspace
     if [ -d "$PROJECTS_PATH" ]; then

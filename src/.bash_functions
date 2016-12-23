@@ -74,6 +74,14 @@ pdoc() {
     command "$cmd" "$@"
 }
 
+phpcs() {
+    if test -f ./vendor/bin/php-cs-fixer; then
+        php -d xdebug.scream=0 ./vendor/bin/php-cs-fixer "$@"
+    else
+        php-cs-fixer "$@"
+    fi
+}
+
 title() {
     echo -n -e "\033]0;$*\007"
 }

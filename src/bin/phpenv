@@ -82,7 +82,7 @@ test "$#" = 0 && show_usage && exit 0
 while test "$#" != 0; do
     case "$1" in
         -h|--help) show_usage; exit 0 ;;
-        --version) echo "$(basename "$0"): $VERSION"; exit 0 ;;
+        --version) echo "phpenv version $VERSION"; exit 0 ;;
         -V) echo "$VERSION"; exit 0 ;;
         install)
             if test "$2" = "--complete"; then

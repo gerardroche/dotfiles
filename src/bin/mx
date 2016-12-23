@@ -6,7 +6,7 @@ unset IFS
 
 show_usage() {
     cat <<USAGE
-Usage: $(basename "$0") [<NAME>]
+Usage: $(basename "$0") [<SESSION-NAME>]
        $(basename "$0") [-h|--help]
 USAGE
 }
@@ -15,32 +15,37 @@ case "$1" in
     --help|-h) show_usage; exit 0 ;;
 esac
 
-SESSION_NAME="${1:-mx}"
+readonly CONFIG_FILE=".tmux"
+
+readonly WINDOW_NAME=""
+
+if test -n "$1"; then
+    readonly SESSION_NAME="$1"
+    if test -d "$PROJECTS_PATH" && test -d "$PROJECTS_PATH/$SESSION_NAME"; then
+        cd "$PROJECTS_PATH/$SESSION_NAME"
+    fi
+elif test -f "$CONFIG_FILE"; then
+    readonly SESSION_NAME="$(basename "$(dirname "$PWD")")/$(basename "$PWD")"
+else
+    readonly SESSION_NAME=
+fi
+
+echo "=> PWD:          $PWD"
+echo "=> SESSION NAME: $SESSION_NAME"
+echo "=> CONFIG FILE:  $CONFIG_FILE"
 
 tmux has-session -t "$SESSION_NAME" > /dev/null 2>&1 && HAS_SESSION=y || HAS_SESSION=n
 
 if [ "$HAS_SESSION" = y ]; then
     tmux attach -t "$SESSION_NAME"
 else
-
-    CONFIG_FILE=
-    if test -d "$PROJECTS_PATH"; then
-
-        SESSION_PATH="$PROJECTS_PATH/$SESSION_NAME"
-
-        if test -d "$SESSION_PATH"; then
-            cd "$SESSION_PATH"
-
-            SESSION_CONFIG_FILE="$SESSION_PATH/.mx"
-            if test -f "$SESSION_CONFIG_FILE"; then
-                CONFIG_FILE="$SESSION_CONFIG_FILE"
-            fi
-        fi
-    fi
-
-    if test -n "$CONFIG_FILE" && test -f "$CONFIG_FILE"; then
-        tmux -2 new-session -n "mx" -s "$SESSION_NAME" \; source-file "$CONFIG_FILE"
+    if test -n "$SESSION_NAME" && test -f "$CONFIG_FILE"; then
+        tmux -2 new-session -n "$WINDOW_NAME" -s "$SESSION_NAME" \; source-file "$CONFIG_FILE"
+    elif test -n "$SESSION_NAME" ; then
+        tmux -2 new-session -n "$WINDOW_NAME" -s "$SESSION_NAME"
+    elif test -f "$CONFIG_FILE"; then
+        tmux -2 new-session -n "$WINDOW_NAME" \; source-file "$CONFIG_FILE"
     else
-        tmux -2 new-session -n "mx" -s "$SESSION_NAME"
+        tmux -2 new-session -n "$WINDOW_NAME"
     fi
 fi

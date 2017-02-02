@@ -11,6 +11,8 @@
         { "type": "path", "url": "$PROJECTS_PATH/gofast/application" },
         { "type": "path", "url": "$PROJECTS_PATH/gerardroche/appconsole" },
         { "type": "path", "url": "$PROJECTS_PATH/gerardroche/php-ary" },
-        { "type": "path", "url": "$PROJECTS_PATH/gerardroche/php-str" }
+        { "type": "path", "url": "$PROJECTS_PATH/gerardroche/php-str" },
+        { "type": "path", "url": "$PROJECTS_PATH/gerardroche/php-dom" },
+        { "type": "path", "url": "$PROJECTS_PATH/gerardroche/php-invalid-argument-exception" }
     ]
 }

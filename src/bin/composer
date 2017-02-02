@@ -12,16 +12,17 @@ OPEN_BASEDIR="$OPEN_BASEDIR:/etc/ssl/certs"
 OPEN_BASEDIR="$OPEN_BASEDIR:$HOME/.cache"
 OPEN_BASEDIR="$OPEN_BASEDIR:$HOME/.config"
 
-# Newer versions of composer don't need this one because configurations are
-# stored in .config/composer.
+# Add composer configuration path to open_basedir. Newer versions of composer
+# don't need to add this path because configurations are stored in
+# .config/composer in newer versions of composer.
 OPEN_BASEDIR="$OPEN_BASEDIR:$HOME/.composer"
 
-# Projects
+# Add system projects path to open_basedir
 if test -n "$PROJECTS_PATH" && test -d "$PROJECTS_PATH"; then
     OPEN_BASEDIR="$OPEN_BASEDIR:$PROJECTS_PATH"
 fi
 
-# Vendors
+# Add system vendors path to open_basedir
 if test -n "$VENDOR_PATH" && test -d "$VENDOR_PATH"; then
     OPEN_BASEDIR="$OPEN_BASEDIR:$VENDOR_PATH"
 fi
@@ -41,19 +42,19 @@ DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,shell_exec"
 DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,show_source"
 DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,syslog,system"
 
-# Allow picking php 7.x version via phpenv
-if test -f ./.php-version-7.x; then
+PHP_BIN=php
+
+# Use phpenv version file
+if test -f ./.phpenv-7.x; then
     PHP_BIN="$HOME/.phpenv/versions/7.x/bin/php"
     if test ! -f "$PHP_BIN" || test ! -x "$PHP_BIN"; then
         echo >&2 "$(basename "$0"): phpenv version not found"
         exit 1
     fi
-else
-    PHP_BIN=php
 fi
 
-# Allow picking a php version to use via phpenv
-if test "$1" = "--php-version"; then
+# Use explicit phpenv version
+if test "$1" = "--phpenv"; then
     shift
     PHP_BIN="$HOME/.phpenv/versions/${1:?'version parameter is required'}/bin/php"
     shift

@@ -1,4 +1,6 @@
 #!/bin/sh
+#
+# Usage: composer [--phpenv <semver>] [options] [arguments]
 
 set -e
 unset CDPATH

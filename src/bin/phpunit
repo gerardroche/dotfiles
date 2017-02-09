@@ -1,7 +1,4 @@
 #!/bin/sh
-#
-# .phpenv travis-like emulation. Runs unit tests with all .phpenv versions with
-# trailing literal ".x" e.g. 5.x, 5.5.x, 5.6.x, 7.x, 7.0.x, 7.1.x
 
 set -e
 unset CDPATH
@@ -12,8 +9,8 @@ show_usage() {
     echo ""
     echo "PHP Environment:"
     echo ""
-    echo "  --ci                      .phpenv continuous integration emulation"
-    echo "  --php-version <number>    Use .phpenv php version"
+    echo "  --phpenv-ci               .phpenv continuous integration emulation"
+    echo "  --phpenv <semver>         Use .phpenv php version"
 }
 
 run_phpunit_with_phpenv_version() {
@@ -46,7 +43,7 @@ run_phpunit_with_phpenv_version() {
     fi
 }
 
-if test -f ./.php-version-7.x; then
+if test -f ./.phpenv-7.x; then
     PHP_BIN="$HOME/.phpenv/versions/7.x/bin/php"
     if test ! -f "$PHP_BIN" || test ! -x "$PHP_BIN"; then
         echo >&2 "$(basename "$0"): phpenv version not found"
@@ -66,13 +63,14 @@ else
 fi
 
 CI=
+
 while test "$#" != 0; do
     case "$1" in
         --help|-h) show_usage; exit 0 ;;
-        --ci)
+        --phpenv-ci)
             CI=true
             ;;
-        --php-version)
+        --phpenv)
             PHP_BIN="$HOME/.phpenv/versions/${2:?'version parameter is required'}/bin/php"
             shift
             if test ! -f "$PHP_BIN" || test ! -x "$PHP_BIN"; then

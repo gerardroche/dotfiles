@@ -107,7 +107,7 @@ versioninfo() {
 }
 
 watch_app_logs() {
-    tail -v -f /var/log/{apache2,mysql}/{,*_}{access,error,mysql}.log ./data/logs/*.log
+    tail -v -f /var/log/{apache2,mysql}/{,*}{access,error,mysql}.log ./data/logs/*.log
 }
 
 projects() {

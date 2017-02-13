@@ -75,6 +75,9 @@ fi
 # https://getcomposer.org/doc/03-cli.md#composer-disable-xdebug-warn
 # https://getcomposer.org/doc/articles/troubleshooting.md#xdebug-impact-on-composer
 export COMPOSER_DISABLE_XDEBUG_WARN=1
+# COMPOSER_ALLOW_XDEBUG=1 is required after 3.0.0 update
+# https://github.com/composer/composer/pull/5580
+export COMPOSER_ALLOW_XDEBUG=1
 
 exec "$PHP_BIN"\
     -d detect_unicode=0\

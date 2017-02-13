@@ -78,7 +78,15 @@ phpcs() {
     if test -f ./vendor/bin/php-cs-fixer; then
         php -d xdebug.scream=0 ./vendor/bin/php-cs-fixer "$@"
     else
-        php-cs-fixer "$@"
+        if test ! -f ./.php_cs.dist && test ! -f ./.php_cs && test -f ~/.php_cs; then
+            if test "x$1" = "xfix"; then
+                php-cs-fixer "$@" --config ~/.php_cs
+            else
+                php-cs-fixer "$@"
+            fi
+        else
+            php-cs-fixer "$@"
+        fi
     fi
 }
 

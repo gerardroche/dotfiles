@@ -113,6 +113,11 @@ let g:syntastic_auto_jump = 0
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
+if exists('$TMUX')
+    let g:test#strategy = 'vimux'
+endif
+let g:test#php#phpunit#options = '--no-coverage'
+let g:test#preserve_screen = 0
 let g:vim_markdown_folding_disabled = 1
 " }}}
 " Visual {{{
@@ -261,8 +266,15 @@ map <leader>jF :CtrlP factories<CR>
 map <leader>jT :CtrlP test<CR>
 
 " PHPUnit
-nnoremap <leader>t :call PHPUnitRunTests()<CR>
-nnoremap <leader>r :call PHPUnitRunSingleTest()<CR>
+nnoremap <leader>va :call PHPUnitRunTests()<CR>
+nnoremap <leader>vt :call PHPUnitRunSingleTest()<CR>
+
+" vim-test
+nnoremap <leader>t :silent :TestNearest<CR>
+nnoremap <leader>T :silent :TestFile<CR>
+nnoremap <leader>a :silent :TestSuite<CR>
+nnoremap <leader>l :silent :TestLast<CR>
+nnoremap <leader>g :silent :TestVisit<CR>
 
 " Misc.
 nnoremap <leader>? :call pathogen#helptags()

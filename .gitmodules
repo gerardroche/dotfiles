@@ -97,3 +97,6 @@
 [submodule "src/.vim/bundle/vim-git"]
 	path = src/.vim/bundle/vim-git
 	url = https://github.com/tpope/vim-git.git
+[submodule "src/.vim/bundle/vim-test"]
+	path = src/.vim/bundle/vim-test
+	url = https://github.com/janko-m/vim-test.git

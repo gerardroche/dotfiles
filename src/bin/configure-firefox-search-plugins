@@ -55,6 +55,8 @@ for searchplugin_file in /usr/lib/firefox/distribution/searchplugins/locale/*/*.
         s/&amp;t=canonical//g
         s/gl=.*&amp;//g
 
+        s/duckduckgo\.com\/?q=/duckduckgo\.com\/html?q=/g
+
     ' "$searchplugin_file"
 
     echo "done."

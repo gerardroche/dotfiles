@@ -137,7 +137,6 @@ vendors() {
 }
 
 c() {
-
     if test -z "$PROJECTS_PATH"; then
         return
     fi

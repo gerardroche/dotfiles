@@ -70,6 +70,7 @@ alias reloadcompletions="source ~/.bash_completions"
 alias reloadfunctions="source ~/.bash_functions"
 alias reloadrc='source ~/.bashrc'
 alias s='git status'
+alias sports='sudo netstat -lntpau'
 alias svi='sudo vi'
 alias tmux='tmux -2'
 alias top='top -o %CPU'

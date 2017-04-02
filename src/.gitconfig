@@ -8,7 +8,7 @@
 	al = add .
 	aliases = config --get-regexp alias
 	ap = add --patch
-	b = branch -v -a
+	b = branch -av
 	c = commit
 	ca = commit -a
 	cam = "!f() { git commit -a -m \"$*\"; }; f"
@@ -26,7 +26,10 @@
 	ll = "!f() { git log --pretty=format:\"%C(auto)%h %ad %C(green)%cn%C(reset)%C(auto)%d %s%C(reset)\" --decorate --date=relative -n "${1:-10}"; }; f"
 	ls = "!f() { git log --oneline --decorate; }; f"
 	m = merge
+	mff = merge --ff-only
+	mt = mergetool
 	p = push
+	pff = pull --ff-only
 	pt = push --tags
 	r = remote -v
 	s = status
@@ -97,6 +100,7 @@
 	branchdesc = true
 	log = 65
 	stat = true
+	tool = fugitive
 
 [mergetool]
 
@@ -115,3 +119,5 @@
 
 	name = Gerard Roche
 	email = gerardroche@users.noreply.github.com
+[mergetool "fugitive"]
+	cmd = vim -f -c \"Gvdiff\" \"$MERGED\"

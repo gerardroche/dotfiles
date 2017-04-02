@@ -90,6 +90,7 @@ while test "$#" != 0; do
             fi
             shift
             install_version "$@"
+            phpenv-config
             exit 0
             ;;
         versions)

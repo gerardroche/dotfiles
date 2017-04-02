@@ -90,7 +90,7 @@ if [ "$color_prompt" = yes ]; then
             fi
 
             # void __git_ps1 {pre} {post} {status}
-            __git_ps1 "╭─ \w" "\n╰$prompt_char " "  %s"
+            __git_ps1 "╭─ \w" "\n╰$prompt_char " " %s"
         }
 
         PROMPT_COMMAND="prompt_command_callback"

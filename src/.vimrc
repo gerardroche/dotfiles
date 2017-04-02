@@ -108,11 +108,12 @@ let g:multi_cursor_use_default_mapping=0
 let g:php_baselib = 1
 let g:php_folding = 1
 let g:php_sql_query = 1
-let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_jump = 0
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 0
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+let g:syntastic_php_checkers = ['php']
 if exists('$TMUX')
     let g:test#strategy = 'vimux'
 endif
@@ -137,7 +138,7 @@ let g:rehash256=1
 let g:solarized_termcolors=16
 let g:solarized_termtrans=1 " Fix some tmux colour issues.
 
-silent! colorscheme molokai
+silent! colorscheme solarized
 
 " Make the sign column background the same
 " colour as the colorscheme background.

@@ -16,7 +16,6 @@ case "$1" in
 esac
 
 readonly CONFIG_FILE=".tmux"
-
 readonly WINDOW_NAME=""
 
 if test -n "$1"; then
@@ -29,10 +28,6 @@ elif test -f "$CONFIG_FILE"; then
 else
     readonly SESSION_NAME=
 fi
-
-echo "=> PWD:          $PWD"
-echo "=> SESSION NAME: $SESSION_NAME"
-echo "=> CONFIG FILE:  $CONFIG_FILE"
 
 tmux has-session -t "$SESSION_NAME" > /dev/null 2>&1 && HAS_SESSION=y || HAS_SESSION=n
 

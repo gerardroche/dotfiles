@@ -5,7 +5,7 @@
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
-      *) return;;
+      *) return ;;
 esac
 
 # Don't put duplicate lines or lines starting with space in the history.
@@ -144,17 +144,17 @@ fi
 # sources /etc/bash.bashrc).
 if ! shopt -oq posix; then
 
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-  fi
+    if [ -f /usr/share/bash-completion/bash_completion ]; then
+        . /usr/share/bash-completion/bash_completion
+    elif [ -f /etc/bash_completion ]; then
+        . /etc/bash_completion
+    fi
 
-  # Enable custom programmable completion features.
-  # You may want to put all your additions into a separate file like
-  # ~/.bash_completions, i
-  if [ -f ~/.bash_completions ]; then
-    . ~/.bash_completions
-  fi
+    # Enable custom programmable completion features.
+    # You may want to put all your additions into a separate file like
+    # ~/.bash_completions, i
+    if [ -f ~/.bash_completions ]; then
+        . ~/.bash_completions
+    fi
 
 fi

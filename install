@@ -47,6 +47,7 @@ command -v tmux >/dev/null 2>&1 || sudo apt-get install tmux
 command -v xclip >/dev/null 2>&1 || sudo apt-get install xclip
 command -v ctags >/dev/null 2>&1 || sudo apt-get install ctags
 command -v tree >/dev/null 2>&1 || sudo apt-get install tree
+command -v flake8 >/dev/null 2>&1 || sudo apt-get install python-flake8
 
 echo "Updating dependencies..."
 git submodule update --init --recursive

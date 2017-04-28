@@ -14,11 +14,11 @@
 	cam = "!f() { git commit -a -m \"$*\"; }; f"
 	cm = "!f() { git commit -m \"$*\"; }; f"
 	co = checkout
+	cod = checkout develop
+	com = checkout master
 	d = diff
 	f = fetch -v
 	fa = fetch --all
-	cod = checkout develop
-	com = checkout master
 	ff = merge --ff-only
 	ffom = merge --ff-only origin/master
 	l = "!f() { git log --pretty=format:\"%C(auto)%h %ad%d %s%C(reset)\" --decorate --date=relative -n "${1:-10}"; }; f"
@@ -30,10 +30,13 @@
 	mt = mergetool
 	p = push
 	pff = pull --ff-only
+	prune = fetch --prune
 	pt = push --tags
 	r = remote -v
 	s = status
+	stash-all = stash save --include-untracked
 	t = "!f() { git tag -l | sort -V | tail; }; f"
+	undo = reset --soft HEAD^
 
 	changelog = "!f() { git log --no-merges $1 --not $2 --format=\"%h %s%+b\"; }; f"
 	contributors = shortlog --summary --numbered # List contributors with number of commits https://github.com/mathiasbynens/dotfiles/blob/e32bc6cc07e1e25ba0821c3c20b488ead2133e0a/.gitconfig
@@ -93,6 +96,7 @@
 	autocorrect = 1
 
 [init]
+
 	templatedir = ~/.gittemplates
 
 [merge]
@@ -106,9 +110,18 @@
 
 	keepBackup = false
 
+[mergetool "fugitive"]
+
+	cmd = vim -f -c \"Gvdiff\" \"$MERGED\"
+
 [push]
 
 	default = simple
+    followTags = true
+
+[status]
+
+	showUntrackedFiles = all
 
 [url "https://github"]
 
@@ -118,6 +131,4 @@
 [user]
 
 	name = Gerard Roche
-	email = gerardroche@users.noreply.github.com
-[mergetool "fugitive"]
-	cmd = vim -f -c \"Gvdiff\" \"$MERGED\"
+    email = gerardroche@users.noreply.github.com

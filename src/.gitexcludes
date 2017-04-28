@@ -7,7 +7,7 @@
 *.bak
 *.cache
 *.log
-*.php-version-*
+*.php-version*
 *.sqlite3
 /bower_components/
 /cache/

@@ -44,6 +44,7 @@ command -v gitk >/dev/null 2>&1 || sudo apt-get install gitk
 command -v vim.basic >/dev/null 2>&1 || sudo apt-get install vim
 command -v firefox >/dev/null 2>&1 || sudo apt-get install firefox firefox-locale-en
 command -v tmux >/dev/null 2>&1 || sudo apt-get install tmux
+command -v netstat >/dev/null 2>&1 || sudo apt-get install net-tools
 command -v xclip >/dev/null 2>&1 || sudo apt-get install xclip
 command -v ctags >/dev/null 2>&1 || sudo apt-get install ctags
 command -v tree >/dev/null 2>&1 || sudo apt-get install tree
@@ -65,6 +66,8 @@ done
 
 ln -sfv ~/.dotfiles/vendor/paulirish/git-open/git-open ~/bin/git-open
 ln -sfv ~/.dotfiles/vendor/php-build/php-build/bin/php-build  ~/bin/php-build
+
+# TODO esnure symlink for ~/.config/nvim -> ../.vim
 
 mkdir -p ~/.rbenv/plugins
 touch ~/.rbenv/plugins/ruby-build

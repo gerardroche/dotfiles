@@ -221,8 +221,8 @@ let mapleader=","
 
 " Fix delay in airline redraw.
 " http://superuser.com/a/252717
-inoremap <Esc> <Esc>
-vnoremap <Esc> <Esc>
+"inoremap <Esc> <Esc>
+"vnoremap <Esc> <Esc>
 
 nnoremap <Space> :
 

@@ -1,8 +1,0 @@
-
-# http://superuser.com/questions/415553/setting-dead-area-background-colour-in-gvim
-# http://www.sohua.xyz/questions-full/151956/strange-gvim-inner-borders
-style "vimfix" {
-  # this matches my gvim theme 'Normal' bg color.
-  bg[NORMAL] = "#1B1D1E"
-}
-widget "vim-main-window.*GtkForm" style "vimfix"

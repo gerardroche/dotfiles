@@ -5,5 +5,9 @@ unset CDPATH
 unset IFS
 
 case "$1" in
-  rebase) exec .git/hooks/post-merge ;;
+  rebase)
+    if test -d .git; then
+        exec .git/hooks/post-merge
+    fi
+    ;;
 esac

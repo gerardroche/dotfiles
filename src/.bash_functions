@@ -188,20 +188,3 @@ c() {
 v() {
     cd "$VENDOR_PATH/$1"
 }
-
-todo() {
-    if test -n "$1"; then
-        if test -n "$PROJECTS_PATH" && test -d "$PROJECTS_PATH"; then
-            if test -d "$PROJECTS_PATH/.todo"; then
-                if test "$1" = "--complete"; then
-                    for todo in "$PROJECTS_PATH"/.todo/*.md; do
-                        test -f "$todo" || continue
-                        echo "$(basename -s .md "$todo")"
-                    done
-                else
-                    "$EDITOR" "$PROJECTS_PATH/.todo/$1.md"
-                fi
-            fi
-        fi
-    fi
-}

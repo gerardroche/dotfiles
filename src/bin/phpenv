@@ -61,14 +61,10 @@ install_version() {
     # points to 7.0.5 and installing 7.0.6 and it is latest 7.x version then
     # point 7.x at 7.0.6.
 
-    echo "=> bin: $BUILD_BIN"
-    echo "=> prefix: $prefix"
-    echo "=> version: $version"
-
-    exec "$BUILD_BIN" "$version" "$prefix"
+    exec "$BUILD_BIN" --ini development "$version" "$prefix"
 }
 
-readonly VERSION="0.4.0"
+readonly VERSION="0.4.1"
 readonly PREFIX="$HOME/.phpenv"
 readonly BUILD_BIN="$HOME/bin/php-build"
 
@@ -90,7 +86,14 @@ while test "$#" != 0; do
             fi
             shift
             install_version "$@"
-            phpenv-config
+
+            # TODO move into a local hook i.e. so that it's not a dependency to run phpenv
+            for phpenv_version_etc_conf_d in ~/.phpenv/versions/*/etc/conf.d; do
+                test -d "$phpenv_version_etc_conf_d" || continue
+                echo "$(cat "$PROJECTS_PATH/lde/lde/etc/php/conf.d/90-lde.ini")" > "$phpenv_version_etc_conf_d/80-phpenv.ini"
+                # TODO also create symlink for lde overrides
+            done
+
             exit 0
             ;;
         versions)

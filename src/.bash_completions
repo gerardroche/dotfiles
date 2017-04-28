@@ -4,12 +4,20 @@ __dotfiles_completion_reply_with() {
     COMPREPLY=( $( compgen -W "$1" -- "${COMP_WORDS[COMP_CWORD]}"  ) )
 }
 
+# Filters non alnum characters; replaces them with underscores
+__filter_completions() {
+    for completion in "$1"; do
+        completion="$(echo "$completion" | sed "s/[^a-zA-Z0-9_-\\.\\/]/_/g")"
+        echo "$completion"
+    done
+}
+
 __dotfiles_completion_projects() {
-    __dotfiles_completion_reply_with "$(projects)" 2>/dev/null
+    COMPREPLY=( $( compgen -W "$(__filter_completions "$(projects)")" -- "${COMP_WORDS[COMP_CWORD]}"  ) )
 }
 
 __dotfiles_completion_vendors() {
-    __dotfiles_completion_reply_with "$(vendors)" 2>/dev/null
+    COMPREPLY=( $( compgen -W "$(__filter_completions "$(vendors)")" -- "${COMP_WORDS[COMP_CWORD]}"  ) )
 }
 
 __dotfiles_completion_phpenv() {

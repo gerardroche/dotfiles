@@ -4,17 +4,6 @@
 # operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile ~/.gitignore_global
 
-*.bak
-*.cache
-*.log
-*.php-version*
-*.sqlite3
-/bower_components/
-/cache/
-/node_modules/
-/tmp/
-/vendor/
-
 ################################################################################
 # https://github.com/github/gitignore/blob/master/Global/Vim.gitignore
 ################################################################################
@@ -317,3 +306,21 @@ composer.phar
 # Commit your application's lock file http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file
 # You may choose to ignore a library lock file http://getcomposer.org/doc/02-libraries.md#lock-file
 composer.lock
+
+################################################################################
+# User
+################################################################################
+
+*.bak
+*.cache
+*.log
+*.php-version*
+*.sqlite3
+.tmux
+.todo
+/bower_components/
+/cache/
+/node_modules/
+/tmp/
+/vendor/
+/covhtml

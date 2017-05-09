@@ -138,7 +138,7 @@ let g:rehash256=1
 let g:solarized_termcolors=16
 let g:solarized_termtrans=1 " Fix some tmux colour issues.
 
-silent! colorscheme solarized
+silent! colorscheme molokai
 
 " Make the sign column background the same
 " colour as the colorscheme background.
@@ -290,6 +290,8 @@ noremap <leader>s :set nolist!<CR>
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+
+" :inoremap <c-s> <Esc>:w<CR>
 
 " Mappings: Typos {{{
 " Don't care if I typo when saving or quitting!

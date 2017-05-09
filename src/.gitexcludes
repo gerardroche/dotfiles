@@ -314,6 +314,7 @@ composer.lock
 *.bak
 *.cache
 *.log
+*.log.*
 *.php-version*
 *.sqlite3
 .tmux
@@ -324,3 +325,5 @@ composer.lock
 /tmp/
 /vendor/
 /covhtml
+/sandbox.py
+/.todo*

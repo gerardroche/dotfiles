@@ -33,13 +33,20 @@ if test -z "$TMUX"; then
     # /bin
     # /usr/games
     # /usr/local/games
+    # /snap/bin
     TMP_PATH="$PATH"
 
-    PATH="$HOME/bin"
-    PATH="$PATH:$HOME/npm/bin"
-    PATH="$PATH:$HOME/.rbenv/shims"
-    PATH="$PATH:$HOME/.rbenv/bin"
-    PATH="$PATH:$TMP_PATH"
+    case "$PATH" in
+        "$HOME/bin:"*)
+            ;;
+        *)
+            PATH="$HOME/bin"
+            PATH="$PATH:$HOME/npm/bin"
+            PATH="$PATH:$HOME/.rbenv/shims"
+            PATH="$PATH:$HOME/.rbenv/bin"
+            PATH="$PATH:$TMP_PATH"
+            ;;
+    esac
 
     export PATH
 

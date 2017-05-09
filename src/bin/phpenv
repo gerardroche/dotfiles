@@ -90,8 +90,10 @@ while test "$#" != 0; do
             # TODO move into a local hook i.e. so that it's not a dependency to run phpenv
             for phpenv_version_etc_conf_d in ~/.phpenv/versions/*/etc/conf.d; do
                 test -d "$phpenv_version_etc_conf_d" || continue
-                echo "$(cat "$PROJECTS_PATH/lde/lde/etc/php/conf.d/90-lde.ini")" > "$phpenv_version_etc_conf_d/80-phpenv.ini"
-                # TODO also create symlink for lde overrides
+                # Default local development overrides
+                ln -vfs "$PROJECTS_PATH/lde/lde/etc/php/conf.d/90-lde.ini" "$phpenv_version_etc_conf_d/90-lde.ini"
+                # Local development overrides
+                touch "$phpenv_version_etc_conf_d/95-development.ini"
             done
 
             exit 0

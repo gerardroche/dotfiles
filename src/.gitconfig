@@ -7,6 +7,7 @@
 	a = add
 	al = add .
 	aliases = config --get-regexp alias
+	amend = commit --amend
 	ap = add --patch
 	b = branch -av
 	c = commit
@@ -21,6 +22,8 @@
 	fa = fetch --all
 	ff = merge --ff-only
 	ffom = merge --ff-only origin/master
+	hreset = reset --hard
+	rcontinue = rebase --continue
 	l = "!f() { git log --pretty=format:\"%C(auto)%h %ad%d %s%C(reset)\" --decorate --date=relative -n "${1:-10}"; }; f"
 	lg = "!f() { git log --pretty=format:\"%C(auto)%h %ad %C(green)%cn%C(reset)%C(auto)%d %s%C(reset)\" --decorate --date=relative --graph -n "${1:-10}"; }; f"
 	ll = "!f() { git log --pretty=format:\"%C(auto)%h %ad %C(green)%cn%C(reset)%C(auto)%d %s%C(reset)\" --decorate --date=relative -n "${1:-10}"; }; f"
@@ -34,6 +37,7 @@
 	pt = push --tags
 	r = remote -v
 	s = status
+	st = stash
 	stash-all = stash save --include-untracked
 	t = "!f() { git tag -l | sort -V | tail; }; f"
 	undo = reset --soft HEAD^

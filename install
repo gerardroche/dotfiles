@@ -38,21 +38,29 @@ create_home_dir_symlink() {
 cd "$SOURCE_PATH"
 echo "command: cd $SOURCE_PATH"
 
-echo "Installing dependencies..."
-command -v git >/dev/null 2>&1 || sudo apt-get install git
-command -v gitk >/dev/null 2>&1 || sudo apt-get install gitk
-command -v vim.basic >/dev/null 2>&1 || sudo apt-get install vim
-command -v firefox >/dev/null 2>&1 || sudo apt-get install firefox firefox-locale-en
-command -v tmux >/dev/null 2>&1 || sudo apt-get install tmux
-command -v netstat >/dev/null 2>&1 || sudo apt-get install net-tools
-command -v xclip >/dev/null 2>&1 || sudo apt-get install xclip
-command -v ctags >/dev/null 2>&1 || sudo apt-get install ctags
-command -v tree >/dev/null 2>&1 || sudo apt-get install tree
-command -v flake8 >/dev/null 2>&1 || sudo apt-get install python-flake8
+if test "$1" != "--skip-dependencies"; then
+    echo "Installing dependencies..."
+    command -v git >/dev/null 2>&1 || sudo apt-get install git
+    command -v gitk >/dev/null 2>&1 || sudo apt-get install gitk
+    command -v vim.basic >/dev/null 2>&1 || sudo apt-get install vim
+    command -v firefox >/dev/null 2>&1 || sudo apt-get install firefox firefox-locale-en
+    command -v tmux >/dev/null 2>&1 || sudo apt-get install tmux
+    command -v netstat >/dev/null 2>&1 || sudo apt-get install net-tools
+    command -v xclip >/dev/null 2>&1 || sudo apt-get install xclip
+    command -v ctags >/dev/null 2>&1 || sudo apt-get install ctags
+    command -v tree >/dev/null 2>&1 || sudo apt-get install tree
+    command -v flake8 >/dev/null 2>&1 || sudo apt-get install python-flake8
+else
+    shift
+fi
 
-echo "Updating dependencies..."
-git submodule update --init --recursive
-git submodule foreach 'git fetch && git merge --ff-only origin/master'
+if test "$1" != "--skip-submodules"; then
+    echo "Updating dependencies..."
+    git submodule update --init --recursive
+    git submodule foreach 'git fetch && git merge --ff-only origin/master'
+else
+    shift
+fi
 
 echo "Configuring home directory $HOME symbolic links..."
 

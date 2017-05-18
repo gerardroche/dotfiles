@@ -2,6 +2,7 @@
 silent! execute pathogen#infect()
 
 " Options {{{
+set mouse=a
 set autoindent
 set autoread
 set autowrite
@@ -37,6 +38,7 @@ set nobackup
 set nocompatible
 set noswapfile
 set nowrap
+set number
 set relativenumber
 set scrolloff=8
 set shiftround
@@ -218,6 +220,7 @@ autocmd Filetype gitcommit setlocal spell textwidth=72
 "}}}
 " Mappings {{{
 let mapleader=","
+" let maplocalleader="."
 
 " Fix delay in airline redraw.
 " http://superuser.com/a/252717
@@ -290,8 +293,13 @@ noremap <leader>s :set nolist!<CR>
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
-
-" :inoremap <c-s> <Esc>:w<CR>
+nmap <leader>sp :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
 
 " Mappings: Typos {{{
 " Don't care if I typo when saving or quitting!
@@ -319,5 +327,9 @@ inoremap <up> <nop>
 inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
+" noremap h <NOP>
+" noremap j <NOP>
+" noremap k <NOP>
+" noremap l <NOP>
 " }}}
 " }}}

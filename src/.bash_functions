@@ -188,3 +188,15 @@ c() {
 v() {
     cd "$VENDOR_PATH/$1"
 }
+
+snodebug() {
+    if test -f ./.debug; then
+        rm ./.debug
+    fi
+}
+
+sdebug() {
+    if test ! -f ./.debug; then
+        touch ./.debug
+    fi
+}

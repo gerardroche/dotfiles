@@ -331,3 +331,5 @@ composer.lock
 /lib/libsublime
 /libsublime
 .reload-package*
+.debug*
+/VimL/

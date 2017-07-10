@@ -22,10 +22,10 @@ set formatoptions+=r
 set formatoptions+=q
 set formatoptions-=t
 set guioptions-=e
+set termguicolors
 set hidden
 set hlsearch
 set incsearch
-set laststatus=2
 set lazyredraw
 set linebreak
 set list
@@ -51,7 +51,7 @@ endif
 set showcmd
 set showmatch
 set showmode
-set showtabline=2
+set showtabline=1
 set sidescroll=1
 set sidescrolloff=12
 set smarttab
@@ -62,6 +62,7 @@ set splitright
 set tabstop=4
 set textwidth=80
 set ttyfast
+set laststatus=1
 set visualbell
 set wildignore+=*.bak,*~,*.o,*.h,*.info,*.swp,*.obj
 set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
@@ -224,8 +225,8 @@ let mapleader=","
 
 " Fix delay in airline redraw.
 " http://superuser.com/a/252717
-"inoremap <Esc> <Esc>
-"vnoremap <Esc> <Esc>
+" inoremap <Esc> <Esc>
+" vnoremap <Esc> <Esc>
 
 nnoremap <Space> :
 

@@ -14,6 +14,7 @@ git clone https://github.com/gerardroche/dotfiles.git ~/.dotfiles && ~/.dotfiles
 
 ## Thanks
 
+* https://gist.github.com/XVilka/8346728
 * https://github.com/AntJanus/dotfiles
 * https://github.com/garybernhardt/dotfiles
 * https://github.com/holman/dotfiles

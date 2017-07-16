@@ -192,11 +192,17 @@ v() {
 snodebug() {
     if test -f ./.debug; then
         rm ./.debug
+        echo 'Debug disabled'
+    else
+        echo 'Debug already disabled'
     fi
 }
 
 sdebug() {
     if test ! -f ./.debug; then
-        touch ./.debug
+        touch  ./.debug
+        echo 'Debug enabled'
+    else
+        echo 'Debug already enabled'
     fi
 }

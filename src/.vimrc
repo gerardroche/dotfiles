@@ -1,7 +1,53 @@
 
-silent! execute pathogen#infect()
+" Plugins {{{
 
+call plug#begin('~/.vim/plugged')
+
+" Load vim-sensible now so settings can be overridden
+" https://github.com/junegunn/vim-plug/issues/68
+Plug 'tpope/vim-sensible'
+call plug#load('vim-sensible')
+
+Plug 'airblade/vim-gitgutter'
+Plug 'benmills/vimux'
+Plug 'bling/vim-airline'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'easymotion/vim-easymotion'
+" Plug 'ervandew/supertab'
+" Plug 'honza/vim-snippets'
+Plug 'janko-m/vim-test'
+" Plug 'othree/html5.vim', { 'for': 'html' }
+" Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'scrooloose/syntastic'
+" Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
+" Plug 'StanAngeloff/php.vim', { 'for': 'php' }
+Plug 'terryma/vim-multiple-cursors'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-characterize'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-endwise'
+" Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-git'
+Plug 'tpope/vim-ragtag'
+" Plug 'tpope/vim-rails'
+Plug 'tpope/vim-repeat'
+" Plug 'tpope/vim-scriptease'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+
+" Colour schemes
+Plug 'lifepillar/vim-solarized8'
+Plug 'morhetz/gruvbox'
+Plug 'tomasr/molokai'
+
+call plug#end()
+
+" }}}
 " Options {{{
+
 set mouse=a
 set autoindent
 set autoread
@@ -21,12 +67,9 @@ set formatoptions+=j
 set formatoptions+=r
 set formatoptions+=q
 set formatoptions-=t
-set guioptions-=e
-set termguicolors
 set hidden
 set hlsearch
 set incsearch
-set lazyredraw
 set linebreak
 set list
 if (&termencoding ==# 'utf-8' || &encoding ==# 'utf-8') && version >= 700
@@ -49,8 +92,7 @@ else
     set showbreak=\ +
 endif
 set showcmd
-set showmatch
-set showmode
+set noshowmode
 set showtabline=1
 set sidescroll=1
 set sidescrolloff=12
@@ -61,9 +103,11 @@ set splitbelow
 set splitright
 set tabstop=4
 set textwidth=80
+" Fixes escape key delays
+" https://www.johnhawthorn.com/2012/09/vi-escape-delays
+" set timeoutlen=1000 ttimeoutlen=0
 set ttyfast
 set laststatus=1
-set visualbell
 set wildignore+=*.bak,*~,*.o,*.h,*.info,*.swp,*.obj
 set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
 set wildignore+=*.log
@@ -85,29 +129,25 @@ set wildignore+=.git,.hg,.svn
 set wildignore+=composer.lock,bower_components,node_modules
 set wildmenu
 set wildmode=longest:full
+
 " }}}
-" Options: Plugins {{{
+" Options (Plugins) {{{
+
 let NERDTreeMinimalUI = 1
-let g:SuperTabDefaultCompletionType = "<c-p>"
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_left_sep = ''
-let g:airline_powerline_fonts=0
-let g:airline_right_sep = ''
-let g:airline_symbols = {}
-let g:airline_symbols.branch = ''
-let g:airline_symbols.linenr = ''
-let g:airline_symbols.readonly = ''
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+let g:airline_symbols.crypt = '🔒'
+let g:airline_symbols.linenr = ''
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.branch = '⎇ '
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.whitespace = ''
 let g:ctrlp_follow_symlinks = 1
 let g:ctrlp_show_hidden = 1
 let g:gitgutter_highlight_lines = 0
 let g:gitgutter_map_keys = 1
-let g:gitgutter_sign_column_always = 1
-let g:multi_cursor_next_key='j'
-let g:multi_cursor_prev_key='k'
-let g:multi_cursor_quit_key='J'
-let g:multi_cursor_skip_key='l'
-let g:multi_cursor_start_key='gh'
-let g:multi_cursor_use_default_mapping=0
+let g:gitgutter_sign_column_always = 0
 let g:php_baselib = 1
 let g:php_folding = 1
 let g:php_sql_query = 1
@@ -122,30 +162,53 @@ if exists('$TMUX')
 endif
 let g:test#php#phpunit#options = '--no-coverage'
 let g:test#preserve_screen = 0
+let g:vim_markdown_conceal = 0
 let g:vim_markdown_folding_disabled = 1
+
 " }}}
 " Visual {{{
+
 syntax enable
-set background=dark
+
+" Fixes insert and replace mode cursor shape in terminal
+" https://github.com/neovim/neovim/issues/2475
+let &t_SI = "\<Esc>[5 q"
+let &t_SR = "\<Esc>[5 q"
+let &t_EI = "\<Esc>[2 q"
+
 set t_Co=256
 
-if (has("gui_running"))
-    set guifont=Monospace\ Medium\ 12
+" Fixes issues with bg colour when scrolling
+" https://superuser.com/a/588243
+if &term =~ '256color'
+    " Disable Background Color Erase (BCE) so that color schemes
+    " render properly when inside 256-color tmux and GNU screen.
+    set t_ut=
 endif
 
-" Molokai colorscheme.
-let g:molokai_original=0
+set termguicolors
+
+set background=dark
+
+" Gruvbox colorscheme
+let g:gruvbox_italic=1
+
+" Molokai colorscheme
+let g:molokai_original=1
 let g:rehash256=1
 
-" Solarized colorscheme.
+" Solarized colorscheme
 let g:solarized_termcolors=16
-let g:solarized_termtrans=1 " Fix some tmux colour issues.
+let g:solarized_termtrans=1 " Fix some tmux colour issues
 
-silent! colorscheme molokai
+colorscheme gruvbox
 
 " Make the sign column background the same
 " colour as the colorscheme background.
 silent! highlight SignColumn ctermbg=bg guibg=bg
+silent! highlight GruvboxGreenSign ctermbg=bg guibg=bg
+silent! highlight GruvboxAquaSign ctermbg=bg guibg=bg
+silent! highlight GruvboxRedSign ctermbg=bg guibg=bg
 
 " Make the number column background the
 " same as the colorscheme background.
@@ -157,6 +220,7 @@ silent! highlight RulerColumn ctermfg=bg ctermbg=fg guifg=bg guibg=fg
 call matchadd("RulerColumn", '\%81v', 100)
 silent! highlight RulerColumn2 ctermfg=white ctermbg=red guifg=white guibg=red
 call matchadd("RulerColumn2", '\%121v', 200)
+
 " }}}
 " Commands {{{
 
@@ -199,6 +263,13 @@ function! PHPUnitRunTests()
     endif
 endfunction
 
+function! <SID>SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
+
 " }}}
 " Autocommands {{{
 filetype plugin indent on
@@ -220,8 +291,8 @@ autocmd Filetype gitcommit setlocal spell textwidth=72
 "autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
 "}}}
 " Mappings {{{
+
 let mapleader=","
-" let maplocalleader="."
 
 " Fix delay in airline redraw.
 " http://superuser.com/a/252717
@@ -231,9 +302,9 @@ let mapleader=","
 nnoremap <Space> :
 
 " Make j and k work file linewise instead of screen linewise.
-" http://stevelosh.com/blog/2010/09/coming-home-to-vim/nnoremap <up> <nop>
-nnoremap j gj
-nnoremap k gk
+" http://stevelosh.com/blog/2010/09/coming-home-to-vim/
+" nnoremap j gj
+" nnoremap k gk
 
 " Scroll viewport faster.
 " http://items.sjbach.com/319/configuring-vim-right
@@ -285,8 +356,8 @@ nnoremap <leader>g :silent :TestVisit<CR>
 nnoremap <leader>? :call pathogen#helptags()
 nnoremap <leader>ov :split $MYVIMRC<CR>
 nnoremap <leader>sa ggVG:sort<CR>:w<CR>
-nnoremap <leader>sv :source $MYVIMRC<CR>
-nnoremap <leader>va ggVG<CR>
+nnoremap <leader>rv :source $MYVIMRC<CR>
+nnoremap <leader>va ggvG<CR>
 noremap <leader>d :NERDTreeToggle<CR>
 noremap <leader>s :set nolist!<CR>
 
@@ -295,12 +366,6 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 nmap <leader>sp :call <SID>SynStack()<CR>
-function! <SID>SynStack()
-  if !exists("*synstack")
-    return
-  endif
-  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunc
 
 " Mappings: Typos {{{
 " Don't care if I typo when saving or quitting!

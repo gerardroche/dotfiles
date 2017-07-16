@@ -18,6 +18,8 @@
 	cod = checkout develop
 	com = checkout master
 	d = diff
+	ds = diff --staged
+	dsh = diff --shortstat
 	f = fetch -v
 	fa = fetch --all
 	ff = merge --ff-only

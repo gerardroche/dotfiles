@@ -11,6 +11,7 @@
 /src/bin/git-open
 /src/bin/php-build
 /src/bin/subl
+/src/.vim/plugged/
 /tmp/
 
 # VIM

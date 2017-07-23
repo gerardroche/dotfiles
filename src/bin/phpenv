@@ -6,15 +6,14 @@ unset IFS
 
 show_usage() {
     cat <<EOT
-Usage: $(basename "$0") <COMMAND> [<ARGS>]
-    or $(basename "$0") [-h|--help]
-    or $(basename "$0") [--version]
-    or $(basename "$0") [-V]
+Usage: $(basename "$0") [-h|--help] [--version] [-V]
+    or $(basename "$0") <command> [<args>]
 
-Some useful $(basename "$0") commands are:"
+Commands:
 
-  install <version>   Install a PHP version using $(basename "$BUILD_BIN")
-  versions            List all PHP versions available to $(basename "$0")
+  install <version>   Install a PHP version
+  versions            List all available PHP versions
+
 EOT
 }
 
@@ -61,10 +60,13 @@ install_version() {
     # points to 7.0.5 and installing 7.0.6 and it is latest 7.x version then
     # point 7.x at 7.0.6.
 
+    echo "install version: $version"
+    echo "install prefix: $prefix"
+
     exec "$BUILD_BIN" --ini development "$version" "$prefix"
 }
 
-readonly VERSION="0.4.1"
+readonly VERSION="0.4.2"
 readonly PREFIX="$HOME/.phpenv"
 readonly BUILD_BIN="$HOME/bin/php-build"
 
@@ -84,6 +86,7 @@ while test "$#" != 0; do
             if test "$2" = "--complete"; then
                 exec "$BUILD_BIN" --definitions
             fi
+
             shift
             install_version "$@"
 

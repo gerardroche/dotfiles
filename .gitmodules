@@ -1,6 +1,3 @@
-[submodule "vendor/Anthony25/gnome-terminal-colors-solarized"]
-	path = vendor/Anthony25/gnome-terminal-colors-solarized
-	url = https://github.com/Anthony25/gnome-terminal-colors-solarized.git
 [submodule "vendor/paulirish/git-open"]
 	path = vendor/paulirish/git-open
 	url = https://github.com/paulirish/git-open.git

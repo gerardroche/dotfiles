@@ -22,6 +22,7 @@ gsettings_set_org_gnome_settings_daemon_plugins_media_keys() {
 
 # Remove defaults that cause conflicts with custom shortcuts
 gsettings set org.gnome.shell.keybindings toggle-message-tray     "[]"
+gsettings set org.gnome.desktop.wm.keybindings toggle-shaded "[]"
 
 # CapsLock -> Escape
 gsettings set org.gnome.desktop.input-sources xkb-options "['caps:escape']"

@@ -66,8 +66,8 @@ nbdist/
 # https://github.com/github/gitignore/blob/master/Global/Eclipse.gitignore
 ################################################################################
 
-.metadata
-bin/
+/.metadata
+# bin/
 tmp/
 *.tmp
 *.bak
@@ -222,7 +222,6 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
 lib64/
 parts/
 sdist/
@@ -313,23 +312,21 @@ composer.lock
 
 *.bak
 *.cache
-*.log
-*.log.*
+*.log*
 *.php-version*
 *.sqlite3
-.tmux*
-/bower_components/
-/cache/
-/node_modules/
-/tmp/
-/vendor/
-/covhtml/
-/sandbox*
-.todo*
+.debug*
 .issue*
 .notes*
-/lib/libsublime
-/libsublime
-.reload-package*
-.debug*
-/VimL/
+.reload*
+.tmux*
+.todo*
+bower_components/
+cache/
+covhtml/
+libsublime/
+libsublime*
+node_modules/
+sandbox*
+tmp/
+vendor/

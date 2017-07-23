@@ -114,7 +114,7 @@ versioninfo() {
     gnome-shell --version
 }
 
-watch_app_logs() {
+watchapplogs() {
     tail -v -f /var/log/{apache2,mysql}/{,*}{access,error,mysql}.log ./data/logs/*.log
 }
 

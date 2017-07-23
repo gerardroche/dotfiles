@@ -294,27 +294,39 @@ autocmd Filetype gitcommit setlocal spell textwidth=72
 
 let mapleader=","
 
-" Fix delay in airline redraw.
-" http://superuser.com/a/252717
+" " Fix delay in airline redraw.
+" " http://superuser.com/a/252717
 " inoremap <Esc> <Esc>
 " vnoremap <Esc> <Esc>
 
+" Enter command line mode.
 nnoremap <Space> :
 
 " Make j and k work file linewise instead of screen linewise.
 " http://stevelosh.com/blog/2010/09/coming-home-to-vim/
-" nnoremap j gj
-" nnoremap k gk
+" https://bitbucket.org/sjl/dotfiles/src/b89b95f1cb1d06596c0c46bfb5a9e7e95ce71913/vim/vimrc?at=default
+noremap j gj
+noremap k gk
+noremap gj j
+noremap gk k
 
 " Scroll viewport faster.
 " http://items.sjbach.com/319/configuring-vim-right
 nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
 
-" Match bracket pairs.
+" Easy buffer navigation.
 " http://stevelosh.com/blog/2010/09/coming-home-to-vim/
-"nnoremap <tab> %
-"vnoremap <tab> %
+" https://bitbucket.org/sjl/dotfiles/src/b89b95f1cb1d06596c0c46bfb5a9e7e95ce71913/vim/vimrc?at=default
+noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
+
+" " Match bracket pairs.
+" " http://stevelosh.com/blog/2010/09/coming-home-to-vim/
+" nnoremap <tab> %
+" vnoremap <tab> %
 
 " Yank and paste using system clipboard.
 " http://www.drbunsen.org/the-text-triumvirate/
@@ -323,6 +335,14 @@ map <leader>Y "+Y
 map <leader>p "+p
 map <leader>P "+P
 noremap <leader>yy "+Y
+
+" Select entire buffer
+" https://bitbucket.org/sjl/dotfiles/src/b89b95f1cb1d06596c0c46bfb5a9e7e95ce71913/vim/vimrc?at=default
+nnoremap vaa ggvGg_
+nnoremap Vaa ggVG
+
+" Toggle NERDTree
+noremap <leader>d :NERDTreeToggle<CR>
 
 " Idea from : http://www.charlietanksley.net/blog/blog/2011/10/18/vim-navigation-with-lustyexplorer-and-lustyjuggler/
 " Open CtrlP starting from a particular path, making it much
@@ -341,24 +361,19 @@ map <leader>jV :CtrlP vendor<CR>
 map <leader>jF :CtrlP factories<CR>
 map <leader>jT :CtrlP test<CR>
 
-" PHPUnit
-nnoremap <leader>va :call PHPUnitRunTests()<CR>
-nnoremap <leader>vt :call PHPUnitRunSingleTest()<CR>
-
-" vim-test
+" Test
 nnoremap <leader>t :silent :TestNearest<CR>
 nnoremap <leader>T :silent :TestFile<CR>
 nnoremap <leader>a :silent :TestSuite<CR>
 nnoremap <leader>l :silent :TestLast<CR>
 nnoremap <leader>g :silent :TestVisit<CR>
 
+" " PHPUnit
+" nnoremap <leader>va :call PHPUnitRunTests()<CR>
+" nnoremap <leader>vt :call PHPUnitRunSingleTest()<CR>
+
 " Misc.
-nnoremap <leader>? :call pathogen#helptags()
-nnoremap <leader>ov :split $MYVIMRC<CR>
 nnoremap <leader>sa ggVG:sort<CR>:w<CR>
-nnoremap <leader>rv :source $MYVIMRC<CR>
-nnoremap <leader>va ggvG<CR>
-noremap <leader>d :NERDTreeToggle<CR>
 noremap <leader>s :set nolist!<CR>
 
 " Show colorscheme information
@@ -370,18 +385,28 @@ nmap <leader>sp :call <SID>SynStack()<CR>
 " Mappings: Typos {{{
 " Don't care if I typo when saving or quitting!
 " http://git.io/vTBOa
+cnoreabbrev Q q
+cnoreabbrev Q! q!
+cnoreabbrev Qall qall
+cnoreabbrev Qall! qall!
+cnoreabbrev W w
+cnoreabbrev W! w!
+cnoreabbrev WQ wq
+cnoreabbrev Wa wa
+cnoreabbrev Wq wq
+cnoreabbrev wQ wq
+command! E e
+command! Q q
+command! QA qa
+command! Qa qa
+command! W w
+command! WA wa
+command! WQ wq
+command! Wa wa
+command! Wq wq
 inoremap <F1> <ESC>
 nnoremap <F1> <ESC>
 vnoremap <F1> <ESC>
-command! E e
-command! Q q
-command! Qa qa
-command! QA qa
-command! W w
-command! Wa wa
-command! WA wa
-command! Wq wq
-command! WQ wq
 " }}}
 " Mappings: Disable arrow keys {{{
 " http://stevelosh.com/blog/2010/09/coming-home-to-vim/

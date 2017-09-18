@@ -16,7 +16,6 @@ case "$1" in
 esac
 
 readonly CONFIG_FILE=".tmux"
-readonly WINDOW_NAME=""
 
 if test -n "$1"; then
     readonly SESSION_NAME="$1"
@@ -35,12 +34,13 @@ if [ "$HAS_SESSION" = y ]; then
     tmux attach -t "$SESSION_NAME"
 else
     if test -n "$SESSION_NAME" && test -f "$CONFIG_FILE"; then
-        tmux -2 new-session -n "$WINDOW_NAME" -s "$SESSION_NAME" \; source-file "$CONFIG_FILE"
+
+        tmux -2 new-session -n "main" -s "$SESSION_NAME" \; source-file "$CONFIG_FILE"
     elif test -n "$SESSION_NAME" ; then
-        tmux -2 new-session -n "$WINDOW_NAME" -s "$SESSION_NAME"
+        tmux -2 new-session -n "main" -s "$SESSION_NAME"
     elif test -f "$CONFIG_FILE"; then
-        tmux -2 new-session -n "$WINDOW_NAME" \; source-file "$CONFIG_FILE"
+        tmux -2 new-session -n "main" \; source-file "$CONFIG_FILE"
     else
-        tmux -2 new-session -n "$WINDOW_NAME"
+        tmux -2 new-session -n "main"
     fi
 fi

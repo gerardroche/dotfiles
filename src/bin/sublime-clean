@@ -80,6 +80,7 @@ echo "cleaning sublime text 3 installation..."
 
 # ST3 Linux
 rm -rfv ~/.config/sublime-text-3/Packages/.logs/
+rm -rfv ~/.config/sublime-text-3/Packages/User/Package\ Control.cache/
 rm -rfv ~/.config/sublime-text-3/Packages/User/SublimeLinter/*.tmTheme
 rm -rfv ~/.config/sublime-text-3/Backup/
 rm -rfv ~/.config/sublime-text-3/Cache/
@@ -88,6 +89,7 @@ rm -rfv ~/.config/sublime-text-3/Settings/
 
 # ST3 OSX
 rm -rfv ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/.logs/
+rm -rfv ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/Package\ Control.cache/
 rm -rfv ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/SublimeLinter/*.tmTheme
 rm -rfv ~/Library/Application\ Support/Sublime\ Text\ 3/Backup/
 rm -rfv ~/Library/Application\ Support/Sublime\ Text\ 3/Cache/

@@ -194,14 +194,14 @@ set background=dark
 let g:gruvbox_italic=1
 
 " Molokai colorscheme
-let g:molokai_original=1
+let g:molokai_original=0
 let g:rehash256=1
 
 " Solarized colorscheme
 let g:solarized_termcolors=16
 let g:solarized_termtrans=1 " Fix some tmux colour issues
 
-colorscheme gruvbox
+colorscheme molokai
 
 " Make the sign column background the same
 " colour as the colorscheme background.
@@ -269,6 +269,18 @@ function! <SID>SynStack()
   endif
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
+
+function! DumpColorSchemeInfo()
+    let hi = synIDattr(synID(line("."),col("."),1),"name")
+    let trans = synIDattr(synID(line("."),col("."),0),"name")
+    let lo = synIDattr(synIDtrans(synID(line("."),col("."),1)),"name")
+
+    echo "hi<" . hi . "> trans<" . trans . "> lo<" . lo . ">"
+
+    execute join(['hi', hi], ' ')
+    execute join(['hi', trans], ' ')
+    execute join(['hi', lo], ' ')
+endfunction
 
 " }}}
 " Autocommands {{{
@@ -375,12 +387,7 @@ nnoremap <leader>g :silent :TestVisit<CR>
 " Misc.
 nnoremap <leader>sa ggVG:sort<CR>:w<CR>
 noremap <leader>s :set nolist!<CR>
-
-" Show colorscheme information
-map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
-nmap <leader>sp :call <SID>SynStack()<CR>
+nnoremap <F10> :call DumpColorSchemeInfo()<CR>
 
 " Mappings: Typos {{{
 " Don't care if I typo when saving or quitting!

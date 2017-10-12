@@ -326,7 +326,9 @@ cache/
 covhtml/
 libsublime/
 libsublime*
+libvim*
 node_modules/
 sandbox*
 tmp/
 vendor/
+/libsource

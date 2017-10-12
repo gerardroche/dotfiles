@@ -201,7 +201,8 @@ let g:rehash256=1
 let g:solarized_termcolors=16
 let g:solarized_termtrans=1 " Fix some tmux colour issues
 
-colorscheme molokai
+" colorscheme solarized8_dark
+colorscheme gruvbox
 
 " Make the sign column background the same
 " colour as the colorscheme background.
@@ -333,7 +334,8 @@ nnoremap <C-y> 3<C-y>
 noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
-noremap <C-l> <C-w>l
+
+noremap <C-l> :nohlsearch<CR>
 
 " " Match bracket pairs.
 " " http://stevelosh.com/blog/2010/09/coming-home-to-vim/
@@ -355,6 +357,9 @@ nnoremap Vaa ggVG
 
 " Toggle NERDTree
 noremap <leader>d :NERDTreeToggle<CR>
+
+" Sort
+nnoremap <leader>s vip:sort u<CR>
 
 " Idea from : http://www.charlietanksley.net/blog/blog/2011/10/18/vim-navigation-with-lustyexplorer-and-lustyjuggler/
 " Open CtrlP starting from a particular path, making it much
@@ -386,7 +391,6 @@ nnoremap <leader>g :silent :TestVisit<CR>
 
 " Misc.
 nnoremap <leader>sa ggVG:sort<CR>:w<CR>
-noremap <leader>s :set nolist!<CR>
 nnoremap <F10> :call DumpColorSchemeInfo()<CR>
 
 " Mappings: Typos {{{

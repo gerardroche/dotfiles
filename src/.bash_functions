@@ -94,6 +94,16 @@ title() {
     echo -n -e "\033]0;$*\007"
 }
 
+toggledebug() {
+    if test -f ./.debug; then
+        rm ./.debug
+        echo 'Debug is disabled'
+    else
+        touch  ./.debug
+        echo 'Debug is enabled'
+    fi
+}
+
 versioninfo() {
     echo -n "Hostname: "
     cat /etc/hostname
@@ -112,6 +122,38 @@ versioninfo() {
 
     echo -n "Gnome: "
     gnome-shell --version
+}
+
+setmygitremote() {
+    git_origin_url="$(git remote get-url origin 2> /dev/null || true)"
+
+    if test -z "$git_origin_url"; then
+        echo >&2 "origin remote not found"
+        return
+    fi
+
+    new_origin="$(echo "$git_origin_url" |\
+        grep "^https://github.com/gerardroche/" |\
+        sed '
+        s_https://github.com/gerardroche/_git@github.com:gerardroche/_
+        '\
+    )"
+
+    if test -n "$new_origin"; then
+        echo
+        echo "UPDATING REMOTES:"
+        echo
+        git remote -v
+        echo
+
+        git remote set-url origin "$new_origin"
+    fi
+
+    echo
+    echo "REMOTES:"
+    echo
+    git remote -v
+    echo
 }
 
 watchapplogs() {
@@ -187,22 +229,4 @@ c() {
 
 v() {
     cd "$VENDOR_PATH/$1"
-}
-
-snodebug() {
-    if test -f ./.debug; then
-        rm ./.debug
-        echo 'Debug disabled'
-    else
-        echo 'Debug already disabled'
-    fi
-}
-
-sdebug() {
-    if test ! -f ./.debug; then
-        touch  ./.debug
-        echo 'Debug enabled'
-    else
-        echo 'Debug already enabled'
-    fi
 }

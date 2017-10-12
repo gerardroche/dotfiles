@@ -40,16 +40,28 @@ echo "command: cd $SOURCE_PATH"
 
 if test "$1" != "--skip-dependencies"; then
     echo "Installing dependencies..."
+    command -v ctags >/dev/null 2>&1 || sudo apt-get install ctags
+    command -v figlet >/dev/null 2>&1 || sudo apt-get install figlet
+    command -v firefox >/dev/null 2>&1 || sudo apt-get install firefox firefox-locale-en
+    command -v flake8 >/dev/null 2>&1 || sudo apt-get install python-flake8
+    command -v gimp >/dev/null 2>&1 || sudo apt-get install gimp
     command -v git >/dev/null 2>&1 || sudo apt-get install git
     command -v gitk >/dev/null 2>&1 || sudo apt-get install gitk
-    command -v vim.basic >/dev/null 2>&1 || sudo apt-get install vim
-    command -v firefox >/dev/null 2>&1 || sudo apt-get install firefox firefox-locale-en
-    command -v tmux >/dev/null 2>&1 || sudo apt-get install tmux
+    command -v gtypist >/dev/null 2>&1 || sudo apt-get install gtypist
+    command -v liferea >/dev/null 2>&1 || sudo apt-get install liferea
     command -v netstat >/dev/null 2>&1 || sudo apt-get install net-tools
-    command -v xclip >/dev/null 2>&1 || sudo apt-get install xclip
-    command -v ctags >/dev/null 2>&1 || sudo apt-get install ctags
+    command -v tmux >/dev/null 2>&1 || sudo apt-get install tmux
     command -v tree >/dev/null 2>&1 || sudo apt-get install tree
-    command -v flake8 >/dev/null 2>&1 || sudo apt-get install python-flake8
+    command -v vim.basic >/dev/null 2>&1 || sudo apt-get install vim
+    command -v xclip >/dev/null 2>&1 || sudo apt-get install xclip
+    dpkg -l | grep fonts-firacode >/dev/null 2>&1 || sudo apt-get install fonts-firacode
+    dpkg -l | grep fonts-inconsolata >/dev/null 2>&1 || sudo apt-get install fonts-inconsolata
+    dpkg -l | grep ttf-anonymous-pro >/dev/null 2>&1 || sudo apt-get install ttf-anonymous-pro
+
+    # Addtional fonts not available in repositories:
+    # Hasklig (Source Code Pro font with ligatures) https://github.com/i-tu/Hasklig
+    # Monoid (lagature font) https://github.com/larsenwork/monoid
+
 else
     shift
 fi

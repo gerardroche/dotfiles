@@ -19,14 +19,21 @@ readonly CONFIG_FILE=".tmux"
 
 if test -n "$1"; then
     readonly SESSION_NAME="$1"
+    readonly WINDOW_NAME="${SESSION_NAME##*/}"
     if test -d "$PROJECTS_PATH" && test -d "$PROJECTS_PATH/$SESSION_NAME"; then
         cd "$PROJECTS_PATH/$SESSION_NAME"
     fi
 elif test -f "$CONFIG_FILE"; then
     readonly SESSION_NAME="$(basename "$(dirname "$PWD")")/$(basename "$PWD")"
+    readonly WINDOW_NAME="${SESSION_NAME##*/}"
 else
-    readonly SESSION_NAME=
+    readonly SESSION_NAME="mx"
+    readonly WINDOW_NAME="mx"
 fi
+
+echo "Starting Tmux session:"
+echo " Session: '$SESSION_NAME'"
+echo " Window: '$WINDOW_NAME'"
 
 tmux has-session -t "$SESSION_NAME" > /dev/null 2>&1 && HAS_SESSION=y || HAS_SESSION=n
 
@@ -34,13 +41,12 @@ if [ "$HAS_SESSION" = y ]; then
     tmux attach -t "$SESSION_NAME"
 else
     if test -n "$SESSION_NAME" && test -f "$CONFIG_FILE"; then
-
-        tmux -2 new-session -n "main" -s "$SESSION_NAME" \; source-file "$CONFIG_FILE"
-    elif test -n "$SESSION_NAME" ; then
-        tmux -2 new-session -n "main" -s "$SESSION_NAME"
+        tmux -2 new-session -n "$WINDOW_NAME" -s "$SESSION_NAME" \; source-file "$CONFIG_FILE"
+    elif test -n "$WINDOW_NAME" ; then
+        tmux -2 new-session -n "$WINDOW_NAME" -s "$SESSION_NAME"
     elif test -f "$CONFIG_FILE"; then
-        tmux -2 new-session -n "main" \; source-file "$CONFIG_FILE"
+        tmux -2 new-session -n "$WINDOW_NAME" \; source-file "$CONFIG_FILE"
     else
-        tmux -2 new-session -n "main"
+        tmux -2 new-session -n "$WINDOW_NAME"
     fi
 fi

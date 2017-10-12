@@ -23,6 +23,8 @@ gsettings_set_org_gnome_settings_daemon_plugins_media_keys() {
 # Remove defaults that cause conflicts with custom shortcuts
 gsettings set org.gnome.shell.keybindings toggle-message-tray     "[]"
 gsettings set org.gnome.desktop.wm.keybindings toggle-shaded "[]"
+gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver ""
+gsettings set org.gnome.settings-daemon.plugins.media-keys video-out ""
 
 # CapsLock -> Escape
 gsettings set org.gnome.desktop.input-sources xkb-options "['caps:escape']"
@@ -33,9 +35,9 @@ gsettings set org.gnome.desktop.wm.keybindings  switch-group                "['<
 
 # <Super>*
 gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/']"
-gsettings set org.gnome.settings-daemon.plugins.media-keys calculator "" # Fix launch calculator focus issues
+gsettings set org.gnome.settings-daemon.plugins.media-keys calculator "" # Fixes launch calculator focus issues
 gsettings_set_org_gnome_settings_daemon_plugins_media_keys 0 "Calculator"  "gnome-calculator"   "Calculator"
-gsettings set org.gnome.settings-daemon.plugins.media-keys www "" # Fix launch browser focus issues
+gsettings set org.gnome.settings-daemon.plugins.media-keys www "" # Fixes launch browser focus issues
 gsettings_set_org_gnome_settings_daemon_plugins_media_keys 1 "Firefox"     "firefox"            "<Super>b"
 gsettings_set_org_gnome_settings_daemon_plugins_media_keys 2 "Sublime"     "subl"               "<Super>e"
 gsettings_set_org_gnome_settings_daemon_plugins_media_keys 3 "Files"       "nautilus"           "<Super>f"

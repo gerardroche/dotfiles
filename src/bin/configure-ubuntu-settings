@@ -6,6 +6,9 @@ unset IFS
 
 echo -n "Configuring Ubuntu settings... "
 
+# causes error unknown setting:
+# gsettings set com.ubuntu.geoip geoip-url ''
+
 gsettings set com.canonical.indicator.appmenu.hud store-usage-data false
 gsettings set com.canonical.indicator.datetime show-auto-detected-location false
 gsettings set com.canonical.indicator.network data-usage-indication true
@@ -16,7 +19,6 @@ gsettings set com.canonical.Unity.FilesLens use-locate true
 gsettings set com.canonical.Unity.Lenses always-search "['applications.scope']"
 gsettings set com.canonical.Unity.Lenses disabled-scopes "['more_suggestions-amazon.scope', 'more_suggestions-u1ms.scope', 'more_suggestions-populartracks.scope', 'music-musicstore.scope', 'more_suggestions-ebay.scope', 'more_suggestions-ubuntushop.scope', 'more_suggestions-skimlinks.scope']"
 gsettings set com.canonical.Unity.Lenses remote-content-search 'none'
-gsettings set com.ubuntu.geoip geoip-url ''
 gsettings set com.ubuntu.touch.network gps false
 gsettings set com.ubuntu.update-manager autoclose-install-window false
 gsettings set com.ubuntu.update-manager check-dist-upgrades false

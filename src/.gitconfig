@@ -140,3 +140,5 @@
 
 	name = Gerard Roche
     email = gerardroche@users.noreply.github.com
+[flake8]
+	strict = true

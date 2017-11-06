@@ -225,15 +225,6 @@ call matchadd("RulerColumn2", '\%121v', 200)
 " }}}
 " Commands {{{
 
-" Trim trailing whitespace.
-" http://git.io/vTBO8
-function! TrimWhiteSpace()
-    let l = line(".")
-    let c = col(".")
-    %s/\s\+$//e
-    call cursor(l, c)
-endfunction
-
 " Runs the current file through PHPUnit via tmux.
 " http://git.io/vTBOo
 function! PHPUnitRunSingleTest()
@@ -262,6 +253,25 @@ function! PHPUnitRunTests()
     else
         echo "No test runner for files of type: " . filetype
     endif
+endfunction
+
+function! ShowFileInNERDTree()
+  if exists("t:NERDTreeBufName")
+    NERDTreeFind
+  else
+    NERDTree
+    wincmd l
+    NERDTreeFind
+  endif
+endfunction
+
+" Trim trailing whitespace.
+" http://git.io/vTBO8
+function! TrimWhiteSpace()
+    let l = line(".")
+    let c = col(".")
+    %s/\s\+$//e
+    call cursor(l, c)
 endfunction
 
 function! <SID>SynStack()
@@ -357,6 +367,7 @@ nnoremap Vaa ggVG
 
 " Toggle NERDTree
 noremap <leader>d :NERDTreeToggle<CR>
+noremap <leader>f :call ShowFileInNERDTree()<CR>
 
 " Sort
 nnoremap <leader>s vip:sort u<CR>

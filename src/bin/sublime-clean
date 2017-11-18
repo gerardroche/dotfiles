@@ -92,11 +92,14 @@ rm -rfv ~/.config/sublime-text-3/Index/
 rm -rfv ~/.config/sublime-text-3/Packages/.logs/
 rm -rfv ~/.config/sublime-text-3/Packages/User/*.log*
 rm -rfv ~/.config/sublime-text-3/Packages/User/Package\ Control.*-ca-bundle
+rm -rfv ~/.config/sublime-text-3/Packages/User/Color\ Highlighter/icons/
 rm -rfv ~/.config/sublime-text-3/Packages/User/Package\ Control.cache/
 rm -rfv ~/.config/sublime-text-3/Packages/User/SublimeLinter/*.tmTheme
+rm -rfv ~/.config/sublime-text-3/Packages/User/UnitTesting/
 rm -rfv ~/.config/sublime-text-3/Settings/
-rmdir_if_empty ~/.config/sublime-text-3/Lib/python3.3/
 rmdir_if_empty ~/.config/sublime-text-3/Lib/
+rmdir_if_empty ~/.config/sublime-text-3/Lib/python3.3/
+rmdir_if_empty ~/.config/sublime-text-3/Packages/User/Color\ Highlighter/
 rmdir_if_empty ~/.config/sublime-text-3/Packages/User/SublimeLinter/
 
 # ST3 OSX
@@ -106,11 +109,14 @@ rm -rfv ~/Library/Application\ Support/Sublime\ Text\ 3/Index/
 rm -rfv ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/.logs/
 rm -rfv ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/Package\ Control.*-ca-bundle
 rm -rfv ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/*.log*
+rm -rfv ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/Color\ Highlighter/icons/
 rm -rfv ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/Package\ Control.cache/
 rm -rfv ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/SublimeLinter/*.tmTheme
+rm -rfv ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/UnitTesting/
 rm -rfv ~/Library/Application\ Support/Sublime\ Text\ 3/Settings/
-rmdir_if_empty ~/Library/Application\ Support/Sublime\ Text\ 3/Lib/python3.3/
 rmdir_if_empty ~/Library/Application\ Support/Sublime\ Text\ 3/Lib/
+rmdir_if_empty ~/Library/Application\ Support/Sublime\ Text\ 3/Lib/python3.3/
+rmdir_if_empty ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/Color\ Highligher/
 rmdir_if_empty ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/SublimeLinter/
 
 if [ "$SUBLIME_CLEAN_INCLUDE_SESSIONS" = "y" ]; then

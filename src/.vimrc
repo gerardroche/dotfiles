@@ -8,33 +8,35 @@ call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-sensible'
 call plug#load('vim-sensible')
 
+" Plug 'StanAngeloff/php.vim', { 'for': 'php' }
+" Plug 'ervandew/supertab'
+" Plug 'honza/vim-snippets'
+" Plug 'othree/html5.vim', { 'for': 'html' }
+" Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+" Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
+" Plug 'tpope/vim-eunuch'
+" Plug 'tpope/vim-rails'
+" Plug 'tpope/vim-scriptease'
+
 Plug 'airblade/vim-gitgutter'
 Plug 'benmills/vimux'
 Plug 'bling/vim-airline'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'easymotion/vim-easymotion'
-" Plug 'ervandew/supertab'
-" Plug 'honza/vim-snippets'
 Plug 'janko-m/vim-test'
-" Plug 'othree/html5.vim', { 'for': 'html' }
-" Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+Plug 'machakann/vim-highlightedyank'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'scrooloose/syntastic'
-" Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
-" Plug 'StanAngeloff/php.vim', { 'for': 'php' }
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-characterize'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-endwise'
-" Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-ragtag'
-" Plug 'tpope/vim-rails'
 Plug 'tpope/vim-repeat'
-" Plug 'tpope/vim-scriptease'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 
@@ -354,6 +356,7 @@ noremap <C-l> :nohlsearch<CR>
 
 " Yank and paste using system clipboard.
 " http://www.drbunsen.org/the-text-triumvirate/
+map y <Plug>(highlightedyank)
 map <leader>y "+y
 map <leader>Y "+Y
 map <leader>p "+p

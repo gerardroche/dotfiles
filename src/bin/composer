@@ -13,6 +13,7 @@ OPEN_BASEDIR="$OPEN_BASEDIR:/etc/pki/certs"
 OPEN_BASEDIR="$OPEN_BASEDIR:/etc/ssl/certs"
 OPEN_BASEDIR="$OPEN_BASEDIR:$HOME/.cache"
 OPEN_BASEDIR="$OPEN_BASEDIR:$HOME/.config"
+OPEN_BASEDIR="$OPEN_BASEDIR:$HOME/.phpenv/versions"
 
 # Add composer configuration path to open_basedir. Newer versions of composer
 # don't need to add this path because configurations are stored in

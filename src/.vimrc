@@ -392,6 +392,10 @@ map <leader>jV :CtrlP vendor<CR>
 map <leader>jF :CtrlP factories<CR>
 map <leader>jT :CtrlP test<CR>
 
+map <leader>= <C-w>=
+map <leader>\| <C-w>\|
+map <leader>_ <C-w>_
+
 " Test
 nnoremap <leader>t :silent :TestNearest<CR>
 nnoremap <leader>T :silent :TestFile<CR>

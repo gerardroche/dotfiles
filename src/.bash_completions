@@ -41,6 +41,7 @@ if [ -f /usr/share/bash-completion/completions/git ]; then
     __git_complete d _git_diff
     __git_complete g _git
     __git_complete ga _git_add
+    __git_complete gff _git_merge
     __git_complete gal _git_add
     __git_complete gc _git_commit
     __git_complete gca _git_commit

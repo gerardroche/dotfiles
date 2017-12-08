@@ -13,6 +13,7 @@ Commands:
 
   install <version>   Install a PHP version
   versions            List all available PHP versions
+  reload-symlinks     Reloads ~/bin/_php{version} symlinks
 
 EOT
 }
@@ -66,6 +67,78 @@ install_version() {
     exec "$BUILD_BIN" --ini development "$version" "$prefix"
 }
 
+fixup_x_version() {
+    source="$1"
+    target="$2"
+
+    source_path="$HOME/.phpenv/versions/$source"
+    target_path="$HOME/.phpenv/versions/$target"
+
+    echo
+    echo "  source: $source_path"
+    echo "  target: $target_path"
+
+    if test ! -d "$source_path"; then
+        echo >&2 "ERROR: expected a directory: $source_path"
+        return
+    fi
+
+    if test -e "$target_path"; then
+        if test -h "$target_path"; then
+            rm -v "$target_path"
+        else
+            echo >&2 "ERROR: expected a symbolic file: $target_path"
+            return
+        fi
+    fi
+
+    ln -s -r "$source_path" "$target_path"
+}
+
+reload_symlinks() {
+    echo "reload symbolic links"
+
+    # TODO rework hardcoded logic
+    fixup_x_version "5.5.38" "5.5.x"
+    fixup_x_version "5.6.30" "5.6.x"
+    fixup_x_version "7.0.10" "7.0.x"
+    fixup_x_version "7.1.12" "7.1.x"
+    fixup_x_version "5.6.30" "5.x"
+    fixup_x_version "7.2.0"  "7.x"
+
+    # TODO refactor hardcoded paths
+    for version_path in ~/.phpenv/versions/*; do
+        if test ! -d "$version_path"; then
+            continue
+        fi
+
+        version="$(basename "$version_path")"
+        version_source="$version_path/bin/php"
+        version_target="$HOME/bin/_php$version"
+
+        echo
+        echo "processing:"
+        echo "  version:        $version"
+        echo "  version path:   $version_path"
+        echo "  version source: $version_source"
+        echo "  version target: $version_target"
+
+        if test -e "$version_target"; then
+            if test -h "$version_target"; then
+                rm -v "$version_target"
+            else
+                echo >&2 "ERROR: expected a symbolic file: $version_target"
+                continue
+            fi
+        fi
+
+        ln -s "$version_source" "$version_target"
+
+    done
+
+    tree -L 1 ~/.phpenv/versions/
+}
+
 readonly VERSION="0.4.2"
 readonly PREFIX="$HOME/.phpenv"
 readonly BUILD_BIN="$HOME/bin/php-build"
@@ -99,6 +172,11 @@ while test "$#" != 0; do
                 touch "$phpenv_version_etc_conf_d/95-development.ini"
             done
 
+            reload_symlinks
+            exit 0
+            ;;
+        reload-symlinks)
+            reload_symlinks
             exit 0
             ;;
         versions)

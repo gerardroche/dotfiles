@@ -1,6 +1,17 @@
 
 " Plugins {{{
 
+" Use Vim settings, rather than Vi settings (much better!).
+" This must be first, because it changes other options as a side effect.
+" Avoid side effects when it was already reset.
+if &compatible
+    set nocompatible
+endif
+
+if !has('nvim')
+    set encoding=utf-8
+endif
+
 call plug#begin('~/.vim/plugged')
 
 " Load vim-sensible now so settings can be overridden
@@ -50,28 +61,28 @@ call plug#end()
 " }}}
 " Options {{{
 
-set mouse=a
 set autoindent
 set autoread
 set autowrite
 set backspace=indent,eol,start
+set belloff=
 set complete-=i
 set cursorline
 set display+=lastline
-if !has('nvim')
-    set encoding=utf-8
-endif
+set errorbells
 set expandtab
 set foldmethod=marker
 set foldopen+=jump
 set formatoptions+=c
 set formatoptions+=j
-set formatoptions+=r
+set formatoptions+=l
 set formatoptions+=q
+set formatoptions+=r
 set formatoptions-=t
 set hidden
 set hlsearch
 set incsearch
+set laststatus=1
 set linebreak
 set list
 if (&termencoding ==# 'utf-8' || &encoding ==# 'utf-8') && version >= 700
@@ -79,9 +90,11 @@ if (&termencoding ==# 'utf-8' || &encoding ==# 'utf-8') && version >= 700
 else
     set listchars=tab:>\ ,trail:-,extends:>,precedes:<
 endif
+set mouse=a
 set nobackup
-set nocompatible
+set noshowmode
 set noswapfile
+set novisualbell
 set nowrap
 set number
 set relativenumber
@@ -94,7 +107,6 @@ else
     set showbreak=\ +
 endif
 set showcmd
-set noshowmode
 set showtabline=1
 set sidescroll=1
 set sidescrolloff=12
@@ -109,20 +121,19 @@ set textwidth=80
 " https://www.johnhawthorn.com/2012/09/vi-escape-delays
 " set timeoutlen=1000 ttimeoutlen=0
 set ttyfast
-set laststatus=1
 set wildignore+=*.bak,*~,*.o,*.h,*.info,*.swp,*.obj
 set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
 set wildignore+=*.log
 set wildignore+=*.pyc
 set wildignore+=*.sublime-workspace
-set wildignore+=*/CodeCoverage/Report
 set wildignore+=*/build
+set wildignore+=*/CodeCoverage/Report
 set wildignore+=*/data
 set wildignore+=*/public/assets
 set wildignore+=*/tmp
-set wildignore+=*/vendor/*/*/Tests
 set wildignore+=*/vendor/*/*/build
 set wildignore+=*/vendor/*/*/test
+set wildignore+=*/vendor/*/*/Tests
 set wildignore+=*/vendor/*/*/tests
 set wildignore+=*/vendor/*/*/tmp
 set wildignore+=*/vendor/*/*/vendor
@@ -346,8 +357,10 @@ nnoremap <C-y> 3<C-y>
 noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
-
 noremap <C-l> :nohlsearch<CR>
+
+" Saving.
+noremap <C-s> :w<CR>
 
 " " Match bracket pairs.
 " " http://stevelosh.com/blog/2010/09/coming-home-to-vim/

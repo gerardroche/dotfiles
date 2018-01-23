@@ -132,9 +132,22 @@ if [ "$SUBLIME_CLEAN_INCLUDE_WORKSPACES" = "y" ]; then
     rm -fv ./*.sublime-workspace
     rm -fv ./*/*.sublime-workspace
     if [ -d "$PROJECTS_PATH" ]; then
+
         rm -fv "$PROJECTS_PATH"/*.sublime-workspace
+        rm -fv "$PROJECTS_PATH"/.reload-package
+        rm -rfv "$PROJECTS_PATH"/.mypy_cache/
+        rm -rfv "$PROJECTS_PATH"/.rope_project/
+
         rm -fv "$PROJECTS_PATH"/*/*.sublime-workspace
+        rm -fv "$PROJECTS_PATH"/*/.reload-package
+        rm -rfv "$PROJECTS_PATH"/*/.mypy_cache/
+        rm -rfv "$PROJECTS_PATH"/*/.rope_project/
+
         rm -fv "$PROJECTS_PATH"/*/*/*.sublime-workspace
+        rm -fv "$PROJECTS_PATH"/*/*/.reload-package
+        rm -rfv "$PROJECTS_PATH"/*/*/.mypy_cache/
+        rm -rfv "$PROJECTS_PATH"/*/*/.rope_project/
+
         rm -fv "$PROJECTS_PATH"/.sublime/*.sublime-workspace
         rm -fv "$PROJECTS_PATH"/.sublime-workspaces/*.sublime-workspace
         rm -fv "$PROJECTS_PATH"/.sublime-projects/*.sublime-workspace

@@ -16,6 +16,72 @@ find_regular_files_with_byte_order_marks() {
     done
 }
 
+mypyinitfix() {
+    # Recursively creates __init__.pyi files.
+    #
+    # Options:
+    #   --undo Recursively removes any __init__.pyi files.
+    #   --dry-run
+
+    dry_run=
+    undo=
+
+    if test "x$1" = "x--dry-run"; then
+        dry_run=y
+    fi
+
+    if test "x$1" = "x--undo"; then
+        undo=y
+    fi
+
+    if test "x$2" = "x--dry-run"; then
+        dry_run=y
+    fi
+
+    if test "x$2" = "x--undo"; then
+        undo=y
+    fi
+
+    prefix_msg=""
+    if test "x$dry_run" = "xy"; then
+        prefix_msg="[dry run] "
+    fi
+
+    folders="$(find . -type d ! -path "*/.git*" ! -path "*/tmp*" ! -path "*/res*")"
+    for folder in ${folders}; do
+        test -d "$folder" || continue
+
+        init_py_file="$folder/__init__.py"
+        init_pyi_file="$folder/__init__.pyi"
+
+        if test "x$undo" = "xy"; then
+            if test -f "$init_pyi_file"; then
+                if test "x$dry_run" = "xy"; then
+                    echo "${prefix_msg}remove $init_pyi_file"
+                else
+                    echo "${prefix_msg}remove $init_pyi_file"
+                    rm -v "$init_pyi_file"
+                fi
+            fi
+        else
+            if test ! -f "$init_py_file"; then
+                if test ! -f "$init_pyi_file"; then
+                    if test "x$dry_run" = "xy"; then
+                        echo "${prefix_msg}create          $init_pyi_file"
+                    else
+                        echo "${prefix_msg}create          $init_pyi_file"
+                        touch "$init_pyi_file"
+                    fi
+                else
+                    echo "${prefix_msg}already exists: $init_pyi_file"
+                fi
+            else
+                echo "${prefix_msg}already exists: $init_py_file"
+            fi
+        fi
+    done
+}
+
 internet_use() {
     lsof -P -i -n | uniq
 }

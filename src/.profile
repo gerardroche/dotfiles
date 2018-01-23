@@ -58,6 +58,8 @@ export APP_ENV=development
 export EDITOR=vi
 export GO_FAST_DEBUG=true
 export GO_FAST_ENV=development
+export MYPYPATH=~/.config/sublime-text-3/Packages/.mypy_stubs
 export PROJECTS_PATH=~/projects
+export SUBLIME_NEOVINTAGEOUS_DEBUG=y
 export VENDOR_PATH=~/vendor
 export XDEBUG_CONFIG="idekey=pugdebug"

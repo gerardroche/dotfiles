@@ -70,7 +70,7 @@ if [ "$color_prompt" = yes ]; then
     GIT_PS1_SHOWDIRTYSTATE="y"
     GIT_PS1_SHOWSTASHSTATE="y"
     GIT_PS1_SHOWUNTRACKEDFILES="y"
-    GIT_PS1_SHOWUPSTREAM="verbose name"
+    GIT_PS1_SHOWUPSTREAM="verbose name git"
 
     if [ "$oh_my_git_prompt" = yes ]; then
 
@@ -176,5 +176,8 @@ if ! shopt -oq posix; then
     if [ -f ~/.bash_completions ]; then
         . ~/.bash_completions
     fi
-
 fi
+
+# Fix CTRL-S is Vim.
+# https://stackoverflow.com/questions/13648237/ctrls-horizontal-split-not-working-with-command-t-in-vim
+stty start undef stop undef

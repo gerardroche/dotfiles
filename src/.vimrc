@@ -346,6 +346,9 @@ noremap k gk
 noremap gj j
 noremap gk k
 
+" vmap <lt> <lt>gv
+" vmap > >gv
+
 " Scroll viewport faster.
 " http://items.sjbach.com/319/configuring-vim-right
 nnoremap <C-e> 3<C-e>
@@ -386,7 +389,7 @@ noremap <leader>d :NERDTreeToggle<CR>
 noremap <leader>f :call ShowFileInNERDTree()<CR>
 
 " Sort
-nnoremap <leader>s vip:sort u<CR>
+nnoremap <leader>ss vip:sort u<CR>
 
 " Idea from : http://www.charlietanksley.net/blog/blog/2011/10/18/vim-navigation-with-lustyexplorer-and-lustyjuggler/
 " Open CtrlP starting from a particular path, making it much

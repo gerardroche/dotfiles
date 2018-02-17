@@ -323,7 +323,7 @@ composer.lock
 .reload*
 .tmux*
 .todo*
-/libsource
+/.srcpath
 bower_components/
 cache/
 covhtml/
@@ -331,3 +331,4 @@ node_modules/
 sandbox*
 tmp/
 vendor/
+mypy.ini

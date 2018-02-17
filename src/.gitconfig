@@ -15,6 +15,8 @@
 	ca = commit -a
 	cam = "!f() { git commit -a -m \"$*\"; }; f"
 	cm = "!f() { git commit -m \"$*\"; }; f"
+	cmi = "!f() { git commit -m \"Internal: $*\"; }; f"
+	cmif = "!f() { git commit -m \"Internal: Refactor $*\"; }; f"
 	co = checkout
 	cod = checkout develop
 	com = checkout master

@@ -4,7 +4,7 @@ set -e
 unset CDPATH
 unset IFS
 
-echo -n "configuring Ubuntu keybindings... "
+echo -n "configuring keybindings... "
 
 # Creates a custom media key.
 gsettings_set_org_gnome_settings_daemon_plugins_media_keys() {
@@ -25,11 +25,12 @@ gsettings_set_org_gnome_settings_daemon_plugins_media_keys() {
 # Ubuntu Gnome has a keyboard shortcut mapped then application don't receive the
 # key event. When you want to use a key binding in an application you need to
 # disable the shortcut that Gnome has set.
-gsettings set org.gnome.shell.keybindings focus-active-notification "[]"
-gsettings set org.gnome.shell.keybindings toggle-message-tray "[]"
 gsettings set org.gnome.desktop.wm.keybindings toggle-shaded "[]"
+gsettings set org.gnome.desktop.wm.preferences action-middle-click-titlebar "none"
 gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver ""
 gsettings set org.gnome.settings-daemon.plugins.media-keys video-out ""
+gsettings set org.gnome.shell.keybindings focus-active-notification "[]"
+gsettings set org.gnome.shell.keybindings toggle-message-tray "[]"
 
 # CapsLock -> Escape.
 gsettings set org.gnome.desktop.input-sources xkb-options "['caps:escape']"
@@ -53,11 +54,11 @@ gsettings set org.gnome.desktop.wm.keybindings  switch-applications         "['<
 gsettings set org.gnome.desktop.wm.keybindings  switch-group                "['<Alt>Above_Tab']"
 
 # Window management: Resizing.
-gsettings set org.gnome.desktop.wm.keybindings  unmaximize                  "['<Super>j']" # Actually toggles window (maximise/unmaximise).
+gsettings set org.gnome.desktop.wm.keybindings  unmaximize                  "['<Super>j']"
 gsettings set org.gnome.desktop.wm.keybindings  maximize                    "['<Super>k']"
 gsettings set org.gnome.desktop.wm.keybindings  toggle-fullscreen           "['<Super>u']"
-gsettings set org.gnome.desktop.wm.keybindings  maximize-horizontally       "['<Super>minus']" # Minus is the same key as underscore.
-gsettings set org.gnome.desktop.wm.keybindings  maximize-vertically         "['<Super>backslash']" # Backslash is the same key as bar ("|").
+gsettings set org.gnome.desktop.wm.keybindings  maximize-horizontally       "['<Super>minus']" # "minus" is the same key as underscore.
+gsettings set org.gnome.desktop.wm.keybindings  maximize-vertically         "['<Super>backslash']" # "backslash" is the same key as bar "|".
 
 # Window management: Moving.
 gsettings set org.gnome.mutter.keybindings      toggle-tiled-left           "['<Super>h']"

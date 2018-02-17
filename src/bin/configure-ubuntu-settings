@@ -9,6 +9,28 @@ echo -n "Configuring Ubuntu settings... "
 # causes error unknown setting:
 # gsettings set com.ubuntu.geoip geoip-url ''
 
+# # Disable GeoIP Connections
+# # I have permanent connections to Canonical servers, what are they for? http://askubuntu.com/a/145384/32580
+# gsettings set com.ubuntu.geoip geoip-url ""
+
+# gsettings set apps.telepathy-logger enabled false
+# gsettings set apps.update-manager show-versions true
+# gsettings set com.canonical.indicator.appmenu.hud store-usage-data false
+# gsettings set com.canonical.indicator.sound preferred-media-players ['banshee']
+
+# # old value ['JavaEmbeddedFrame', 'Wine', 'Update-notifier']
+# gsettings set com.canonical.unity.panel systray-whitelist ['Update-notifier']
+# gsettings set com.canonical.unity.webapps integration-allowed false
+
+# # Disable "available apps" in app lens
+# gsettings set desktop.unity.lenses.applications display-available-apps false
+
+# gsettings set org.yorba.shotwell.sharing.facebook strip-metadata true
+# gsettings set org.yorba.shotwell.sharing.flickr strip-metadata true
+# gsettings set org.yorba.shotwell.sharing.org-yorba-shotwell-publishing-piwigo strip-metadata true
+# gsettings set org.yorba.shotwell.sharing.picasa strip-metadata true
+# gsettings set org.yorba.shotwell.sharing.youtube strip-metadata true
+
 gsettings set com.canonical.indicator.appmenu.hud store-usage-data false
 gsettings set com.canonical.indicator.datetime show-auto-detected-location false
 gsettings set com.canonical.indicator.network data-usage-indication true

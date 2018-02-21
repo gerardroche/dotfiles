@@ -55,11 +55,16 @@ if test "$1" != "--skip-dependencies"; then
     command -v vim.basic >/dev/null 2>&1 || sudo apt-get install vim
     command -v xclip >/dev/null 2>&1 || sudo apt-get install xclip
     command -v rename >/dev/null 2>&1 || sudo apt-get install rename
+
+    # Required for Git interactive.singlekey to work.
+    # See https://superuser.com/a/817688.
+    dpkg -l | grep libterm-readkey-perl >/dev/null 2>&1 || sudo apt-get install libterm-readkey-perl
+
+    # Fonts.
     dpkg -l | grep fonts-firacode >/dev/null 2>&1 || sudo apt-get install fonts-firacode
     dpkg -l | grep fonts-inconsolata >/dev/null 2>&1 || sudo apt-get install fonts-inconsolata
     dpkg -l | grep ttf-anonymous-pro >/dev/null 2>&1 || sudo apt-get install ttf-anonymous-pro
-
-    # Addtional fonts not available in repositories:
+    # The following fonts need to be manually installed:
     # Hasklig (Source Code Pro font with ligatures) https://github.com/i-tu/Hasklig
     # Monoid (lagature font) https://github.com/larsenwork/monoid
 

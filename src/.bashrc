@@ -61,9 +61,6 @@ fi
 
 if [ "$color_prompt" = yes ]; then
 
-    # Set to "yes" to enable
-    oh_my_git_prompt=
-
     # hook it to my veins
     GIT_PS1_DESCRIBE_STYLE="contains"
     GIT_PS1_SHOWCOLORHINTS="y"
@@ -72,50 +69,18 @@ if [ "$color_prompt" = yes ]; then
     GIT_PS1_SHOWUNTRACKEDFILES="y"
     GIT_PS1_SHOWUPSTREAM="verbose name git"
 
-    if [ "$oh_my_git_prompt" = yes ]; then
-
-        PS1="\w `test $? = 0 && echo "\$" || echo "\[\033[41m\]\[\033[30m\]\$\[\033[0m\]"` "
-
-        : ${omg_is_a_git_repo_symbol:='⎇  '}
-        : ${omg_has_untracked_files_symbol:='%'}
-        : ${omg_has_adds_symbol:=''}
-        : ${omg_has_deletions_symbol:='-'}
-        : ${omg_has_cached_deletions_symbol:='-'}
-        : ${omg_has_modifications_symbol:='~'}
-        : ${omg_has_cached_modifications_symbol:='~'}
-        : ${omg_ready_to_commit_symbol:='⭢'}
-        : ${omg_is_on_a_tag_symbol:='=T'}
-        : ${omg_needs_to_merge_symbol:='=M'}
-        : ${omg_detached_symbol:='⭫'}
-        : ${omg_can_fast_forward_symbol:='⯭'} # ⮅
-        : ${omg_has_diverged_symbol:='⭷'}
-        : ${omg_not_tracked_branch_symbol:=''}
-        : ${omg_rebase_tracking_branch_symbol:='RTB'}
-        : ${omg_merge_tracking_branch_symbol:='⮃'}
-        : ${omg_should_push_symbol:='⭡'}
-        : ${omg_has_stashes_symbol:='HS'}
-
-        oh_my_git_prompt="$(dirname "$(dirname "$(readlink -nf "${BASH_SOURCE[0]}")")")/vendor/arialdomartini/oh-my-git/prompt.sh"
-
-        if test -f "$oh_my_git_prompt"; then
-            . "$oh_my_git_prompt"
+    prompt_command_callback() {
+        if test "$?" = 0; then
+            prompt_char="\$"
+        else
+            prompt_char="\[\033[41m\]\[\033[30m\]\$\[\033[0m\]"
         fi
-    else
-        prompt_command_callback() {
-            if test "$?" = 0; then
-                prompt_char="\$"
-            else
-                prompt_char="\[\033[41m\]\[\033[30m\]\$\[\033[0m\]"
-            fi
 
-            # void __git_ps1 {pre} {post} {git info}
-            __git_ps1 "╭─ \w " "\n╰$prompt_char " "\\u2387\\u0020\\u0020%s"
-        }
+        # void __git_ps1 {pre} {post} {git info}
+        __git_ps1 "╭─ \w " "\n╰$prompt_char " "\\u2387\\u0020\\u0020%s"
+    }
 
-        PROMPT_COMMAND="prompt_command_callback"
-    fi
-
-    unset oh_my_git_prompt
+    PROMPT_COMMAND="prompt_command_callback"
 
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '

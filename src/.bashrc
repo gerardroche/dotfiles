@@ -19,7 +19,7 @@ shopt -s histappend
 HISTSIZE=1000
 HISTFILESIZE=2000
 
-# No less history
+# No less history (~/.lesshst file)
 export LESSHISTFILE=-
 
 # check the window size after each command and, if necessary,
@@ -61,6 +61,9 @@ fi
 
 if [ "$color_prompt" = yes ]; then
 
+	# Default PS1
+    # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+
     # hook it to my veins
     GIT_PS1_DESCRIBE_STYLE="contains"
     GIT_PS1_SHOWCOLORHINTS="y"
@@ -85,8 +88,18 @@ if [ "$color_prompt" = yes ]; then
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
-
 unset color_prompt force_color_prompt
+
+# NOTE: This is commented out because it prevents the title being set via the
+# title() function. See the functions definition file: bash_functions.
+# If this is an xterm set the title to user@host:dir
+# case "$TERM" in
+# xterm*|rxvt*)
+#     PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+#     ;;
+# *)
+#     ;;
+# esac
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -100,16 +113,8 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-# If this is an xterm set the title to user@host:dir
-# Note: This is commented out because it prevents the
-# title being set via the title() function. See the
-# functions definition file: bash_functions.
-# case "$TERM" in
-#     xterm*|rxvt*)
-#         PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-#         ;;
-#     *)  ;;
-# esac
+# colored GCC warnings and errors
+#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like

@@ -46,7 +46,7 @@ esac
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
-force_color_prompt=yes
+#force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
@@ -62,9 +62,8 @@ fi
 if [ "$color_prompt" = yes ]; then
 
 	# Default PS1
-    # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 
-    # hook it to my veins
     GIT_PS1_DESCRIBE_STYLE="contains"
     GIT_PS1_SHOWCOLORHINTS="y"
     GIT_PS1_SHOWDIRTYSTATE="y"
@@ -72,19 +71,7 @@ if [ "$color_prompt" = yes ]; then
     GIT_PS1_SHOWUNTRACKEDFILES="y"
     GIT_PS1_SHOWUPSTREAM="verbose name git"
 
-    prompt_command_callback() {
-        if test "$?" = 0; then
-            prompt_char="\$"
-        else
-            prompt_char="\[\033[41m\]\[\033[30m\]\$\[\033[0m\]"
-        fi
-
-        # void __git_ps1 {pre} {post} {git info}
-        __git_ps1 "╭─ \w " "\n╰$prompt_char " "\\u2387\\u0020\\u0020%s"
-    }
-
-    PROMPT_COMMAND="prompt_command_callback"
-
+    PROMPT_COMMAND='__git_ps1 "╭─ \w" "\n╰$(if test $? = 0;then echo "\$";else echo "\[\e[31m\]\$\[\e[0m\]";fi) " " ⎇  %s"'
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi

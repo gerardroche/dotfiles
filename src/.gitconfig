@@ -20,6 +20,7 @@
 	co = checkout
 	cod = checkout develop
 	com = checkout master
+	conext = "!f() { git log HEAD...$1 --pretty=%H | tail -1 | xargs git checkout; }; f"
 	coprev = checkout HEAD^
 	d = diff
 	dl = diff
@@ -27,6 +28,7 @@
 	f = fetch -v
 	fa = fetch --all
 	ff = merge --ff-only
+	ffnext = "!f() { git log HEAD...$1 --pretty=%H | tail -1 | xargs git merge --ff-only; }; f"
 	ffom = merge --ff-only origin/master
 	ffum = merge --ff-only upstream/master
 	hreset = reset --hard
@@ -37,16 +39,15 @@
 	mt = mergetool
 	p = push
 	pff = pull --ff-only
+	pop = stash pop
 	prune = fetch --prune
 	pt = push --tags
 	r = remote -v
 	rc = rebase --continue
 	s = status
-	stash-all = stash save --include-untracked
+	sta = stash save --include-untracked
 	t = "!f() { git tag -l | sort -V | tail; }; f"
 	undo = reset --soft HEAD^
-	conext = "!f() { git log HEAD...$1 --pretty=%H | tail -1 | xargs git checkout; }; f"
-	ffnext = "!f() { git log HEAD...$1 --pretty=%H | tail -1 | xargs git merge --ff-only; }; f"
 
 	changelog = "!f() { git log --no-merges $1 --not $2 --format=\"%h %s%+b\"; }; f"
 	contributors = shortlog --summary --numbered # List contributors with number of commits https://github.com/mathiasbynens/dotfiles/blob/e32bc6cc07e1e25ba0821c3c20b488ead2133e0a/.gitconfig

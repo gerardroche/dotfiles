@@ -132,7 +132,6 @@
 	log = 65
 	stat = true
 	summary = true
-	tool = fugitive
 
 [mergetool]
 

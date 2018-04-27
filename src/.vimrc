@@ -164,12 +164,15 @@ let g:gitgutter_sign_column_always = 0
 let g:php_baselib = 1
 let g:php_folding = 1
 let g:php_sql_query = 1
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_jump = 0
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_php_checkers = ['php']
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_jump = 0
+"let g:syntastic_auto_loc_list = 0
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
+"let g:syntastic_php_checkers = ['php']
+let g:syntastic_python_flake8_exec = '~/.local/bin/flake8'
+" let g:syntastic_python_mypy_exec = '~/.local/bin/mypy'
+let g:syntastic_debug = 1
 if exists('$TMUX')
     let g:test#strategy = 'vimux'
 endif

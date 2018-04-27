@@ -1,10 +1,10 @@
 
 find_dirs_not_perm_755() {
-    find . ! -perm 755 -type d ! -wholename "*.git*" -ls
+    find . ! -perm 755 -type d ! -wholename "*.git/*" -ls
 }
 
 find_regular_files_not_perm_644() {
-    find . ! -perm 644 -type f ! -wholename "*.git*" -ls
+    find . ! -perm 644 -type f ! -wholename "*.git/*" -ls
 }
 
 find_regular_files_with_byte_order_marks() {

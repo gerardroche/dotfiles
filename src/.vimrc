@@ -54,7 +54,7 @@ Plug 'tpope/vim-unimpaired'
 " Colour schemes
 Plug 'lifepillar/vim-solarized8'
 Plug 'morhetz/gruvbox'
-Plug 'tomasr/molokai'
+" Plug 'tomasr/molokai'
 
 call plug#end()
 
@@ -162,7 +162,7 @@ let g:gitgutter_highlight_lines = 0
 let g:gitgutter_map_keys = 1
 let g:gitgutter_sign_column_always = 0
 let g:php_baselib = 1
-let g:php_folding = 1
+let g:php_folding = 0
 let g:php_sql_query = 1
 "let g:syntastic_always_populate_loc_list = 1
 "let g:syntastic_auto_jump = 0
@@ -172,7 +172,7 @@ let g:php_sql_query = 1
 "let g:syntastic_php_checkers = ['php']
 let g:syntastic_python_flake8_exec = '~/.local/bin/flake8'
 " let g:syntastic_python_mypy_exec = '~/.local/bin/mypy'
-let g:syntastic_debug = 1
+let g:syntastic_debug = 0
 if exists('$TMUX')
     let g:test#strategy = 'vimux'
 endif
@@ -344,10 +344,10 @@ nnoremap <Space> :
 " Make j and k work file linewise instead of screen linewise.
 " http://stevelosh.com/blog/2010/09/coming-home-to-vim/
 " https://bitbucket.org/sjl/dotfiles/src/b89b95f1cb1d06596c0c46bfb5a9e7e95ce71913/vim/vimrc?at=default
-noremap j gj
-noremap k gk
-noremap gj j
-noremap gk k
+" noremap j gj
+" noremap k gk
+" noremap gj j
+" noremap gk k
 
 " vmap <lt> <lt>gv
 " vmap > >gv
@@ -365,6 +365,9 @@ noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> :nohlsearch<CR>
 
+" Registers.
+noremap <leader>r :reg<CR>
+
 " Saving.
 noremap <C-s> :w<CR>
 
@@ -381,11 +384,6 @@ map <leader>Y "+Y
 map <leader>p "+p
 map <leader>P "+P
 noremap <leader>yy "+Y
-
-" Select entire buffer
-" https://bitbucket.org/sjl/dotfiles/src/b89b95f1cb1d06596c0c46bfb5a9e7e95ce71913/vim/vimrc?at=default
-nnoremap vaa ggvGg_
-nnoremap Vaa ggVG
 
 " Toggle NERDTree
 noremap <leader>d :NERDTreeToggle<CR>

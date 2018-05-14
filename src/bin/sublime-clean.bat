@@ -1,3 +1,4 @@
+
 @RMDIR /S /Q "%APPDATA%\Sublime Text 3\Backup"
 @RMDIR /S /Q "%APPDATA%\Sublime Text 3\Lib"
 @RMDIR /S /Q "%APPDATA%\Sublime Text 3\Packages\.logs"
@@ -7,5 +8,5 @@
 @RMDIR /S /Q "%LOCALAPPDATA%\Sublime Text 3\Index"
 del "%APPDATA%\Sublime Text 3\Local\*.sublime_session"
 del "%APPDATA%\Sublime Text 3\Packages\User\*-ca-bundle.crt"
-del "%APPDATA%\Sublime Text 3\Packages\User\.*log*"
+del "%APPDATA%\Sublime Text 3\Packages\User\*.log*"
 del "%APPDATA%\Sublime Text 3\Packages\User\Package Control.*-ca-bundle"

@@ -202,7 +202,9 @@ if &term =~ '256color'
     set t_ut=
 endif
 
-set termguicolors
+if exists('+termguicolors')
+    set termguicolors
+endif
 
 set background=dark
 

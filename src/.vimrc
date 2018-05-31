@@ -311,6 +311,8 @@ function! DumpColorSchemeInfo()
     execute join(['hi', lo], ' ')
 endfunction
 
+command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
+
 " }}}
 " Autocommands {{{
 filetype plugin indent on

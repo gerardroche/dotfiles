@@ -53,11 +53,7 @@ if test -z "$TMUX"; then
     unset TMP_PATH
 fi
 
-export APP_DEBUG=true
-export APP_ENV=development
 export EDITOR=vi
-export GO_FAST_DEBUG=true
-export GO_FAST_ENV=development
 export PROJECTS_PATH=~/projects
 export VENDOR_PATH=~/vendor
 export XDEBUG_CONFIG="idekey=pugdebug"

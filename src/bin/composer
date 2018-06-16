@@ -19,7 +19,7 @@ OPEN_BASEDIR="$OPEN_BASEDIR:$HOME/.phpenv/versions"
 
 # Add composer configuration path to open_basedir. Newer versions of composer
 # don't need to add this path because configurations are stored in
-# .config/composer in newer versions of composer.
+# .config/composer in newer versions of composer (Linux).
 OPEN_BASEDIR="$OPEN_BASEDIR:$HOME/.composer"
 
 # Add system projects path to open_basedir
@@ -82,9 +82,9 @@ export COMPOSER_DISABLE_XDEBUG_WARN=1
 # https://github.com/composer/composer/pull/5580
 export COMPOSER_ALLOW_XDEBUG=1
 
-echo "DEBUG composer: php bin = $PHP_BIN"
-echo "DEBUG composer: php open_basedir = $OPEN_BASEDIR"
-echo "DEBUG composer: php disable functions = $DISABLE_FUNCTIONS"
+# echo "DEBUG composer: php bin = $PHP_BIN"
+# echo "DEBUG composer: php open_basedir = $OPEN_BASEDIR"
+# echo "DEBUG composer: php disable functions = $DISABLE_FUNCTIONS"
 
 exec "$PHP_BIN"\
     -d detect_unicode=0\

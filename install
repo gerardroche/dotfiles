@@ -41,6 +41,7 @@ echo "command: cd $SOURCE_PATH"
 if test "$1" != "--skip-dependencies"; then
     echo "Installing dependencies..."
     command -v ctags >/dev/null 2>&1 || sudo apt-get install exuberant-ctags
+    command -v dconf-editor >/dev/null 2>&1 || sudo apt-get install dconf-tools
     command -v figlet >/dev/null 2>&1 || sudo apt-get install figlet
     command -v firefox >/dev/null 2>&1 || sudo apt-get install firefox firefox-locale-en
     command -v flake8 >/dev/null 2>&1 || sudo apt-get install python-flake8
@@ -50,12 +51,11 @@ if test "$1" != "--skip-dependencies"; then
     command -v gtypist >/dev/null 2>&1 || sudo apt-get install gtypist
     command -v liferea >/dev/null 2>&1 || sudo apt-get install liferea
     command -v netstat >/dev/null 2>&1 || sudo apt-get install net-tools
+    command -v rename >/dev/null 2>&1 || sudo apt-get install rename
     command -v tmux >/dev/null 2>&1 || sudo apt-get install tmux
     command -v tree >/dev/null 2>&1 || sudo apt-get install tree
     command -v vim.basic >/dev/null 2>&1 || sudo apt-get install vim
     command -v xclip >/dev/null 2>&1 || sudo apt-get install xclip
-    command -v rename >/dev/null 2>&1 || sudo apt-get install rename
-    command -v dconf-editor >/dev/null 2>&1 || sudo apt-get install dconf-tools
 
     # Required for Git interactive.singlekey to work.
     # See https://superuser.com/a/817688.

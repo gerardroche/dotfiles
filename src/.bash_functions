@@ -144,12 +144,23 @@ phpcs() {
     if test -f ./vendor/bin/php-cs-fixer; then
         php -d xdebug.scream=0 ./vendor/bin/php-cs-fixer "$@"
     else
-        if test ! -f ./.php_cs.dist && test ! -f ./.php_cs && test -f ~/.php_cs; then
-            if test "x$1" = "xfix"; then
-                php-cs-fixer "$@" --config ~/.php_cs
+        config_file=
+        if test "x$1" = "xfix"; then
+            if test -f ./.php_cs; then
+                config_file=./.php_cs
+            elif test -f ./../.php_cs; then
+                config_file=./../.php_cs
+            elif test -f ./.php_cs.dist; then
+                config_file=./.php_cs.dist
             else
-                php-cs-fixer "$@"
+                echo "no config found!"
+                return
             fi
+        fi
+
+        echo "using php-cs-fixer config: $config_file"
+        if test -n "$config_file"; then
+            php-cs-fixer "$@" --config "$config_file"
         else
             php-cs-fixer "$@"
         fi

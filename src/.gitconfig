@@ -23,14 +23,14 @@
 	conext = "!f() { git log HEAD...$1 --pretty=%H | tail -1 | xargs git checkout; }; f"
 	coprev = checkout HEAD^
 	d = diff
-	dl = diff
-	ds = diff --staged
 	f = fetch -v
-	fa = fetch --all
 	ff = merge --ff-only
 	ffnext = "!f() { git log HEAD...$1 --pretty=%H | tail -1 | xargs git merge --ff-only; }; f"
 	ffom = merge --ff-only origin/master
 	ffum = merge --ff-only upstream/master
+	fg = fetch gerardroche
+	fo = fetch origin
+	fu = fetch upstream
 	hreset = reset --hard
 	l = "!f() { git log --all --pretty=format:\"%C(auto)%h %s %n%<(1)        %D\" --date=short --decorate --graph -n "${1:-10}"; }; f"
 	ll = "!f() { git log --pretty=format:\"%C(auto)%h %s %n        %cn <%ae> %ad%n        %D\" --decorate --date=short --graph -n "${1:-7}"; }; f"
@@ -49,22 +49,19 @@
 	t = "!f() { git tag -l | sort -V | tail; }; f"
 	undo = reset --soft HEAD^
 
-	changelog = "!f() { git log --no-merges $1 --not $2 --format=\"%h %s%+b\"; }; f"
-	contributors = shortlog --summary --numbered # List contributors with number of commits https://github.com/mathiasbynens/dotfiles/blob/e32bc6cc07e1e25ba0821c3c20b488ead2133e0a/.gitconfig
-
-	ctags = "!.git/hooks/ctags"
-
-	doc     = "!f() { git commit -m \"Doc: $*\"; }; f"
-	fix     = "!f() { git commit -m \"Fix: $*\" -v; }; f"
-	hi5     = "!f() { git commit -m \"^5 $*\"; }; f"
-
 	batman  	= "!f() { git add -A . && git commit -m \"Batman! $*\"; }; f"
+	fire     	= "!f() { git add -A . && git commit -m \":fire: $*\"; }; f"
+	hi5         = "!f() { git commit -m \"^5 $*\"; }; f"
 	kapow   	= "!f() { git add -A . && git commit -m \"KAPOW$*\"; }; f"
 	w      		= "!f() { git add -A . && git commit -m \"$*\"; }; f"
 	wa     		= "!f() { git add -A . && git commit -m \":metal: $*\"; }; f"
 	wip     	= "!f() { git add -A . && git commit -m \"WIP: $*\"; }; f"
 	zap     	= "!f() { git add -A . && git commit -m \":zap: $*\"; }; f"
 	zapkapow  	= "!f() { git add -A . && git commit -m \":zap: KAPOW\"; }; f"
+
+	changelog = "!f() { git log --no-merges $1 --not $2 --format=\"%h %s%+b\"; }; f"
+	contributors = shortlog --summary --numbered # List contributors with number of commits https://github.com/mathiasbynens/dotfiles/blob/e32bc6cc07e1e25ba0821c3c20b488ead2133e0a/.gitconfig
+    ctags = "!.git/hooks/ctags"
 
 [bash]
 

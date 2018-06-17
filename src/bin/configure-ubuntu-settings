@@ -6,66 +6,19 @@ unset IFS
 
 echo -n "Configuring Ubuntu settings... "
 
-# causes error unknown setting:
-# gsettings set com.ubuntu.geoip geoip-url ''
+# Ubuntu 18.04
+gsettings set org.gnome.desktop.privacy report-technical-problems false
 
-# # Disable GeoIP Connections
-# # I have permanent connections to Canonical servers, what are they for? http://askubuntu.com/a/145384/32580
-# gsettings set com.ubuntu.geoip geoip-url ""
-
-# gsettings set apps.telepathy-logger enabled false
-# gsettings set apps.update-manager show-versions true
-# gsettings set com.canonical.indicator.appmenu.hud store-usage-data false
-# gsettings set com.canonical.indicator.sound preferred-media-players ['banshee']
-
-# # old value ['JavaEmbeddedFrame', 'Wine', 'Update-notifier']
-# gsettings set com.canonical.unity.panel systray-whitelist ['Update-notifier']
-# gsettings set com.canonical.unity.webapps integration-allowed false
-
-# # Disable "available apps" in app lens
-# gsettings set desktop.unity.lenses.applications display-available-apps false
-
-# gsettings set org.yorba.shotwell.sharing.facebook strip-metadata true
-# gsettings set org.yorba.shotwell.sharing.flickr strip-metadata true
-# gsettings set org.yorba.shotwell.sharing.org-yorba-shotwell-publishing-piwigo strip-metadata true
-# gsettings set org.yorba.shotwell.sharing.picasa strip-metadata true
-# gsettings set org.yorba.shotwell.sharing.youtube strip-metadata true
-
-gsettings set com.canonical.indicator.appmenu.hud store-usage-data false
-gsettings set com.canonical.indicator.datetime show-auto-detected-location false
-gsettings set com.canonical.indicator.network data-usage-indication true
-gsettings set com.canonical.Unity.ApplicationsLens display-available-apps false
-gsettings set com.canonical.Unity.ApplicationsLens display-recent-apps true
-gsettings set com.canonical.Unity.Dash scopes "['applications.scope']"
-gsettings set com.canonical.Unity.FilesLens use-locate true
-gsettings set com.canonical.Unity.Lenses always-search "['applications.scope']"
-gsettings set com.canonical.Unity.Lenses disabled-scopes "['more_suggestions-amazon.scope', 'more_suggestions-u1ms.scope', 'more_suggestions-populartracks.scope', 'music-musicstore.scope', 'more_suggestions-ebay.scope', 'more_suggestions-ubuntushop.scope', 'more_suggestions-skimlinks.scope']"
-gsettings set com.canonical.Unity.Lenses remote-content-search 'none'
-gsettings set com.ubuntu.touch.network gps false
-gsettings set com.ubuntu.update-manager autoclose-install-window false
-gsettings set com.ubuntu.update-manager check-dist-upgrades false
-gsettings set com.ubuntu.update-manager show-details true
-gsettings set com.ubuntu.update-manager show-versions true
-gsettings set com.ubuntu.update-manager summary-before-name true
-gsettings set com.ubuntu.update-notifier show-apport-crashes false
-gsettings set org.gnome.desktop.datetime automatic-timezone false
+# Ubuntu 17.04
 gsettings set org.gnome.desktop.privacy hide-identity true
-gsettings set org.gnome.desktop.privacy remember-app-usage false
-gsettings set org.gnome.desktop.privacy remember-recent-files false
-gsettings set org.gnome.desktop.privacy remove-old-temp-files true
-gsettings set org.gnome.desktop.privacy remove-old-trash-files true
 gsettings set org.gnome.desktop.privacy send-software-usage-stats false
-gsettings set org.gnome.desktop.privacy show-full-name-in-top-bar false
-gsettings set org.gnome.desktop.screensaver show-full-name-in-top-bar false
-gsettings set org.gnome.desktop.search-providers disable-external true
-gsettings set org.gnome.FileRoller.Listing show-path true
-gsettings set org.gnome.nautilus.list-view default-zoom-level 'small'
+gsettings set org.gnome.desktop.datetime automatic-timezone false
 gsettings set org.gnome.nautilus.list-view use-tree-view true
 gsettings set org.gnome.nautilus.preferences default-folder-viewer 'list-view'
 gsettings set org.gnome.nautilus.preferences show-hidden-files true
-# gsettings set org.gnome.nautilus.preferences sort-directories-first true
+gsettings set com.canonical.Unity.Lenses remote-content-search 'none'
+gsettings set com.ubuntu.update-manager show-details true
+gsettings set com.ubuntu.update-manager show-versions true
 gsettings set org.gnome.system.location enabled false
-gsettings set org.gtk.Settings.FileChooser show-hidden true
-gsettings set org.gtk.Settings.FileChooser sort-directories-first true
 
 echo "done."

@@ -99,12 +99,14 @@ reload_symlinks() {
     echo "reload symbolic links"
 
     # TODO rework hardcoded logic
-    fixup_x_version "5.5.38" "5.5.x"
-    fixup_x_version "5.6.30" "5.6.x"
-    fixup_x_version "7.0.10" "7.0.x"
-    fixup_x_version "7.1.12" "7.1.x"
-    fixup_x_version "5.6.30" "5.x"
-    fixup_x_version "7.2.0"  "7.x"
+    # fixup_x_version "5.5.38" "5.5.x"
+    # fixup_x_version "5.6.30" "5.6.x"
+    # fixup_x_version "7.0.10" "7.0.x"
+    # fixup_x_version "7.1.12" "7.1.x"
+    # fixup_x_version "5.6.30" "5.x"
+    fixup_x_version "7.1.18"  "7.1.x"
+    fixup_x_version "7.2.6"  "7.2.x"
+    fixup_x_version "7.2.6"  "7.x"
 
     # TODO refactor hardcoded paths
     for version_path in ~/.phpenv/versions/*; do

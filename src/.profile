@@ -34,23 +34,24 @@ if test -z "$TMUX"; then
     # /usr/games
     # /usr/local/games
     # /snap/bin
-    TMP_PATH="$PATH"
+    ORIG_PATH="$PATH"
 
     case "$PATH" in
         "$HOME/bin:"*)
             ;;
         *)
             PATH="$HOME/bin"
+            PATH="$PATH:$HOME/.config/composer/vendor/bin"
             PATH="$PATH:$HOME/npm/bin"
             PATH="$PATH:$HOME/.rbenv/shims"
             PATH="$PATH:$HOME/.rbenv/bin"
-            PATH="$PATH:$TMP_PATH"
+            PATH="$PATH:$ORIG_PATH"
             ;;
     esac
 
     export PATH
 
-    unset TMP_PATH
+    unset ORIG_PATH
 fi
 
 export EDITOR=vi

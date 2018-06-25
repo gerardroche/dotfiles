@@ -104,3 +104,8 @@ ln -sfv ~/.dotfiles/vendor/rbenv/ruby-build ~/.rbenv/plugins/ruby-build
 if test -f ~/.dotfiles-private/install; then
     ~/.dotfiles-private/install
 fi
+
+# Composer
+composer config --global notify-on-install false
+composer config --global github-expose-hostname false
+# composer global require friendsofphp/php-cs-fixer

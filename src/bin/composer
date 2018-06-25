@@ -7,6 +7,10 @@ unset CDPATH
 unset IFS
 
 OPEN_BASEDIR="/usr/local/bin/composer"
+
+# HOME should be required!
+OPEN_BASEDIR="$OPEN_BASEDIR:$HOME"
+
 OPEN_BASEDIR="$OPEN_BASEDIR:/tmp"
 OPEN_BASEDIR="$OPEN_BASEDIR:/usr/bin/php5"
 OPEN_BASEDIR="$OPEN_BASEDIR:/usr/bin/php7.0"

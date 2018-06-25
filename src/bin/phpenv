@@ -98,16 +98,6 @@ fixup_x_version() {
 reload_symlinks() {
     echo "reload symbolic links"
 
-    # TODO rework hardcoded logic
-    # fixup_x_version "5.5.38" "5.5.x"
-    # fixup_x_version "5.6.30" "5.6.x"
-    # fixup_x_version "7.0.10" "7.0.x"
-    # fixup_x_version "7.1.12" "7.1.x"
-    # fixup_x_version "5.6.30" "5.x"
-    fixup_x_version "7.1.18"  "7.1.x"
-    fixup_x_version "7.2.6"  "7.2.x"
-    fixup_x_version "7.2.6"  "7.x"
-
     # TODO refactor hardcoded paths
     for version_path in ~/.phpenv/versions/*; do
         if test ! -d "$version_path"; then
@@ -138,6 +128,18 @@ reload_symlinks() {
 
     done
 
+    # Setup *.x version symlinks
+    # TODO rework hardcoded logic
+    # fixup_x_version "5.5.38" "5.5.x"
+    # fixup_x_version "5.6.30" "5.6.x"
+    # fixup_x_version "7.0.10" "7.0.x"
+    # fixup_x_version "7.1.12" "7.1.x"
+    # fixup_x_version "5.6.30" "5.x"
+    fixup_x_version "7.1.18"  "7.1.x"
+    fixup_x_version "7.2.6"  "7.2.x"
+    fixup_x_version "7.2.6"  "7.x"
+
+    # Display some information about the state
     tree -L 1 ~/.phpenv/versions/
 }
 

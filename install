@@ -38,8 +38,23 @@ create_home_dir_symlink() {
 cd "$SOURCE_PATH"
 echo "command: cd $SOURCE_PATH"
 
-if test "$1" != "--skip-dependencies"; then
-    echo "Installing dependencies..."
+SKIP_DEPS=
+SKIP_SUBMODULES=
+UPDATE_SUBMODULES=
+while test "$#" != 0; do
+    case "$1" in
+        --skip-dep*) SKIP_DEPS=true ;;
+        --skip-sub*) SKIP_SUBMODULES=true ;;
+        --update-sub*) UPDATE_SUBMODULES=true ;;
+        --) shift; break ;; # standard end of options list
+        -*) echo >&2 "$0: unknown option '$1'"; exit 1 ;;
+        *) echo >&2 "$0: unknown argument '$1'"; exit 1 ;;
+    esac
+    shift
+done
+
+if test -z "$SKIP_DEPS"; then
+    echo "installing dependencies..."
     command -v ctags >/dev/null 2>&1 || sudo apt-get install exuberant-ctags
     command -v dconf-editor >/dev/null 2>&1 || sudo apt-get install dconf-tools
     command -v figlet >/dev/null 2>&1 || sudo apt-get install figlet
@@ -51,10 +66,11 @@ if test "$1" != "--skip-dependencies"; then
     command -v gtypist >/dev/null 2>&1 || sudo apt-get install gtypist
     command -v liferea >/dev/null 2>&1 || sudo apt-get install liferea
     command -v netstat >/dev/null 2>&1 || sudo apt-get install net-tools
+    command -v python-pip >/dev/null 2>&1 || sudo apt-get install pip
     command -v rename >/dev/null 2>&1 || sudo apt-get install rename
     command -v tmux >/dev/null 2>&1 || sudo apt-get install tmux
     command -v tree >/dev/null 2>&1 || sudo apt-get install tree
-    command -v vim.basic >/dev/null 2>&1 || sudo apt-get install vim
+    command -v vim.gtk >/dev/null 2>&1 || sudo apt-get install vim-gtk
     command -v xclip >/dev/null 2>&1 || sudo apt-get install xclip
 
     # Required for Git interactive.singlekey to work.
@@ -68,20 +84,20 @@ if test "$1" != "--skip-dependencies"; then
     # The following fonts need to be manually installed:
     # Hasklig (Source Code Pro font with ligatures) https://github.com/i-tu/Hasklig
     # Monoid (lagature font) https://github.com/larsenwork/monoid
-
-else
-    shift
 fi
 
-if test "$1" != "--skip-submodules"; then
-    echo "Updating dependencies..."
-    git submodule update --init --recursive
+if test -z "$SKIP_SUBMODULES"; then
+    echo "installing submodules..."
+    git submodule init
+    git submodule update
+fi
+
+if test -z "$UPDATE_SUBMODULES"; then
+    echo "updating submodules..."
     git submodule foreach 'git fetch && git merge --ff-only origin/master'
-else
-    shift
 fi
 
-echo "Configuring home directory $HOME symbolic links..."
+echo "configuring symlinks..."
 
 for file in "$SOURCE_PATH/src/".*; do
     create_home_dir_symlink "$file"
@@ -109,3 +125,4 @@ fi
 composer config --global notify-on-install false
 composer config --global github-expose-hostname false
 # composer global require friendsofphp/php-cs-fixer
+# TODO composer global require phan/phan (requires apt-get install php-ast)

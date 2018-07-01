@@ -20,5 +20,6 @@ gsettings set com.canonical.Unity.Lenses remote-content-search 'none'
 gsettings set com.ubuntu.update-manager show-details true
 gsettings set com.ubuntu.update-manager show-versions true
 gsettings set org.gnome.system.location enabled false
+gsettings set org.gnome.shell.overrides workspaces-only-on-primary false
 
 echo "done."

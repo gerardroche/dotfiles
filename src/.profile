@@ -58,3 +58,4 @@ export EDITOR=vi
 export PROJECTS_PATH=~/projects
 export VENDOR_PATH=~/vendor
 export XDEBUG_CONFIG="idekey=pugdebug"
+export PHAN_DISABLE_XDEBUG_WARN=0

@@ -307,3 +307,8 @@ c() {
 v() {
     cd "$VENDOR_PATH/$1"
 }
+
+wslsshadd() {
+    eval $(ssh-add -s)
+    ssh-add ~/.ssh/id_rsa
+}

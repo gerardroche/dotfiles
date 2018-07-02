@@ -8,9 +8,30 @@ My configuration files for bash, vim, git, and more. :zap: :zap:
 
 **All bets are off! Install at your own risk.**
 
+The dotfiles must be cloned to `~/.dotfiles` or some things might break!
+
 ```sh
-git clone https://github.com/gerardroche/dotfiles.git ~/.dotfiles && ~/.dotfiles/install
+git clone https://github.com/gerardroche/dotfiles.git ~/.dotfiles
 ```
+
+Run the installer.
+
+It will install dependencies, submodules, and setup any necessary symbolic
+links (or in WSL the files are copied into place because symlinks are mangled in WSL).
+
+**On Linux, it will not overwrite anything.** If the installer can't create a
+symlink because an existing file or folder already exists, it will print a
+notice asking you to move the file out of the way and re-run the installer.
+
+On WSL the files **will** overwrite existing files.
+
+```
+~/.dotfiles/install
+```
+
+Open Vim and run `:PlugInstall` to install the vim dependencies. Vim may
+complain about missing colorschemes, once the dependencies are installed it will
+be fine.
 
 ## Thanks
 

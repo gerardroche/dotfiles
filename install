@@ -66,7 +66,7 @@ if test -z "$SKIP_DEPS"; then
     command -v gtypist >/dev/null 2>&1 || sudo apt-get install gtypist
     command -v liferea >/dev/null 2>&1 || sudo apt-get install liferea
     command -v netstat >/dev/null 2>&1 || sudo apt-get install net-tools
-    command -v python-pip >/dev/null 2>&1 || sudo apt-get install pip
+    command -v pip3 >/dev/null 2>&1 || sudo apt-get install python3-pip
     command -v rename >/dev/null 2>&1 || sudo apt-get install rename
     command -v tmux >/dev/null 2>&1 || sudo apt-get install tmux
     command -v tree >/dev/null 2>&1 || sudo apt-get install tree

@@ -28,27 +28,44 @@ create_home_dir_symlink() {
     fi
 
     if is_wsl; then
-        from="${target#$HOME\/.dotfiles/}"
-    else
+        # *sigh* This isn't worth it. It's just gonna be one gotcha after the other.
+        #
+        # Symlinks are broken to hell in WSL e.g. Git chokes on symlinks,
+        # gitk.exe (because gitk has no display).
+        #
+        # Most files need to be copied. DO NOT MODIFY FILES IN PLACE, because
+        # the installer will overwrite eisting files.
+
         from="./${target#$HOME/}"
-    fi
+        from_rel="${target#$HOME\/.dotfiles/}"
+        to="$HOME/$target_basename"
 
-    to="$HOME/$target_basename"
-
-    if test -L "$to" -o ! -e "$to"; then
-        if is_wsl; then
-            # Yeah, WSL.
-            if test -L "$to"; then
-                rm -v "$to"
+        if test -d "$from_rel"; then
+            echo "copy directory $from_rel -> $to"
+            if test "$from" = "./.dotfiles/src/.gittemplates"; then
+                # Git on WSL chokes on symlinks.
+                cp -r "$from_rel" "$to"
+            else
+                if test -L "$to" -o ! -e "$to"; then
+                    ln -sfnv "$from" "$to"
+                else
+                    echo >&2 "=> NOTICE Could not create home directory symlink."
+                    echo >&2 "          File already exists. Move the existing file and rerun the install script. \"$from\" -> \"$to\""
+                fi
             fi
-            cp -r "$from" "$to"
         else
-            ln -sfnv "$from" "$to"
+            cp -v "$from_rel" "$to"
         fi
     else
-        echo >&2 "=> NOTICE Could not create home directory symlink."
-        echo >&2 "          File alreay exists {target: \"$from\", name: \"$to\"}."
-        echo >&2 "          Move the existing file and rerun the install script."
+        from="./${target#$HOME/}"
+        to="$HOME/$target_basename"
+
+        if test -L "$to" -o ! -e "$to"; then
+            ln -sfnv "$from" "$to"
+        else
+            echo >&2 "=> NOTICE Could not create home directory symlink."
+            echo >&2 "          File already exists. Move the existing file and rerun the install script. \"$from\" -> \"$to\""
+        fi
     fi
 }
 

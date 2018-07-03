@@ -16,6 +16,16 @@ find_regular_files_with_byte_order_marks() {
     done
 }
 
+# https://askubuntu.com/questions/73443/how-to-stop-the-terminal-from-wrapping-lines
+nowrap() {
+    tput rmam
+}
+
+# https://askubuntu.com/questions/73443/how-to-stop-the-terminal-from-wrapping-lines
+wrap() {
+    tput smam
+}
+
 mypyinitfix() {
     # Recursively creates __init__.pyi files.
     #
@@ -88,6 +98,20 @@ internet_use() {
 
 internet_use_full() {
     lsof -P -i -n | cut -f 1 -d " " | uniq
+}
+
+gitvisual() {
+    cmd=gitk
+
+    cmd+=" --branches"
+
+    for remote in $(git remote); do
+        cmd+=" remotes/$remote/master"
+    done
+
+    cmd+=" -n 100"
+
+    $cmd
 }
 
 rbenv() {

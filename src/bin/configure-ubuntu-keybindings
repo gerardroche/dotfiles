@@ -55,6 +55,7 @@ gsettings set org.gnome.desktop.wm.keybindings  switch-group                "['<
 
 # Window management: Resizing.
 gsettings set org.gnome.desktop.wm.keybindings  unmaximize                  "['<Super>j']"
+gsettings set org.gnome.desktop.wm.keybindings  minimize                    "['<Super>m']"
 gsettings set org.gnome.desktop.wm.keybindings  maximize                    "['<Super>k']"
 gsettings set org.gnome.desktop.wm.keybindings  toggle-fullscreen           "['<Super>u']"
 gsettings set org.gnome.desktop.wm.keybindings  maximize-horizontally       "['<Super>minus']" # "minus" is the same key as underscore.

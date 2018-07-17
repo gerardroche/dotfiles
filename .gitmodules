@@ -10,3 +10,6 @@
 [submodule "vendor/php-build/php-build"]
 	path = vendor/php-build/php-build
 	url = https://github.com/php-build/php-build.git
+[submodule "vendor/creationix/nvm"]
+	path = vendor/creationix/nvm
+	url = https://github.com/creationix/nvm.git

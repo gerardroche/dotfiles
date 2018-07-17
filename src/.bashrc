@@ -140,6 +140,13 @@ if ! shopt -oq posix; then
     fi
 fi
 
-# Fix CTRL-S is Vim.
+# If running nvm.
+if [ -n "$NVM_DIR" ]; then
+    if [ -f "$NVM_DIR/nvm.sh" ]; then
+        . "$NVM_DIR/nvm.sh" --no-use
+    fi
+fi
+
+# Fix CTRL-S in Vim.
 # https://stackoverflow.com/questions/13648237/ctrls-horizontal-split-not-working-with-command-t-in-vim
 stty start undef stop undef

@@ -145,9 +145,11 @@ done
 
 ln -sfv ~/.dotfiles/vendor/paulirish/git-open/git-open ~/bin/git-open
 ln -sfv ~/.dotfiles/vendor/php-build/php-build/bin/php-build  ~/bin/php-build
+ln -sfnv ./.dotfiles/vendor/creationix/nvm ~/.nvm
 
-# TODO esnure symlink for ~/.config/nvim -> ../.vim
+# TODO esnure symlink for Neovim: ~/.config/nvim -> ../.vim
 
+# Quick hacky fixes for rbenv
 mkdir -p ~/.rbenv/plugins
 touch ~/.rbenv/plugins/ruby-build
 rm ~/.rbenv/plugins/ruby-build

@@ -100,19 +100,38 @@ internet_use_full() {
     lsof -P -i -n | cut -f 1 -d " " | uniq
 }
 
-gitvisual() {
+gitkmaster() {
     cmd=gitk
-
-    cmd+=" --branches"
-
+    cmd+=" master"
     for remote in $(git remote); do
-        cmd+=" remotes/$remote/master"
+        for accept in origin upstream gerardroche; do
+            if test "x$remote" = "x$accept"; then
+                cmd+=" $remote/master"
+            fi
+        done
     done
-
-    cmd+=" -n 100"
-
     $cmd
 }
+
+gitkbranches() {
+    cmd=gitk
+    cmd+=" -n 100"
+    cmd+=" --branches"
+    cmd+=" master"
+    for remote in $(git remote); do
+        for accept in origin upstream gerardroche; do
+            if test "x$remote" = "x$accept"; then
+                cmd+=" $remote/master"
+            fi
+        done
+    done
+    $cmd
+}
+
+gitkdefault() {
+    gitkmaster
+}
+
 
 rbenv() {
     local cmd="$1"

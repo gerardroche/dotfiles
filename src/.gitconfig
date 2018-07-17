@@ -100,16 +100,12 @@
 
 	mnemonicprefix = true
 
-[fetch]
-
-	prune = true
-
 [flake8]
 
 	strict = true
 
 [gc]
-	auto = 1
+	auto = 500
 
 [help]
 

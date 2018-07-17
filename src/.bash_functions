@@ -110,6 +110,7 @@ gitkmaster() {
             fi
         done
     done
+
     $cmd
 }
 
@@ -125,6 +126,7 @@ gitkbranches() {
             fi
         done
     done
+
     $cmd
 }
 
@@ -278,6 +280,10 @@ setmygitremote() {
 
 watchapplogs() {
     tail -v -f /var/log/{apache2,mysql}/{,*}{access,error,mysql}.log ./data/logs/*.log
+}
+
+watchmysqllogs() {
+    tail -v -f /var/log/mysql/{error,mysql}.log
 }
 
 projects() {

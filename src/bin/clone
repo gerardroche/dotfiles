@@ -6,9 +6,9 @@ unset IFS
 
 show_usage() {
     cat <<EOT
-Usage: $(basename "$0") <GITHUB-REPOSITORY-URL>
+Usage: $(basename "$0") (<github-repository-url>|<composer-package-name>)
 
-Clones a Github repository to <VENDOR_PATH>/<USER>/<REPOSITORY>
+Clones a Github repository to $VENDOR_PATH/<repository-username>/<repository-name>.
 EOT
 }
 

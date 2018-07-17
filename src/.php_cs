@@ -12,9 +12,9 @@ $config = PhpCsFixer\Config::create();
 $config->setRules(array(
     '@PSR2' => true,
     '@Symfony' => true,
-    'concat_space' => ['spacing' => 'one'],
-    'trailing_comma_in_multiline_array' => false,
-    'no_trailing_comma_in_singleline_array' => true
+    // 'concat_space' => ['spacing' => 'one'],
+    // 'trailing_comma_in_multiline_array' => false,
+    // 'no_trailing_comma_in_singleline_array' => true
 ));
 $config->setFinder($finder);
 

@@ -103,6 +103,7 @@ internet_use_full() {
 gitkmaster() {
     cmd=gitk
     cmd+=" master"
+    cmd+=" $(git rev-parse --abbrev-ref HEAD)"
     for remote in $(git remote); do
         for accept in origin upstream gerardroche; do
             if test "x$remote" = "x$accept"; then
@@ -119,6 +120,7 @@ gitkbranches() {
     cmd+=" -n 100"
     cmd+=" --branches"
     cmd+=" master"
+    cmd+=" $(git rev-parse --abbrev-ref HEAD)"
     for remote in $(git remote); do
         for accept in origin upstream gerardroche; do
             if test "x$remote" = "x$accept"; then
@@ -262,28 +264,31 @@ setmygitremote() {
     )"
 
     if test -n "$new_origin"; then
-        echo
-        echo "UPDATING REMOTES:"
-        echo
         git remote -v
-        echo
-
         git remote set-url origin "$new_origin"
     fi
 
-    echo
-    echo "REMOTES:"
-    echo
     git remote -v
-    echo
 }
 
 watchapplogs() {
-    tail -v -f /var/log/{apache2,mysql}/{,*}{access,error,mysql}.log ./data/logs/*.log
+    tail -f /var/log/{apache2,mysql}/{,*}{access,error,mysql}.log ./data/logs/*.log
+}
+
+watchapplogs() {
+    tail -f /var/log/apache2/{access,error,mysql}.log
 }
 
 watchmysqllogs() {
-    tail -v -f /var/log/mysql/{error,mysql}.log
+    tail -f /var/log/mysql/{error,mysql}.log
+}
+
+watchdataapplogs() {
+    tail -f data/logs/*.log
+}
+
+watchlaravelapplogs() {
+    tail -f storage/logs/*.log
 }
 
 projects() {

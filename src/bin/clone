@@ -23,25 +23,25 @@ filter_github_repo_url_path() {
     echo "$github_repo_url_path"
 }
 
-check_repositories_path() {
+_check_vendor_path_exists() {
     if test -z "$VENDOR_PATH"; then
-        echo >&2 "$(basename "$0"): VENDOR_PATH is not set"
+        echo >&2 "$(basename "$0"): VENDOR_PATH environment variable is not set"
         exit 1
     fi
 
     if test ! -d "$VENDOR_PATH"; then
-        echo >&2 "$(basename "$0"): VENDOR_PATH is not a directory"
+        echo >&2 "$(basename "$0"): $VENDOR_PATH does not exist or is not a valid directory"
         exit 1
     fi
 }
 
 test "$#" = 0 && show_usage && exit 0
 
-check_repositories_path()
+_check_vendor_path_exists
 
 if test -z "$1"; then
-    echo >&2 "$(basename "$0"): <USER>/<REPOSITORY> can't be blank"
-    exit 1
+    show_usage
+    exit 0
 fi
 
 GITHUB_REPO_URL_PATH="$(filter_github_repo_url_path "$1")"

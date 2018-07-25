@@ -240,6 +240,12 @@ call matchadd("RulerColumn", '\%81v', 100)
 silent! highlight RulerColumn2 ctermfg=white ctermbg=red guifg=white guibg=red
 call matchadd("RulerColumn2", '\%121v', 200)
 
+" Fix spell checking
+hi SpellBad term=reverse guifg=#000000 guibg=#FF0000
+hi SpellCap term=reverse guifg=#000000 guibg=#FF0000
+hi SpellLocal term=underline guifg=#000000 guibg=#FF0000
+hi SpellRare term=reverse guifg=#000000 guibg=#FF0000
+
 " }}}
 " Commands {{{
 
@@ -331,7 +337,7 @@ autocmd Filetype gitcommit setlocal spell textwidth=72
 
 " Better completions.
 " https://jordaneldredge.com/blog/setting-up-php-completion-in-vim/
-"autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
+" autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
 "}}}
 " Mappings {{{
 

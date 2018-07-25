@@ -45,6 +45,7 @@ if test -z "$TMUX"; then
             PATH="$PATH:$HOME/npm/bin"
             PATH="$PATH:$HOME/.rbenv/shims"
             PATH="$PATH:$HOME/.rbenv/bin"
+            PATH="$PATH:$HOME/.gems/bin"
             PATH="$PATH:$ORIG_PATH"
             ;;
     esac
@@ -59,4 +60,6 @@ export NVM_DIR="$(readlink -nf ~/.nvm)" # https://github.com/creationix/nvm/issu
 export PHAN_DISABLE_XDEBUG_WARN=1
 export PROJECTS_PATH=~/projects
 export VENDOR_PATH=~/vendor
-export XDEBUG_CONFIG="idekey=pugdebug"
+export GEM_HOME=~/gems
+#export XDEBUG_CONFIG="idekey=pugdebug"
+export XDEBUG_CONFIG="idekey=netbeans-xdebug"

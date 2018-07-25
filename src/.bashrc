@@ -72,6 +72,7 @@ if [ "$color_prompt" = yes ]; then
     GIT_PS1_SHOWUPSTREAM="verbose name git"
 
     PROMPT_COMMAND='__git_ps1 "╭─ \w" "\n╰$(if test $? = 0;then echo "\$";else echo "\[\e[31m\]\$\[\e[0m\]";fi) " " ⎇  %s"'
+
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi

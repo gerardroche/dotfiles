@@ -115,9 +115,14 @@ gitkmaster() {
     $cmd
 }
 
+gr() {
+    git checkout -b "gr-$1"
+}
+
+
 gitkbranches() {
     cmd=gitk
-    cmd+=" -n 100"
+    cmd+=" -n 400"
     cmd+=" --branches"
     cmd+=" master"
     cmd+=" $(git rev-parse --abbrev-ref HEAD)"

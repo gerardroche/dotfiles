@@ -61,5 +61,4 @@ export PHAN_DISABLE_XDEBUG_WARN=1
 export PROJECTS_PATH=~/projects
 export VENDOR_PATH=~/vendor
 export GEM_HOME=~/gems
-#export XDEBUG_CONFIG="idekey=pugdebug"
 export XDEBUG_CONFIG="idekey=netbeans-xdebug"

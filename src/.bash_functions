@@ -105,7 +105,7 @@ gitkmaster() {
     cmd+=" master"
     cmd+=" $(git rev-parse --abbrev-ref HEAD)"
     for remote in $(git remote); do
-        for accept in origin upstream gerardroche; do
+        for accept in origin upstream gerardroche hub; do
             if test "x$remote" = "x$accept"; then
                 cmd+=" $remote/master"
             fi
@@ -127,7 +127,7 @@ gitkbranches() {
     cmd+=" master"
     cmd+=" $(git rev-parse --abbrev-ref HEAD)"
     for remote in $(git remote); do
-        for accept in origin upstream gerardroche; do
+        for accept in origin upstream gerardroche hub; do
             if test "x$remote" = "x$accept"; then
                 cmd+=" $remote/master"
             fi

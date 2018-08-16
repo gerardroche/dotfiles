@@ -12,6 +12,7 @@ $config = PhpCsFixer\Config::create();
 $config->setRules(array(
     '@PSR2' => true,
     '@Symfony' => true,
+    'yoda_style' => false,
     // 'concat_space' => ['spacing' => 'one'],
     // 'trailing_comma_in_multiline_array' => false,
     // 'no_trailing_comma_in_singleline_array' => true

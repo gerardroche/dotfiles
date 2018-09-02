@@ -120,6 +120,11 @@ if test -z "$SKIP_DEPS"; then
     # NOTE: The following fonts need to be manually installed:
     # * Hasklig (Source Code Pro font with ligatures) https://github.com/i-tu/Hasklig
     # * Monoid (lagature font) https://github.com/larsenwork/monoid
+
+    # # Python dev tools
+    # pip3 install flake8
+    # pip3 install flake8-docstrings
+
 fi
 
 if test -z "$SKIP_SUBMODULES"; then

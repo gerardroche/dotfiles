@@ -74,12 +74,10 @@ echo "command: cd $SOURCE_PATH"
 
 SKIP_DEPS=
 SKIP_SUBMODULES=
-UPDATE_SUBMODULES=
 while test "$#" != 0; do
     case "$1" in
         --skip-dep*) SKIP_DEPS=true ;;
         --skip-sub*) SKIP_SUBMODULES=true ;;
-        --update) UPDATE_SUBMODULES=true ;;
         --) shift; break ;; # standard end of options list
         -*) echo >&2 "$0: unknown option '$1'"; exit 1 ;;
         *) echo >&2 "$0: unknown argument '$1'"; exit 1 ;;
@@ -98,12 +96,13 @@ if test -z "$SKIP_DEPS"; then
     command -v netstat >/dev/null 2>&1 || sudo apt-get install net-tools
     command -v pip3 >/dev/null 2>&1 || sudo apt-get install python3-pip
     command -v rename >/dev/null 2>&1 || sudo apt-get install rename
+    command -v sqlite3 >/dev/null 2>&1 || sudo apt-get install sqlite3
     command -v tmux >/dev/null 2>&1 || sudo apt-get install tmux
     command -v tree >/dev/null 2>&1 || sudo apt-get install tree
+    command -v unzip >/dev/null 2>&1 || sudo apt-get install unzip
     command -v xclip >/dev/null 2>&1 || sudo apt-get install xclip
 
     if ! is_wsl; then
-        echo "install non-WSL dependencies..."
         command -v dconf-editor >/dev/null 2>&1 || sudo apt-get install dconf-tools
         command -v firefox >/dev/null 2>&1 || sudo apt-get install firefox firefox-locale-en
         command -v gimp >/dev/null 2>&1 || sudo apt-get install gimp
@@ -122,19 +121,15 @@ if test -z "$SKIP_DEPS"; then
     # * Monoid (lagature font) https://github.com/larsenwork/monoid
 
     # Python dev tools
-    pip3 install flake8
-    pip3 install flake8-docstrings
-
+    pip3 install --user flake8
+    pip3 install --user flake8-docstrings
 fi
 
 if test -z "$SKIP_SUBMODULES"; then
     echo "installing submodules..."
     git submodule init
     git submodule update
-fi
-
-if test -n "$UPDATE_SUBMODULES"; then
-    echo "updating submodules..."
+    echo "updating submodules to latest master..."
     git submodule foreach 'git fetch && git merge --ff-only origin/master'
 fi
 
@@ -167,6 +162,11 @@ fi
 # Composer
 composer config --global notify-on-install false
 composer config --global github-expose-hostname false
-composer global require --ignore-platform-reqs friendsofphp/php-cs-fixer
-composer global require --ignore-platform-reqs phan/phan
-composer global require --ignore-platform-reqs laravel/installer
+composer global update
+composer global require --ignore-platform-reqs \
+    "friendsofphp/php-cs-fixer" \
+    "laravel/installer" \
+    "phan/phan" \
+    "phploc/phploc" \
+    "phpmd/phpmd" \
+    "sensiolabs/security-checker"

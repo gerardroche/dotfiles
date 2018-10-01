@@ -61,3 +61,8 @@ fi
 if [ -f ~/.rbenv/completions/rbenv.bash ]; then
     . ~/.rbenv/completions/rbenv.bash
 fi
+
+# hub https://github.com/github/hub
+if [ -f ~/hub.bash_completion.sh ]; then
+    . ~/hub.bash_completion.sh
+fi

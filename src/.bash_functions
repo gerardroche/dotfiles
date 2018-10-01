@@ -100,8 +100,9 @@ internet_use_full() {
     lsof -P -i -n | cut -f 1 -d " " | uniq
 }
 
-gitkmaster() {
+gitkcurrent() {
     cmd=gitk
+    cmd+=" -n 400"
     cmd+=" master"
     cmd+=" $(git rev-parse --abbrev-ref HEAD)"
     for remote in $(git remote); do
@@ -114,11 +115,6 @@ gitkmaster() {
 
     $cmd
 }
-
-gr() {
-    git checkout -b "gr-$1"
-}
-
 
 gitkbranches() {
     cmd=gitk
@@ -137,10 +133,9 @@ gitkbranches() {
     $cmd
 }
 
-gitkdefault() {
-    gitkmaster
+new() {
+    git checkout -b "gr-$1"
 }
-
 
 rbenv() {
     local cmd="$1"

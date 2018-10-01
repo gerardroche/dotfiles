@@ -13,22 +13,19 @@
 	b = branch -av
 	c = commit
 	ca = commit -a
-	cam = "!f() { git commit -a -m \"$*\"; }; f"
-	cm = "!f() { git commit -m \"$*\"; }; f"
-	cmi = "!f() { git commit -m \"Internal: $*\"; }; f"
-	cmif = "!f() { git commit -m \"Internal: Refactor $*\"; }; f"
 	co = checkout
 	cod = checkout develop
 	com = checkout master
 	conext = "!f() { git log HEAD...$1 --pretty=%H | tail -1 | xargs git checkout; }; f"
 	coprev = checkout HEAD^
 	d = diff
-	f = fetch -v
+	f = fetch
 	ff = merge --ff-only
 	ffnext = "!f() { git log HEAD...$1 --pretty=%H | tail -1 | xargs git merge --ff-only; }; f"
 	ffom = merge --ff-only origin/master
 	ffum = merge --ff-only upstream/master
 	fg = fetch gerardroche
+	fh = fetch hub
 	fo = fetch origin
 	fu = fetch upstream
 	hreset = reset --hard
@@ -103,9 +100,6 @@
 [flake8]
 
 	strict = true
-
-[gc]
-	auto = 500
 
 [help]
 

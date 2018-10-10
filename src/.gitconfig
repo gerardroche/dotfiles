@@ -12,7 +12,6 @@
 	ap = add --patch
 	b = branch -av
 	c = commit
-	ca = commit -a
 	co = checkout
 	cod = checkout develop
 	com = checkout master
@@ -45,6 +44,8 @@
 	sta = stash save --include-untracked
 	t = "!f() { git tag -l | sort -V | tail; }; f"
 	undo = reset --soft HEAD^
+	ca = commit -a
+	cm = "!f() { git commit -m \"$*\"; }; f"
 
 	batman  	= "!f() { git add -A . && git commit -m \"Batman! $*\"; }; f"
 	fire     	= "!f() { git add -A . && git commit -m \":fire: $*\"; }; f"

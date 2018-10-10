@@ -207,9 +207,9 @@ phpcs() {
 
         echo "using php-cs-fixer config: $config_file"
         if test -n "$config_file"; then
-            php-cs-fixer "$@" --config "$config_file"
+            php-cs-fixer -vvv "$@" --config "$config_file"
         else
-            php-cs-fixer "$@"
+            php-cs-fixer -vvv "$@"
         fi
     fi
 }

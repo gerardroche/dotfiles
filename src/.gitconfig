@@ -21,6 +21,7 @@
 	f = fetch
 	ff = merge --ff-only
 	ffnext = "!f() { git log HEAD...$1 --pretty=%H | tail -1 | xargs git merge --ff-only; }; f"
+	ffhm = merge --ff-only hub/master
 	ffom = merge --ff-only origin/master
 	ffum = merge --ff-only upstream/master
 	fg = fetch gerardroche

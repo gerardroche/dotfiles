@@ -271,23 +271,23 @@ setmygitremote() {
     git remote -v
 }
 
-watchapplogs() {
+wapplogs() {
     tail -f /var/log/{apache2,mysql}/{,*}{access,error,mysql}.log ./data/logs/*.log
 }
 
-watchapplogs() {
+wapplogs() {
     tail -f /var/log/apache2/{access,error,mysql}.log
 }
 
-watchmysqllogs() {
+wmysqllogs() {
     tail -f /var/log/mysql/{error,mysql}.log
 }
 
-watchdataapplogs() {
+wdataapplogs() {
     tail -f data/logs/*.log
 }
 
-watchlaravelapplogs() {
+wlaravelapplogs() {
     tail -f storage/logs/*.log
 }
 

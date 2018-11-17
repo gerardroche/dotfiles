@@ -1,3 +1,39 @@
+setenv() {
+    name="$1"
+
+    env_file=".env"
+    env_file_named=".env-$name"
+
+    env_file_abs="$PWD/$env_file"
+    env_file_abs_named="$PWD/$env_file_named"
+
+    if test ! -f "$env_file_abs_named"; then
+        echo >&2 "env file not found: $env_file_named"
+        exit 1
+    fi
+
+    echo "found $env_file_abs_named"
+    if test -h "$env_file_abs"; then
+        rm -v "$env_file_abs"
+        ln -s "$env_file_named" "$env_file"
+        echo "symlinked $env_file -> $env_file_named"
+    else
+        echo >&2 "ERROR $env_file_abs is not a symlink"
+        exit 1
+    fi
+}
+
+showrecenterrors() {
+    d="$(date -u +%Y-%m-%d)"
+
+    if test -f storage/logs/laravel.log; then
+        showrecentapperrors
+    elif test -f storage/logs/laravel-$d.log; then
+        showrecentapperrors
+    fi
+
+    showrecentconerrors
+}
 
 find_dirs_not_perm_755() {
     find . ! -perm 755 -type d ! -wholename "*.git/*" -ls
@@ -134,7 +170,13 @@ gitkbranches() {
 }
 
 new() {
-    git checkout -b "gr-$1"
+    cat="$1"
+    if test "x$1" = "xfix"; then
+        cat="hotfix"
+    fi
+
+    name="$2"
+    git checkout -b "$cat/$name"
 }
 
 rbenv() {

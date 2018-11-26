@@ -9,7 +9,7 @@ setenv() {
 
     if test ! -f "$env_file_abs_named"; then
         echo >&2 "env file not found: $env_file_named"
-        exit 1
+        return
     fi
 
     echo "found $env_file_abs_named"
@@ -17,9 +17,11 @@ setenv() {
         rm -v "$env_file_abs"
         ln -s "$env_file_named" "$env_file"
         echo "symlinked $env_file -> $env_file_named"
+    elif test ! -f "$env_file_abs"; then
+        ln -s "$env_file_named" "$env_file"
+        echo "symlinked $env_file -> $env_file_named"
     else
         echo >&2 "ERROR $env_file_abs is not a symlink"
-        exit 1
     fi
 }
 
@@ -170,13 +172,13 @@ gitkbranches() {
 }
 
 new() {
-    cat="$1"
-    if test "x$1" = "xfix"; then
-        cat="hotfix"
+    prefix="$1"
+    if test "x$prefix" = "xfix"; then
+        prefix="hotfix"
     fi
 
     name="$2"
-    git checkout -b "$cat/$name"
+    git checkout -b "$prefix/$name"
 }
 
 rbenv() {

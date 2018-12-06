@@ -25,18 +25,6 @@ setenv() {
     fi
 }
 
-showrecenterrors() {
-    d="$(date -u +%Y-%m-%d)"
-
-    if test -f storage/logs/laravel.log; then
-        showrecentapperrors
-    elif test -f storage/logs/laravel-$d.log; then
-        showrecentapperrors
-    fi
-
-    showrecentconerrors
-}
-
 find_dirs_not_perm_755() {
     find . ! -perm 755 -type d ! -wholename "*.git/*" -ls
 }
@@ -173,15 +161,11 @@ gitkbranches() {
 
 new() {
     prefix="$1"
-    if test "x$prefix" = "xfix"; then
-        prefix="hotfix"
-    fi
-
     name="$2"
     git checkout -b "$prefix/$name"
 }
 
-rbenv() {
+_rbenv() {
     local cmd="$1"
     if [ "$#" -gt 0 ]; then
         shift
@@ -232,8 +216,8 @@ pdoc() {
 }
 
 phpcs() {
-    if test -f ./vendor/bin/php-cs-fixer; then
-        php -d xdebug.scream=0 ./vendor/bin/php-cs-fixer "$@"
+    if test -f vendor/bin/php-cs-fixer; then
+        php vendor/bin/php-cs-fixer -vvv "$@"
     else
         config_file=
         if test "x$1" = "xfix"; then
@@ -333,6 +317,18 @@ wdataapplogs() {
 
 wlaravelapplogs() {
     tail -f storage/logs/*.log
+}
+
+showrecenterrors() {
+    d="$(date -u +%Y-%m-%d)"
+
+    if test -f storage/logs/laravel.log; then
+        showrecentapperrors
+    elif test -f storage/logs/laravel-$d.log; then
+        showrecentapperrors
+    fi
+
+    showrecentconerrors
 }
 
 projects() {

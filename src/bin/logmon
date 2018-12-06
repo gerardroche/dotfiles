@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+set -e
+
+unset CDPATH
+unset IFS
+
+
+init() {
+    tail -f /var/log/{apache2,mysql}/{,*}{access,error,mysql}.log
+}
+
+
+monitorlogs() {
+    tail -f /var/log/{apache2,mysql}/{,*}{access,error,mysql}.log
+}
+
+wapplogs() {
+    tail -f /var/log/{apache2,mysql}/{,*}{access,error,mysql}.log ./data/logs/*.log
+}
+
+wapplogs() {
+    tail -f /var/log/apache2/{access,error,mysql}.log
+}
+
+wmysqllogs() {
+    tail -f /var/log/mysql/{error,mysql}.log
+}
+
+wdataapplogs() {
+    tail -f data/logs/*.log
+}
+
+wlaravelapplogs() {
+    tail -f storage/logs/*.log
+}
+
+while test "$#" != 0; do
+    case "$1" in
+        --) shift; break ;; # standard end of options list
+        -*) echo >&2 "$(basename "$0"): unknown option '$1'" && exit 1 ;;
+        *)  echo >&2 "$(basename "$0"): unknown argument '$1'" && exit 1 ;;
+    esac
+    shift
+done
+
+tail -f \
+    /var/log/{apache2,mysql}/{,*}{access,error,mysql}.log \
+    storage/logs/*.log

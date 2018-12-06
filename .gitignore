@@ -7,11 +7,12 @@
 /src/.composer/auth.json
 /src/.composer/cache/
 /src/.composer/composer.json
+/src/.vim/plugged/
 /src/bin/_*
 /src/bin/git-open
 /src/bin/php-build
+/src/bin/php[0-9]*
 /src/bin/subl
-/src/.vim/plugged/
 /tmp/
 
 # VIM

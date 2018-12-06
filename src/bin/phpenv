@@ -11,9 +11,9 @@ Usage: $(basename "$0") [-h|--help] [--version] [-V]
 
 Commands:
 
-  install <version>   Install a PHP version
-  versions            List all available PHP versions
-  reload-symlinks     Reloads ~/bin/_php{version} symlinks
+  install <version>     Install a PHP version
+  versions              List all available PHP versions
+  reload                Reloads ~/bin/php{version} symlinks
 
 EOT
 }
@@ -67,50 +67,21 @@ install_version() {
     exec "$BUILD_BIN" --ini development "$version" "$prefix"
 }
 
-fixup_x_version() {
-    source="$1"
-    target="$2"
-
-    source_path="$HOME/.phpenv/versions/$source"
-    target_path="$HOME/.phpenv/versions/$target"
-
-    echo
-    echo "  source: $source_path"
-    echo "  target: $target_path"
-
-    if test ! -d "$source_path"; then
-        echo >&2 "ERROR: expected a directory: $source_path"
-        return
-    fi
-
-    if test -e "$target_path"; then
-        if test -h "$target_path"; then
-            rm -v "$target_path"
-        else
-            echo >&2 "ERROR: expected a symbolic file: $target_path"
-            return
-        fi
-    fi
-
-    ln -s -r "$source_path" "$target_path"
-}
-
+# Symbolically links each phpenv version at ~/bin/php{VERSION}.
 reload_symlinks() {
-    echo "reload symbolic links"
+    echo "*** reload symlinks"
 
     # TODO refactor hardcoded paths
-    for version_path in ~/.phpenv/versions/*; do
+    for version_path in ~/.phpenv/versions/[0-9]*; do
         if test ! -d "$version_path"; then
             continue
         fi
 
         version="$(basename "$version_path")"
         version_source="$version_path/bin/php"
-        version_target="$HOME/bin/_php$version"
+        version_target="$HOME/bin/php$version"
 
-        echo
-        echo "processing:"
-        echo "  version:        $version"
+        echo "processing version $version"
         echo "  version path:   $version_path"
         echo "  version source: $version_source"
         echo "  version target: $version_target"
@@ -124,26 +95,31 @@ reload_symlinks() {
             fi
         fi
 
-        ln -s "$version_source" "$version_target"
+        ln -sv "$version_source" "$version_target"
 
     done
-
-    # Setup *.x version symlinks
-    # TODO rework hardcoded logic
-    # fixup_x_version "5.5.38" "5.5.x"
-    # fixup_x_version "5.6.30" "5.6.x"
-    # fixup_x_version "7.0.10" "7.0.x"
-    # fixup_x_version "7.1.12" "7.1.x"
-    # fixup_x_version "5.6.30" "5.x"
-    fixup_x_version "7.1.18"  "7.1.x"
-    fixup_x_version "7.2.6"  "7.2.x"
-    fixup_x_version "7.2.6"  "7.x"
-
-    # Display some information about the state
-    tree -L 1 ~/.phpenv/versions/
 }
 
-readonly VERSION="0.4.2"
+# Symbolically links each lde config override into each version.
+# Note: This has a dependency on the "lde" toolset.
+reload_configs() {
+    echo "*** reload configurations"
+    for phpenv_version_etc_conf_d in ~/.phpenv/versions/*/etc/conf.d; do
+        if test ! -d "$phpenv_version_etc_conf_d"; then
+            echo >&2 "WARNING: $phpenv_version_etc_conf_d is not a valid directory"
+            continue
+        fi
+
+        ln -vfs "$PROJECTS_PATH/lde/lde/etc/php/conf.d/90-lde.ini" "$phpenv_version_etc_conf_d/90-lde.ini"
+    done
+}
+
+reload() {
+    reload_symlinks
+    reload_configs
+}
+
+readonly VERSION="0.4.3"
 readonly PREFIX="$HOME/.phpenv"
 readonly BUILD_BIN="$HOME/bin/php-build"
 
@@ -160,27 +136,17 @@ while test "$#" != 0; do
         --version) echo "phpenv version $VERSION"; exit 0 ;;
         -V) echo "$VERSION"; exit 0 ;;
         install)
-            if test "$2" = "--complete"; then
+            shift
+            if test "$1" = "--complete"; then
                 exec "$BUILD_BIN" --definitions
             fi
 
-            shift
-            install_version "$@"
-
-            # TODO move into a local hook i.e. so that it's not a dependency to run phpenv
-            for phpenv_version_etc_conf_d in ~/.phpenv/versions/*/etc/conf.d; do
-                test -d "$phpenv_version_etc_conf_d" || continue
-                # Default local development overrides
-                ln -vfs "$PROJECTS_PATH/lde/lde/etc/php/conf.d/90-lde.ini" "$phpenv_version_etc_conf_d/90-lde.ini"
-                # Local development overrides
-                touch "$phpenv_version_etc_conf_d/95-development.ini"
-            done
-
-            reload_symlinks
+            install_version "$@" || true
+            reload
             exit 0
             ;;
-        reload-symlinks)
-            reload_symlinks
+        reload)
+            reload
             exit 0
             ;;
         versions)

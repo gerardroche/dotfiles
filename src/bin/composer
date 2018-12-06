@@ -15,6 +15,8 @@ OPEN_BASEDIR="$OPEN_BASEDIR:/tmp"
 OPEN_BASEDIR="$OPEN_BASEDIR:/usr/bin/php5"
 OPEN_BASEDIR="$OPEN_BASEDIR:/usr/bin/php7.0"
 OPEN_BASEDIR="$OPEN_BASEDIR:/usr/bin/php7.1"
+OPEN_BASEDIR="$OPEN_BASEDIR:/usr/bin/php7.2"
+OPEN_BASEDIR="$OPEN_BASEDIR:/usr/bin/unzip"
 OPEN_BASEDIR="$OPEN_BASEDIR:/etc/pki/certs"
 OPEN_BASEDIR="$OPEN_BASEDIR:/etc/ssl/certs"
 OPEN_BASEDIR="$OPEN_BASEDIR:$HOME/.cache"
@@ -36,19 +38,7 @@ if test -n "$VENDOR_PATH" && test -d "$VENDOR_PATH"; then
     OPEN_BASEDIR="$OPEN_BASEDIR:$VENDOR_PATH"
 fi
 
-DISABLE_FUNCTIONS="apache_child_terminate"
-DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,allow_url_include"
-DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,assert"
-DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,define_syslog_variables"
-DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,dl"
-DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,eval"
-DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,exec"
-DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,ftp_alloc,ftp_cdup,ftp_chdir,ftp_chmod,ftp_close,ftp_connect,ftp_delete,ftp_exec,ftp_fget,ftp_fput,ftp_get_option,ftp_get,ftp_login,ftp_mdtm,ftp_mkdir,ftp_nb_continue,ftp_nb_fget,ftp_nb_fput,ftp_nb_get,ftp_nb_put,ftp_nlist,ftp_pasv,ftp_put,ftp_pwd,ftp_quit,ftp_raw,ftp_rawlist,ftp_rename,ftp_rmdir,ftp_set_option,ftp_site,ftp_size,ftp_ssl_connect,ftp_systype"
-DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,passthru"
-DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,pcntl_alarm,pcntl_errno,pcntl_exec,pcntl_fork,pcntl_get_last_error,pcntl_getpriority,pcntl_setpriority,pcntl_signal_dispatch,pcntl_signal,pcntl_sigprocmask,pcntl_sigtimedwait,pcntl_sigwaitinfo,pcntl_strerror,pcntl_wait,pcntl_waitpid,pcntl_wexitstatus,pcntl_wifexited,pcntl_wifsignaled,pcntl_wifstopped,pcntl_wstopsig,pcntl_wtermsig,popen,proc_nice,proc_terminate"
-DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,shell_exec"
-DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,show_source"
-DISABLE_FUNCTIONS="$DISABLE_FUNCTIONS,syslog,system"
+DISABLE_FUNCTIONS="allow_url_include"
 
 PHP_BIN=php
 
@@ -63,9 +53,8 @@ fi
 
 # Use explicit phpenv version
 if test "$1" = "--phpenv"; then
-    shift
-    PHP_BIN="$HOME/.phpenv/versions/${1:?'version parameter is required'}/bin/php"
-    shift
+    PHP_BIN="$HOME/.phpenv/versions/${2:?'version parameter is required'}/bin/php"
+    shift 2
     if test ! -f "$PHP_BIN" || test ! -x "$PHP_BIN"; then
         echo >&2 "$(basename :"$0"): phpenv version not found"
         exit 1
@@ -81,17 +70,15 @@ fi
 # https://getcomposer.org/doc/03-cli.md#composer-disable-xdebug-warn
 # https://getcomposer.org/doc/articles/troubleshooting.md#xdebug-impact-on-composer
 export COMPOSER_DISABLE_XDEBUG_WARN=1
-# COMPOSER_ALLOW_XDEBUG=1 is required after 3.0.0 update
+
+# Required for development since 3.0.0
 # https://github.com/composer/composer/pull/5580
 export COMPOSER_ALLOW_XDEBUG=1
-
-# echo "DEBUG composer: php bin = $PHP_BIN"
-# echo "DEBUG composer: php open_basedir = $OPEN_BASEDIR"
-# echo "DEBUG composer: php disable functions = $DISABLE_FUNCTIONS"
 
 exec "$PHP_BIN"\
     -d detect_unicode=0\
     -d allow_url_fopen=1\
+    -d allow_url_include=0\
     -d xdebug.default_enable=0\
     -d xdebug.enable=0\
     -d xdebug.profiler_enable=0\

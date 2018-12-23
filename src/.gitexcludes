@@ -5,12 +5,12 @@
 #   git config --global core.excludesfile ~/.gitignore_global
 
 # NETBEANS
-# /.nb-gradle/
-# /build/
-# /dist/
-# /nbbuild/
-# /nbdist/
 /nbproject/
+
+# ECLIPSE
+/.buildpath
+/.project
+/.settings/
 
 # SUBLIME TEXT
 *.sublime-workspace
@@ -19,4 +19,6 @@ _*.sublime-project
 
 # Tmux
 .tmux
+
+.todo*
 

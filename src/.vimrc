@@ -50,6 +50,7 @@ Plug 'tpope/vim-ragtag'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
+Plug 'michaeljsmith/vim-indent-object'
 
 " Colour schemes
 Plug 'lifepillar/vim-solarized8'
@@ -359,8 +360,12 @@ nnoremap <Space> :
 " noremap gj j
 " noremap gk k
 
-" vmap <lt> <lt>gv
-" vmap > >gv
+" nnoremap < <<
+" nnoremap > >>
+
+" vnoremap <lt> <lt>gv
+" vnoremap < <gv
+" vnoremap > >gv
 
 " Scroll viewport faster.
 " http://items.sjbach.com/319/configuring-vim-right
@@ -420,8 +425,23 @@ map <leader>jF :CtrlP factories<CR>
 map <leader>jT :CtrlP test<CR>
 
 map <leader>= <C-w>=
-map <leader>\| <C-w>\|
+map <leader><bar> <C-w><bar>
 map <leader>_ <C-w>_
+
+" Mapping bar
+" map <leader>\| <C-w>\|
+" map <leader>\| <C-w><bar>
+" map <leader><bar> <C-w>\|
+" map <leader><bar> <C-w><bar>
+
+" Mapping backslash
+" map <leader>\ <C-w>=
+" map <leader><leader><bslash> <C-w>=
+" map <leader><leader>f f\\
+" map <leader>\| <C-w>\|
+" map <leader>\| <C-w><bar>
+" map <leader><bar> <C-w>\|
+" map <leader><bar> <C-w><bar>
 
 " Test
 nnoremap <leader>t :silent :TestNearest<CR>

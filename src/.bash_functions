@@ -299,24 +299,16 @@ setmygitremote() {
     git remote -v
 }
 
-wapplogs() {
-    tail -f /var/log/{apache2,mysql}/{,*}{access,error,mysql}.log ./data/logs/*.log
+tailapachelogs() {
+    tail -f /var/log/apache2/{access,error,other_vhosts_access}.log
 }
 
-wapplogs() {
-    tail -f /var/log/apache2/{access,error,mysql}.log
+tailapplogs() {
+    tail -f /var/log/apache2/{access,error,other_vhosts_access}.log /var/log/mysql/{error,mysql}.log {storage,data}/logs/*.log
 }
 
-wmysqllogs() {
+tailmysqllogs() {
     tail -f /var/log/mysql/{error,mysql}.log
-}
-
-wdataapplogs() {
-    tail -f data/logs/*.log
-}
-
-wlaravelapplogs() {
-    tail -f storage/logs/*.log
 }
 
 showrecenterrors() {

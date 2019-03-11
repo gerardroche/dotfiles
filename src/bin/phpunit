@@ -54,7 +54,7 @@ else
 fi
 
 if test -f ./vendor/bin/phpunit && test -x ./vendor/bin/phpunit; then
-    PHPUNIT_BIN=./vendor/bin/phpunit
+    PHPUNIT_BIN=vendor/bin/phpunit
 elif test -f /usr/local/bin/phpunit && test -x /usr/local/bin/phpunit; then
     PHPUNIT_BIN=/usr/local/bin/phpunit
 else
@@ -111,7 +111,7 @@ if test -n "$CI"; then
         run_phpunit_with_phpenv_version "$version"
     done
 
-    "$PHP_BIN" "$PHPUNIT_BIN" --colors "$@"
+    "$PHP_BIN" "$PHPUNIT_BIN" "$@"
 
     if test "$CI_FAILURE_COUNT" -gt 0; then
         echo
@@ -131,5 +131,5 @@ if test -n "$CI"; then
         echo
     fi
 else
-    "$PHP_BIN" "$PHPUNIT_BIN" --colors --verbose "$@"
+    "$PHP_BIN" "$PHPUNIT_BIN" "$@"
 fi

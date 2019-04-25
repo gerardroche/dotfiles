@@ -23,3 +23,5 @@ _*.sublime-project
 .todo*
 
 .php-version
+
+*.pyi

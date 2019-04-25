@@ -10,7 +10,7 @@ echo -n "Configuring Ubuntu settings... "
 gsettings set org.gnome.desktop.privacy report-technical-problems false
 
 # Ubuntu 17.04
-gsettings set com.canonical.indicator.datetime show-events false
+# gsettings set com.canonical.indicator.datetime show-events false
 gsettings set com.canonical.Unity.Lenses remote-content-search 'none'
 gsettings set com.ubuntu.update-manager show-details true
 gsettings set com.ubuntu.update-manager show-versions true
@@ -22,5 +22,8 @@ gsettings set org.gnome.nautilus.preferences default-folder-viewer 'list-view'
 gsettings set org.gnome.nautilus.preferences show-hidden-files true
 gsettings set org.gnome.shell.overrides workspaces-only-on-primary false
 gsettings set org.gnome.system.location enabled false
+
+gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 15
+gsettings set org.gnome.desktop.peripherals.keyboard delay 180
 
 echo "done."

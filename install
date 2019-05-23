@@ -6,10 +6,6 @@ unset IFS
 readonly SOURCE="$(readlink -nf "$0")"
 readonly SOURCE_PATH="$(dirname "$SOURCE")"
 
-is_wsl() {
-    grep -q Microsoft /proc/version
-}
-
 create_home_dir_symlink() {
     target="$1"
     target_basename="$(basename "$target")"
@@ -27,45 +23,14 @@ create_home_dir_symlink() {
         exit 1
     fi
 
-    if is_wsl; then
-        # *sigh* This isn't worth it. It's just gonna be one gotcha after the other.
-        #
-        # Symlinks are broken to hell in WSL e.g. Git chokes on symlinks,
-        # gitk.exe (because gitk has no display).
-        #
-        # Most files need to be copied. DO NOT MODIFY FILES IN PLACE, because
-        # the installer will overwrite eisting files.
+    from="./${target#$HOME/}"
+    to="$HOME/$target_basename"
 
-        from="./${target#$HOME/}"
-        from_rel="${target#$HOME\/.dotfiles/}"
-        to="$HOME/$target_basename"
-
-        if test -d "$from_rel"; then
-            echo "copy directory $from_rel -> $to"
-            if test "$from" = "./.dotfiles/src/.gittemplates"; then
-                # Git on WSL chokes on symlinks.
-                cp -r "$from_rel" "$to"
-            else
-                if test -L "$to" -o ! -e "$to"; then
-                    ln -sfnv "$from" "$to"
-                else
-                    echo >&2 "=> NOTICE Could not create home directory symlink."
-                    echo >&2 "          File already exists. Move the existing file and rerun the install script. \"$from\" -> \"$to\""
-                fi
-            fi
-        else
-            cp -v "$from_rel" "$to"
-        fi
+    if test -L "$to" -o ! -e "$to"; then
+        ln -sfnv "$from" "$to"
     else
-        from="./${target#$HOME/}"
-        to="$HOME/$target_basename"
-
-        if test -L "$to" -o ! -e "$to"; then
-            ln -sfnv "$from" "$to"
-        else
-            echo >&2 "=> NOTICE Could not create home directory symlink."
-            echo >&2 "          File already exists. Move the existing file and rerun the install script. \"$from\" -> \"$to\""
-        fi
+        echo >&2 "=> NOTICE Could not create home directory symlink."
+        echo >&2 "          File already exists. Move the existing file and rerun the install script. \"$from\" -> \"$to\""
     fi
 }
 
@@ -89,8 +54,11 @@ if test -z "$SKIP_DEPS"; then
     echo "install dependencies..."
 
     command -v ctags >/dev/null 2>&1 || sudo apt-get install exuberant-ctags
+    command -v dconf-editor >/dev/null 2>&1 || sudo apt-get install dconf-tools
     command -v figlet >/dev/null 2>&1 || sudo apt-get install figlet
+    command -v firefox >/dev/null 2>&1 || sudo apt-get install firefox firefox-locale-en
     command -v flake8 >/dev/null 2>&1 || sudo apt-get install python-flake8
+    command -v gimp >/dev/null 2>&1 || sudo apt-get install gimp
     command -v git >/dev/null 2>&1 || sudo apt-get install git
     command -v gitk >/dev/null 2>&1 || sudo apt-get install gitk
     command -v netstat >/dev/null 2>&1 || sudo apt-get install net-tools
@@ -100,14 +68,9 @@ if test -z "$SKIP_DEPS"; then
     command -v tmux >/dev/null 2>&1 || sudo apt-get install tmux
     command -v tree >/dev/null 2>&1 || sudo apt-get install tree
     command -v unzip >/dev/null 2>&1 || sudo apt-get install unzip
+    command -v vim.gtk >/dev/null 2>&1 || sudo apt-get install vim-gtk
+    command -v wmctrl  >/dev/null 2>&1 || sudo apt-get install wmctrl
     command -v xclip >/dev/null 2>&1 || sudo apt-get install xclip
-
-    if ! is_wsl; then
-        command -v dconf-editor >/dev/null 2>&1 || sudo apt-get install dconf-tools
-        command -v firefox >/dev/null 2>&1 || sudo apt-get install firefox firefox-locale-en
-        command -v gimp >/dev/null 2>&1 || sudo apt-get install gimp
-        command -v vim.gtk >/dev/null 2>&1 || sudo apt-get install vim-gtk
-    fi
 
     # Required for Git interactive.singlekey to work. See https://superuser.com/a/817688.
     dpkg -l | grep libterm-readkey-perl >/dev/null 2>&1 || sudo apt-get install libterm-readkey-perl

@@ -8,6 +8,7 @@
 /src/.composer/cache/
 /src/.composer/composer.json
 /src/.vim/plugged/
+/src/.vim/spell/
 /src/bin/_*
 /src/bin/git-open
 /src/bin/php-build

@@ -56,9 +56,11 @@ if test -z "$TMUX"; then
 fi
 
 export EDITOR=vi
+export GPG_TTY=$(tty)
 export NVM_DIR="$(readlink -nf ~/.nvm)" # https://github.com/creationix/nvm/issues/617
 export PHAN_DISABLE_XDEBUG_WARN=1
 export PROJECTS_PATH=~/projects
 export VENDOR_PATH=~/vendor
-unset GEM_HOME
 export XDEBUG_CONFIG="idekey=netbeans-xdebug"
+unset GEM_HOME
+

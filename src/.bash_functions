@@ -257,11 +257,13 @@ toggledebug() {
 }
 
 versioninfo() {
+    echo "$(uname -s) $(uname -r)"
+    uname -v
+    echo "$(uname -o) $(uname -m) $(uname -p) $(uname -i)"
+    uname -n
+
     echo -n "Hostname: "
     cat /etc/hostname
-
-    echo -n "Uname: "
-    uname -a
 
     echo -n "Debian: "
     cat /etc/debian_version
@@ -269,10 +271,6 @@ versioninfo() {
     echo -n "Release: "
     cat /etc/lsb-release
 
-    echo -n "Unity: "
-    unity --version
-
-    echo -n "Gnome: "
     gnome-shell --version
 }
 
@@ -397,4 +395,9 @@ v() {
 wslsshadd() {
     eval $(ssh-add -s)
     ssh-add ~/.ssh/id_rsa
+}
+
+
+mypysublime() {
+    MYPYPATH=$PROJECTS_PATH/sublime/sublime-mypy-stubs mypy $@
 }

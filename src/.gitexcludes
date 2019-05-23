@@ -4,24 +4,49 @@
 # operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile ~/.gitignore_global
 
-# NETBEANS
+*~
+.netrwhist
+Session.vim
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+
+# Netbeans
 /nbproject/
 
-# ECLIPSE
+# Eclipse
 /.buildpath
 /.project
 /.settings/
 
-# SUBLIME TEXT
+# Sublime Text
 *.sublime-workspace
-private*.sublime-project
 _*.sublime-project
+private*.sublime-project
 
-# Tmux
-.tmux
+# PhpStorm
+.idea
 
-.todo*
+# Linux
+*~
+.Trash-*
+.nfs*
 
+# Mac OS X
+*.DS_Store
+
+# Python
+*.pyi
+.mypy_cache/
+
+# PHP
 .php-version
 
-*.pyi
+# Tags
+.TAGS
+.tags
+TAGS
+tags
+
+# Custom
+.tmux
+.todo*

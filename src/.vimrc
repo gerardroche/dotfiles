@@ -29,6 +29,9 @@ call plug#load('vim-sensible')
 " Plug 'tpope/vim-rails'
 " Plug 'tpope/vim-scriptease'
 
+" Plug 'lyokha/vim-xkbswitch'
+" Plug 'rlue/vim-barbaric'
+
 Plug 'airblade/vim-gitgutter'
 Plug 'benmills/vimux'
 Plug 'bling/vim-airline'
@@ -51,11 +54,11 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'michaeljsmith/vim-indent-object'
+Plug 'justinmk/vim-sneak'
 
 " Colour schemes
 Plug 'lifepillar/vim-solarized8'
 Plug 'morhetz/gruvbox'
-" Plug 'tomasr/molokai'
 
 call plug#end()
 
@@ -71,6 +74,7 @@ set complete-=i
 set cursorline
 set display+=lastline
 set errorbells
+set nowrapscan
 set expandtab
 set foldmethod=marker
 set foldopen+=jump
@@ -181,6 +185,9 @@ let g:test#php#phpunit#options = '--no-coverage'
 let g:test#preserve_screen = 0
 let g:vim_markdown_conceal = 0
 let g:vim_markdown_folding_disabled = 1
+let g:multi_cursor_exit_from_visual_mode = 1
+let g:barbaric_default = "xkb:gb:extd:eng"
+" let g:barbaric_default = "libpinyin"
 
 " }}}
 " Visual {{{
@@ -349,8 +356,28 @@ let mapleader=","
 " inoremap <Esc> <Esc>
 " vnoremap <Esc> <Esc>
 
-" Enter command line mode.
+" Saving.
+nnoremap <C-s> :w<CR>
+vnoremap <C-s> :w<CR>
+
+" Enter Ex mode.
 nnoremap <Space> :
+
+" Easy buffer navigation.
+" http://stevelosh.com/blog/2010/09/coming-home-to-vim/
+" https://bitbucket.org/sjl/dotfiles/src/b89b95f1cb1d06596c0c46bfb5a9e7e95ce71913/vim/vimrc?at=default
+" noremap <C-h> <C-w>h
+" noremap <C-j> <C-w>j
+" noremap <C-k> <C-w>k
+" noremap <C-l> <C-w>l
+
+" Clear highlighting.
+noremap <C-l> :nohlsearch<CR>
+
+" Scroll viewport faster.
+" http://items.sjbach.com/319/configuring-vim-right
+" nnoremap <C-e> 3<C-e>
+" nnoremap <C-y> 3<C-y>
 
 " Make j and k work file linewise instead of screen linewise.
 " http://stevelosh.com/blog/2010/09/coming-home-to-vim/
@@ -360,52 +387,33 @@ nnoremap <Space> :
 " noremap gj j
 " noremap gk k
 
-" nnoremap < <<
-" nnoremap > >>
+" Yank and paste using system clipboard.
+" http://www.drbunsen.org/the-text-triumvirate/
+map y <Plug>(highlightedyank)
+noremap <leader>y "+y
+noremap <leader>Y "+Y
+noremap <leader>p "+p
+noremap <leader>P "+P
 
-" vnoremap <lt> <lt>gv
-" vnoremap < <gv
-" vnoremap > >gv
-
-" Scroll viewport faster.
-" http://items.sjbach.com/319/configuring-vim-right
-nnoremap <C-e> 3<C-e>
-nnoremap <C-y> 3<C-y>
-
-" Easy buffer navigation.
-" http://stevelosh.com/blog/2010/09/coming-home-to-vim/
-" https://bitbucket.org/sjl/dotfiles/src/b89b95f1cb1d06596c0c46bfb5a9e7e95ce71913/vim/vimrc?at=default
-noremap <C-h> <C-w>h
-noremap <C-j> <C-w>j
-noremap <C-k> <C-w>k
-noremap <C-l> :nohlsearch<CR>
-
-" Registers.
+" Show me the registers.
 noremap <leader>r :reg<CR>
-
-" Saving.
-noremap <C-s> :w<CR>
 
 " " Match bracket pairs.
 " " http://stevelosh.com/blog/2010/09/coming-home-to-vim/
 " nnoremap <tab> %
 " vnoremap <tab> %
 
-" Yank and paste using system clipboard.
-" http://www.drbunsen.org/the-text-triumvirate/
-map y <Plug>(highlightedyank)
-map <leader>y "+y
-map <leader>Y "+Y
-map <leader>p "+p
-map <leader>P "+P
-noremap <leader>yy "+Y
-
-" Toggle NERDTree
+" NERDTree
 noremap <leader>d :NERDTreeToggle<CR>
 noremap <leader>f :call ShowFileInNERDTree()<CR>
 
-" Sort
-nnoremap <leader>ss vip:sort u<CR>
+" Sorted.
+map <leader>s) vi):sort u<CR>
+map <leader>s] vip:sort u<CR>
+map <leader>sp vip:sort u<CR>
+map <leader>si vii:sort u<CR>
+map <leader>ss vii:sort u<CR>
+vmap <leader>s :sort u<CR>
 
 " Idea from : http://www.charlietanksley.net/blog/blog/2011/10/18/vim-navigation-with-lustyexplorer-and-lustyjuggler/
 " Open CtrlP starting from a particular path, making it much
@@ -424,24 +432,10 @@ map <leader>jV :CtrlP vendor<CR>
 map <leader>jF :CtrlP factories<CR>
 map <leader>jT :CtrlP test<CR>
 
+" Windowing aliases (especially useful if you don't use ctrl-keys).
 map <leader>= <C-w>=
 map <leader><bar> <C-w><bar>
 map <leader>_ <C-w>_
-
-" Mapping bar
-" map <leader>\| <C-w>\|
-" map <leader>\| <C-w><bar>
-" map <leader><bar> <C-w>\|
-" map <leader><bar> <C-w><bar>
-
-" Mapping backslash
-" map <leader>\ <C-w>=
-" map <leader><leader><bslash> <C-w>=
-" map <leader><leader>f f\\
-" map <leader>\| <C-w>\|
-" map <leader>\| <C-w><bar>
-" map <leader><bar> <C-w>\|
-" map <leader><bar> <C-w><bar>
 
 " Test
 nnoremap <leader>t :silent :TestNearest<CR>
@@ -455,8 +449,17 @@ nnoremap <leader>g :silent :TestVisit<CR>
 " nnoremap <leader>vt :call PHPUnitRunSingleTest()<CR>
 
 " Misc.
-nnoremap <leader>sa ggVG:sort<CR>:w<CR>
+" nnoremap <leader>sa ggVG:sort<CR>:w<CR>
 nnoremap <F10> :call DumpColorSchemeInfo()<CR>
+
+" map <C-Space> iHelloCSpace
+" map <M-space> iHelloMspace
+""map <A-d> iHelloA
+"map <M-bslash> iHelloM-bslash
+"map <M-X> iHelloM-p
+"map <M-S-u> iHelloM-bslash
+" map <M-f> iHelloM-f
+" map <M-k> iHelloM-k
 
 " Mappings: Typos {{{
 " Don't care if I typo when saving or quitting!

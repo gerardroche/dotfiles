@@ -118,7 +118,6 @@ alias se='setenv'
 alias sports='sudo netstat -lntpauW'
 alias sshconfig="vi ~/.ssh/config"
 alias sta='git sta'
-alias subl='subl && wmctrl -a Sublime'
 alias svi='sudo vi'
 alias tmuxrenamewindow='tmux rename-window'
 alias update='sudo apt-get update'

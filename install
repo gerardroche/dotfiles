@@ -53,6 +53,7 @@ done
 if test -z "$SKIP_DEPS"; then
     echo "install dependencies..."
 
+    command -v audacity >/dev/null 2>&1 || sudo apt-get install audacity pavucontrol
     command -v ctags >/dev/null 2>&1 || sudo apt-get install exuberant-ctags
     command -v dconf-editor >/dev/null 2>&1 || sudo apt-get install dconf-tools
     command -v figlet >/dev/null 2>&1 || sudo apt-get install figlet
@@ -67,6 +68,7 @@ if test -z "$SKIP_DEPS"; then
     command -v sqlite3 >/dev/null 2>&1 || sudo apt-get install sqlite3
     command -v tmux >/dev/null 2>&1 || sudo apt-get install tmux
     command -v tree >/dev/null 2>&1 || sudo apt-get install tree
+    command -v tuxguitar >/dev/null 2>&1 || sudo apt-get install tuxguitar tuxguitar-alsa tuxguitar-oss tuxguitar-jsa
     command -v unzip >/dev/null 2>&1 || sudo apt-get install unzip
     command -v vim.gtk >/dev/null 2>&1 || sudo apt-get install vim-gtk
     command -v wmctrl  >/dev/null 2>&1 || sudo apt-get install wmctrl
@@ -85,10 +87,16 @@ if test -z "$SKIP_DEPS"; then
     # * Hasklig (Source Code Pro font with ligatures) https://github.com/i-tu/Hasklig
     # * Monoid (lagature font) https://github.com/larsenwork/monoid
 
+    # LMMS: https://lmms.io/download/
+    # Ardour: https://ardour.org/
+
     # Python dev tools
     pip3 install --user flake8
     pip3 install --user flake8-docstrings
     pip3 install --user mypy
+
+    # Fix compatability errors (upstream bug).
+    pip3 install --user pydocstyle==3.0.0
 
     # Hub
     # https://github.com/github/hub

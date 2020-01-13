@@ -86,6 +86,8 @@ if test -z "$SKIP_DEPS"; then
     command -v xclip >/dev/null 2>&1 || sudo apt-get install xclip
     command -v yarn >/dev/null 2>&1 || sudo apt-get install yarn
 
+    dpkg -l | grep ubuntu-restricted-extras >/dev/null 2>&1 || sudo apt-get install ubuntu-restricted-extras
+
     # Required for Git interactive.singlekey to work. See https://superuser.com/a/817688.
     dpkg -l | grep libterm-readkey-perl >/dev/null 2>&1 || sudo apt-get install libterm-readkey-perl
 
@@ -95,23 +97,25 @@ if test -z "$SKIP_DEPS"; then
     dpkg -l | grep ttf-anonymous-pro >/dev/null 2>&1 || sudo apt-get install ttf-anonymous-pro
     dpkg -l | grep ttf-mscorefonts-installer >/dev/null 2>&1 || sudo apt-get install ttf-mscorefonts-installer
     dpkg -l | grep ttf-ubuntu-font-family >/dev/null 2>&1 || sudo apt-get install ttf-ubuntu-font-family
-
-    # The following fonts need to be manually installed:
+    # The following fonts need to be installed manually:
     # * Hasklig (Source Code Pro font with ligatures) https://github.com/i-tu/Hasklig
     # * Monoid (lagature font) https://github.com/larsenwork/monoid
 
-    # LMMS: https://lmms.io/download/
-    # Ardour: https://ardour.org/
+    # Music production.
+    # The following need to be install manually:
+    # * LMMS: https://lmms.io/download/
+    # * Ardour: https://ardour.org/
 
-    # Python dev tools
+    # Python developer tools.
     pip3 install --upgrade --user flake8
     pip3 install --upgrade --user flake8-docstrings
     pip3 install --upgrade --user mypy
     pip3 install --upgrade --user gcovr
     pip3 install --upgrade --user pydocstyle
 
-    # Hub
-    # https://github.com/github/hub
+    # Developer tools.
+    # The following need to be install manually:
+    # * Hub: https://github.com/github/hub
 fi
 
 if test -z "$SKIP_SUBMODULES"; then
@@ -136,7 +140,7 @@ ln -sfv ~/.dotfiles/vendor/paulirish/git-open/git-open ~/bin/git-open
 ln -sfv ~/.dotfiles/vendor/php-build/php-build/bin/php-build  ~/bin/php-build
 ln -sfnv ./.dotfiles/vendor/creationix/nvm ~/.nvm
 
-# TODO esnure symlink for Neovim: ~/.config/nvim -> ../.vim
+# TODO symlink for Neovim: ~/.config/nvim -> ../.vim
 
 # Quick hacky fixes for rbenv
 mkdir -p ~/.rbenv/plugins

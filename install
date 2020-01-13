@@ -104,12 +104,11 @@ if test -z "$SKIP_DEPS"; then
     # Ardour: https://ardour.org/
 
     # Python dev tools
-    pip3 install --user flake8
-    pip3 install --user flake8-docstrings
-    pip3 install --user mypy
-
-    # Fix compatability errors (upstream bug).
-    pip3 install --user pydocstyle==3.0.0
+    pip3 install --upgrade --user flake8
+    pip3 install --upgrade --user flake8-docstrings
+    pip3 install --upgrade --user mypy
+    pip3 install --upgrade --user gcovr
+    pip3 install --upgrade --user pydocstyle
 
     # Hub
     # https://github.com/github/hub

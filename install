@@ -155,6 +155,7 @@ composer global update
 composer global require --ignore-platform-reqs \
     "friendsofphp/php-cs-fixer" \
     "laravel/installer" \
+    "pds/skeleton" \
     "phan/phan" \
     "phploc/phploc" \
     "phpmd/phpmd" \

@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -e
+unset CDPATH
+unset IFS
+
+is_dirty() {
+    test -n "$(git -C "$1" status --porcelain)"
+}
+
+for project in "$PROJECTS_PATH/"*/*; do
+    test -d "$project/.git" || continue
+
+    if is_dirty "$project"; then
+        echo "Dirty repository: $project"
+    fi
+done

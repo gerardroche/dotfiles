@@ -1,30 +1,3 @@
-setenv() {
-    name="$1"
-
-    env_file=".env"
-    env_file_named=".env-$name"
-
-    env_file_abs="$PWD/$env_file"
-    env_file_abs_named="$PWD/$env_file_named"
-
-    if test ! -f "$env_file_abs_named"; then
-        echo >&2 "env file not found: $env_file_named"
-        return
-    fi
-
-    echo "found $env_file_abs_named"
-    if test -h "$env_file_abs"; then
-        rm -v "$env_file_abs"
-        ln -s "$env_file_named" "$env_file"
-        echo "symlinked $env_file -> $env_file_named"
-    elif test ! -f "$env_file_abs"; then
-        ln -s "$env_file_named" "$env_file"
-        echo "symlinked $env_file -> $env_file_named"
-    else
-        echo >&2 "ERROR $env_file_abs is not a symlink"
-    fi
-}
-
 find_dirs_not_perm_755() {
     find . ! -perm 755 -type d ! -wholename "*.git/*" -ls
 }
@@ -42,17 +15,7 @@ find_regular_files_with_byte_order_marks() {
     done
 }
 
-# https://askubuntu.com/questions/73443/how-to-stop-the-terminal-from-wrapping-lines
-nowrap() {
-    tput rmam
-}
-
-# https://askubuntu.com/questions/73443/how-to-stop-the-terminal-from-wrapping-lines
-wrap() {
-    tput smam
-}
-
-mypyinitfix() {
+fixmypyinit() {
     # Recursively creates __init__.pyi files.
     #
     # Options:
@@ -118,6 +81,10 @@ mypyinitfix() {
     done
 }
 
+mypysublime() {
+    MYPYPATH=$PROJECTS_PATH/sublime/sublime-mypy-stubs mypy $@
+}
+
 internet_use() {
     lsof -P -i -n | uniq
 }
@@ -159,10 +126,33 @@ gitkbranches() {
     $cmd
 }
 
-new() {
+git_create_branch() {
     prefix="$1"
-    name="$2"
-    git checkout -b "$prefix/$name"
+    suffix="$2"
+
+    if test -z "$prefix"; then
+        echo >&2 "param 1 is required"
+        return 1
+    fi
+
+    if test -z "$suffix"; then
+        echo >&2 "param 2 is required"
+        return 1
+    fi
+
+    git checkout -b "$prefix/$suffix"
+}
+
+new() {
+    git_create_branch $@
+}
+
+newfeature() {
+    git_create_branch feature $@
+}
+
+newissue() {
+    git_create_branch issue $@
 }
 
 _rbenv() {
@@ -242,36 +232,121 @@ phpcs() {
     fi
 }
 
-title() {
-    echo -n -e "\033]0;$*\007"
+phpt() {
+    NO_INTERACTION=1 make -j$(nproc) TEST_PHP_ARGS="-q --offline --show-diff $*" lcov-clean lcov-clean-data test
 }
 
-toggledebug() {
-    if test -f ./.debug; then
-        rm ./.debug
-        echo 'Debug is disabled'
-    else
-        touch  ./.debug
-        echo 'Debug is enabled'
+phptcov() {
+    NO_INTERACTION=1 make -j$(nproc) TEST_PHP_ARGS="-q --offline --show-diff $*" lcov-html gcovr-html gcovr-xml
+}
+
+phptlcov() {
+    NO_INTERACTION=1 make -j$(nproc) lcov-html
+}
+
+phptgcovr() {
+    NO_INTERACTION=1 make -j$(nproc) gcovr-html
+}
+
+phptgcovrxml() {
+    NO_INTERACTION=1 make -j$(nproc) gcovr-xml
+}
+
+phptbuildonly() {
+    ./buildconf
+    ./configure \
+        --enable-bcmath \
+        --enable-calendar \
+        --enable-debug \
+        --enable-exif \
+        --enable-fpm \
+        --enable-ftp \
+        --enable-gcov \
+        --enable-gd \
+        --enable-intl \
+        --enable-mbstring \
+        --enable-pcntl \
+        --enable-phpdbg \
+        --enable-shmop \
+        --enable-soap \
+        --enable-sockets \
+        --enable-sysvmsg \
+        --enable-sysvsem \
+        --enable-sysvshm \
+        --enable-werror \
+        --enable-xmlreader \
+        --enable-zend-test \
+        --with-bz2 \
+        --with-curl \
+        --with-freetype \
+        --with-gettext \
+        --with-gmp \
+        --with-jpeg \
+        --with-kerberos \
+        --with-ldap \
+        --with-ldap-sasl \
+        --with-mhash \
+        --with-openssl \
+        --with-password-argon2 \
+        --with-pdo-pgsql \
+        --with-pdo-sqlite \
+        --with-pgsql \
+        --with-readline \
+        --with-tidy \
+        --with-webp \
+        --with-xmlrpc \
+        --with-xpm \
+        --with-xsl \
+        --with-zip \
+        --with-zlib \
+        --without-pear
+}
+
+phptbuild() {
+    phptbuildonly
+    NO_INTERACTION=1 make
+}
+
+phptreset() {
+    git clean -xdf
+    phptbuild
+}
+
+# https://askubuntu.com/questions/73443/how-to-stop-the-terminal-from-wrapping-lines
+setnowrap() {
+    tput rmam
+}
+
+# https://askubuntu.com/questions/73443/how-to-stop-the-terminal-from-wrapping-lines
+setwrap() {
+    tput smam
+}
+
+setenv() {
+    name="$1"
+
+    env_file=".env"
+    env_file_named=".env-$name"
+
+    env_file_abs="$PWD/$env_file"
+    env_file_abs_named="$PWD/$env_file_named"
+
+    if test ! -f "$env_file_abs_named"; then
+        echo >&2 "env file not found: $env_file_named"
+        return
     fi
-}
 
-versioninfo() {
-    echo "$(uname -s) $(uname -r)"
-    uname -v
-    echo "$(uname -o) $(uname -m) $(uname -p) $(uname -i)"
-    uname -n
-
-    echo -n "Hostname: "
-    cat /etc/hostname
-
-    echo -n "Debian: "
-    cat /etc/debian_version
-
-    echo -n "Release: "
-    cat /etc/lsb-release
-
-    gnome-shell --version
+    echo "found $env_file_abs_named"
+    if test -h "$env_file_abs"; then
+        rm -v "$env_file_abs"
+        ln -s "$env_file_named" "$env_file"
+        echo "symlinked $env_file -> $env_file_named"
+    elif test ! -f "$env_file_abs"; then
+        ln -s "$env_file_named" "$env_file"
+        echo "symlinked $env_file -> $env_file_named"
+    else
+        echo >&2 "ERROR $env_file_abs is not a symlink"
+    fi
 }
 
 setmygitremote() {
@@ -295,6 +370,41 @@ setmygitremote() {
     fi
 
     git remote -v
+}
+
+settitle() {
+    echo -n -e "\033]0;$*\007"
+}
+
+rubyinfo() {
+    which ruby
+    ruby --version
+    which gem
+    gem --version
+    which bundle
+    bundle --version
+    which rails
+    rails --version
+    which rake
+    rake --version
+}
+
+systeminfo() {
+    echo "$(uname -s) $(uname -r)"
+    uname -v
+    echo "$(uname -o) $(uname -m) $(uname -p) $(uname -i)"
+    uname -n
+
+    echo -n "Hostname: "
+    cat /etc/hostname
+
+    echo -n "Debian: "
+    cat /etc/debian_version
+
+    echo -n "Release: "
+    cat /etc/lsb-release
+
+    gnome-shell --version
 }
 
 tailapachelogs() {
@@ -395,9 +505,4 @@ v() {
 wslsshadd() {
     eval $(ssh-add -s)
     ssh-add ~/.ssh/id_rsa
-}
-
-
-mypysublime() {
-    MYPYPATH=$PROJECTS_PATH/sublime/sublime-mypy-stubs mypy $@
 }

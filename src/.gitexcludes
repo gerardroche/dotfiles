@@ -20,8 +20,7 @@ Session.vim
 
 # Sublime Text
 *.sublime-workspace
-_*.sublime-project
-private*.sublime-project
+*.sublime-project
 
 # PhpStorm
 .idea
@@ -39,7 +38,6 @@ private*.sublime-project
 .mypy_cache/
 
 # PHP
-.php-version
 
 # Tags
 .TAGS
@@ -47,6 +45,16 @@ private*.sublime-project
 TAGS
 tags
 
-# Custom
+#
+
+.phan/
+.php-version
 .tmux
 .todo*
+
+## PHP Source
+*.post
+*.zip
+
+#ext/opcache/jit/zend_jit_x86.c
+#ext/opcache/minilua

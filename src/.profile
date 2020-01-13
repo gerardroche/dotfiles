@@ -16,24 +16,13 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
+# Check that we are not in a Tmux session before populating PATH. This works
+# around Tmux duplicating PATH entries every time a Tmux session is created.
+# http://unix.stackexchange.com/questions/4965/keep-duplicates-out-of-path-on-source/4973#4973
+# http://unix.stackexchange.com/questions/124444/how-can-i-cleanly-add-to-path/124447#124447
 if test -z "$TMUX"; then
 
-    # Check to see if we are in tmux before populating PATH. This is a hack to
-    # prevent tmux from duplicating PATH entries.
-    # Further reading:
-    # http://unix.stackexchange.com/questions/4965/keep-duplicates-out-of-path-on-source/4973#4973
-    # http://unix.stackexchange.com/questions/124444/how-can-i-cleanly-add-to-path/124447#124447
-
-    # The default original path on Ubuntu looks something like:
-    # /usr/local/sbin
-    # /usr/local/bin
-    # /usr/sbin
-    # /usr/bin
-    # /sbin
-    # /bin
-    # /usr/games
-    # /usr/local/games
-    # /snap/bin
+    # The default original path (it will be appended to the new entries).
     ORIG_PATH="$PATH"
 
     case "$PATH" in
@@ -46,6 +35,7 @@ if test -z "$TMUX"; then
             PATH="$PATH:$HOME/.rbenv/shims"
             PATH="$PATH:$HOME/.rbenv/bin"
             PATH="$PATH:$HOME/.gems/bin"
+            PATH="$PATH:$HOME/.local/bin"
             PATH="$PATH:$ORIG_PATH"
             ;;
     esac
@@ -57,10 +47,11 @@ fi
 
 export EDITOR=vi
 export GPG_TTY=$(tty)
-export NVM_DIR="$(readlink -nf ~/.nvm)" # https://github.com/creationix/nvm/issues/617
+export NVM_DIR="$(readlink -nf ~/.nvm)" # Fix https://github.com/creationix/nvm/issues/617
 export PHAN_DISABLE_XDEBUG_WARN=1
 export PROJECTS_PATH=~/projects
 export VENDOR_PATH=~/vendor
 export XDEBUG_CONFIG="idekey=netbeans-xdebug"
-unset GEM_HOME
+
+unset GEM_HOME  # Fix Gem issue (I can't remember exactly what the issue was)
 

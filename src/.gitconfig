@@ -150,7 +150,7 @@
 
 	name = Gerard Roche
 	email = gerardroche@users.noreply.github.com
-	signingkey = 5A9C047B8E53DC92
+	signingKey = 5A9C047B8E53DC92
 
 [commit]
 	gpgSign = true

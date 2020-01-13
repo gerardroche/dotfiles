@@ -126,6 +126,7 @@ set textwidth=80
 " https://www.johnhawthorn.com/2012/09/vi-escape-delays
 " set timeoutlen=1000 ttimeoutlen=0
 set ttyfast
+set updatetime=100
 set wildignore+=*.bak,*~,*.o,*.h,*.info,*.swp,*.obj
 set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
 set wildignore+=*.log
@@ -147,6 +148,7 @@ set wildignore+=.git,.hg,.svn
 set wildignore+=composer.lock,bower_components,node_modules
 set wildmenu
 set wildmode=longest:full
+set tags^=./.git/tags;
 
 " }}}
 " Options (Plugins) {{{

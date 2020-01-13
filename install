@@ -58,6 +58,8 @@ if test -z "$SKIP_DEPS"; then
         echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
     fi
 
+    sudo apt-get update
+
     command -v audacity >/dev/null 2>&1 || sudo apt-get install audacity pavucontrol
     command -v chromium-browser >/dev/null 2>&1 || sudo apt-get install chromium-browser
     command -v cmake  >/dev/null 2>&1 || sudo apt-get install cmake

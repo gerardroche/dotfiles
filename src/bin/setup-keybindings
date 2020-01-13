@@ -44,7 +44,7 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys www "" # Fixes launch
 gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/']"
 gsettings_set_org_gnome_settings_daemon_plugins_media_keys 0 "Calculator"  "gnome-calculator"   "Calculator"
 gsettings_set_org_gnome_settings_daemon_plugins_media_keys 1 "Firefox"     "firefox"            "<Super>b"
-gsettings_set_org_gnome_settings_daemon_plugins_media_keys 2 "Sublime"     "subl"               "<Super>e"
+gsettings_set_org_gnome_settings_daemon_plugins_media_keys 2 "Sublime"     "subl4"              "<Super>e"
 gsettings_set_org_gnome_settings_daemon_plugins_media_keys 3 "Files"       "nautilus"           "<Super>f"
 
 gsettings set org.gnome.settings-daemon.plugins.media-keys terminal                             "<Super>t"

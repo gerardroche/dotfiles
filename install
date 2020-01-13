@@ -53,6 +53,11 @@ done
 if test -z "$SKIP_DEPS"; then
     echo "install dependencies..."
 
+    if test ! -f /etc/apt/sources.list.d/yarn.list; then
+        curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+        echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+    fi
+
     command -v audacity >/dev/null 2>&1 || sudo apt-get install audacity pavucontrol
     command -v ctags >/dev/null 2>&1 || sudo apt-get install exuberant-ctags
     command -v dconf-editor >/dev/null 2>&1 || sudo apt-get install dconf-tools
@@ -73,6 +78,7 @@ if test -z "$SKIP_DEPS"; then
     command -v vim.gtk >/dev/null 2>&1 || sudo apt-get install vim-gtk
     command -v wmctrl  >/dev/null 2>&1 || sudo apt-get install wmctrl
     command -v xclip >/dev/null 2>&1 || sudo apt-get install xclip
+    command -v yarn >/dev/null 2>&1 || sudo apt-get install yarn
 
     # Required for Git interactive.singlekey to work. See https://superuser.com/a/817688.
     dpkg -l | grep libterm-readkey-perl >/dev/null 2>&1 || sudo apt-get install libterm-readkey-perl

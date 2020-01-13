@@ -11,11 +11,11 @@ create_home_dir_symlink() {
     target_basename="$(basename "$target")"
 
     if test "$target_basename" = "."; then
-        continue
+        return
     fi
 
     if test "$target_basename" = ".."; then
-        continue
+        return
     fi
 
     if test "$HOME/$target_basename" = "$SOURCE_PATH"; then

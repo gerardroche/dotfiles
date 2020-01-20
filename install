@@ -109,9 +109,14 @@ if test -z "$SKIP_DEPS"; then
     # Python developer tools.
     pip3 install --upgrade --user flake8
     pip3 install --upgrade --user flake8-docstrings
+    pip3 install --upgrade --user pydocstyle
     pip3 install --upgrade --user mypy
     pip3 install --upgrade --user gcovr
-    pip3 install --upgrade --user pydocstyle
+    python3.8 -m pip install --upgrade --user flake8
+    python3.8 -m pip install --upgrade --user flake8-docstrings
+    python3.8 -m pip install --upgrade --user pydocstyle
+    python3.8 -m pip install --upgrade --user mypy
+    python3.8 -m pip install --upgrade --user gcovr
 
     # Developer tools.
     # The following need to be install manually:

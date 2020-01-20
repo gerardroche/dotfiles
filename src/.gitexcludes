@@ -4,6 +4,7 @@
 # operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile ~/.gitignore_global
 
+# Vim
 *~
 .netrwhist
 Session.vim
@@ -37,7 +38,8 @@ Session.vim
 *.pyi
 .mypy_cache/
 
-# PHP
+# Packages
+*.zip
 
 # Tags
 .TAGS
@@ -45,16 +47,13 @@ Session.vim
 TAGS
 tags
 
-#
-
+# PHP
 .phan/
 .php-version
-.tmux
-.todo*
-
-## PHP Source
 *.post
-*.zip
-
 #ext/opcache/jit/zend_jit_x86.c
 #ext/opcache/minilua
+
+# Dotfiles
+.tmux
+.todo*

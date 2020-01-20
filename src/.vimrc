@@ -187,8 +187,9 @@ let g:test#php#phpunit#options = '--no-coverage'
 let g:test#preserve_screen = 0
 let g:vim_markdown_conceal = 0
 let g:vim_markdown_folding_disabled = 1
-let g:multi_cursor_exit_from_visual_mode = 1
+let g:multi_cursor_exit_from_visual_mode = 0
 let g:barbaric_default = "xkb:gb:extd:eng"
+let g:multi_cursor_select_all_word_key = '<A-n>'
 " let g:barbaric_default = "libpinyin"
 
 " }}}

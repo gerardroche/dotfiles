@@ -15,74 +15,53 @@ find_regular_files_with_byte_order_marks() {
     done
 }
 
-fixmypyinit() {
-    # Recursively creates __init__.pyi files.
-    #
-    # Options:
-    #   --undo Recursively removes any __init__.pyi files.
-    #   --dry-run
-
-    dry_run=
-    undo=
-
-    if test "x$1" = "x--dry-run"; then
-        dry_run=y
-    fi
-
-    if test "x$1" = "x--undo"; then
-        undo=y
-    fi
-
-    if test "x$2" = "x--dry-run"; then
-        dry_run=y
-    fi
-
-    if test "x$2" = "x--undo"; then
-        undo=y
-    fi
-
-    prefix_msg=""
-    if test "x$dry_run" = "xy"; then
-        prefix_msg="[dry run] "
-    fi
-
-    folders="$(find . -type d ! -path "*/.git*" ! -path "*/tmp*" ! -path "*/res*")"
-    for folder in ${folders}; do
-        test -d "$folder" || continue
-
-        init_py_file="$folder/__init__.py"
-        init_pyi_file="$folder/__init__.pyi"
-
-        if test "x$undo" = "xy"; then
-            if test -f "$init_pyi_file"; then
-                if test "x$dry_run" = "xy"; then
-                    echo "${prefix_msg}remove $init_pyi_file"
-                else
-                    echo "${prefix_msg}remove $init_pyi_file"
-                    rm -v "$init_pyi_file"
-                fi
-            fi
-        else
-            if test ! -f "$init_py_file"; then
-                if test ! -f "$init_pyi_file"; then
-                    if test "x$dry_run" = "xy"; then
-                        echo "${prefix_msg}create          $init_pyi_file"
-                    else
-                        echo "${prefix_msg}create          $init_pyi_file"
-                        touch "$init_pyi_file"
-                    fi
-                else
-                    echo "${prefix_msg}already exists: $init_pyi_file"
-                fi
-            else
-                echo "${prefix_msg}already exists: $init_py_file"
-            fi
-        fi
-    done
+p6myp() {
+    echo "$(python3.6 --version) $(python3.6 -m mypy --version)"
+    python3.6 -m mypy $@
 }
 
-mypysublime() {
-    MYPYPATH=$PROJECTS_PATH/sublime/sublime-mypy-stubs mypy $@
+p8myp() {
+    echo "$(python3.8 --version) $(python3.8 -m mypy --version)"
+    python3.8 -m mypy $@
+}
+
+p6flake() {
+    python3.6 -m flake8 --version
+    python3.6 -m flake8 $@
+}
+
+p8flake() {
+    python3.8 -m flake8 --version
+    python3.8 -m flake8 $@
+}
+
+p6mypysubl() {
+    echo "$(python3.6 --version) $(python3.6 -m mypy --version)"
+    MYPYPATH=$PROJECTS_PATH/sublime/sublime-mypy-stubs python3.6 -m mypy --show-error-codes $@
+}
+
+p8mypysubl() {
+    echo "$(python3.8 --version) $(python3.6 -m mypy --version)"
+    MYPYPATH=$PROJECTS_PATH/sublime/sublime-mypy-stubs python3.8 -m mypy --show-error-codes $@
+}
+
+mypysublall() {
+   p6mypysubl $@
+   p8mypysubl $@
+}
+
+mypysubl() {
+    MYPYPATH=$PROJECTS_PATH/sublime/sublime-mypy-stubs mypy --show-error-codes $@
+}
+
+mypyall() {
+    p6myp $@
+    p8myp $@
+}
+
+flake8all() {
+    p6flake $@
+    p8flake $@
 }
 
 internet_use() {

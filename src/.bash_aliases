@@ -133,7 +133,6 @@ alias sports='sudo netstat -lntpauW'
 alias sshconfig="vi ~/.ssh/config"
 alias sta='git sta'
 alias svi='sudo vi'
-alias tmuxrenamewindow='tmux rename-window'
 alias update='sudo apt-get update'
 alias upgrade='sudo apt-get upgrade -V --show-upgraded'
 alias w='git cm'

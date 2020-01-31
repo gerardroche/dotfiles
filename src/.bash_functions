@@ -122,6 +122,10 @@ git_create_branch() {
     git checkout -b "$prefix/$suffix"
 }
 
+tmr() {
+    tmux rename-window $@
+}
+
 new() {
     git_create_branch $@
 }

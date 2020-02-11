@@ -98,11 +98,15 @@ rm -rfv ~/.config/sublime-text*/Packages/User/Package\ Control.cache/
 rm -rfv ~/.config/sublime-text*/Packages/User/SublimeLinter/*.tmTheme
 rm -rfv ~/.config/sublime-text*/Packages/User/UnitTesting/
 rm -rfv ~/.config/sublime-text*/Settings/
-rmdir_if_empty ~/.config/sublime-text*/Lib/
-rmdir_if_empty ~/.config/sublime-text*/Lib/python33/
-rmdir_if_empty ~/.config/sublime-text*/Lib/python38/
-rmdir_if_empty ~/.config/sublime-text*/Packages/User/Color\ Highlighter/
-rmdir_if_empty ~/.config/sublime-text*/Packages/User/SublimeLinter/
+rmdir_if_empty ~/.config/sublime-text-3/Lib/python3.3/
+rmdir_if_empty ~/.config/sublime-text-3/Lib/
+rmdir_if_empty ~/.config/sublime-text-3/Packages/User/Color\ Highlighter/
+rmdir_if_empty ~/.config/sublime-text-3/Packages/User/SublimeLinter/
+rmdir_if_empty ~/.config/sublime-text/Lib/python33/
+rmdir_if_empty ~/.config/sublime-text/Lib/python38/
+rmdir_if_empty ~/.config/sublime-text/Lib/
+rmdir_if_empty ~/.config/sublime-text/Packages/User/Color\ Highlighter/
+rmdir_if_empty ~/.config/sublime-text/Packages/User/SublimeLinter/
 
 # ST3 OSX
 rm -rfv ~/Library/Application\ Support/Sublime\ Text\ 3/Backup/
@@ -121,6 +125,7 @@ rmdir_if_empty ~/Library/Application\ Support/Sublime\ Text\ 3/Lib/
 rmdir_if_empty ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/Color\ Highligher/
 rmdir_if_empty ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/SublimeLinter/
 
+echo "$SUBLIME_CLEAN_INCLUDE_SESSIONS"
 if [ "$SUBLIME_CLEAN_INCLUDE_SESSIONS" = "y" ]; then
     echo "cleaning sublime text sessions..."
     # ST3 Linux sessions
@@ -160,3 +165,5 @@ if [ "$SUBLIME_CLEAN_INCLUDE_WORKSPACES" = "y" ]; then
         rm -fv "$PROJECTS_PATH"/.st-projects/*.sublime-workspace
     fi
 fi
+
+echo "Done."

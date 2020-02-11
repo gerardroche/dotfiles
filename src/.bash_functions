@@ -138,7 +138,7 @@ newissue() {
     git_create_branch issue $@
 }
 
-_rbenv() {
+rbenv() {
     local cmd="$1"
     if [ "$#" -gt 0 ]; then
         shift

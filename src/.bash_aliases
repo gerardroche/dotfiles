@@ -50,6 +50,7 @@ alias gcod='git checkout develop'
 alias gcom='git checkout master'
 alias gconext='git conext'
 alias gcoprev='git coprev'
+alias gcp="git cherry-pick --no-commit"
 alias gd='git diff'
 alias gerty='_gerty'
 alias gf='git fetch'

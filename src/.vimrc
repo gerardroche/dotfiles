@@ -95,6 +95,7 @@ if (&termencoding ==# 'utf-8' || &encoding ==# 'utf-8') && version >= 700
 else
     set listchars=tab:>\ ,trail:-,extends:>,precedes:<
 endif
+set modeline
 set mouse=a
 set nobackup
 set noshowmode

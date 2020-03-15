@@ -85,7 +85,7 @@ rmdir_if_empty() {
 
 echo "cleaning sublime text 3 installation..."
 
-# ST3 and ST4
+# ST3 & ST4
 rm -rfv ~/.config/sublime-text*/Backup/
 rm -rfv ~/.config/sublime-text*/Cache/
 rm -rfv ~/.config/sublime-text*/Index/
@@ -108,7 +108,7 @@ rmdir_if_empty ~/.config/sublime-text/Lib/
 rmdir_if_empty ~/.config/sublime-text/Packages/User/Color\ Highlighter/
 rmdir_if_empty ~/.config/sublime-text/Packages/User/SublimeLinter/
 
-# ST3 OSX
+# OSX ST3
 rm -rfv ~/Library/Application\ Support/Sublime\ Text\ 3/Backup/
 rm -rfv ~/Library/Application\ Support/Sublime\ Text\ 3/Cache/
 rm -rfv ~/Library/Application\ Support/Sublime\ Text\ 3/Index/
@@ -134,6 +134,8 @@ if [ "$SUBLIME_CLEAN_INCLUDE_SESSIONS" = "y" ]; then
     rm -fv ~/.config/sublime-text/Local/*.sublime_session
     # ST3 OSX sessions
     rm -fv ~/Library/Application\ Support/Sublime\ Text\ 3/Local/*.sublime_session
+    # NeoVintageous
+    rm -rfv ~/.config/sublime-text*/Local/nvinfo
 fi
 
 if [ "$SUBLIME_CLEAN_INCLUDE_WORKSPACES" = "y" ]; then

@@ -86,6 +86,8 @@ set formatoptions+=r
 set formatoptions-=t
 set hidden
 set hlsearch
+set ignorecase
+set smartcase
 set incsearch
 set laststatus=1
 set linebreak
@@ -192,6 +194,8 @@ let g:multi_cursor_exit_from_visual_mode = 0
 let g:barbaric_default = "xkb:gb:extd:eng"
 let g:multi_cursor_select_all_word_key = '<A-n>'
 " let g:barbaric_default = "libpinyin"
+" let g:sneak#s_next = 1
+let g:sneak#label = 0
 
 " }}}
 " Visual {{{

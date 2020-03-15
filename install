@@ -163,7 +163,7 @@ fi
 composer config --global notify-on-install false
 composer config --global github-expose-hostname false
 composer global update
-composer global require --ignore-platform-reqs \
+composer global require \
     "friendsofphp/php-cs-fixer" \
     "laravel/installer" \
     "pds/skeleton" \

@@ -7,7 +7,7 @@ unset IFS
 echo -n "configuring keybindings... "
 
 # Creates a custom media key.
-gsettings_set_org_gnome_settings_daemon_plugins_media_keys() {
+gsettings_set_media_number_key() {
     n="$1"
     name="$2"
     cmd="$3"
@@ -40,12 +40,12 @@ gsettings set org.gnome.desktop.input-sources xkb-options "['caps:escape']"
 gsettings set org.gnome.settings-daemon.plugins.media-keys calculator "" # Fixes launch Calculator focus issues.
 gsettings set org.gnome.settings-daemon.plugins.media-keys www "" # Fixes launch Firefox focus issues.
 # A list of custom media key paths is required.
-# TODO This should be automatically updated by gsettings_set_org_gnome_settings_daemon_plugins_media_keys().
+# TODO This should be automatically updated by gsettings_set_media_number_key().
 gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/']"
-gsettings_set_org_gnome_settings_daemon_plugins_media_keys 0 "Calculator"  "gnome-calculator"   "Calculator"
-gsettings_set_org_gnome_settings_daemon_plugins_media_keys 1 "Firefox"     "firefox"            "<Super>b"
-gsettings_set_org_gnome_settings_daemon_plugins_media_keys 2 "Sublime"     "subld"              "<Super>e"
-gsettings_set_org_gnome_settings_daemon_plugins_media_keys 3 "Files"       "nautilus"           "<Super>f"
+gsettings_set_media_number_key 0 "Calculator"  "gnome-calculator"   "Calculator"
+gsettings_set_media_number_key 1 "Firefox"     "firefox"            "<Super>b"
+gsettings_set_media_number_key 2 "Sublime"     "subld"              "<Super>e"
+gsettings_set_media_number_key 3 "Files"       "nautilus"           "<Super>f"
 
 gsettings set org.gnome.settings-daemon.plugins.media-keys terminal                             "<Super>t"
 

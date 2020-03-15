@@ -12,9 +12,12 @@ gsettings set org.gnome.desktop.privacy report-technical-problems false
 # Ubuntu 17.04
 # gsettings set com.canonical.indicator.datetime show-events false
 gsettings set com.canonical.Unity.Lenses remote-content-search 'none'
+gsettings set com.ubuntu.touch.network gps false
 gsettings set com.ubuntu.update-manager show-details true
 gsettings set com.ubuntu.update-manager show-versions true
 gsettings set org.gnome.desktop.datetime automatic-timezone false
+gsettings set org.gnome.desktop.peripherals.keyboard delay 150
+gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 3
 gsettings set org.gnome.desktop.privacy hide-identity true
 gsettings set org.gnome.desktop.privacy send-software-usage-stats false
 gsettings set org.gnome.nautilus.list-view use-tree-view true
@@ -22,8 +25,5 @@ gsettings set org.gnome.nautilus.preferences default-folder-viewer 'list-view'
 gsettings set org.gnome.nautilus.preferences show-hidden-files true
 gsettings set org.gnome.shell.overrides workspaces-only-on-primary false
 gsettings set org.gnome.system.location enabled false
-
-gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 15
-gsettings set org.gnome.desktop.peripherals.keyboard delay 180
 
 echo "done."

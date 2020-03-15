@@ -16,23 +16,19 @@ find_regular_files_with_byte_order_marks() {
 }
 
 p6myp() {
-    echo "$(python3.6 --version) $(python3.6 -m mypy --version)"
-    python3.6 -m mypy $@
+    echo "$(python3.6 --version) $(python3.6 -m mypy --version)" && python3.6 -m mypy $@
 }
 
 p8myp() {
-    echo "$(python3.8 --version) $(python3.8 -m mypy --version)"
-    python3.8 -m mypy $@
+    echo "$(python3.8 --version) $(python3.8 -m mypy --version)" && python3.8 -m mypy $@
 }
 
-p6flake() {
-    python3.6 -m flake8 --version
-    python3.6 -m flake8 $@
+p6flake8() {
+    python3.6 -m flake8 --version && python3.6 -m flake8 $@
 }
 
-p8flake() {
-    python3.8 -m flake8 --version
-    python3.8 -m flake8 $@
+p8flake8() {
+    python3.8 -m flake8 --version && python3.8 -m flake8 $@
 }
 
 p6mypysubl() {
@@ -46,8 +42,7 @@ p8mypysubl() {
 }
 
 mypysublall() {
-   p6mypysubl $@
-   p8mypysubl $@
+   p6mypysubl $@ && p8mypysubl $@
 }
 
 mypysubl() {
@@ -55,13 +50,11 @@ mypysubl() {
 }
 
 mypyall() {
-    p6myp $@
-    p8myp $@
+    p6myp $@ && p8myp $@
 }
 
 flake8all() {
-    p6flake $@
-    p8flake $@
+    p6flake8 $@ && p8flake8 $@
 }
 
 internet_use() {
@@ -128,14 +121,6 @@ tmr() {
 
 new() {
     git_create_branch $@
-}
-
-newfeature() {
-    git_create_branch feature $@
-}
-
-newissue() {
-    git_create_branch issue $@
 }
 
 rbenv() {
@@ -377,29 +362,13 @@ systeminfo() {
     uname -v
     echo "$(uname -o) $(uname -m) $(uname -p) $(uname -i)"
     uname -n
-
     echo -n "Hostname: "
     cat /etc/hostname
-
     echo -n "Debian: "
     cat /etc/debian_version
-
     echo -n "Release: "
     cat /etc/lsb-release
-
     gnome-shell --version
-}
-
-tailapachelogs() {
-    tail -f /var/log/apache2/{access,error,other_vhosts_access}.log
-}
-
-tailapplogs() {
-    tail -f /var/log/apache2/{access,error,other_vhosts_access}.log /var/log/mysql/{error,mysql}.log {storage,data}/logs/*.log
-}
-
-tailmysqllogs() {
-    tail -f /var/log/mysql/{error,mysql}.log
 }
 
 showrecenterrors() {

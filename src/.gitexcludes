@@ -57,3 +57,4 @@ tags
 # Dotfiles
 .tmux
 .todo*
+todo*.md

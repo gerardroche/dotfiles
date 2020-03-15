@@ -13,7 +13,7 @@ Commands:
 
   install <version>     Install a PHP version
   versions              List all available PHP versions
-  reload                Reloads ~/bin/php{version} symlinks
+  reload                Reloads config overrides and ~/bin symlinks
 
 EOT
 }
@@ -67,11 +67,10 @@ install_version() {
     exec "$BUILD_BIN" --ini development "$version" "$prefix"
 }
 
-# Symbolically links each phpenv version at ~/bin/php{VERSION}.
-reload_symlinks() {
-    echo "*** reload symlinks"
-
-    # TODO refactor hardcoded paths
+# Updates symbolic links for each php version in user bin directory. A symbolic
+# link for each available version is created at ~/bin/php{version}.
+update_symlinks() {
+    echo "*** update symlinks"
     for version_path in ~/.phpenv/versions/[0-9]*; do
         if test ! -d "$version_path"; then
             continue
@@ -81,14 +80,9 @@ reload_symlinks() {
         version_source="$version_path/bin/php"
         version_target="$HOME/bin/php$version"
 
-        echo "processing version $version"
-        echo "  version path:   $version_path"
-        echo "  version source: $version_source"
-        echo "  version target: $version_target"
-
         if test -e "$version_target"; then
             if test -h "$version_target"; then
-                rm -v "$version_target"
+                rm "$version_target"
             else
                 echo >&2 "ERROR: expected a symbolic file: $version_target"
                 continue
@@ -100,10 +94,10 @@ reload_symlinks() {
     done
 }
 
-# Symbolically links each lde config override into each version.
-# Note: This has a dependency on the "lde" toolset.
-reload_configs() {
-    echo "*** reload configurations"
+# Creates a symbolic link for lde configuration overrides for each available
+# version. Note that this is a dependency on an internal lde toolset.
+update_configs() {
+    echo "*** update configurations"
     for phpenv_version_etc_conf_d in ~/.phpenv/versions/*/etc/conf.d; do
         if test ! -d "$phpenv_version_etc_conf_d"; then
             echo >&2 "WARNING: $phpenv_version_etc_conf_d is not a valid directory"
@@ -115,11 +109,11 @@ reload_configs() {
 }
 
 reload() {
-    reload_symlinks
-    reload_configs
+    update_symlinks
+    update_configs
 }
 
-readonly VERSION="0.4.3"
+readonly VERSION="0.5.0"
 readonly PREFIX="$HOME/.phpenv"
 readonly BUILD_BIN="$HOME/bin/php-build"
 

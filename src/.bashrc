@@ -71,7 +71,57 @@ if [ "$color_prompt" = yes ]; then
     GIT_PS1_SHOWUNTRACKEDFILES="y"
     GIT_PS1_SHOWUPSTREAM="verbose name git"
 
-    PROMPT_COMMAND='__git_ps1 "╭─ \w" "\n╰$(if test $? = 0;then echo "\$";else echo "\[\e[31m\]\$\[\e[0m\]";fi) " " ⎇  %s"'
+    do_prompt_command() {
+        # version color
+        vc="\[\e[33m\]"
+        # version label color
+        vlc="\[\e[36m\]"
+        # working dir color
+        wc="\[\e[34m\]"
+        # error color
+        ec="\[\e[31m\]"
+        # clear color
+        cc="\[\e[0m\]"
+
+        # versions information buffer
+        v_buf=""
+
+        # PHP.
+        if test -f composer.json; then
+            php_version=$(php -v 2>&1 | grep --color=never -oe "^PHP\s*[0-9.]\+" | awk '{print $2}')
+            v_buf="${v_buf} ${vlc}php:(${cc}${vc}${php_version}${cc}${vlc})${cc}"
+        fi
+
+        # Ruby.
+        if test -f Gemfile || test -f Rakefile; then
+            ruby_version=$(rbenv version-name)
+            v_buf="${v_buf} ${vlc}ruby:(${cc}${vc}${ruby_version}${cc}${vlc})${cc}"
+        fi
+
+        # Rails.
+        if test -f bin/rails; then
+            rails_version=$(rails --version | sed -e 's/Rails //')
+            v_buf="${v_buf} ${vlc}rails:(${cc}${vc}${rails_version}${cc}${vlc})${cc}"
+        fi
+
+        # Node.
+        if test -f package.json || test -d node_modules; then
+            node_version=$(node -v 2>/dev/null | sed -e 's/v//')
+            v_buf="${v_buf} ${vlc}node:(${cc}${vc}${node_version}${cc}${vlc})${cc}"
+        fi
+
+        # Format version information.
+        if test -n "$v_buf"; then
+            v_buf=" [$(echo "$v_buf" | sed -e 's/ //')]"
+        fi
+
+        __git_ps1 "${wc}╭─ \w${cc}${v_buf} " \
+                  "\n${wc}╰─${cc}$(if test $? = 0;then echo "${wc}\$${cc}";else echo "${ec}\$${cc}";fi) " \
+                  "(%s) [jobs:(\j)]"
+    }
+
+    PROMPT_COMMAND=do_prompt_command
+    # PROMPT_COMMAND='__git_ps1 "╭─ \w" "\n╰$(if test $? = 0;then echo "\$";else echo "\[\e[31m\]\$\[\e[0m\]";fi) " " ⎇  %s"'
 
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '

@@ -22,20 +22,33 @@ fi
 # http://unix.stackexchange.com/questions/124444/how-can-i-cleanly-add-to-path/124447#124447
 if test -z "$TMUX"; then
 
-    # The default original path (it will be appended to the new entries).
+    # The original path will be appended to new entries.
     ORIG_PATH="$PATH"
 
     case "$PATH" in
+        # Path has already been updated!
         "$HOME/bin:"*)
             ;;
         *)
+
+            # User first!
             PATH="$HOME/bin"
+
+            # PHP: Composer global packages.
             PATH="$PATH:$HOME/.config/composer/vendor/bin"
+
+            # NPM
             PATH="$PATH:$HOME/npm/bin"
+
+            # Ruby
             PATH="$PATH:$HOME/.rbenv/shims"
             PATH="$PATH:$HOME/.rbenv/bin"
             PATH="$PATH:$HOME/.gems/bin"
+
+            # Local
             PATH="$PATH:$HOME/.local/bin"
+
+            # Append original.
             PATH="$PATH:$ORIG_PATH"
             ;;
     esac
@@ -47,11 +60,23 @@ fi
 
 export EDITOR=vi
 export GPG_TTY=$(tty)
-export NVM_DIR="$(readlink -nf ~/.nvm)" # Fix https://github.com/creationix/nvm/issues/617
 export PHAN_DISABLE_XDEBUG_WARN=1
 export PROJECTS_PATH=~/projects
 export VENDOR_PATH=~/vendor
 export XDEBUG_CONFIG="idekey=netbeans-xdebug"
 
-unset GEM_HOME  # Fix Gem issue (I can't remember exactly what the issue was)
+# Make sure nvm dir path is resolved if it's a symlink.
+# Fixes "When NVM_DIR is a symlink nvm_ls breaks"
+# https://github.com/creationix/nvm/issues/617
+export NVM_DIR="$(readlink -nf ~/.nvm)"
+
+# Use the alias "reloadnvm" when you want to use nvm, this avoids having to load
+# nvm every time a shell is started. The "reloadnvm" alias has the advantage of
+# executing "nvm use" after nvm is loaded to select any local npm version.
+# if test -s "$NVM_DIR/nvm.sh"; then
+#     . "$NVM_DIR/nvm.sh"
+# fi
+
+# Fix Gem issue (I can't remember exactly what the issue was)
+unset GEM_HOME
 

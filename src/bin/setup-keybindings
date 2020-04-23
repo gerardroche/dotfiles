@@ -25,35 +25,41 @@ gsettings_set_media_number_key() {
 # Ubuntu Gnome has a keyboard shortcut mapped then application don't receive the
 # key event. When you want to use a key binding in an application you need to
 # disable the shortcut that Gnome has set.
+
 gsettings set org.gnome.desktop.wm.keybindings toggle-shaded "[]"
 gsettings set org.gnome.desktop.wm.preferences action-middle-click-titlebar "none"
-gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver ""
-gsettings set org.gnome.settings-daemon.plugins.media-keys video-out ""
+gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver "['']"
+# gsettings set org.gnome.settings-daemon.plugins.media-keys video-out "['']"
 gsettings set org.gnome.shell.keybindings focus-active-notification "[]"
 gsettings set org.gnome.shell.keybindings toggle-message-tray "[]"
 
 # CapsLock -> Escape.
 gsettings set org.gnome.desktop.input-sources xkb-options "['caps:escape']"
 
-# Launching.
-# The dedicated calculator and www (browser) media keys definitions don't work.
-gsettings set org.gnome.settings-daemon.plugins.media-keys calculator "" # Fixes launch Calculator focus issues.
-gsettings set org.gnome.settings-daemon.plugins.media-keys www "" # Fixes launch Firefox focus issues.
+# Launching applications
+########################
+# Fix launch Calculator focus issues. The dedicated calculator and www
+# (browser) media keys definitions don't work.
+gsettings set org.gnome.settings-daemon.plugins.media-keys calculator "['']"
+# Fix launch Firefox focus issues.
+gsettings set org.gnome.settings-daemon.plugins.media-keys www "['']"
 # A list of custom media key paths is required.
 # TODO This should be automatically updated by gsettings_set_media_number_key().
 gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/']"
 gsettings_set_media_number_key 0 "Calculator"  "gnome-calculator"   "Calculator"
 gsettings_set_media_number_key 1 "Firefox"     "firefox"            "<Super>b"
-gsettings_set_media_number_key 2 "Sublime"     "subld"              "<Super>e"
+gsettings_set_media_number_key 2 "Sublime"     "subl4d"             "<Super>e"
 gsettings_set_media_number_key 3 "Files"       "nautilus"           "<Super>f"
 
-gsettings set org.gnome.settings-daemon.plugins.media-keys terminal                             "<Super>t"
+gsettings set org.gnome.settings-daemon.plugins.media-keys terminal "['<Super>t']"
 
 # Window management: Switching.
+###############################
 gsettings set org.gnome.desktop.wm.keybindings  switch-applications         "['<Alt>Tab']"
 gsettings set org.gnome.desktop.wm.keybindings  switch-group                "['<Alt>Above_Tab']"
 
 # Window management: Resizing.
+##############################
 gsettings set org.gnome.desktop.wm.keybindings  unmaximize                  "['<Super>j']"
 gsettings set org.gnome.desktop.wm.keybindings  minimize                    "['<Super>m']"
 gsettings set org.gnome.desktop.wm.keybindings  maximize                    "['<Super>k']"
@@ -62,6 +68,7 @@ gsettings set org.gnome.desktop.wm.keybindings  maximize-horizontally       "['<
 gsettings set org.gnome.desktop.wm.keybindings  maximize-vertically         "['<Super>backslash']" # "backslash" is the same key as bar "|".
 
 # Window management: Moving.
+############################
 gsettings set org.gnome.mutter.keybindings      toggle-tiled-left           "['<Super>h']"
 gsettings set org.gnome.mutter.keybindings      toggle-tiled-right          "['<Super>l']"
 gsettings set org.gnome.desktop.wm.keybindings  move-to-center              "['<Super>c']"

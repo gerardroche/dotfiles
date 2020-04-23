@@ -45,6 +45,7 @@
 	pop = stash pop
 	prune = fetch --prune
 	pt = push --tags
+	r = rebase
 	ra = rebase --abort
 	rc = rebase --continue
 	rh = reset --hard

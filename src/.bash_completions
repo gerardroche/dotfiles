@@ -6,10 +6,7 @@ __dotfiles_completion_reply_with() {
 
 # Filters non alnum characters; replaces them with underscores
 __filter_completions() {
-    for completion in "$1"; do
-        completion="$(echo "$completion" | sed "s/[^a-zA-Z0-9_-\\.\\/]/_/g")"
-        echo "$completion"
-    done
+    echo "$(echo "$1" | sed "s/[^a-zA-Z0-9\\/\\._-]/_/g")"
 }
 
 __dotfiles_completion_projects() {
@@ -54,6 +51,7 @@ if [ -f /usr/share/bash-completion/completions/git ]; then
     __git_complete gls _git_log
     __git_complete gm _git_merge
     __git_complete go _git_checkout
+    __git_complete gr _git_rebase
     __git_complete s _git_status
 fi
 

@@ -123,6 +123,24 @@ new() {
     git_create_branch $@
 }
 
+php() {
+    cwd="$(readlink -nf "$PWD")"
+    while test "x$cwd" != "x$(dirname "$HOME")" && test "x$cwd" != "x/" && test "x$cwd" != "x"; do
+        php_version_file="$cwd/.php-version"
+        if test -f "$php_version_file"; then
+            phpenv_bin="$HOME/.phpenv/versions/$(cat "$php_version_file" | head -1)/bin/php"
+
+            if test -x "$phpenv_bin"; then
+                command "$phpenv_bin" "$@"
+                return
+            fi
+        fi
+        cwd="$(dirname $cwd)"
+    done
+
+    command php "$@"
+}
+
 rbenv() {
     local cmd="$1"
     if [ "$#" -gt 0 ]; then
@@ -357,7 +375,30 @@ rubyinfo() {
     rake --version
 }
 
-systeminfo() {
+appversions() {
+    php --version | head -1 2> /dev/null || true
+    ruby --version 2> /dev/null || true
+
+    if command -v gem >/dev/null 2>&1; then
+        echo -n "Gem "
+        gem --version 2> /dev/null
+    fi
+
+    bundler --version 2> /dev/null || true
+    rails --version 2> /dev/null || true
+
+    if command -v npm >/dev/null 2>&1; then
+        echo -n "npm "
+        npm --version 2> /dev/null || true
+    fi
+
+    if command -v node >/dev/null 2>&1; then
+        echo -n "node "
+        node --version 2> /dev/null || true
+    fi
+}
+
+sysversions() {
     echo "$(uname -s) $(uname -r)"
     uname -v
     echo "$(uname -o) $(uname -m) $(uname -p) $(uname -i)"

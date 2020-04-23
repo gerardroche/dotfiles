@@ -31,9 +31,9 @@ else
     readonly WINDOW_NAME="mx"
 fi
 
-echo "Starting Tmux session:"
-echo " Session: '$SESSION_NAME'"
-echo " Window: '$WINDOW_NAME'"
+# echo "Starting Tmux session:"
+# echo " Session: '$SESSION_NAME'"
+# echo " Window: '$WINDOW_NAME'"
 
 tmux has-session -t "$SESSION_NAME" > /dev/null 2>&1 && HAS_SESSION=y || HAS_SESSION=n
 

@@ -6,19 +6,18 @@ unset IFS
 
 echo -n "Configuring Ubuntu settings... "
 
-# Ubuntu 18.04
-gsettings set org.gnome.desktop.privacy report-technical-problems false
-
-# Ubuntu 17.04
-# gsettings set com.canonical.indicator.datetime show-events false
 gsettings set com.canonical.Unity.Lenses remote-content-search 'none'
 gsettings set com.ubuntu.touch.network gps false
 gsettings set com.ubuntu.update-manager show-details true
 gsettings set com.ubuntu.update-manager show-versions true
+gsettings set com.ubuntu.update-manager summary-before-name true
+gsettings set org.gnome.desktop.background show-desktop-icons false
 gsettings set org.gnome.desktop.datetime automatic-timezone false
+gsettings set org.gnome.desktop.interface clock-format "24h"
 gsettings set org.gnome.desktop.peripherals.keyboard delay 150
 gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 3
 gsettings set org.gnome.desktop.privacy hide-identity true
+gsettings set org.gnome.desktop.privacy report-technical-problems false
 gsettings set org.gnome.desktop.privacy send-software-usage-stats false
 gsettings set org.gnome.nautilus.list-view use-tree-view true
 gsettings set org.gnome.nautilus.preferences default-folder-viewer 'list-view'

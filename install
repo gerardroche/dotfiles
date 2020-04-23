@@ -146,8 +146,7 @@ done
 
 ln -sfv ~/.dotfiles/vendor/paulirish/git-open/git-open ~/bin/git-open
 ln -sfv ~/.dotfiles/vendor/php-build/php-build/bin/php-build  ~/bin/php-build
-ln -sfnv ./.dotfiles/vendor/creationix/nvm ~/.nvm
-#ln -sfnv ~/.config/nvim ~/.vim
+ln -sfnv ./.dotfiles/vendor/nvm-sh/nvm ~/.nvm
 
 # Quick hacky fixes for rbenv
 mkdir -p ~/.rbenv/plugins

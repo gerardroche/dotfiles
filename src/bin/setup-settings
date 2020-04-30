@@ -14,6 +14,8 @@ gsettings set com.ubuntu.update-manager summary-before-name true
 gsettings set org.gnome.desktop.background show-desktop-icons false
 gsettings set org.gnome.desktop.datetime automatic-timezone false
 gsettings set org.gnome.desktop.interface clock-format "24h"
+gsettings set org.gnome.desktop.interface clock-show-weekday true
+gsettings set org.gnome.desktop.notifications show-in-lock-screen false
 gsettings set org.gnome.desktop.peripherals.keyboard delay 150
 gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 3
 gsettings set org.gnome.desktop.privacy hide-identity true

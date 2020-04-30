@@ -119,6 +119,10 @@ tmr() {
     tmux rename-window $@
 }
 
+mkd() {
+    mkdir -p "$@" && cd "$@"
+}
+
 new() {
     git_create_branch $@
 }
@@ -139,6 +143,12 @@ php() {
     done
 
     command php "$@"
+}
+
+phpserver() {
+    local ip=localhost
+    local port="${1:-4000}"
+    php -S "${ip}:${port}"
 }
 
 rbenv() {

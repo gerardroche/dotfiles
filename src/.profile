@@ -61,6 +61,7 @@ fi
 export EDITOR=vi
 export GPG_TTY=$(tty)
 export PHAN_DISABLE_XDEBUG_WARN=1
+export PHP_CS_FIXER_FUTURE_MODE=1
 export PROJECTS_PATH=~/projects
 export VENDOR_PATH=~/vendor
 export XDEBUG_CONFIG="idekey=netbeans-xdebug"

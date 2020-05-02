@@ -53,7 +53,7 @@ tags
 *.post
 #ext/opcache/jit/zend_jit_x86.c
 #ext/opcache/minilua
-
+.php_cs.cache
 # Dotfiles
 .tmux
 .todo*

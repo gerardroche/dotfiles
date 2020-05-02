@@ -10,15 +10,15 @@ create_home_dir_symlink() {
     target="$1"
     target_basename="$(basename "$target")"
 
-    if test "$target_basename" = "."; then
+    if test "x$target_basename" = "x."; then
         return
     fi
 
-    if test "$target_basename" = ".."; then
+    if test "x$target_basename" = "x.."; then
         return
     fi
 
-    if test "$HOME/$target_basename" = "$SOURCE_PATH"; then
+    if test "x$HOME/$target_basename" = "x$SOURCE_PATH"; then
         echo >&2 "$0:create_home_dir_symlink() cannot link to self"
         exit 1
     fi
@@ -54,6 +54,7 @@ if test -z "$SKIP_DEPS"; then
     echo "install dependencies..."
 
     if test ! -f /etc/apt/sources.list.d/yarn.list; then
+        ecoh "Adding Yarn apt key..."
         curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
         echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
     fi
@@ -81,12 +82,13 @@ if test -z "$SKIP_DEPS"; then
     command -v tree >/dev/null 2>&1 || sudo apt-get install tree
     command -v tuxguitar >/dev/null 2>&1 || sudo apt-get install tuxguitar tuxguitar-alsa tuxguitar-oss tuxguitar-jsa
     command -v unzip >/dev/null 2>&1 || sudo apt-get install unzip
-    command -v vim.gtk >/dev/null 2>&1 || sudo apt-get install vim-gtk
     command -v wmctrl  >/dev/null 2>&1 || sudo apt-get install wmctrl
     command -v xclip >/dev/null 2>&1 || sudo apt-get install xclip
     command -v yarn >/dev/null 2>&1 || sudo apt-get install yarn
 
+    dpkg -l | grep php-pcov >/dev/null 2>&1 || sudo apt-get install php-pcov
     dpkg -l | grep ubuntu-restricted-extras >/dev/null 2>&1 || sudo apt-get install ubuntu-restricted-extras
+    dpkg -l | grep vim.gtk >/dev/null 2>&1 || sudo apt-get install vim.gtk
 
     # Required for Git interactive.singlekey to work. See https://superuser.com/a/817688.
     dpkg -l | grep libterm-readkey-perl >/dev/null 2>&1 || sudo apt-get install libterm-readkey-perl
@@ -97,14 +99,21 @@ if test -z "$SKIP_DEPS"; then
     dpkg -l | grep ttf-anonymous-pro >/dev/null 2>&1 || sudo apt-get install ttf-anonymous-pro
     dpkg -l | grep ttf-mscorefonts-installer >/dev/null 2>&1 || sudo apt-get install ttf-mscorefonts-installer
     dpkg -l | grep ttf-ubuntu-font-family >/dev/null 2>&1 || sudo apt-get install ttf-ubuntu-font-family
-    # The following fonts need to be installed manually:
-    # * Hasklig (Source Code Pro font with ligatures) https://github.com/i-tu/Hasklig
-    # * Monoid (lagature font) https://github.com/larsenwork/monoid
 
-    # Music production.
-    # The following need to be install manually:
-    # * LMMS: https://lmms.io/download/
-    # * Ardour: https://ardour.org/
+    echo
+    echo "The following fonts need to be installed manually:"
+    echo "* Hasklig (Source Code Pro font with ligatures) https://github.com/i-tu/Hasklig"
+    echo "* Monoid (lagature font) https://github.com/larsenwork/monoid"
+    echo
+
+    echo "Force re-generation of font information cache files..."
+    fc-cache -f
+
+    echo
+    echo "The following music production tools need to be install manually:"
+    echo "* LMMS: https://lmms.io/download"
+    echo "* Ardour: https://ardour.org"
+    echo
 
     # Python developer tools.
     pip3 install --upgrade --user flake8
@@ -112,25 +121,25 @@ if test -z "$SKIP_DEPS"; then
     pip3 install --upgrade --user pydocstyle
     pip3 install --upgrade --user mypy
     pip3 install --upgrade --user gcovr
+
     python3.8 -m pip install --upgrade --user flake8
     python3.8 -m pip install --upgrade --user flake8-docstrings
     python3.8 -m pip install --upgrade --user pydocstyle
     python3.8 -m pip install --upgrade --user mypy
     python3.8 -m pip install --upgrade --user gcovr
 
-    # Developer tools.
-    # The following need to be install manually:
-    # * Hub: https://github.com/github/hub
-
-    # GitHub CLI
-    # https://github.com/cli/cli#installation-and-upgrading
+    echo
+    echo "The following developer tools need to be installed manually:"
+    echo "* Hub: https://github.com/github/hub"
+    echo "* GitHub CLI https://github.com/cli/cli#installation-and-upgrading"
+    echo
 fi
 
 if test -z "$SKIP_SUBMODULES"; then
     echo "installing submodules..."
     git submodule init
     git submodule update
-    echo "updating submodules to latest master..."
+    echo "updating submodules..."
     git submodule foreach 'git fetch && git merge --ff-only origin/master'
 fi
 
@@ -161,12 +170,15 @@ fi
 # Composer
 composer config --global notify-on-install false
 composer config --global github-expose-hostname false
+
+packages="$(composer global show --direct)"
+
+echo "$packages" | grep -q "friendsofphp/php-cs-fixer" || composer global require "friendsofphp/php-cs-fixer"
+echo "$packages" | grep -q "laravel/installer" || composer global require "laravel/installer"
+echo "$packages" | grep -q "pds/skeleton" || composer global require "pds/skeleton"
+echo "$packages" | grep -q "phan/phan" || composer global require "phan/phan"
+echo "$packages" | grep -q "phploc/phploc" || composer global require "phploc/phploc"
+echo "$packages" | grep -q "phpmd/phpmd" || composer global require "phpmd/phpmd"
+echo "$packages" | grep -q "sensiolabs/security-checker" || composer global require "sensiolabs/security-checker"
+
 composer global update
-composer global require \
-    "friendsofphp/php-cs-fixer" \
-    "laravel/installer" \
-    "pds/skeleton" \
-    "phan/phan" \
-    "phploc/phploc" \
-    "phpmd/phpmd" \
-    "sensiolabs/security-checker"

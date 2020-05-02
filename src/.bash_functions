@@ -15,46 +15,54 @@ find_regular_files_with_byte_order_marks() {
     done
 }
 
-p6myp() {
+
+# MYPY
+
+p36mypy() {
     echo "$(python3.6 --version) $(python3.6 -m mypy --version)" && python3.6 -m mypy $@
 }
 
-p8myp() {
+p38mypy() {
     echo "$(python3.8 --version) $(python3.8 -m mypy --version)" && python3.8 -m mypy $@
 }
 
-p6flake8() {
-    python3.6 -m flake8 --version && python3.6 -m flake8 $@
+mypyall() {
+    p38mypy $@
 }
 
-p8flake8() {
-    python3.8 -m flake8 --version && python3.8 -m flake8 $@
-}
-
-p6mypysubl() {
-    echo "$(python3.6 --version) $(python3.6 -m mypy --version)"
+p36mypysubl() {
+    echo "$(python3.6 --version)"
+    echo "$(python3.6 -m mypy --version)"
     MYPYPATH=$PROJECTS_PATH/sublime/sublime-mypy-stubs python3.6 -m mypy --show-error-codes $@
 }
 
-p8mypysubl() {
-    echo "$(python3.8 --version) $(python3.6 -m mypy --version)"
+p38mypysubl() {
+    echo "$(python3.8 --version)"
+    echo "$(python3.8 -m mypy --version)"
     MYPYPATH=$PROJECTS_PATH/sublime/sublime-mypy-stubs python3.8 -m mypy --show-error-codes $@
 }
 
 mypysublall() {
-   p6mypysubl $@ && p8mypysubl $@
+   p38mypysubl $@
 }
 
 mypysubl() {
     MYPYPATH=$PROJECTS_PATH/sublime/sublime-mypy-stubs mypy --show-error-codes $@
 }
 
-mypyall() {
-    p6myp $@ && p8myp $@
+
+# FLAKE8
+
+p36flake8() {
+    python3.6 -m flake8 --version && python3.6 -m flake8 $@
+}
+
+p38flake8() {
+    python3.8 -m flake8 --version && python3.8 -m flake8 $@
 }
 
 flake8all() {
-    p6flake8 $@ && p8flake8 $@
+    p36flake8 $@ && p38flake8 $@
 }
 
 internet_use() {
@@ -206,13 +214,15 @@ phpcs() {
         php vendor/bin/php-cs-fixer -vvv "$@"
     else
         config_file=
-        if test "x$1" = "xfix"; then
+        if test x"$1" = x"fix"; then
             if test -f ./.php_cs; then
                 config_file=./.php_cs
-            elif test -f ./../.php_cs; then
-                config_file=./../.php_cs
             elif test -f ./.php_cs.dist; then
                 config_file=./.php_cs.dist
+            elif test -f ./../.php_cs; then
+                config_file=./../.php_cs
+            elif test -f ~/.php_cs; then
+                config_file=~/.php_cs
             else
                 echo "no config found!"
                 return
@@ -228,12 +238,86 @@ phpcs() {
     fi
 }
 
+phptbuild() {
+    ./buildconf
+
+    if test "x$1" = "x--min"; then
+
+        ./configure \
+            --enable-cgi \
+            --enable-cli \
+            --enable-gcov \
+            --enable-phpdbg \
+            --disable-gd \
+            --with-zlib
+
+    else
+
+        ./configure \
+            --enable-bcmath \
+            --enable-calendar \
+            --enable-debug \
+            --enable-exif \
+            --enable-fpm \
+            --enable-ftp \
+            --enable-gcov \
+            --enable-intl \
+            --enable-mbstring \
+            --enable-pcntl \
+            --enable-phpdbg \
+            --enable-shmop \
+            --enable-soap \
+            --enable-sysvmsg \
+            --enable-sysvsem \
+            --enable-sysvshm \
+            --disable-gd \
+            --enable-werror \
+            --enable-xmlreader \
+            --enable-zend-test \
+            --with-bz2 \
+            --with-curl \
+            --with-enchant \
+            --with-ffi \
+            --with-freetype \
+            --with-gettext \
+            --with-gmp \
+            --with-jpeg \
+            --with-kerberos \
+            --with-mysqli=mysqlnd \
+            --with-openssl \
+            --with-pdo-mysql=mysqlnd \
+            --with-pdo-pgsql \
+            --with-pdo-sqlite \
+            --with-pear \
+            --with-pgsql \
+            --with-pspell \
+            --with-readline \
+            --with-sodium \
+            --with-tidy \
+            --with-webp \
+            --with-xmlrpc \
+            --with-xpm \
+            --with-xsl \
+            --with-zip \
+            --with-zlib \
+            --without-pear
+
+    fi
+
+    NO_INTERACTION=1 make -j$(nproc)
+}
+
+phptreset() {
+    git clean -xdf
+    phptbuild "$@"
+}
+
 phpt() {
     NO_INTERACTION=1 make -j$(nproc) TEST_PHP_ARGS="-q --offline --show-diff $*" lcov-clean lcov-clean-data test
 }
 
 phptcov() {
-    NO_INTERACTION=1 make -j$(nproc) TEST_PHP_ARGS="-q --offline --show-diff $*" lcov-html gcovr-html gcovr-xml
+    NO_INTERACTION=1 make -j$(nproc) TEST_PHP_ARGS="-q --offline --show-diff $*" lcov-html gcovr-html
 }
 
 phptlcov() {
@@ -246,66 +330,6 @@ phptgcovr() {
 
 phptgcovrxml() {
     NO_INTERACTION=1 make -j$(nproc) gcovr-xml
-}
-
-phptbuildonly() {
-    ./buildconf
-    ./configure \
-        --enable-bcmath \
-        --enable-calendar \
-        --enable-debug \
-        --enable-exif \
-        --enable-fpm \
-        --enable-ftp \
-        --enable-gcov \
-        --enable-gd \
-        --enable-intl \
-        --enable-mbstring \
-        --enable-pcntl \
-        --enable-phpdbg \
-        --enable-shmop \
-        --enable-soap \
-        --enable-sockets \
-        --enable-sysvmsg \
-        --enable-sysvsem \
-        --enable-sysvshm \
-        --enable-werror \
-        --enable-xmlreader \
-        --enable-zend-test \
-        --with-bz2 \
-        --with-curl \
-        --with-freetype \
-        --with-gettext \
-        --with-gmp \
-        --with-jpeg \
-        --with-kerberos \
-        --with-ldap \
-        --with-ldap-sasl \
-        --with-mhash \
-        --with-openssl \
-        --with-password-argon2 \
-        --with-pdo-pgsql \
-        --with-pdo-sqlite \
-        --with-pgsql \
-        --with-readline \
-        --with-tidy \
-        --with-webp \
-        --with-xmlrpc \
-        --with-xpm \
-        --with-xsl \
-        --with-zip \
-        --with-zlib \
-        --without-pear
-}
-
-phptbuild() {
-    phptbuildonly
-    NO_INTERACTION=1 make
-}
-
-phptreset() {
-    git clean -xdf
-    phptbuild
 }
 
 # https://askubuntu.com/questions/73443/how-to-stop-the-terminal-from-wrapping-lines
@@ -372,7 +396,7 @@ settitle() {
     echo -n -e "\033]0;$*\007"
 }
 
-rubyinfo() {
+rubyversions() {
     which ruby
     ruby --version
     which gem

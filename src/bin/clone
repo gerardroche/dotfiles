@@ -15,7 +15,7 @@ EOT
 filter_github_repo_url_path() {
     # Extracts the user/repository part of a github.com/vendor/name url
     github_repo_url_path="$(echo "$1" | \
-        grep "^https\?://github\.com/[a-zA-Z0-9_][a-zA-Z0-9_-]*/[a-zA-Z0-9_][a-zA-Z0-9_-\/]*\(\.git\)\?$" | \
+        grep "^https\?://github\.com/[a-zA-Z0-9_][a-zA-Z0-9_-]*/[a-zA-Z0-9_][a-zA-Z0-9\/_-]*\(\.git\)\?$" | \
         sed -e 's/^https\?\:\/\/github\.com\///' |\
         sed -e 's/\.git$//'\
     )"

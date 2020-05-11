@@ -11,4 +11,4 @@ unset IFS
 
 file="$(echo "$1" | sed "s/^subl\:\/\/open?url=file\:\/\///;s/%2F/\//g;s/&line=/:/;s/&column=/:/")"
 
-subl $file
+subl "$file"

@@ -2,7 +2,8 @@
 
 # 1. In firefox about:config set network.protocol-handler.expose.subl false
 # 2. When firefox asks what program to use select this script.
-# Thanks also to https://askubuntu.com/questions/527166/how-to-set-subl-protocol-handler-with-unity
+# https://askubuntu.com/questions/527166/how-to-set-subl-protocol-handler-with-unity
+# https://github.com/metricfu/metric_fu/wiki/Custom-Prefix-Configuration-(Ubuntu,-Sublime,-and-Firefox)
 
 set -e
 unset CDPATH

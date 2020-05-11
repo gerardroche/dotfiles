@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# 1. In firefox about:config set network.protocol-handler.expose.subl false
+# 2. When firefox asks what program to use select this script.
+# Thanks also to https://askubuntu.com/questions/527166/how-to-set-subl-protocol-handler-with-unity
+
+set -e
+unset CDPATH
+unset IFS
+
+file="$(echo "$1" | sed "s/^subl\:\/\/open?url=file\:\/\///;s/%2F/\//g;s/&line=/:/;s/&column=/:/")"
+
+subl $file

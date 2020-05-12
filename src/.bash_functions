@@ -238,22 +238,56 @@ phpcs() {
     fi
 }
 
+phptinstalldeps() {
+    # dpkg -l | grep postgresql >/dev/null 2>&1 || sudo apt-get install postgresql
+    # dpkg -l | grep postgresql-contrib >/dev/null 2>&1 || sudo apt-get install postgresql-contrib
+    dpkg -l | grep bison >/dev/null 2>&1 || sudo apt-get install bison
+    dpkg -l | grep language-pack-de >/dev/null 2>&1 || sudo apt-get install language-pack-de
+    dpkg -l | grep libargon2-dev >/dev/null 2>&1 || sudo apt-get install libargon2-dev
+    dpkg -l | grep libaspell-dev >/dev/null 2>&1 || sudo apt-get install libaspell-dev
+    dpkg -l | grep libcurl4-openssl-dev >/dev/null 2>&1 || sudo apt-get install libcurl4-openssl-dev
+    dpkg -l | grep libenchant-dev >/dev/null 2>&1 || sudo apt-get install libenchant-dev
+    dpkg -l | grep libgmp-dev >/dev/null 2>&1 || sudo apt-get install libgmp-dev
+    dpkg -l | grep libgssapi-krb5-2 >/dev/null 2>&1 || sudo apt-get install libgssapi-krb5-2
+    dpkg -l | grep libicu-dev >/dev/null 2>&1 || sudo apt-get install libicu-dev
+    dpkg -l | grep libkrb5-dev >/dev/null 2>&1 || sudo apt-get install libkrb5-dev
+    dpkg -l | grep libldap2-dev >/dev/null 2>&1 || sudo apt-get install libldap2-dev
+    dpkg -l | grep libonig-dev >/dev/null 2>&1 || sudo apt-get install libonig-dev
+    dpkg -l | grep libpq-dev >/dev/null 2>&1 || sudo apt-get install libpq-dev
+    dpkg -l | grep libpspell-dev >/dev/null 2>&1 || sudo apt-get install libpspell-dev
+    dpkg -l | grep libreadline-dev >/dev/null 2>&1 || sudo apt-get install libreadline-dev
+    dpkg -l | grep libsasl2-dev >/dev/null 2>&1 || sudo apt-get install libsasl2-dev
+    dpkg -l | grep libsodium-dev >/dev/null 2>&1 || sudo apt-get install libsodium-dev
+    dpkg -l | grep libsqlite3-dev >/dev/null 2>&1 || sudo apt-get install libsqlite3-dev
+    dpkg -l | grep libtidy-dev >/dev/null 2>&1 || sudo apt-get install libtidy-dev
+    dpkg -l | grep libwebp-dev >/dev/null 2>&1 || sudo apt-get install libwebp-dev
+    dpkg -l | grep libxml2-dev >/dev/null 2>&1 || sudo apt-get install libxml2-dev
+    dpkg -l | grep libxpm-dev >/dev/null 2>&1 || sudo apt-get install libxpm-dev
+    dpkg -l | grep libxslt1-dev >/dev/null 2>&1 || sudo apt-get install libxslt1-dev
+    dpkg -l | grep libzip-dev >/dev/null 2>&1 || sudo apt-get install libzip-dev
+    dpkg -l | grep llvm >/dev/null 2>&1 || sudo apt-get install llvm
+    dpkg -l | grep locales >/dev/null 2>&1 || sudo apt-get install locales
+    dpkg -l | grep re2c >/dev/null 2>&1 || sudo apt-get install re2c
+}
+
 phptbuild() {
     ./buildconf
 
     if test "x$1" = "x--min"; then
 
         ./configure \
+            --disable-gd \
             --enable-cgi \
             --enable-cli \
             --enable-gcov \
             --enable-phpdbg \
-            --disable-gd \
             --with-zlib
 
     else
 
         ./configure \
+            --disable-gd \
+            --disable-sockets \
             --enable-bcmath \
             --enable-calendar \
             --enable-debug \
@@ -263,6 +297,7 @@ phptbuild() {
             --enable-gcov \
             --enable-intl \
             --enable-mbstring \
+            --enable-option-checking=fatal \
             --enable-pcntl \
             --enable-phpdbg \
             --enable-shmop \
@@ -270,7 +305,6 @@ phptbuild() {
             --enable-sysvmsg \
             --enable-sysvsem \
             --enable-sysvshm \
-            --disable-gd \
             --enable-werror \
             --enable-xmlreader \
             --enable-zend-test \
@@ -284,11 +318,9 @@ phptbuild() {
             --with-jpeg \
             --with-kerberos \
             --with-mysqli=mysqlnd \
-            --with-openssl \
             --with-pdo-mysql=mysqlnd \
             --with-pdo-pgsql \
             --with-pdo-sqlite \
-            --with-pear \
             --with-pgsql \
             --with-pspell \
             --with-readline \
@@ -300,6 +332,11 @@ phptbuild() {
             --with-xsl \
             --with-zip \
             --with-zlib \
+            --without-ldap \
+            --without-ldap-sasl \
+            --without-mhash \
+            --without-openssl \
+            --without-password-argon2 \
             --without-pear
 
     fi

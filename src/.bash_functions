@@ -271,6 +271,8 @@ phptinstalldeps() {
 }
 
 phptbuild() {
+    source .env
+
     ./buildconf
 
     if test "x$1" = "x--min"; then
@@ -345,31 +347,38 @@ phptbuild() {
 }
 
 phptreset() {
-    git clean -xdf
+    git clean -e "/.env*" -e "/*.sublime-project" -xdf
+    source .env
     phptbuild "$@"
 }
 
+phptphp() {
+    source .env
+    php "$@"
+}
+
 phpt() {
-    PDO_MYSQL_TEST_DSN='mysql:host=localhost;dbname=test;unix_socket=/var/run/mysqld/mysqld.sock' \
-    PDO_MYSQL_TEST_USER=root \
-    PDO_MYSQL_TEST_PASS=root \
-    NO_INTERACTION=1 \
+    source .env
     make -j$(nproc) TEST_PHP_ARGS="-q --offline --show-diff $*" lcov-clean lcov-clean-data test
 }
 
 phptcov() {
+    source .env
     NO_INTERACTION=1 make -j$(nproc) TEST_PHP_ARGS="-q --offline --show-diff $*" lcov-html gcovr-html
 }
 
 phptlcov() {
+    source .env
     NO_INTERACTION=1 make -j$(nproc) lcov-html
 }
 
 phptgcovr() {
+    source .env
     NO_INTERACTION=1 make -j$(nproc) gcovr-html
 }
 
 phptgcovrxml() {
+    source .env
     NO_INTERACTION=1 make -j$(nproc) gcovr-xml
 }
 

@@ -87,6 +87,7 @@ if test -z "$SKIP_DEPS"; then
     command -v xclip >/dev/null 2>&1 || sudo apt-get install xclip
     command -v yarn >/dev/null 2>&1 || sudo apt-get install yarn
 
+    dpkg -l | grep git-extras >/dev/null 2>&1 || sudo apt-get install git-extras
     dpkg -l | grep php-pcov >/dev/null 2>&1 || sudo apt-get install php-pcov
     dpkg -l | grep ubuntu-restricted-extras >/dev/null 2>&1 || sudo apt-get install ubuntu-restricted-extras
     dpkg -l | grep vim.gtk >/dev/null 2>&1 || sudo apt-get install vim.gtk
@@ -168,6 +169,9 @@ if test -f ~/.dotfiles-private/install; then
     ~/.dotfiles-private/install
 fi
 
+setup-settings
+setup-keybindings
+
 # Composer
 composer config --global notify-on-install false
 composer config --global github-expose-hostname false
@@ -182,4 +186,4 @@ echo "$packages" | grep -q "phploc/phploc" || composer global require "phploc/ph
 echo "$packages" | grep -q "phpmd/phpmd" || composer global require "phpmd/phpmd"
 echo "$packages" | grep -q "sensiolabs/security-checker" || composer global require "sensiolabs/security-checker"
 
-composer global update
+composer global update -vvv

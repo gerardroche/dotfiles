@@ -59,3 +59,5 @@ tags
 .todo*
 todo*.md
 php/php-src/php.sublime-project
+*php/php-src/.env*
+.env

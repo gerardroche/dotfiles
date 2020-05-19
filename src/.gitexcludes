@@ -58,3 +58,4 @@ tags
 .tmux
 .todo*
 todo*.md
+php/php-src/php.sublime-project

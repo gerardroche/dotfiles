@@ -317,8 +317,8 @@ phptbuild() {
             --with-gmp \
             --with-jpeg \
             --with-kerberos \
-            --with-mysqli=mysqlnd \
-            --with-pdo-mysql=mysqlnd \
+            --with-mysqli \
+            --with-pdo-mysql \
             --with-pdo-pgsql \
             --with-pdo-sqlite \
             --with-pgsql \
@@ -350,7 +350,11 @@ phptreset() {
 }
 
 phpt() {
-    NO_INTERACTION=1 make -j$(nproc) TEST_PHP_ARGS="-q --offline --show-diff $*" lcov-clean lcov-clean-data test
+    PDO_MYSQL_TEST_DSN='mysql:host=localhost;dbname=test;unix_socket=/var/run/mysqld/mysqld.sock' \
+    PDO_MYSQL_TEST_USER=root \
+    PDO_MYSQL_TEST_PASS=root \
+    NO_INTERACTION=1 \
+    make -j$(nproc) TEST_PHP_ARGS="-q --offline --show-diff $*" lcov-clean lcov-clean-data test
 }
 
 phptcov() {

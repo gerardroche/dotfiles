@@ -58,6 +58,8 @@
 	w			= "!f() { git commit -m \"$*\"; }; f"
 	wa			= "!f() { git add -A . && git commit -m \":metal: $*\"; }; f"
 	zap			= "!f() { git add -A . && git commit -m \":zap: KAPOW\"; }; f"
+    add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
+    edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; vim `f`"
 
 [bash]
 

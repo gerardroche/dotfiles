@@ -5,6 +5,14 @@ set -e
 unset CDPATH
 unset IFS
 
+show_usage() {
+    cat <<USAGE
+Usage: $(basename "$0") [--all | -a | -d | -m | -am ]
+USAGE
+}
+
+test "$#" = 0 && show_usage && exit 0
+
 while test "$#" != 0; do
     case "$1" in
         -a)     tail -f /var/log/apache2/{access,error,other_vhosts_access}.log ;;

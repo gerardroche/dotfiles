@@ -23,13 +23,13 @@ $config->setRules([
     'constant_case' => true,
     'escape_implicit_backslashes' => true,
     'explicit_indirect_variable' => true,
-    /* 'annotations' => ['author'], */
+    'general_phpdoc_annotation_remove' => ['annotations' => ['author']],
     'linebreak_after_opening_tag' => true,
     'list_syntax' => ['syntax' => 'short'],
     'method_chaining_indentation' => true,
     'no_alias_functions' => true,
     'no_php4_constructor' => true,
-    'no_superfluous_phpdoc_tags' => false,
+    'no_superfluous_phpdoc_tags' => true,
     'no_unneeded_final_method' => false,
     'no_useless_return' => true,
     'ordered_class_elements' => true,
@@ -48,7 +48,7 @@ $config->setRules([
     'phpdoc_trim_consecutive_blank_line_separation' => true,
     'phpdoc_types_order' => true,
     'pow_to_exponentiation' => true,
-    'psr4' => false, // Breaks Sublime Text php-cs-fixer linter.
+    'psr4' => false, // Temp: Because it breaks Sublime Text php-cs-fixer linter
     'random_api_migration' => true,
     'self_accessor' => true,
     'strict_comparison' => true,

@@ -18,6 +18,10 @@ find_regular_files_with_byte_order_marks() {
 
 # MYPY
 
+p3mypy() {
+    echo "$(python3 --version) $(python3 -m mypy --version)" && python3 -m mypy $@
+}
+
 p36mypy() {
     echo "$(python3.6 --version) $(python3.6 -m mypy --version)" && python3.6 -m mypy $@
 }
@@ -30,28 +34,35 @@ mypyall() {
     p38mypy $@
 }
 
+p3mypysubl() {
+    echo "$(python3 --version) $(python3 -m mypy --version)"
+    MYPYPATH=$PROJECTS_PATH/sublime/sublime-mypy-stubs python3 -m mypy --show-error-codes $@
+}
+
 p36mypysubl() {
-    echo "$(python3.6 --version)"
-    echo "$(python3.6 -m mypy --version)"
+    echo "$(python3.6 --version) $(python3.6 -m mypy --version)"
     MYPYPATH=$PROJECTS_PATH/sublime/sublime-mypy-stubs python3.6 -m mypy --show-error-codes $@
 }
 
 p38mypysubl() {
-    echo "$(python3.8 --version)"
-    echo "$(python3.8 -m mypy --version)"
+    echo "$(python3.8 --version) $(python3.8 -m mypy --version)"
     MYPYPATH=$PROJECTS_PATH/sublime/sublime-mypy-stubs python3.8 -m mypy --show-error-codes $@
 }
 
 mypysublall() {
-   p38mypysubl $@
+   p3mypysubl $@
 }
 
 mypysubl() {
-    MYPYPATH=$PROJECTS_PATH/sublime/sublime-mypy-stubs mypy --show-error-codes $@
+   p3mypysubl $@
 }
 
 
 # FLAKE8
+
+p3flake8() {
+    python3 -m flake8 --version && python3 -m flake8 $@
+}
 
 p36flake8() {
     python3.6 -m flake8 --version && python3.6 -m flake8 $@

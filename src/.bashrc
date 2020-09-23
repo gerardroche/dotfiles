@@ -89,25 +89,28 @@ if [ "$color_prompt" = yes ]; then
         # PHP.
         if test -f composer.json; then
             php_version=$(php -v 2>&1 | grep --color=never -oe "^PHP\s*[0-9.]\+" | awk '{print $2}')
-            v_buf="${v_buf} ${vlc}php:(${cc}${vc}${php_version}${cc}${vlc})${cc}"
+            v_buf="${v_buf} ${vlc}php:${cc}${vc}${php_version}${cc}${vlc}${cc}"
         fi
 
         # Ruby.
         if test -f Gemfile || test -f Rakefile; then
             ruby_version=$(rbenv version-name)
-            v_buf="${v_buf} ${vlc}ruby:(${cc}${vc}${ruby_version}${cc}${vlc})${cc}"
+            v_buf="${v_buf} ${vlc}ruby:${cc}${vc}${ruby_version}${cc}${vlc}${cc}"
         fi
 
         # Rails.
         if test -f bin/rails; then
             rails_version=$(rails --version | sed -e 's/Rails //')
-            v_buf="${v_buf} ${vlc}rails:(${cc}${vc}${rails_version}${cc}${vlc})${cc}"
+            v_buf="${v_buf} ${vlc}rails:${cc}${vc}${rails_version}${cc}${vlc}${cc}"
         fi
 
         # Node.
         if test -f package.json || test -d node_modules; then
+            npm_version=$(npm --version 2>/dev/null)
+            v_buf="${v_buf} ${vlc}npm:${cc}${vc}${npm_version}${cc}${vlc}${cc}"
+
             node_version=$(node -v 2>/dev/null | sed -e 's/v//')
-            v_buf="${v_buf} ${vlc}node:(${cc}${vc}${node_version}${cc}${vlc})${cc}"
+            v_buf="${v_buf} ${vlc}node:${cc}${vc}${node_version}${cc}${vlc}${cc}"
         fi
 
         # Format version information.
@@ -117,7 +120,7 @@ if [ "$color_prompt" = yes ]; then
 
         __git_ps1 "${wc}╭─ \w${cc}${v_buf} " \
                   "\n${wc}╰─${cc}$(if test $? = 0;then echo "${wc}\$${cc}";else echo "${ec}\$${cc}";fi) " \
-                  "(%s) [jobs:(\j)]"
+                  "(%s) [j:\j]"
     }
 
     PROMPT_COMMAND=do_prompt_command

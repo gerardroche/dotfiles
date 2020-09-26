@@ -22,7 +22,6 @@
 	contributors = shortlog --summary --numbered # List contributors with number of commits https://github.com/mathiasbynens/dotfiles/blob/e32bc6cc07e1e25ba0821c3c20b488ead2133e0a/.gitconfig
 	coprev = checkout HEAD^
 	cp = cherry-pick --no-commit
-	cpnc = cherry-pick --no-commit
 	ctags = "!.git/hooks/ctags"
 	d = diff
 	f = fetch

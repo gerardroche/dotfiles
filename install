@@ -61,7 +61,7 @@ if test -z "$SKIP_DEPS"; then
 
     sudo apt-get update
 
-    command -v audacity >/dev/null 2>&1 || sudo apt-get install audacity pavucontrol
+    #command -v audacity >/dev/null 2>&1 || sudo apt-get install audacity pavucontrol
     command -v chromium-browser >/dev/null 2>&1 || sudo apt-get install chromium-browser
     command -v cmake  >/dev/null 2>&1 || sudo apt-get install cmake
     command -v ctags >/dev/null 2>&1 || sudo apt-get install exuberant-ctags
@@ -82,6 +82,7 @@ if test -z "$SKIP_DEPS"; then
     command -v tmux >/dev/null 2>&1 || sudo apt-get install tmux
     command -v tree >/dev/null 2>&1 || sudo apt-get install tree
     command -v tuxguitar >/dev/null 2>&1 || sudo apt-get install tuxguitar tuxguitar-alsa tuxguitar-oss tuxguitar-jsa
+    command -v ubuntustudio-installer >/dev/null 2>&1 || sudo apt-get install ubuntustudio-installer
     command -v unzip >/dev/null 2>&1 || sudo apt-get install unzip
     command -v wmctrl  >/dev/null 2>&1 || sudo apt-get install wmctrl
     command -v xclip >/dev/null 2>&1 || sudo apt-get install xclip
@@ -114,7 +115,6 @@ if test -z "$SKIP_DEPS"; then
     echo
     echo "The following music production tools need to be install manually:"
     echo "* LMMS: https://lmms.io/download"
-    echo "* Ardour: https://ardour.org"
     echo
 
     # Python developer tools.
@@ -178,6 +178,8 @@ composer config --global github-expose-hostname false
 
 packages="$(composer global show --direct)"
 
+# Note: packages are installed seperatly because Composer chokes when it tries
+# to install all of the packages at the same time.
 echo "$packages" | grep -q "friendsofphp/php-cs-fixer" || composer global require "friendsofphp/php-cs-fixer"
 echo "$packages" | grep -q "laravel/installer" || composer global require "laravel/installer"
 echo "$packages" | grep -q "pds/skeleton" || composer global require "pds/skeleton"

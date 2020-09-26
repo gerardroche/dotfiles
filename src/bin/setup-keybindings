@@ -4,7 +4,7 @@ set -e
 unset CDPATH
 unset IFS
 
-echo -n "configuring keybindings... "
+echo "Configuring keybindings ..."
 
 # Creates a custom media key.
 gsettings_set_media_number_key() {
@@ -82,7 +82,3 @@ gsettings set org.gnome.desktop.wm.keybindings  move-to-side-e              "['<
 
 gsettings set org.gnome.desktop.wm.keybindings  move-to-workspace-down      "['<Super><Ctrl>j']"
 gsettings set org.gnome.desktop.wm.keybindings  move-to-workspace-up        "['<Super><Ctrl>k']"
-
-
-
-echo "done."

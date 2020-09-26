@@ -4,7 +4,7 @@ set -e
 unset CDPATH
 unset IFS
 
-echo -n "Configuring Ubuntu settings... "
+echo "Configuring settings ..."
 
 gsettings set com.canonical.Unity.Lenses remote-content-search 'none'
 gsettings set com.ubuntu.touch.network gps false
@@ -26,5 +26,3 @@ gsettings set org.gnome.nautilus.preferences default-folder-viewer 'list-view'
 gsettings set org.gnome.nautilus.preferences show-hidden-files true
 gsettings set org.gnome.shell.overrides workspaces-only-on-primary false
 gsettings set org.gnome.system.location enabled false
-
-echo "done."

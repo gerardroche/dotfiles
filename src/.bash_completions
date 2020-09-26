@@ -51,6 +51,7 @@ if [ -f /usr/share/bash-completion/completions/git ]; then
     __git_complete gls _git_log
     __git_complete gm _git_merge
     __git_complete go _git_checkout
+    __git_complete gp _git_cherry_pick
     __git_complete gr _git_rebase
     __git_complete s _git_status
 fi

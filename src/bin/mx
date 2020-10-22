@@ -15,25 +15,31 @@ case "$1" in
     --help|-h) show_usage; exit 0 ;;
 esac
 
-readonly CONFIG_FILE=".tmux"
+init_nvm() {
+    if test -f "$PWD/.nvmrc"; then
+        . ~/.nvm/nvm.sh
+        nvm use
+    fi
+}
+
+CONFIG_FILE=".tmux"
+SESSION_NAME="mx"
+WINDOW_NAME="mx"
 
 if test -n "$1"; then
-    readonly SESSION_NAME="$1"
-    readonly WINDOW_NAME="${SESSION_NAME##*/}"
+    SESSION_NAME="$1"
+    WINDOW_NAME="${SESSION_NAME##*/}"
     if test -d "$PROJECTS_PATH" && test -d "$PROJECTS_PATH/$SESSION_NAME"; then
         cd "$PROJECTS_PATH/$SESSION_NAME"
     fi
 elif test -f "$CONFIG_FILE"; then
-    readonly SESSION_NAME="$(basename "$(dirname "$PWD")")/$(basename "$PWD")"
-    readonly WINDOW_NAME="${SESSION_NAME##*/}"
-else
-    readonly SESSION_NAME="mx"
-    readonly WINDOW_NAME="mx"
+    SESSION_NAME="$(basename "$(dirname "$PWD")")/$(basename "$PWD")"
+    WINDOW_NAME="${SESSION_NAME##*/}"
 fi
 
-# echo "Starting Tmux session:"
-# echo " Session: '$SESSION_NAME'"
-# echo " Window: '$WINDOW_NAME'"
+echo "Starting tmux session '$SESSION_NAME' (name=$WINDOW_NAME)"
+
+init_nvm
 
 tmux has-session -t "$SESSION_NAME" > /dev/null 2>&1 && HAS_SESSION=y || HAS_SESSION=n
 

@@ -222,30 +222,34 @@ pdoc() {
 
 phpcs() {
     if test -f vendor/bin/php-cs-fixer; then
-        php vendor/bin/php-cs-fixer -vvv "$@"
+        php_cs_bin=vendor/bin/php-cs-fixer
     else
-        config_file=
-        if test x"$1" = x"fix"; then
-            if test -f ./.php_cs; then
-                config_file=./.php_cs
-            elif test -f ./.php_cs.dist; then
-                config_file=./.php_cs.dist
-            elif test -f ./../.php_cs; then
-                config_file=./../.php_cs
-            elif test -f ~/.php_cs; then
-                config_file=~/.php_cs
-            else
-                echo "no config found!"
-                return
-            fi
-        fi
+        php_cs_bin=php-cs-fixer
+    fi
 
-        echo "using php-cs-fixer config: $config_file"
-        if test -n "$config_file"; then
-            php-cs-fixer -vvv "$@" --config "$config_file"
+    command -v $php_cs_bin
+    $php_cs_bin --version
+
+    config_file=
+    if test x"$1" = x"fix"; then
+        if test -f ./.php_cs; then
+            config_file=./.php_cs
+        elif test -f ./.php_cs.dist; then
+            config_file=./.php_cs.dist
+        elif test -f ./../.php_cs; then
+            config_file=./../.php_cs
+        elif test -f ~/.php_cs; then
+            config_file=~/.php_cs
         else
-            php-cs-fixer -vvv "$@"
+            echo "no config found!"
+            return
         fi
+    fi
+
+    if test -n "$config_file"; then
+        php-cs-fixer -vvv "$@" --config "$config_file"
+    else
+        php-cs-fixer -vvv "$@"
     fi
 }
 

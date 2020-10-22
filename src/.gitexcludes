@@ -48,16 +48,17 @@ TAGS
 tags
 
 # PHP
-.phan/
-.php-version
-*.post
 #ext/opcache/jit/zend_jit_x86.c
 #ext/opcache/minilua
-.php_cs.cache
+#*.post
+#*php/php-src/.env*
+#.phan/
+#.php-version
+#.php_cs.cache
+#php/php-src/php.sublime-project
+
 # Dotfiles
+#.env
 .tmux
 .todo*
 todo*.md
-php/php-src/php.sublime-project
-*php/php-src/.env*
-.env

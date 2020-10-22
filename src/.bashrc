@@ -73,7 +73,7 @@ if [ "$color_prompt" = yes ]; then
 
     do_prompt_command() {
         # version color
-        vc="\[\e[34m\]"
+        vc="\[\e[37m\]"
         # version label color
         vlc="\[\e[38m\]"
         # working dir color

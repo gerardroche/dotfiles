@@ -51,6 +51,7 @@ $config->setRules([
     'psr4' => false, // Temp: Because it breaks Sublime Text php-cs-fixer linter
     'random_api_migration' => true,
     'self_accessor' => true,
+    'semicolon_after_instruction' => false,
     'strict_comparison' => true,
     'strict_param' => true,
     'string_line_ending' => true,
@@ -61,12 +62,14 @@ $config->setRules([
 
 $finder = PhpCsFixer\Finder::create();
 $finder->in(getcwd());
+
 $finder->exclude('bootstrap/cache');
 $finder->exclude('build');
 $finder->exclude('node_modules');
 $finder->exclude('storage');
 $finder->exclude('tmp');
 $finder->exclude('vendor');
+
 $config->setFinder($finder);
 
 return $config;

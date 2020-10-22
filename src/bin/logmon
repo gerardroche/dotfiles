@@ -13,13 +13,55 @@ USAGE
 
 test "$#" = 0 && show_usage && exit 0
 
+_showrecentapperrors() {
+    today="$(date --utc +%Y-%m-%d)"
+    yesterday="$(date --utc --date yesterday +%Y-%m-%d)"
+
+    egrep "\.(EMERG|ALERT|CRIT|ERROR|WARN|NOTICE)" storage/logs/{laravel-$yesterday,laravel-$today,laravel}.log | tail -n10
+}
+
+_showrecentconerrors() {
+    egrep "\.(EMERG|ALERT|CRIT|ERROR|WARN|NOTICE)" storage/logs/console.log | tail -n10
+}
+
+_showrecenterrors() {
+    _showrecentapperrors
+    _showrecentconerrors
+}
+
 while test "$#" != 0; do
     case "$1" in
-        -a)     tail -f /var/log/apache2/{access,error,other_vhosts_access}.log ;;
-        -d)     tail -f {data,storage}/logs/*.log ;;
-        -m)     tail -f /var/log/mysql/{error,mysql}.log ;;
-        -am)    tail -f /var/log/{apache2,mysql}/{,*}{access,error,other_vhosts_access,mysql}.log ;;
-        --all)  tail -f /var/log/{apache2,mysql}/{,*}{access,error,other_vhosts_access,mysql}.log {data,storage}/logs/*.log ;;
+
+        --all)              tail -f /var/log/{apache2,mysql}/{,*}{access,error,other_vhosts_access,mysql}.log {data,storage}/logs/*.log ;;
+
+        --apache)           tail -f /var/log/apache2/{access,error,other_vhosts_access}.log ;;
+
+        --apache-mysql)     tail -f /var/log/{apache2,mysql}/{,*}{access,error,other_vhosts_access,mysql}.log ;;
+
+        --app)              tail -f {data,storage}/logs/*.log ;;
+
+        --mysql)            tail -f /var/log/mysql/{error,mysql}.log ;;
+
+        showerrors)
+            egrep "\.(EMERG|ALERT|CRIT|ERROR|WARN|NOTICE)" storage/logs/*.log
+            ;;
+
+        showrecentapperrors)
+            _showrecentapperrors
+            ;;
+
+        showrecentconerrors)
+            _showrecentconerrors
+            ;;
+
+        showrecenterrors)
+            _showrecenterrors
+            ;;
+
+        showapplogscolor)
+            tail -n 200 -f storage/logs/*.log | perl -pe "s/.*\.(EMERG|ALERT|CRIT|ERROR|WARN|NOTICE).*/\e[1;31m$&\e[0m/;s/.*INFO.*/\e[0;32m$&\e[0m/"
+            ;;
+
         --) shift; break ;; # standard end of options list
         -*) echo >&2 "$(basename "$0"): unknown option '$1'" && exit 1 ;;
         *)  echo >&2 "$(basename "$0"): unknown argument '$1'" && exit 1 ;;

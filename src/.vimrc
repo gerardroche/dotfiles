@@ -196,6 +196,7 @@ let g:multi_cursor_select_all_word_key = '<A-n>'
 " let g:barbaric_default = "libpinyin"
 " let g:sneak#s_next = 1
 let g:sneak#label = 0
+let g:sneak#use_ic_scs = 1
 
 " }}}
 " Visual {{{

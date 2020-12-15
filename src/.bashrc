@@ -72,6 +72,7 @@ if [ "$color_prompt" = yes ]; then
     GIT_PS1_SHOWUPSTREAM="verbose name git"
 
     do_prompt_command() {
+        last_status=$?
         # version color
         vc="\[\e[37m\]"
         # version label color
@@ -118,8 +119,8 @@ if [ "$color_prompt" = yes ]; then
             v_buf=" $(echo "$v_buf" | sed -e 's/ //')"
         fi
 
-        __git_ps1 "${wc}╭─ \w${cc}${v_buf} " \
-                  "\n${wc}╰─${cc}$(if test $? = 0;then echo "${wc}\$${cc}";else echo "${ec}\$${cc}";fi) " \
+        __git_ps1 "${wc}╭─ \w${cc}$v_buf " \
+                  "\n${wc}╰─${cc}$(if test $last_status = 0;then echo "${wc}\$${cc}";else echo "${ec}\$${cc}";fi) " \
                   "(%s)"
     }
 

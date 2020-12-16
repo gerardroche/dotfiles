@@ -16,64 +16,64 @@ find_regular_files_with_byte_order_marks() {
 }
 
 
-# MYPY
+# MYPY #########################################################################
 
-p3mypy() {
+mypyp3() {
     echo "$(python3 --version) $(python3 -m mypy --version)" && python3 -m mypy $@
 }
 
-p36mypy() {
+mypyp36() {
     echo "$(python3.6 --version) $(python3.6 -m mypy --version)" && python3.6 -m mypy $@
 }
 
-p38mypy() {
+mypyp38() {
     echo "$(python3.8 --version) $(python3.8 -m mypy --version)" && python3.8 -m mypy $@
 }
 
 mypyall() {
-    p38mypy $@
+    mypyp38 $@
 }
 
-p3mypysubl() {
+mypysublp3() {
     echo "$(python3 --version) $(python3 -m mypy --version)"
     MYPYPATH=$PROJECTS_PATH/sublime/sublime-mypy-stubs python3 -m mypy --show-error-codes $@
 }
 
-p36mypysubl() {
+mypysublp36() {
     echo "$(python3.6 --version) $(python3.6 -m mypy --version)"
     MYPYPATH=$PROJECTS_PATH/sublime/sublime-mypy-stubs python3.6 -m mypy --show-error-codes $@
 }
 
-p38mypysubl() {
+mypysublp38() {
     echo "$(python3.8 --version) $(python3.8 -m mypy --version)"
     MYPYPATH=$PROJECTS_PATH/sublime/sublime-mypy-stubs python3.8 -m mypy --show-error-codes $@
 }
 
-mypysublall() {
-   p3mypysubl $@
-}
-
 mypysubl() {
-   p3mypysubl $@
+   mypysublp3 $@
+}
+
+mypysublall() {
+   mypysublp3 $@
 }
 
 
-# FLAKE8
+# FLAKE8 #######################################################################
 
-p3flake8() {
+flake8p3() {
     python3 -m flake8 --version && python3 -m flake8 $@
 }
 
-p36flake8() {
+flake8p36() {
     python3.6 -m flake8 --version && python3.6 -m flake8 $@
 }
 
-p38flake8() {
+flake8p38() {
     python3.8 -m flake8 --version && python3.8 -m flake8 $@
 }
 
 flake8all() {
-    p36flake8 $@ && p38flake8 $@
+    flake8p36 $@ && p38flake8 $@
 }
 
 internet_use() {
@@ -134,8 +134,12 @@ git_create_branch() {
     git checkout -b "$prefix/$suffix"
 }
 
-tmr() {
+tmuxrenamewindow() {
     tmux rename-window $@
+}
+
+tmr() {
+    tmuxrenamewindow $@
 }
 
 mkd() {
@@ -220,6 +224,7 @@ pdoc() {
     command "$cmd" "$@"
 }
 
+# https://github.com/FriendsOfPhp/PHP-CS-Fixer
 phpcs() {
     if test -f vendor/bin/php-cs-fixer; then
         php_cs_bin=vendor/bin/php-cs-fixer
@@ -290,7 +295,7 @@ phptbuild() {
 
     ./buildconf
 
-    if test "x$1" = "x--min"; then
+    if test "x$1" = "x--minimal"; then
 
         ./configure \
             --disable-gd \

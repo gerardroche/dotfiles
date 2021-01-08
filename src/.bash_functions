@@ -86,11 +86,11 @@ internet_use_full() {
 
 gitkcurrent() {
     cmd=gitk
-    cmd+=" -n 400"
+    cmd+=" -n 800"
     cmd+=" master"
     cmd+=" $(git rev-parse --abbrev-ref HEAD)"
     for remote in $(git remote); do
-        for accept in origin upstream gerardroche hub; do
+        for accept in origin upstream gerardroche; do
             if test "x$remote" = "x$accept"; then
                 cmd+=" $remote/master"
             fi
@@ -102,12 +102,12 @@ gitkcurrent() {
 
 gitkbranches() {
     cmd=gitk
-    cmd+=" -n 400"
+    cmd+=" -n 800"
     cmd+=" --branches"
     cmd+=" master"
     cmd+=" $(git rev-parse --abbrev-ref HEAD)"
     for remote in $(git remote); do
-        for accept in origin upstream gerardroche hub; do
+        for accept in origin upstream gerardroche; do
             if test "x$remote" = "x$accept"; then
                 cmd+=" $remote/master"
             fi

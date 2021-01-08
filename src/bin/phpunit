@@ -5,12 +5,14 @@ unset CDPATH
 unset IFS
 
 show_usage() {
-    "$PHP_BIN" "$PHPUNIT_BIN" --help
-    echo ""
-    echo "PHP Environment:"
-    echo ""
-    echo "  --phpenv-ci               .phpenv continuous integration emulation"
-    echo "  --phpenv <semver>         Use .phpenv php version"
+cat <<USAGE
+$($PHP_BIN $PHPUNIT_BIN --help)
+
+PHP Environment:
+
+  --phpenv <version>          Use local .phpenv version
+  --phpenv-ci                 Local continuous integration emulation
+USAGE
 }
 
 run_phpunit_with_phpenv_version() {
@@ -67,9 +69,6 @@ CI=
 while test "$#" != 0; do
     case "$1" in
         --help|-h) show_usage; exit 0 ;;
-        --phpenv-ci)
-            CI=true
-            ;;
         --phpenv)
             PHP_BIN="$HOME/.phpenv/versions/${2:?'version parameter is required'}/bin/php"
             shift
@@ -77,6 +76,9 @@ while test "$#" != 0; do
                 echo >&2 "$(basename "$0"): phpenv version not found"
                 exit 1
             fi
+            ;;
+        --phpenv-ci)
+            CI=true
             ;;
         --) shift; break ;; # standard end of options list
         -*) break ;; # the remaining options are passed to phpunit executable

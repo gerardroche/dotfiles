@@ -6,11 +6,9 @@ set -e
 unset CDPATH
 unset IFS
 
-OPEN_BASEDIR="/usr/local/bin/composer"
-
-# HOME should be required!
+OPEN_BASEDIR="/usr/local/bin"
+# The HOME directory needs to be required!
 OPEN_BASEDIR="$OPEN_BASEDIR:$HOME"
-
 OPEN_BASEDIR="$OPEN_BASEDIR:/tmp"
 OPEN_BASEDIR="$OPEN_BASEDIR:/usr/bin/php5"
 OPEN_BASEDIR="$OPEN_BASEDIR:/usr/bin/php7.0"
@@ -75,18 +73,14 @@ export COMPOSER_DISABLE_XDEBUG_WARN=1
 # https://github.com/composer/composer/pull/5580
 export COMPOSER_ALLOW_XDEBUG=1
 
+# https://xdebug.org/docs/upgrade_guide#changed-xdebug.default_enable
 exec "$PHP_BIN"\
     -d detect_unicode=0\
     -d allow_url_fopen=1\
     -d allow_url_include=0\
-    -d xdebug.default_enable=0\
-    -d xdebug.enable=0\
-    -d xdebug.profiler_enable=0\
-    -d xdebug.remote_autostart=0\
-    -d xdebug.remote_enable=0\
-    -d xdebug.scream=0\
+    -d xdebug.mode=off\
     -d open_basedir="$OPEN_BASEDIR"\
     -d disable_functions="$DISABLE_FUNCTIONS"\
-    -d memory_limit=1G\
-    /usr/local/bin/composer "$@"
+    -d memory_limit=3G\
+    "$composer_bin" "$@"
 

@@ -10,11 +10,9 @@ Usage: $(basename "$0") [-h|--help] [--version] [-V]
     or $(basename "$0") <command> [<args>]
 
 Commands:
-
   install <version>     Install a PHP version
   versions              List all available PHP versions
   reload                Reloads config overrides and ~/bin symlinks
-
 EOT
 }
 
@@ -97,7 +95,7 @@ update_symlinks() {
 # Creates a symbolic link for lde configuration overrides for each available
 # version. Note that this is a dependency on an internal lde toolset.
 update_configs() {
-    echo "*** update configurations"
+    echo "*** update configs"
     for phpenv_version_etc_conf_d in ~/.phpenv/versions/*/etc/conf.d; do
         if test ! -d "$phpenv_version_etc_conf_d"; then
             echo >&2 "WARNING: $phpenv_version_etc_conf_d is not a valid directory"

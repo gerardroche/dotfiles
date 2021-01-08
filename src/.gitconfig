@@ -21,18 +21,11 @@
 	conext = "!f() { git log HEAD...$1 --pretty=%H | tail -1 | xargs git checkout; }; f"
 	contributors = shortlog --summary --numbered # List contributors with number of commits https://github.com/mathiasbynens/dotfiles/blob/e32bc6cc07e1e25ba0821c3c20b488ead2133e0a/.gitconfig
 	coprev = checkout HEAD^
-	cp = cherry-pick --no-commit
 	ctags = "!.git/hooks/ctags"
 	d = diff
 	f = fetch
-	ff = merge --ff-only
-	ffhm = merge --ff-only hub/master
 	ffnext = "!f() { git log HEAD...$1 --pretty=%H | tail -1 | xargs git merge --ff-only; }; f"
-	ffom = merge --ff-only origin/master
-	ffum = merge --ff-only upstream/master
-	fo = fetch origin
-	fu = fetch upstream
-	hi5         = "!f() { git commit -m \"^5 $*\"; }; f"
+	hi5 = "!f() { git commit -m \"^5 $*\"; }; f"
 	l = "!f() { git log --all --pretty=format:\"%C(auto)%h %s %n%<(1)        %D\" --date=short --decorate --graph -n "${1:-10}"; }; f"
 	ll = "!f() { git log --pretty=format:\"%C(auto)%h %s %n        %cn <%ae> %ad%n        %D\" --decorate --date=short --graph -n "${1:-7}"; }; f"
 	ls = "!f() { git log --oneline --decorate; }; f"
@@ -41,20 +34,11 @@
 	lsmybranches = "!git lsbranches | grep \"`git config user.name`\" | grep \"refs/head\""
 	m = merge
 	mt = mergetool
-	pop = stash pop
-	prune = fetch --prune
-	pt = push --tags
 	r = rebase
-	ra = rebase --abort
-	rc = rebase --continue
-	rh = reset --hard
-	ri = rebase -i
-	rv = remote -v
 	s = status
-	sta = stash save --include-untracked
 	t			= "!f() { git tag -l | sort -V | tail; }; f"
-	undo 		= reset --soft HEAD^
 	w			= "!f() { git commit -m \"$*\"; }; f"
+	wd			= "!f() { git commit -m \"DEV: $*\"; }; f"
 	wa			= "!f() { git add -A . && git commit -m \":metal: $*\"; }; f"
 	zap			= "!f() { git add -A . && git commit -m \":zap: KAPOW\"; }; f"
     add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"

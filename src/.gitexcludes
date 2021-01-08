@@ -62,3 +62,4 @@ tags
 .tmux
 .todo*
 todo*.md
+.phpenv

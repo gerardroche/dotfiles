@@ -1,0 +1,26 @@
+#!/bin/sh
+
+set -e
+unset CDPATH
+unset IFS
+
+get_local_version() {
+    for php_version_file in .phpenv .php-version; do
+        test -f "$php_version_file" || continue
+        version="$(cat "$php_version_file" | sed ':a;N;$!ba;s/\n//g')"
+        echo "$version"
+        break
+    done
+}
+
+PHPENV_VERSION="$(get_local_version)"
+
+if test -n "$PHPENV_VERSION"; then
+    PHP_BIN="$HOME/.phpenv/versions/$PHPENV_VERSION/bin/php"
+    if test ! -f "$PHP_BIN" || test ! -x "$PHP_BIN"; then
+        echo >&2 "$(basename "$0"): phpenv version not found"
+        exit 1
+    fi
+
+    echo "$PHP_BIN"
+fi

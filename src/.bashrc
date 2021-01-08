@@ -89,7 +89,11 @@ if [ "$color_prompt" = yes ]; then
 
         # PHP.
         if test -f composer.json; then
-            php_version=$(php -v 2>&1 | grep --color=never -oe "^PHP\s*[0-9.]\+" | awk '{print $2}')
+            if test -f .phpenv; then
+                php_version="$(cat .phpenv | sed ':a;N;$!ba;s/\n//g')"
+            else
+                php_version=$(php -v 2>&1 | grep --color=never -oe "^PHP\s*[0-9.]\+" | awk '{print $2}')
+            fi
             v_buf="${v_buf} ${vlc}php ${cc}${vc}${php_version}${cc}${vlc}${cc}"
         fi
 

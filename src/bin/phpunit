@@ -45,12 +45,9 @@ run_phpunit_with_phpenv_version() {
     fi
 }
 
-if test -f ./.phpenv-7.x; then
-    PHP_BIN="$HOME/.phpenv/versions/7.x/bin/php"
-    if test ! -f "$PHP_BIN" || test ! -x "$PHP_BIN"; then
-        echo >&2 "$(basename "$0"): phpenv version not found"
-        exit 1
-    fi
+PHP_BIN="$(phpenv-getlocalversionbin || true)"
+if test -n "$PHP_BIN"; then
+    echo "Using $PHP_BIN"
 else
     PHP_BIN=php
 fi

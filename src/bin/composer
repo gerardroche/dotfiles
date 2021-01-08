@@ -38,17 +38,6 @@ fi
 
 DISABLE_FUNCTIONS="allow_url_include"
 
-PHP_BIN=php
-
-# Use phpenv version file
-if test -f ./.phpenv-7.x; then
-    PHP_BIN="$HOME/.phpenv/versions/7.x/bin/php"
-    if test ! -f "$PHP_BIN" || test ! -x "$PHP_BIN"; then
-        echo >&2 "$(basename "$0"): phpenv version not found"
-        exit 1
-    fi
-fi
-
 # Use explicit phpenv version
 if test "$1" = "--phpenv"; then
     PHP_BIN="$HOME/.phpenv/versions/${2:?'version parameter is required'}/bin/php"
@@ -57,12 +46,39 @@ if test "$1" = "--phpenv"; then
         echo >&2 "$(basename :"$0"): phpenv version not found"
         exit 1
     fi
+else
+    PHP_BIN="$(phpenv-getlocalversionbin || true)"
+    if test -n "$PHP_BIN"; then
+        echo "Using $PHP_BIN"
+    else
+        PHP_BIN=php
+    fi
 fi
 
-if test ! -f /usr/local/bin/composer || test ! -x /usr/local/bin/composer; then
-    echo >&2 "$(basename :"$0"): composer not found"
+composer_bin=/usr/local/bin/composer
+
+composer_version_file=
+if test -f ./.composer-version; then
+    composer_version_file=./.composer-version
+elif test -f ../.composer-version; then
+    composer_version_file=../.composer-version
+fi
+
+composer_version=
+if test -n "$composer_version_file"; then
+    composer_version="$(cat "$composer_version_file" | sed ':a;N;$!ba;s/\n//g')"
+fi
+
+if test -n "$composer_version"; then
+    composer_bin="/usr/local/bin/composer-$composer_version"
+fi
+
+if test ! -f "$composer_bin" || test ! -x "$composer_bin"; then
+    echo >&2 "$(basename :"$0"): $composer_bin not found"
     exit 1
 fi
+
+echo "Using $composer_bin"
 
 # Disable the warning about having xdebug enabled
 # https://getcomposer.org/doc/03-cli.md#composer-disable-xdebug-warn

@@ -59,16 +59,45 @@ install_version() {
     # points to 7.0.5 and installing 7.0.6 and it is latest 7.x version then
     # point 7.x at 7.0.6.
 
-    echo "install version: $version"
-    echo "install prefix: $prefix"
+    echo "Installing version $version (prefix=$prefix, ini=$INI) ..."
+    "$PHP_BUILD_BIN" --ini "$INI" "$version" "$prefix"
+}
 
-    exec "$BUILD_BIN" --ini development "$version" "$prefix"
+get_latest_version() {
+    for version in ~/.phpenv/versions/$1.[0-9]*; do
+        test -d "$version" || continue
+    done
+
+    echo "$version"
 }
 
 # Updates symbolic links for each php version in user bin directory. A symbolic
 # link for each available version is created at ~/bin/php{version}.
 update_symlinks() {
     echo "*** update symlinks"
+
+    # Remove HOME/bin version broken symlinks (e.g. version was removed).
+    for versions in ~/bin/php[0-9]*; do
+        if test ! -e "$versions"; then
+            rm "$versions"
+        fi
+    done
+
+    # Remove .phpenv version broken symlinks (e.g. version was removed).
+    for versions in ~/.phpenv/versions/*; do
+        if test ! -e "$versions"; then
+            rm "$versions"
+        fi
+    done
+
+    # Update latest major and minor version symlinks.
+    ln -vnfs "$(get_latest_version 7.2)" ~/.phpenv/versions/7.2
+    ln -vnfs "$(get_latest_version 7.3)" ~/.phpenv/versions/7.3
+    ln -vnfs "$(get_latest_version 7.4)" ~/.phpenv/versions/7.4
+    ln -vnfs "$(get_latest_version 7.4)" ~/.phpenv/versions/7
+    ln -vnfs "$(get_latest_version 8.0)" ~/.phpenv/versions/8.0
+    ln -vnfs "$(get_latest_version 8.0)" ~/.phpenv/versions/8
+
     for version_path in ~/.phpenv/versions/[0-9]*; do
         if test ! -d "$version_path"; then
             continue
@@ -111,29 +140,32 @@ reload() {
     update_configs
 }
 
-readonly VERSION="0.5.0"
+readonly VERSION="0.6.0"
 readonly PREFIX="$HOME/.phpenv"
-readonly BUILD_BIN="$HOME/bin/php-build"
+readonly PHP_BUILD_BIN="$HOME/bin/php-build"
 
-if test ! -f "$BUILD_BIN" || test ! -x "$BUILD_BIN"; then
-    echo >&2 "$(basename "$0"): $(basename "$BUILD_BIN") not found"
+if test ! -f "$PHP_BUILD_BIN" || test ! -x "$PHP_BUILD_BIN"; then
+    echo >&2 "$(basename "$0"): $(basename "$PHP_BUILD_BIN") not found"
     exit 1
 fi
 
 test "$#" = 0 && show_usage && exit 0
 
+INI=development
 while test "$#" != 0; do
     case "$1" in
         -h|--help) show_usage; exit 0 ;;
         --version) echo "phpenv version $VERSION"; exit 0 ;;
         -V) echo "$VERSION"; exit 0 ;;
+        --production) INI=production ;;
         install)
             shift
             if test "$1" = "--complete"; then
-                exec "$BUILD_BIN" --definitions
+                "$PHP_BUILD_BIN" --definitions
             fi
 
             install_version "$@" || true
+            echo "reloading symlinks..."
             reload
             exit 0
             ;;

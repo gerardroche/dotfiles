@@ -61,7 +61,7 @@ fi
 
 if [ "$color_prompt" = yes ]; then
 
-	# Default PS1
+    # Default PS1
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 
     GIT_PS1_DESCRIBE_STYLE="describe"
@@ -71,60 +71,58 @@ if [ "$color_prompt" = yes ]; then
     GIT_PS1_SHOWUNTRACKEDFILES="y"
     GIT_PS1_SHOWUPSTREAM="verbose name git"
 
+    PS1_VERSION_COLOR="\[\e[37m\]"
+    PS1_VERSION_LABEL_COLOR="\[\e[38m\]"
+    PS1_PWD_COLOR="\[\e[34m\]"
+    PS1_ERROR_COLOR="\[\e[31m\]"
+    PS1_CLEAR_COLOR="\[\e[0m\]"
+
     do_prompt_command() {
         last_status=$?
-        # version color
-        vc="\[\e[37m\]"
-        # version label color
-        vlc="\[\e[38m\]"
-        # working dir color
-        wc="\[\e[34m\]"
-        # error color
-        ec="\[\e[31m\]"
-        # clear color
-        cc="\[\e[0m\]"
+        ver_info=""
 
-        # versions information buffer
-        v_buf=""
-
-        # PHP.
+        # PHP
         if test -f composer.json; then
-            if test -f .phpenv; then
-                php_version="$(cat .phpenv | sed ':a;N;$!ba;s/\n//g')"
-            else
-                php_version=$(php -v 2>&1 | grep --color=never -oe "^PHP\s*[0-9.]\+" | awk '{print $2}')
+            php_version=$(php -v 2>&1 | grep --color=never -oe "^PHP\s*[0-9.]\+" | awk '{print $2}')
+            ver_info="${ver_info} ${PS1_VERSION_LABEL_COLOR}php ${PS1_CLEAR_COLOR}${PS1_VERSION_COLOR}${php_version}${PS1_CLEAR_COLOR}${PS1_VERSION_LABEL_COLOR}${PS1_CLEAR_COLOR}"
+        fi
+
+        # NODE
+        if test -f package.json; then
+            if test "x$PWD" != "x$PS1_PREV_PWD"; then
+                if test -f .nvmrc; then
+                    nvm use
+                fi
             fi
-            v_buf="${v_buf} ${vlc}php ${cc}${vc}${php_version}${cc}${vlc}${cc}"
-        fi
 
-        # Ruby.
-        if test -f Gemfile || test -f Rakefile; then
-            ruby_version=$(rbenv version-name)
-            v_buf="${v_buf} ${vlc}ruby ${cc}${vc}${ruby_version}${cc}${vlc}${cc}"
-        fi
-
-        # Rails.
-        if test -f bin/rails; then
-            rails_version=$(rails --version | sed -e 's/Rails //')
-            v_buf="${v_buf} ${vlc}rails ${cc}${vc}${rails_version}${cc}${vlc}${cc}"
-        fi
-
-        # Node.
-        if test -f package.json || test -d node_modules; then
             npm_version=$(npm --version 2>/dev/null)
-            v_buf="${v_buf} ${vlc}npm ${cc}${vc}${npm_version}${cc}${vlc}${cc}"
+            ver_info="${ver_info} ${PS1_VERSION_LABEL_COLOR}npm ${PS1_CLEAR_COLOR}${PS1_VERSION_COLOR}${npm_version}${PS1_CLEAR_COLOR}${PS1_VERSION_LABEL_COLOR}${PS1_CLEAR_COLOR}"
 
             node_version=$(node -v 2>/dev/null | sed -e 's/v//')
-            v_buf="${v_buf} ${vlc}node ${cc}${vc}${node_version}${cc}${vlc}${cc}"
+            ver_info="${ver_info} ${PS1_VERSION_LABEL_COLOR}node ${PS1_CLEAR_COLOR}${PS1_VERSION_COLOR}${node_version}${PS1_CLEAR_COLOR}${PS1_VERSION_LABEL_COLOR}${PS1_CLEAR_COLOR}"
         fi
 
-        # Format version information.
-        if test -n "$v_buf"; then
-            v_buf=" $(echo "$v_buf" | sed -e 's/ //')"
+        # Ruby
+        if test -f Gemfile; then
+            ruby_version=$(rbenv version-name)
+            ver_info="${ver_info} ${PS1_VERSION_LABEL_COLOR}ruby ${PS1_CLEAR_COLOR}${PS1_VERSION_COLOR}${ruby_version}${PS1_CLEAR_COLOR}${PS1_VERSION_LABEL_COLOR}${PS1_CLEAR_COLOR}"
+
+            # Rails
+            if test -f bin/rails; then
+                rails_version=$(rails --version | sed -e 's/Rails //')
+                ver_info="${ver_info} ${PS1_VERSION_LABEL_COLOR}rails ${PS1_CLEAR_COLOR}${PS1_VERSION_COLOR}${rails_version}${PS1_CLEAR_COLOR}${PS1_VERSION_LABEL_COLOR}${PS1_CLEAR_COLOR}"
+            fi
         fi
 
-        __git_ps1 "${wc}╭─ \w${cc}$v_buf " \
-                  "\n${wc}╰─${cc}$(if test $last_status = 0;then echo "${wc}\$${cc}";else echo "${ec}\$${cc}";fi) " \
+        PS1_PREV_PWD="$PWD"
+
+        # Format versions.
+        if test -n "$ver_info"; then
+            ver_info=" $(echo "$ver_info" | sed -e 's/ //')"
+        fi
+
+        __git_ps1 "${PS1_PWD_COLOR}╭─ \w${PS1_CLEAR_COLOR}$ver_info " \
+                  "\n${PS1_PWD_COLOR}╰─${PS1_CLEAR_COLOR}$(if test $last_status = 0;then echo "${PS1_PWD_COLOR}\$${PS1_CLEAR_COLOR}";else echo "${PS1_ERROR_COLOR}\$${PS1_CLEAR_COLOR}";fi) " \
                   "(%s)"
     }
 

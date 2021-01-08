@@ -232,6 +232,12 @@ get_local_phpcsfixer_version_bin() {
 
 # https://github.com/FriendsOfPhp/PHP-CS-Fixer
 phpcsfixer() {
+    is_dev=
+    if test "x$1" = "x--dev"; then
+        is_dev=true
+        shift
+    fi
+
     if test -f vendor/bin/php-cs-fixer; then
         php_cs_fixer_bin=vendor/bin/php-cs-fixer
     else
@@ -245,7 +251,9 @@ phpcsfixer() {
     echo "$("$php_cs_fixer_bin" --version)"
 
     config_file=
-    if test -f ./.php_cs; then
+    if test -f ./.php_cs.dev && test "x$is_dev" = "xtrue"; then
+        config_file=./.php_cs.dev
+    elif test -f ./.php_cs; then
         config_file=./.php_cs
     elif test -f ./.php_cs.dist; then
         config_file=./.php_cs.dist
@@ -259,7 +267,7 @@ phpcsfixer() {
     fi
 
     if test -n "$config_file"; then
-        if test "x$1" = "fix"; then
+        if test "x$1" = "xfix"; then
             $php_cs_fixer_bin -vvv "$@" --config "$config_file"
         else
             $php_cs_fixer_bin -vvv "$@"

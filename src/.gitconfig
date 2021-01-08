@@ -38,7 +38,6 @@
 	s = status
 	t			= "!f() { git tag -l | sort -V | tail; }; f"
 	w			= "!f() { git commit -m \"$*\"; }; f"
-	wd			= "!f() { git commit -m \"DEV: $*\"; }; f"
 	wa			= "!f() { git add -A . && git commit -m \":metal: $*\"; }; f"
 	zap			= "!f() { git add -A . && git commit -m \":zap: KAPOW\"; }; f"
     add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
@@ -75,6 +74,7 @@
 	autocrlf = input
 	excludesfile = ~/.gitexcludes
 	editor = /usr/bin/vim
+	hooksPath = /home/gerard/.githooks
 
 [diff]
 
@@ -87,11 +87,6 @@
 [help]
 
 	autocorrect = 1
-
-[init]
-
-	templatedir = ~/.gittemplates
-
 [interactive]
 
 	singlekey = true
@@ -133,3 +128,5 @@
 
 [commit]
 	gpgSign = true
+[checkout]
+	defaultRemote = origin

@@ -23,10 +23,10 @@ unset IFS
 # }
 
 PHP_BIN="$(phpenv-getlocalversionbin || true)"
-if test -n "$PHP_BIN"; then
-    echo "Using $PHP_BIN"
-else
+if test -z "$PHP_BIN"; then
     PHP_BIN=/usr/bin/php
 fi
+
+#echo "Using $PHP_BIN"
 
 "$PHP_BIN" "$@"

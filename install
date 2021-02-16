@@ -62,6 +62,7 @@ if test -z "$SKIP_DEPS"; then
     sudo apt-get update
 
     #command -v audacity >/dev/null 2>&1 || sudo apt-get install audacity pavucontrol
+    command -v bsdtar >/dev/null 2>&1 || sudo apt-get install libarchive-tools
     command -v chromium-browser >/dev/null 2>&1 || sudo apt-get install chromium-browser
     command -v cmake  >/dev/null 2>&1 || sudo apt-get install cmake
     command -v ctags >/dev/null 2>&1 || sudo apt-get install exuberant-ctags
@@ -138,11 +139,13 @@ if test -z "$SKIP_DEPS"; then
 fi
 
 if test -z "$SKIP_SUBMODULES"; then
+    echo
     echo "installing submodules..."
     git submodule init
     git submodule update
+    echo
     echo "updating submodules..."
-    git submodule foreach 'git fetch && git merge --ff-only origin/master'
+    git submodule foreach 'git fetch --all --prune && git merge --ff-only origin/master || true'
 fi
 
 echo "configure symlinks..."

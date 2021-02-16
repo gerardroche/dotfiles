@@ -128,5 +128,5 @@
 
 [commit]
 	gpgSign = true
-[checkout]
-	defaultRemote = origin
+; [checkout]
+; 	defaultRemote = origin

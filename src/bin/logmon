@@ -29,37 +29,63 @@ _showrecenterrors() {
     _showrecentconerrors
 }
 
+
+merge=
+mysql_log=
+app_log=
+apache_log=
+
+DEFAULT_APACHE_LOG=/var/log/apache2/*.log
+DEFAULT_APP_LOG=storage/logs/*.log
+DEFAULT_MYSQL_LOG=/var/log/mysql/*.log
+
 while test "$#" != 0; do
     case "$1" in
-
-        --all)              tail -f /var/log/{apache2,mysql}/{,*}{access,error,other_vhosts_access,mysql}.log {data,storage}/logs/*.log ;;
-
-        --apache)           tail -f /var/log/apache2/{access,error,other_vhosts_access}.log ;;
-
-        --apache-mysql)     tail -f /var/log/{apache2,mysql}/{,*}{access,error,other_vhosts_access,mysql}.log ;;
-
-        --app)              tail -f {data,storage}/logs/*.log ;;
-
-        --mysql)            tail -f /var/log/mysql/{error,mysql}.log ;;
-
-        showerrors)
-            egrep "\.(EMERG|ALERT|CRIT|ERROR|WARN|NOTICE)" storage/logs/*.log
+        --all)
+            app_log=$DEFAULT_APP_LOG
+            apache_log=$DEFAULT_APACHE_LOG
+            mysql_log=$DEFAULT_MYSQL_LOG
+            merge=1
+            ;;
+        --mysql)
+            mysql_log=$DEFAULT_MYSQL_LOG
+            merge=1
+            ;;
+        --app)
+            app_log=$DEFAULT_APP_LOG
+            merge=1
+            ;;
+        --apache)
+            apache_log=$DEFAULT_APACHE_LOG
+            merge=1
             ;;
 
-        showrecentapperrors)
-            _showrecentapperrors
+        showerrors) egrep "\.(EMERG|ALERT|CRIT|ERROR|WARN|NOTICE)" storage/logs/*.log ;;
+        showrecentapperrors) _showrecentapperrors ;;
+        showrecentconerrors) _showrecentconerrors ;;
+        showrecenterrors) _showrecenterrors ;;
+        showapplogscolor) tail -n 200 -f storage/logs/*.log | perl -pe "s/.*\.(EMERG|ALERT|CRIT|ERROR|WARN|NOTICE).*/\e[1;31m$&\e[0m/;s/.*INFO.*/\e[0;32m$&\e[0m/" ;;
+
+        # 31=RED
+        # 34=BLUE
+        # 35=MAGENTA
+        # 36=TEAK
+
+        --debug)
+            # tail -n 200 -f storage/logs/*.log | perl -pe "s/.*\.(EMERG|ALERT|CRIT|ERROR|WARN|NOTICE).*/\e[1;31m$&\e[0m/;s/.*INFO.*/\e[0;32m$&\e[0m/"
+            tail -n 200 -f storage/logs/*.log | \
+                perl -pe "
+                    s/.*\.(EMERG|ALERT|CRIT|ERROR).*/\e[1;31m$&\e[0m/;
+                    s/.*\.(WARN).*/\e[1;35m$&\e[0m/;
+                    s/.*NOTICE.*/\e[0;36m$&\e[0m/;
+                    s/.*INFO/\e[0;33m$&\e[0m/;
+                    s/.*DEBUG/\e[0;34m$&\e[0m/
+                    "
             ;;
 
-        showrecentconerrors)
-            _showrecentconerrors
-            ;;
-
-        showrecenterrors)
-            _showrecenterrors
-            ;;
-
-        showapplogscolor)
-            tail -n 200 -f storage/logs/*.log | perl -pe "s/.*\.(EMERG|ALERT|CRIT|ERROR|WARN|NOTICE).*/\e[1;31m$&\e[0m/;s/.*INFO.*/\e[0;32m$&\e[0m/"
+        --info)
+            tail -n 1200 -f storage/logs/*.log \
+                | egrep "(INFO|NOTICE|WARN|ERROR|CRIT|ALERT|EMERG)"
             ;;
 
         --) shift; break ;; # standard end of options list
@@ -68,3 +94,7 @@ while test "$#" != 0; do
     esac
     shift
 done
+
+if test -n "$merge"; then
+    tail -f -n 500 $mysql_log $apache_log $app_log
+fi

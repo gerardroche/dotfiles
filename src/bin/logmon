@@ -73,19 +73,36 @@ while test "$#" != 0; do
 
         --debug)
             # tail -n 200 -f storage/logs/*.log | perl -pe "s/.*\.(EMERG|ALERT|CRIT|ERROR|WARN|NOTICE).*/\e[1;31m$&\e[0m/;s/.*INFO.*/\e[0;32m$&\e[0m/"
-            tail -n 200 -f storage/logs/*.log | \
-                perl -pe "
+            tail -n 200 -f storage/logs/*.log \
+                | perl -pe "
                     s/.*\.(EMERG|ALERT|CRIT|ERROR).*/\e[1;31m$&\e[0m/;
-                    s/.*\.(WARN).*/\e[1;35m$&\e[0m/;
+                    s/.*\.(WARNING).*/\e[1;35m$&\e[0m/;
                     s/.*NOTICE.*/\e[0;36m$&\e[0m/;
-                    s/.*INFO/\e[0;33m$&\e[0m/;
-                    s/.*DEBUG/\e[0;34m$&\e[0m/
+                    s/.*INFO.*/\e[0;32m$&\e[0m/;
                     "
             ;;
 
         --info)
             tail -n 1200 -f storage/logs/*.log \
+                |  sed --unbuffered \
+                    -e 's/\(.*INFO.*\)/\o033[32m\1\o033[39m/' \
+                    -e 's/\(.*NOTICE.*\)/\o033[36m\1\o033[39m/' \
+                    -e 's/\(.*WARNING.*\)/\o033[35m\1\o033[39m/' \
+                    -e 's/\(.*ERROR.*\)/\o033[31m\1\o033[39m/' \
                 | egrep "(INFO|NOTICE|WARN|ERROR|CRIT|ALERT|EMERG)"
+
+                # | perl -pe "
+                #     s/.*\.(EMERG|ALERT|CRIT|ERROR).*/\e[1;31m$&\e[0m/;
+                #     s/.*\.(WARNING).*/\e[1;35m$&\e[0m/;
+                #     s/.*NOTICE.*/\e[0;36m$&\e[0m/;
+                #     s/.*INFO/\e[0;33m$&\e[0m/;
+                #     s/.*DEBUG.*\n//
+                #     "
+
+            ;;
+
+        --info-raw)
+            tail -n 1200 -f storage/logs/*.log
             ;;
 
         --) shift; break ;; # standard end of options list

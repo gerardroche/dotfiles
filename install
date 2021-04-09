@@ -75,6 +75,7 @@ if test -z "$SKIP_DEPS"; then
     command -v git >/dev/null 2>&1 || sudo apt-get install git
     command -v gitk >/dev/null 2>&1 || sudo apt-get install gitk
     command -v htop >/dev/null 2>&1 || sudo apt-get install htop
+    command -v jq >/dev/null 2>&1 || sudo apt-get install jq
     command -v lcov >/dev/null 2>&1 || sudo apt-get install lcov
     command -v netstat >/dev/null 2>&1 || sudo apt-get install net-tools
     command -v pip3 >/dev/null 2>&1 || sudo apt-get install python3-pip

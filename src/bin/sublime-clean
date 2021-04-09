@@ -79,7 +79,7 @@ fi
 rmdir_if_empty() {
     if test -d "$1"; then
         echo "rmdir_if_empty: removing empty directory, '$1'"
-        rmdir "$1"
+        rmdir "$1" || true
     fi
 }
 
@@ -125,7 +125,6 @@ rmdir_if_empty ~/Library/Application\ Support/Sublime\ Text\ 3/Lib/
 rmdir_if_empty ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/Color\ Highligher/
 rmdir_if_empty ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/SublimeLinter/
 
-echo "$SUBLIME_CLEAN_INCLUDE_SESSIONS"
 if [ "$SUBLIME_CLEAN_INCLUDE_SESSIONS" = "y" ]; then
     echo "cleaning sublime text sessions..."
     # ST3 Linux sessions

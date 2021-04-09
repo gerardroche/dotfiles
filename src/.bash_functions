@@ -207,75 +207,74 @@ pdoc() {
 }
 
 
-get_local_phpcsfixer_version() {
-    for version_file in .php-cs-fixer-version; do
-        test -f "$version_file" || continue
-        version="$(cat "$version_file" | sed ':a;N;$!ba;s/\n//g')"
-        echo "$version"
-        break
-    done
-}
+# get_local_phpcsfixer_version() {
+#     for version_file in .php-cs-fixer-version; do
+#         test -f "$version_file" || continue
+#         version="$(cat "$version_file" | sed ':a;N;$!ba;s/\n//g')"
+#         echo "$version"
+#         break
+#     done
+# }
 
-get_local_phpcsfixer_version_bin() {
-    php_cs_fixer_version="$(get_local_phpcsfixer_version)"
+# get_local_phpcsfixer_version_bin() {
+#     php_cs_fixer_version="$(get_local_phpcsfixer_version)"
 
-    if test -n "$php_cs_fixer_version"; then
-        php_cs_fixer_bin="/usr/local/bin/php-cs-fixer-$php_cs_fixer_version"
-        if test ! -f "$php_cs_fixer_bin" || test ! -x "$php_cs_fixer_bin"; then
-            echo >&2 "$(basename "$0"): php-cs-fixer version not found"
-            exit 1
-        fi
+#     if test -n "$php_cs_fixer_version"; then
+#         php_cs_fixer_bin="/usr/local/bin/php-cs-fixer-$php_cs_fixer_version"
+#         if test ! -f "$php_cs_fixer_bin" || test ! -x "$php_cs_fixer_bin"; then
+#             echo >&2 "$(basename "$0"): php-cs-fixer version not found"
+#             exit 1
+#         fi
 
-        echo "$php_cs_fixer_bin"
-    fi
-}
+#         echo "$php_cs_fixer_bin"
+#     fi
+# }
 
-# https://github.com/FriendsOfPhp/PHP-CS-Fixer
-phpcsfixer() {
-    is_dev=
-    if test "x$1" = "x--dev"; then
-        is_dev=true
-        shift
-    fi
+# phpcsfixer() {
+#     is_dev=
+#     if test "x$1" = "x--dev"; then
+#         is_dev=true
+#         shift
+#     fi
 
-    if test -f vendor/bin/php-cs-fixer; then
-        php_cs_fixer_bin=vendor/bin/php-cs-fixer
-    else
-        php_cs_fixer_bin="$(get_local_phpcsfixer_version_bin)"
-        if test -z "$php_cs_fixer_bin"; then
-            php_cs_fixer_bin=php-cs-fixer
-        fi
-    fi
+#     if test -f vendor/bin/php-cs-fixer; then
+#         php_cs_fixer_bin=vendor/bin/php-cs-fixer
+#     else
+#         php_cs_fixer_bin="$(get_local_phpcsfixer_version_bin)"
+#         if test -z "$php_cs_fixer_bin"; then
+#             php_cs_fixer_bin=php-cs-fixer
+#         fi
+#     fi
 
-    echo "Using $php_cs_fixer_bin"
-    echo "$("$php_cs_fixer_bin" --version)"
+#     echo "Using $php_cs_fixer_bin"
+#     echo "$("$php_cs_fixer_bin" --version)"
 
-    config_file=
-    if test -f ./.php_cs.dev && test "x$is_dev" = "xtrue"; then
-        config_file=./.php_cs.dev
-    elif test -f ./.php_cs; then
-        config_file=./.php_cs
-    elif test -f ./.php_cs.dist; then
-        config_file=./.php_cs.dist
-    elif test -f ./../.php_cs; then
-        config_file=./../.php_cs
-    elif test -f ~/.php_cs; then
-        config_file=~/.php_cs
-    else
-        echo "no config found!"
-        return
-    fi
+#     config_file=
+#     if test -f ./.php_cs.dev && test "x$is_dev" = "xtrue"; then
+#         config_file=./.php_cs.dev
+#     elif test -f ./.php_cs; then
+#         config_file=./.php_cs
+#     elif test -f ./.php_cs.dist; then
+#         config_file=./.php_cs.dist
+#     elif test -f ./../.php_cs; then
+#         config_file=./../.php_cs
+#     elif test -f ~/.php_cs; then
+#         config_file=~/.php_cs
+#     else
+#         echo "no config found!"
+#         return
+#     fi
 
-    if test -n "$config_file"; then
-        if test "x$1" = "xfix"; then
-            $php_cs_fixer_bin -vvv "$@" --config "$config_file"
-        else
-            $php_cs_fixer_bin -vvv "$@"
-        fi
-    else
-        $php_cs_fixer_bin -vvv "$@"
-    fi
-}
+#     if test -n "$config_file"; then
+#         if test "x$1" = "xfix"; then
+#             $php_cs_fixer_bin -vvv "$@" --config "$config_file"
+#         else
+#             $php_cs_fixer_bin -vvv "$@"
+#         fi
+#     else
+#         $php_cs_fixer_bin -vvv "$@"
+#     fi
+# }
 
 phptinstalldeps() {
     # dpkg -l | grep postgresql >/dev/null 2>&1 || sudo apt-get install postgresql

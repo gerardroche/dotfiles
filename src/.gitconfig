@@ -71,10 +71,10 @@
 
 [core]
 
-	autocrlf = input
 	excludesfile = ~/.gitexcludes
 	editor = /usr/bin/vim
 	hooksPath = /home/gerard/.githooks
+	autocrlf = input
 
 [diff]
 

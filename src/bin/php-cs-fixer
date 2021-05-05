@@ -29,13 +29,6 @@ get_local_phpcsfixer_version_bin() {
     fi
 }
 
-
-DEV_MODE=
-if test "x$1" = "x--dev"; then
-    DEV_MODE=true
-    shift
-fi
-
 # Use local composer installed php-cs-fixer
 if test -f vendor/bin/php-cs-fixer; then
     php_cs_fixer_bin=vendor/bin/php-cs-fixer
@@ -56,32 +49,46 @@ else
     fi
 fi
 
-# Some projects need a dev override.
-if test -f ./.php_cs.dev && test "x$DEV_MODE" = "xtrue"; then
-    config_file=./.php_cs.dev
+# CONFIGURATION
 
+if test -f ./.php-cs-fixer.php; then
+    config_file=./.php-cs-fixer.php
+elif test -f ./laravel/.php-cs-fixer.php; then
+    # Some projects do this
+    config_file=./laravel/.php-cs-fixer.php
+elif test -f ./.php-cs-fixer.dist.php; then
+    config_file=./.php-cs-fixer.dist.php
+elif test -f ./../.php-cs-fixer.php; then
+    # Some projects do this.
+    config_file=./../.php-cs-fixer.php
+elif test -f ~/.php-cs-fixer.php; then
+    # Default to local system configuration.
+    config_file=~/.php-cs-fixer.php
+#
+# CONFIGURATION LEGACY v2
+#
 elif test -f ./.php_cs; then
     config_file=./.php_cs
+elif test -f ./laravel/.php_cs; then
+    # Some projects do this
+    config_file=./laravel/.php_cs
 elif test -f ./.php_cs.dist; then
     config_file=./.php_cs.dist
-
-# Some projects do this.
 elif test -f ./../.php_cs; then
+    # Some projects do this.
     config_file=./../.php_cs
-
-# Default to local system configuration.
 elif test -f ~/.php_cs; then
+    # Default to local system configuration.
     config_file=~/.php_cs
-
-# Configuration is required.
 else
+    # Configuration is required.
     echo >&2 "$(basename "$0"): php-cs-fixer config not found"
     exit 1
 fi
 
-# echo "Using $php_cs_fixer_bin"
-# echo "Config $config_file"
-# echo "$("$php_cs_fixer_bin" --version)"
+echo "Using $php_cs_fixer_bin"
+echo "Config $config_file"
+echo "$("$php_cs_fixer_bin" --version)"
 
 if test -n "$config_file"; then
     if test "x$1" = "xfix"; then

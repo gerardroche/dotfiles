@@ -84,7 +84,7 @@ if [ "$color_prompt" = yes ]; then
         # PHP
         if test -f composer.json; then
             php_version=$(php -v 2>&1 | grep --color=never -oe "^PHP\s*[0-9.]\+" | awk '{print $2}')
-            ver_info="${ver_info} ${PS1_VERSION_LABEL_COLOR}php ${PS1_CLEAR_COLOR}${PS1_VERSION_COLOR}${php_version}${PS1_CLEAR_COLOR}${PS1_VERSION_LABEL_COLOR}${PS1_CLEAR_COLOR}"
+            ver_info="${ver_info} ${PS1_VERSION_LABEL_COLOR}${PS1_CLEAR_COLOR}${PS1_VERSION_COLOR}${php_version}${PS1_CLEAR_COLOR}${PS1_VERSION_LABEL_COLOR}${PS1_CLEAR_COLOR}"
         fi
 
         # NODE
@@ -96,21 +96,21 @@ if [ "$color_prompt" = yes ]; then
             fi
 
             npm_version=$(npm --version 2>/dev/null)
-            ver_info="${ver_info} ${PS1_VERSION_LABEL_COLOR}npm ${PS1_CLEAR_COLOR}${PS1_VERSION_COLOR}${npm_version}${PS1_CLEAR_COLOR}${PS1_VERSION_LABEL_COLOR}${PS1_CLEAR_COLOR}"
+            ver_info="${ver_info}/${PS1_VERSION_LABEL_COLOR}${PS1_CLEAR_COLOR}${PS1_VERSION_COLOR}${npm_version}${PS1_CLEAR_COLOR}${PS1_VERSION_LABEL_COLOR}${PS1_CLEAR_COLOR}"
 
             node_version=$(node -v 2>/dev/null | sed -e 's/v//')
-            ver_info="${ver_info} ${PS1_VERSION_LABEL_COLOR}node ${PS1_CLEAR_COLOR}${PS1_VERSION_COLOR}${node_version}${PS1_CLEAR_COLOR}${PS1_VERSION_LABEL_COLOR}${PS1_CLEAR_COLOR}"
+            ver_info="${ver_info}/${PS1_VERSION_LABEL_COLOR}${PS1_CLEAR_COLOR}${PS1_VERSION_COLOR}${node_version}${PS1_CLEAR_COLOR}${PS1_VERSION_LABEL_COLOR}${PS1_CLEAR_COLOR}"
         fi
 
         # Ruby
         if test -f Gemfile; then
             ruby_version=$(rbenv version-name)
-            ver_info="${ver_info} ${PS1_VERSION_LABEL_COLOR}ruby ${PS1_CLEAR_COLOR}${PS1_VERSION_COLOR}${ruby_version}${PS1_CLEAR_COLOR}${PS1_VERSION_LABEL_COLOR}${PS1_CLEAR_COLOR}"
+            ver_info="${ver_info}/${PS1_VERSION_LABEL_COLOR}ruby ${PS1_CLEAR_COLOR}${PS1_VERSION_COLOR}${ruby_version}${PS1_CLEAR_COLOR}${PS1_VERSION_LABEL_COLOR}${PS1_CLEAR_COLOR}"
 
             # Rails
             if test -f bin/rails; then
                 rails_version=$(rails --version | sed -e 's/Rails //')
-                ver_info="${ver_info} ${PS1_VERSION_LABEL_COLOR}rails ${PS1_CLEAR_COLOR}${PS1_VERSION_COLOR}${rails_version}${PS1_CLEAR_COLOR}${PS1_VERSION_LABEL_COLOR}${PS1_CLEAR_COLOR}"
+                ver_info="${ver_info}/${PS1_VERSION_LABEL_COLOR}rails ${PS1_CLEAR_COLOR}${PS1_VERSION_COLOR}${rails_version}${PS1_CLEAR_COLOR}${PS1_VERSION_LABEL_COLOR}${PS1_CLEAR_COLOR}"
             fi
         fi
 
@@ -122,7 +122,7 @@ if [ "$color_prompt" = yes ]; then
         fi
 
         __git_ps1 "${PS1_PWD_COLOR}╭─ \w${PS1_CLEAR_COLOR}$ver_info " \
-                  "\n${PS1_PWD_COLOR}╰─${PS1_CLEAR_COLOR}$(if test $last_status = 0;then echo "${PS1_PWD_COLOR}\$${PS1_CLEAR_COLOR}";else echo "${PS1_ERROR_COLOR}\$${PS1_CLEAR_COLOR}";fi) " \
+                  "\n${PS1_PWD_COLOR}╰─${PS1_CLEAR_COLOR}$(if test $last_status = 0;then echo "${PS1_PWD_COLOR}\$${PS1_CLEAR_COLOR}";else echo "${PS1_ERROR_COLOR} 💥${PS1_CLEAR_COLOR}";fi) " \
                   "(%s)"
     }
 

@@ -7,19 +7,21 @@ unset CDPATH
 unset IFS
 
 OPEN_BASEDIR="/usr/local/bin"
+
 # The HOME directory needs to be required!
 OPEN_BASEDIR="$OPEN_BASEDIR:$HOME"
+OPEN_BASEDIR="$OPEN_BASEDIR:$HOME/.cache"
+OPEN_BASEDIR="$OPEN_BASEDIR:$HOME/.config"
+OPEN_BASEDIR="$OPEN_BASEDIR:$HOME/.phpenv/versions"
+OPEN_BASEDIR="$OPEN_BASEDIR:/etc/pki/certs"
+OPEN_BASEDIR="$OPEN_BASEDIR:/etc/ssl/certs"
+OPEN_BASEDIR="$OPEN_BASEDIR:/proc/version"
 OPEN_BASEDIR="$OPEN_BASEDIR:/tmp"
 OPEN_BASEDIR="$OPEN_BASEDIR:/usr/bin/php5"
 OPEN_BASEDIR="$OPEN_BASEDIR:/usr/bin/php7.0"
 OPEN_BASEDIR="$OPEN_BASEDIR:/usr/bin/php7.1"
 OPEN_BASEDIR="$OPEN_BASEDIR:/usr/bin/php7.2"
 OPEN_BASEDIR="$OPEN_BASEDIR:/usr/bin/unzip"
-OPEN_BASEDIR="$OPEN_BASEDIR:/etc/pki/certs"
-OPEN_BASEDIR="$OPEN_BASEDIR:/etc/ssl/certs"
-OPEN_BASEDIR="$OPEN_BASEDIR:$HOME/.cache"
-OPEN_BASEDIR="$OPEN_BASEDIR:$HOME/.config"
-OPEN_BASEDIR="$OPEN_BASEDIR:$HOME/.phpenv/versions"
 
 # Add composer configuration path to open_basedir. Newer versions of composer
 # don't need to add this path because configurations are stored in

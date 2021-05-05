@@ -11,17 +11,20 @@
  * @see https://github.com/FriendsOfPHP/PHP-CS-Fixer
  */
 
-$config = PhpCsFixer\Config::create();
+$config = new PhpCsFixer\Config();
 
 $config->setRiskyAllowed(true);
 
 $config->setRules([
     '@PSR2' => true,
-    // '@PSR12' => true,
+    '@PSR12' => true,
+    '@Symfony' => true,
+
     // 'psr4' => false, // Temp: Because it breaks Sublime Text php-cs-fixer linter
 
     '@DoctrineAnnotation' => true,
     '@PHPUnit75Migration:risky' => true,
+    '@PHPUnit84Migration:risky' => true,
     '@Symfony' => true,
     '@Symfony:risky' => true,
 
@@ -56,7 +59,7 @@ $config->setRules([
     'no_unused_imports' => false,
     'no_useless_return' => true,
     'no_whitespace_in_blank_line' => false,
-    'ordered_class_elements' => true,
+    'ordered_class_elements' => false,
     'ordered_imports' => true,
     'ordered_traits' => true,
     'self_accessor' => true,
@@ -67,7 +70,7 @@ $config->setRules([
     'strict_comparison' => true,
     'strict_param' => true,
     'string_line_ending' => true,
-    'trailing_comma_in_multiline_array' => false,
+    'trailing_comma_in_multiline' => false,
     'yoda_style' => false,
     // 'array_push' => false,
     // 'ereg_to_preg' => true,
@@ -122,14 +125,6 @@ $config->setRules([
     'phpdoc_types_order' => true,
     'phpdoc_var_annotation_correct_order' => true,
     'phpdoc_var_without_name' => true,
-    // 'no_blank_lines_after_phpdoc' => false,
-    // 'no_empty_phpdoc' => false,
-    // 'no_superfluous_phpdoc_tags' => false,
-    // 'phpdoc_separation' => false,
-    // 'phpdoc_summary' => false,
-    // 'phpdoc_trim' => false,
-    // 'phpdoc_trim_consecutive_blank_line_separation' => false,
-    // 'phpdoc_types_order' => false,
 
     // =================================== PHP 5.6
     'pow_to_exponentiation' => true,
@@ -167,6 +162,7 @@ $config->setRules([
     // =================================== PHP 7.4 RISKY
     'implode_call' => true,
     'no_alias_functions' => true,
+
     // 'use_arrow_functions' => true,
 
     // =================================== PHP 8.0
@@ -175,10 +171,6 @@ $config->setRules([
     'no_unset_cast' => true,
     'no_unreachable_default_argument_value' => true,
     'no_unneeded_final_method' => true,
-
-    // =================================== PHPUnit
-    '@PHPUnit75Migration:risky' => true,
-    '@PHPUnit84Migration:risky' => true,
 
     'php_unit_construct' => true,
     'php_unit_dedicate_assert' => true,

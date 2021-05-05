@@ -89,6 +89,7 @@ if test -z "$SKIP_DEPS"; then
     command -v wmctrl  >/dev/null 2>&1 || sudo apt-get install wmctrl
     command -v xclip >/dev/null 2>&1 || sudo apt-get install xclip
     command -v yarn >/dev/null 2>&1 || sudo apt-get install yarn
+    command -v zstd >/dev/null 2>&1 || sudo apt-get install zstd
 
     dpkg -l | grep git-extras >/dev/null 2>&1 || sudo apt-get install git-extras
     dpkg -l | grep php-pcov >/dev/null 2>&1 || sudo apt-get install php-pcov
@@ -118,6 +119,9 @@ if test -z "$SKIP_DEPS"; then
     echo "The following music production tools need to be install manually:"
     echo "* LMMS: https://lmms.io/download"
     echo
+
+    # Install AWS CLI
+    # https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html
 
     # Python developer tools.
     pip3 install --upgrade --user flake8
@@ -186,10 +190,7 @@ packages="$(composer global show --direct)"
 # to install all of the packages at the same time.
 echo "$packages" | grep -q "friendsofphp/php-cs-fixer" || composer global require "friendsofphp/php-cs-fixer"
 echo "$packages" | grep -q "laravel/installer" || composer global require "laravel/installer"
-echo "$packages" | grep -q "pds/skeleton" || composer global require "pds/skeleton"
 echo "$packages" | grep -q "phan/phan" || composer global require "phan/phan"
-echo "$packages" | grep -q "phploc/phploc" || composer global require "phploc/phploc"
 echo "$packages" | grep -q "phpmd/phpmd" || composer global require "phpmd/phpmd"
-echo "$packages" | grep -q "sensiolabs/security-checker" || composer global require "sensiolabs/security-checker"
 
 composer global update -vvv

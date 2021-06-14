@@ -79,7 +79,7 @@ update_symlinks() {
     # Remove HOME/bin version broken symlinks (e.g. version was removed).
     for versions in ~/bin/php[0-9]*; do
         if test ! -e "$versions"; then
-            rm "$versions"
+            rm "$versions" || true
         fi
     done
 

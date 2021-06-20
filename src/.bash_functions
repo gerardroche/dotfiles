@@ -84,9 +84,18 @@ internet_use_full() {
     lsof -P -i -n | cut -f 1 -d " " | uniq
 }
 
-gitkcurrent() {
+gk_default() {
+    gitk --branches -n 800 --date-order
+}
+
+gka_default() {
+    gitk --branches --date-order
+}
+
+gk_current() {
     cmd=gitk
     cmd+=" -n 800"
+    cmd+=" --date-order"
     cmd+=" master"
     cmd+=" $(git rev-parse --abbrev-ref HEAD)"
     for remote in $(git remote); do
@@ -100,9 +109,10 @@ gitkcurrent() {
     $cmd
 }
 
-gitkbranches() {
+gk_branches() {
     cmd=gitk
     cmd+=" -n 800"
+    cmd+=" --date-order"
     cmd+=" --branches"
     cmd+=" master"
     cmd+=" $(git rev-parse --abbrev-ref HEAD)"
@@ -115,23 +125,6 @@ gitkbranches() {
     done
 
     $cmd
-}
-
-git_create_branch() {
-    prefix="$1"
-    suffix="$2"
-
-    if test -z "$prefix"; then
-        echo >&2 "param 1 is required"
-        return 1
-    fi
-
-    if test -z "$suffix"; then
-        echo >&2 "param 2 is required"
-        return 1
-    fi
-
-    git checkout -b "$prefix/$suffix"
 }
 
 tmuxrenamewindow() {
@@ -367,7 +360,6 @@ phptbuild() {
             --with-sodium \
             --with-tidy \
             --with-webp \
-            --with-xmlrpc \
             --with-xpm \
             --with-xsl \
             --with-zip \
@@ -379,6 +371,7 @@ phptbuild() {
             --without-password-argon2 \
             --without-pear
 
+            # --with-xmlrpc \
     fi
 
     NO_INTERACTION=1 make -j$(nproc)

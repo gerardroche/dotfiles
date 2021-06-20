@@ -4,29 +4,9 @@ set -e
 unset CDPATH
 unset IFS
 
-# php() {
-#     cwd="$(readlink -nf "$PWD")"
-#     while test "x$cwd" != "x$(dirname "$HOME")" && test "x$cwd" != "x/" && test "x$cwd" != "x"; do
-#         php_version_file="$cwd/.php-version"
-#         if test -f "$php_version_file"; then
-#             phpenv_bin="$HOME/.phpenv/versions/$(cat "$php_version_file" | head -1)/bin/php"
-#
-#             if test -x "$phpenv_bin"; then
-#                 command "$phpenv_bin" "$@"
-#                 return
-#             fi
-#         fi
-#         cwd="$(dirname $cwd)"
-#     done
-#
-#     command php "$@"
-# }
-
 PHP_BIN="$(phpenv-getlocalversionbin || true)"
 if test -z "$PHP_BIN"; then
     PHP_BIN=/usr/bin/php
 fi
-
-#echo "Using $PHP_BIN"
 
 "$PHP_BIN" "$@"

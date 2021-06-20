@@ -61,7 +61,7 @@ logmoninfo() {
             -e 's/\(.*NOTICE.*\)/\o033[36m\1\o033[0m/' \
             -e 's/\(.*WARNING.*\)/\o033[31m\1\o033[0m/' \
             -e 's/\(.*ERROR.*\)/\o033[31m\1\o033[0m/' \
-        | egrep "(INFO|NOTICE|WARN|ERROR|CRIT|ALERT|EMERG)"
+        | egrep "\\.(INFO|NOTICE|WARN|ERROR|CRIT|ALERT|EMERG)"
 }
 
 # 31=RED

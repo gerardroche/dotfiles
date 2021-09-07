@@ -87,3 +87,7 @@ export NPM_CONFIG_AUDIT=1
 # Fix Gem issue (I can't remember exactly what the issue was)
 unset GEM_HOME
 
+# Customisations.
+if [ -f ~/.profile-private ]; then
+    . ~/.profile-private
+fi

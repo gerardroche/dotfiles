@@ -194,3 +194,6 @@ echo "$packages" | grep -q "phan/phan" || composer global require "phan/phan"
 echo "$packages" | grep -q "phpmd/phpmd" || composer global require "phpmd/phpmd"
 
 composer global update -vvv
+
+sudo apt-get autoclean
+sudo apt-get autoremove

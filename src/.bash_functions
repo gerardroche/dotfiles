@@ -135,6 +135,8 @@ tmr() {
     tmuxrenamewindow $@
 }
 
+# Create a new directory and enter it
+# Source: https://github.com/mathiasbynens/dotfiles
 mkd() {
     mkdir -p "$@" && cd "$@"
 }

@@ -19,23 +19,39 @@ if (getenv('SKIP_CS')) {
 
 function load_dist_config()
 {
+    $candidates = [
+        ".php-cs-fixer.dist.php",
+
+        // v2.0 configurations (deprecated)
+        ".php_cs.dist",
+
+        // Support for laravel/* project structure
+        "laravel/.php-cs-fixer.dist.php",
+        "laravel/.php_cs.dist",
+    ];
+
     $cwd = getcwd();
 
-    if (is_file("$cwd/.php-cs-fixer.dist.php")) {
-        $file = "$cwd/.php-cs-fixer.dist.php";
-    } elseif (is_file("$cwd/laravel/.php-cs-fixer.dist.php")) {
-        $file = "$cwd/laravel/.php-cs-fixer.dist.php";
-    } elseif (is_file("$cwd/.php_cs.dist")) {
-        $file = "$cwd/.php_cs.dist";
-    } elseif (is_file("$cwd/laravel/.php_cs.dist")) {
-        $file = "$cwd/laravel/.php_cs.dist";
+    $file = null;
+
+    foreach ($candidates as $candidate) {
+        if (is_file("$cwd/$candidate")) {
+            $file = "$cwd/$candidate";
+            break;
+        }
+    }
+
+    if (!$file) {
+        return false;
     }
 
     return require_once $file;
 }
 
 if (getenv('USE_DIST') || getenv('PHP_CS_FIXER_USE_DIST')) {
-    return load_dist_config();
+    if ($result = load_dist_config()) {
+        return $result;
+    }
 }
 
 const STRICT_MODE = false;
@@ -44,6 +60,7 @@ $rules = [
     '@PSR1' => true,
     '@PSR2' => true,
     '@PSR12' => true,
+    '@PSR12:risky' => true,
 
     '@DoctrineAnnotation' => true,
 
@@ -92,6 +109,10 @@ if (PHP_VERSION_ID >= 70400) {
 if (PHP_VERSION_ID >= 80000) {
     $rules['@PHP80Migration'] = true;
     $rules['@PHP80Migration:risky'] = true;
+}
+
+if (PHP_VERSION_ID >= 81000) {
+    $rules['@PHP81Migration'] = true;
 }
 
 // Must come after @* rules.

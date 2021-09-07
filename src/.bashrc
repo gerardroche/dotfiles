@@ -208,7 +208,7 @@ fi
 # https://stackoverflow.com/questions/13648237/ctrls-horizontal-split-not-working-with-command-t-in-vim
 stty start undef stop undef
 
-# Sensitive customisations.
+# Customisations.
 if [ -f ~/.bashrc-private ]; then
     . ~/.bashrc-private
 fi

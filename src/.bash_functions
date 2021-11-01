@@ -201,76 +201,6 @@ pdoc() {
     command "$cmd" "$@"
 }
 
-
-# get_local_phpcsfixer_version() {
-#     for version_file in .php-cs-fixer-version; do
-#         test -f "$version_file" || continue
-#         version="$(cat "$version_file" | sed ':a;N;$!ba;s/\n//g')"
-#         echo "$version"
-#         break
-#     done
-# }
-
-# get_local_phpcsfixer_version_bin() {
-#     php_cs_fixer_version="$(get_local_phpcsfixer_version)"
-
-#     if test -n "$php_cs_fixer_version"; then
-#         php_cs_fixer_bin="/usr/local/bin/php-cs-fixer-$php_cs_fixer_version"
-#         if test ! -f "$php_cs_fixer_bin" || test ! -x "$php_cs_fixer_bin"; then
-#             echo >&2 "$(basename "$0"): php-cs-fixer version not found"
-#             exit 1
-#         fi
-
-#         echo "$php_cs_fixer_bin"
-#     fi
-# }
-
-# phpcsfixer() {
-#     is_dev=
-#     if test "x$1" = "x--dev"; then
-#         is_dev=true
-#         shift
-#     fi
-
-#     if test -f vendor/bin/php-cs-fixer; then
-#         php_cs_fixer_bin=vendor/bin/php-cs-fixer
-#     else
-#         php_cs_fixer_bin="$(get_local_phpcsfixer_version_bin)"
-#         if test -z "$php_cs_fixer_bin"; then
-#             php_cs_fixer_bin=php-cs-fixer
-#         fi
-#     fi
-
-#     echo "Using $php_cs_fixer_bin"
-#     echo "$("$php_cs_fixer_bin" --version)"
-
-#     config_file=
-#     if test -f ./.php_cs.dev && test "x$is_dev" = "xtrue"; then
-#         config_file=./.php_cs.dev
-#     elif test -f ./.php_cs; then
-#         config_file=./.php_cs
-#     elif test -f ./.php_cs.dist; then
-#         config_file=./.php_cs.dist
-#     elif test -f ./../.php_cs; then
-#         config_file=./../.php_cs
-#     elif test -f ~/.php_cs; then
-#         config_file=~/.php_cs
-#     else
-#         echo "no config found!"
-#         return
-#     fi
-
-#     if test -n "$config_file"; then
-#         if test "x$1" = "xfix"; then
-#             $php_cs_fixer_bin -vvv "$@" --config "$config_file"
-#         else
-#             $php_cs_fixer_bin -vvv "$@"
-#         fi
-#     else
-#         $php_cs_fixer_bin -vvv "$@"
-#     fi
-# }
-
 phptinstalldeps() {
     # dpkg -l | grep postgresql >/dev/null 2>&1 || sudo apt-get install postgresql
     # dpkg -l | grep postgresql-contrib >/dev/null 2>&1 || sudo apt-get install postgresql-contrib
@@ -425,33 +355,6 @@ setwrap() {
     tput smam
 }
 
-setenv() {
-    name="$1"
-
-    env_file=".env"
-    env_file_named=".env-$name"
-
-    env_file_abs="$PWD/$env_file"
-    env_file_abs_named="$PWD/$env_file_named"
-
-    if test ! -f "$env_file_abs_named"; then
-        echo >&2 "env file not found: $env_file_named"
-        return
-    fi
-
-    echo "found $env_file_abs_named"
-    if test -h "$env_file_abs"; then
-        rm -v "$env_file_abs"
-        ln -s "$env_file_named" "$env_file"
-        echo "symlinked $env_file -> $env_file_named"
-    elif test ! -f "$env_file_abs"; then
-        ln -s "$env_file_named" "$env_file"
-        echo "symlinked $env_file -> $env_file_named"
-    else
-        echo >&2 "ERROR $env_file_abs is not a symlink"
-    fi
-}
-
 setmygitremote() {
     git_origin_url="$(git remote get-url origin 2> /dev/null || true)"
 
@@ -480,29 +383,44 @@ settitle() {
 }
 
 rubyversions() {
-    which ruby
-    ruby --version
-    which gem
-    gem --version
-    which bundle
-    bundle --version
-    which rails
-    rails --version
-    which rake
-    rake --version
+    if command -v ruby >/dev/null 2>&1; then
+        echo -n "ruby "
+        ruby --version 2> /dev/null || true
+        echo "  $(which ruby)"
+    fi
+
+    if command -v gem >/dev/null 2>&1; then
+        echo -n "gem "
+        gem --version 2> /dev/null || true
+        echo "  $(which gem)"
+    fi
+
+    if command -v bundle >/dev/null 2>&1; then
+        echo -n "bundle "
+        bundle --version 2> /dev/null || true
+        echo "  $(which bundle)"
+    fi
+
+    if command -v rails >/dev/null 2>&1; then
+        echo -n "rails "
+        rails --version 2> /dev/null || true
+        echo "  $(which rails)"
+    fi
+
+    if command -v rake >/dev/null 2>&1; then
+        echo -n "rake "
+        rake --version 2> /dev/null || true
+        echo "  $(which rake)"
+    fi
 }
 
 appversions() {
     php --version | head -1 2> /dev/null || true
-    ruby --version 2> /dev/null || true
 
-    if command -v gem >/dev/null 2>&1; then
-        echo -n "Gem "
-        gem --version 2> /dev/null
+    if command -v nvm >/dev/null 2>&1; then
+        echo -n "nvm "
+        nvm --version 2> /dev/null || true
     fi
-
-    bundler --version 2> /dev/null || true
-    rails --version 2> /dev/null || true
 
     if command -v npm >/dev/null 2>&1; then
         echo -n "npm "
@@ -513,6 +431,8 @@ appversions() {
         echo -n "node "
         node --version 2> /dev/null || true
     fi
+
+    rubyversions
 }
 
 sysversions() {
@@ -527,18 +447,6 @@ sysversions() {
     echo -n "Release: "
     cat /etc/lsb-release
     gnome-shell --version
-}
-
-showrecenterrors() {
-    d="$(date -u +%Y-%m-%d)"
-
-    if test -f storage/logs/laravel.log; then
-        showrecentapperrors
-    elif test -f storage/logs/laravel-$d.log; then
-        showrecentapperrors
-    fi
-
-    showrecentconerrors
 }
 
 projects() {

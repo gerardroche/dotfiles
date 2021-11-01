@@ -63,3 +63,4 @@ tags
 .todo*
 todo*.md
 .phpenv
+.*ods#

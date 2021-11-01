@@ -11,10 +11,6 @@ Usage: $(basename "$0") [<SESSION-NAME>]
 USAGE
 }
 
-case "$1" in
-    --help|-h) show_usage; exit 0 ;;
-esac
-
 init_nvm() {
     if test -f "$PWD/.nvmrc"; then
         . ~/.nvm/nvm.sh
@@ -22,19 +18,34 @@ init_nvm() {
     fi
 }
 
-CONFIG_FILE=".tmux"
-SESSION_NAME="mx"
-WINDOW_NAME="mx"
+SESSION_NAME=
+WINDOW_NAME=
+while test "$#" != 0; do
+    case "$1" in
+        --help|-h) show_usage; exit 0 ;;
+        --) shift; break ;; # standard end of options list
+        -*) echo >&2 "$(basename "$0"): unknown option '$1'" && exit 1 ;;
+        *) SESSION_NAME="$1" ;;
+    esac
+    shift
+done
 
-if test -n "$1"; then
-    SESSION_NAME="$1"
+# defaults
+DEFAULT_CONFIG_FILE=".tmux"
+DEFAULT_SESSION_NAME=mx
+DEFAULT_WINDOW_NAME="mx"
+
+if test -n "$SESSION_NAME"; then
     WINDOW_NAME="${SESSION_NAME##*/}"
     if test -d "$PROJECTS_PATH" && test -d "$PROJECTS_PATH/$SESSION_NAME"; then
         cd "$PROJECTS_PATH/$SESSION_NAME"
     fi
-elif test -f "$CONFIG_FILE"; then
+elif test -f "$DEFAULT_CONFIG_FILE"; then
     SESSION_NAME="$(basename "$(dirname "$PWD")")/$(basename "$PWD")"
     WINDOW_NAME="${SESSION_NAME##*/}"
+else
+    SESSION_NAME="$DEFAULT_SESSION_NAME"
+    WINDOW_NAME="$DEFAULT_WINDOW_NAME"
 fi
 
 echo "Starting tmux session '$SESSION_NAME' (name=$WINDOW_NAME)"
@@ -46,12 +57,12 @@ tmux has-session -t "$SESSION_NAME" > /dev/null 2>&1 && HAS_SESSION=y || HAS_SES
 if [ "$HAS_SESSION" = y ]; then
     tmux attach -t "$SESSION_NAME"
 else
-    if test -n "$SESSION_NAME" && test -f "$CONFIG_FILE"; then
-        tmux -2 new-session -n "$WINDOW_NAME" -s "$SESSION_NAME" \; source-file "$CONFIG_FILE"
+    if test -n "$SESSION_NAME" && test -f "$DEFAULT_CONFIG_FILE"; then
+        tmux -2 new-session -n "$WINDOW_NAME" -s "$SESSION_NAME" \; source-file "$DEFAULT_CONFIG_FILE"
     elif test -n "$WINDOW_NAME" ; then
         tmux -2 new-session -n "$WINDOW_NAME" -s "$SESSION_NAME"
-    elif test -f "$CONFIG_FILE"; then
-        tmux -2 new-session -n "$WINDOW_NAME" \; source-file "$CONFIG_FILE"
+    elif test -f "$DEFAULT_CONFIG_FILE"; then
+        tmux -2 new-session -n "$WINDOW_NAME" \; source-file "$DEFAULT_CONFIG_FILE"
     else
         tmux -2 new-session -n "$WINDOW_NAME"
     fi

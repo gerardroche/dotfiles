@@ -51,7 +51,7 @@ while test "$#" != 0; do
 done
 
 if test -z "$SKIP_DEPS"; then
-    echo "install dependencies..."
+    echo "Install dependencies ..."
 
     if test ! -f /etc/apt/sources.list.d/yarn.list; then
         ecoh "Adding Yarn apt key..."
@@ -106,23 +106,6 @@ if test -z "$SKIP_DEPS"; then
     dpkg -l | grep ttf-mscorefonts-installer >/dev/null 2>&1 || sudo apt-get install ttf-mscorefonts-installer
     dpkg -l | grep ttf-ubuntu-font-family >/dev/null 2>&1 || sudo apt-get install ttf-ubuntu-font-family
 
-    echo
-    echo "The following fonts need to be installed manually:"
-    echo "* Hasklig (Source Code Pro font with ligatures) https://github.com/i-tu/Hasklig"
-    echo "* Monoid (lagature font) https://github.com/larsenwork/monoid"
-    echo
-
-    echo "Force re-generation of font information cache files..."
-    fc-cache -f
-
-    echo
-    echo "The following music production tools need to be install manually:"
-    echo "* LMMS: https://lmms.io/download"
-    echo
-
-    # Install AWS CLI
-    # https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html
-
     # Python developer tools.
     pip3 install --upgrade --user flake8
     pip3 install --upgrade --user flake8-docstrings
@@ -135,25 +118,19 @@ if test -z "$SKIP_DEPS"; then
     python3.8 -m pip install --upgrade --user pydocstyle
     python3.8 -m pip install --upgrade --user mypy
     python3.8 -m pip install --upgrade --user gcovr
-
-    echo
-    echo "The following developer tools need to be installed manually:"
-    echo "* Hub: https://github.com/github/hub"
-    echo "* GitHub CLI https://github.com/cli/cli#installation-and-upgrading"
-    echo
 fi
 
 if test -z "$SKIP_SUBMODULES"; then
     echo
-    echo "installing submodules..."
+    echo "Install submodules ..."
     git submodule init
     git submodule update
     echo
-    echo "updating submodules..."
+    echo "Update submodules ..."
     git submodule foreach 'git fetch --all --prune && git merge --ff-only origin/master || true'
 fi
 
-echo "configure symlinks..."
+echo "Configure symlinks ..."
 
 for file in "$SOURCE_PATH/src/".*; do
     create_home_dir_symlink "$file"
@@ -188,12 +165,28 @@ packages="$(composer global show --direct)"
 
 # Note: packages are installed seperatly because Composer chokes when it tries
 # to install all of the packages at the same time.
-echo "$packages" | grep -q "friendsofphp/php-cs-fixer" || composer global require "friendsofphp/php-cs-fixer"
-echo "$packages" | grep -q "laravel/installer" || composer global require "laravel/installer"
-echo "$packages" | grep -q "phan/phan" || composer global require "phan/phan"
-echo "$packages" | grep -q "phpmd/phpmd" || composer global require "phpmd/phpmd"
+echo "$packages" | grep -q "vimeo/psalm" || composer global require --dev "vimeo/psalm"
+# echo "$packages" | grep -q "friendsofphp/php-cs-fixer" || composer global require --dev "friendsofphp/php-cs-fixer"
+# echo "$packages" | grep -q "laravel/installer" || composer global require --dev "laravel/installer"
+# echo "$packages" | grep -q "phan/phan" || composer global require --dev "phan/phan"
+# echo "$packages" | grep -q "phpmd/phpmd" || composer global require --dev "phpmd/phpmd"
 
-composer global update -vvv
+composer global update -vvv -W
 
 sudo apt-get autoclean
 sudo apt-get autoremove
+
+echo "Force re-generation of font information cache files..."
+fc-cache -f
+
+echo
+echo "The following tools need to be installed manually:"
+echo "* GitHub CLI https://github.com/cli/cli/blob/trunk/docs/install_linux.md"
+echo "* Hub: https://github.com/github/hub"
+echo "* AWS CLI https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html"
+echo "* LMMS: https://lmms.io/download"
+echo
+echo "The following fonts need to be installed manually:"
+echo "* Hasklig (Source Code Pro font with ligatures) https://github.com/i-tu/Hasklig"
+echo "* Monoid (lagature font) https://github.com/larsenwork/monoid"
+echo

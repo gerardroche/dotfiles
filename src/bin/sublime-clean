@@ -98,7 +98,8 @@ rm -rfv ~/.config/sublime-text*/Packages/User/Package\ Control.cache/
 rm -rfv ~/.config/sublime-text*/Packages/User/SublimeLinter/*.tmTheme
 rm -rfv ~/.config/sublime-text*/Packages/User/UnitTesting/
 rm -rfv ~/.config/sublime-text*/Settings/
-rmdir_if_empty ~/.config/sublime-text-3/Lib/python3.3/
+rmdir_if_empty ~/.config/sublime-text-3/Lib/python33/
+rmdir_if_empty ~/.config/sublime-text-3/Lib/python38/
 rmdir_if_empty ~/.config/sublime-text-3/Lib/
 rmdir_if_empty ~/.config/sublime-text-3/Packages/User/Color\ Highlighter/
 rmdir_if_empty ~/.config/sublime-text-3/Packages/User/SublimeLinter/

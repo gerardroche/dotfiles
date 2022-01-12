@@ -105,7 +105,7 @@ if [ "$color_prompt" = yes ]; then
         # Ruby
         if test -f Gemfile; then
             ruby_version=$(rbenv version-name)
-            ver_info="${ver_info}/${PS1_VERSION_LABEL_COLOR}ruby ${PS1_CLEAR_COLOR}${PS1_VERSION_COLOR}${ruby_version}${PS1_CLEAR_COLOR}${PS1_VERSION_LABEL_COLOR}${PS1_CLEAR_COLOR}"
+            ver_info="${ver_info}${PS1_VERSION_LABEL_COLOR}ruby${PS1_CLEAR_COLOR}  ${PS1_VERSION_COLOR}${ruby_version}${PS1_CLEAR_COLOR}${PS1_VERSION_LABEL_COLOR}${PS1_CLEAR_COLOR}"
 
             # Rails
             if test -f bin/rails; then

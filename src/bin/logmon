@@ -1,4 +1,13 @@
 #!/usr/bin/env bash
+#
+# 31=RED
+# 32=GREEN
+# 33=ORANGE
+# 34=BLUE
+# 35=MAGENTA
+# 36=TEAK
+# 37=WHITE
+# 38=SILVER
 
 set -e
 
@@ -64,10 +73,6 @@ logmoninfo() {
         | egrep "\\.(INFO|NOTICE|WARN|ERROR|CRIT|ALERT|EMERG)"
 }
 
-# 31=RED
-# 34=BLUE
-# 35=MAGENTA
-# 36=TEAK
 logmondebug() {
     tail -n 200 -f storage/logs/*.log \
         | perl -pe "
@@ -75,6 +80,7 @@ logmondebug() {
             s/.*\.(WARNING).*/\e[0;31m$&\e[0m/;
             s/.*NOTICE.*/\e[0;36m$&\e[0m/;
             s/.*INFO.*/\e[0;32m$&\e[0m/;
+            s/\\#[0-9]* .*/\e[0;40;2m$&\e[0m/;
             "
 }
 
@@ -105,9 +111,10 @@ DEFAULT_MYSQL_LOG=/var/log/mysql/*.log
 
 while test "$#" != 0; do
     case "$1" in
-        --oneline) logmononeline ;;
         --debug) logmondebug ;;
         --info) logmoninfo ;;
+
+        --oneline) logmononeline ;;
         --info-raw) logmonraw ;;
 
         --all)

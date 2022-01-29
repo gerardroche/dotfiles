@@ -55,15 +55,11 @@ install_version() {
         exit 1
     fi
 
-    # TODO auto create/update symlinks for latest .x versions i.e. if 7.x
-    # points to 7.0.5 and installing 7.0.6 and it is latest 7.x version then
-    # point 7.x at 7.0.6.
-
-    echo "Installing version $version (prefix=$prefix, ini=$INI) ..."
+    echo "=> installing version $version (prefix=$prefix, ini=$INI)"
     "$PHP_BUILD_BIN" --ini "$INI" "$version" "$prefix"
 }
 
-get_latest_version() {
+get_latest_version_for() {
     for version in $(ls -vd ~/.phpenv/versions/"$1".[0-9]* | sort -V); do
         test -d "$version" || continue
     done
@@ -71,33 +67,33 @@ get_latest_version() {
     echo "$version"
 }
 
-# Updates symbolic links for each php version in user bin directory. A symbolic
-# link for each available version is created at ~/bin/php{version}.
 update_symlinks() {
-    echo "*** update symlinks"
+    echo "=> update symlinks"
 
-    # Remove HOME/bin version broken symlinks (e.g. version was removed).
+    # Remove broken version alias symlinks
     for versions in ~/bin/php[0-9]*; do
         if test ! -e "$versions"; then
             rm "$versions" || true
         fi
     done
 
-    # Remove .phpenv version broken symlinks (e.g. version was removed).
+    # Remove broken version symlinks
     for versions in ~/.phpenv/versions/*; do
         if test ! -e "$versions"; then
             rm "$versions"
         fi
     done
 
-    # Update latest major and minor version symlinks.
-    ln -vnfs "$(get_latest_version 7.2)" ~/.phpenv/versions/7.2
-    ln -vnfs "$(get_latest_version 7.3)" ~/.phpenv/versions/7.3
-    ln -vnfs "$(get_latest_version 7.4)" ~/.phpenv/versions/7.4
-    ln -vnfs "$(get_latest_version 7.4)" ~/.phpenv/versions/7
-    ln -vnfs "$(get_latest_version 8.0)" ~/.phpenv/versions/8.0
-    ln -vnfs "$(get_latest_version 8.0)" ~/.phpenv/versions/8
+    # Update version symlinks
+    ln -vnfs "$(get_latest_version_for 7.2)" ~/.phpenv/versions/7.2
+    ln -vnfs "$(get_latest_version_for 7.3)" ~/.phpenv/versions/7.3
+    ln -vnfs "$(get_latest_version_for 7.4)" ~/.phpenv/versions/7.4
+    ln -vnfs "$(get_latest_version_for 7.4)" ~/.phpenv/versions/7
+    ln -vnfs "$(get_latest_version_for 8.0)" ~/.phpenv/versions/8.0
+    ln -vnfs "$(get_latest_version_for 8.1)" ~/.phpenv/versions/8.1
+    ln -vnfs "$(get_latest_version_for 8.1)" ~/.phpenv/versions/8
 
+    # Create ~/bin version symlinks
     for version_path in ~/.phpenv/versions/[0-9]*; do
         if test ! -d "$version_path"; then
             continue
@@ -121,10 +117,8 @@ update_symlinks() {
     done
 }
 
-# Creates a symbolic link for lde configuration overrides for each available
-# version. Note that this is a dependency on an internal lde toolset.
 update_configs() {
-    echo "*** update configs"
+    echo "=> update configs"
     for phpenv_version_etc_conf_d in ~/.phpenv/versions/*/etc/conf.d; do
         if test ! -d "$phpenv_version_etc_conf_d"; then
             echo >&2 "WARNING: $phpenv_version_etc_conf_d is not a valid directory"
@@ -140,7 +134,7 @@ reload() {
     update_configs
 }
 
-readonly VERSION="1.0.0"
+readonly VERSION="1.0.1"
 readonly PREFIX="$HOME/.phpenv"
 readonly PHP_BUILD_BIN="$HOME/bin/php-build"
 
@@ -166,7 +160,7 @@ while test "$#" != 0; do
             fi
 
             install_version "$@" || true
-            echo "reloading symlinks..."
+            echo "=> reload"
             reload
             exit 0
             ;;

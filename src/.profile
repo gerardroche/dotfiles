@@ -65,6 +65,10 @@ export GPG_TTY=$(tty)
 export PHAN_DISABLE_XDEBUG_WARN=1
 export XDEBUG_CONFIG="idekey=netbeans-xdebug"
 
+# Sublime
+export DEBUGBAR_EDITOR=sublime
+export IGNITION_EDITOR=sublime
+
 # If you don't need BC kept on CLI level, you might use PHP_CS_FIXER_FUTURE_MODE
 # to start using options that would be default in next MAJOR release.
 # https://github.com/FriendsOfPhp/PHP-CS-Fixer

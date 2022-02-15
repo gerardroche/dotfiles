@@ -1,9 +1,13 @@
 #!/bin/sh
-
-# 1. In firefox about:config set network.protocol-handler.expose.subl false
-# 2. When firefox asks what program to use select this script.
-# https://askubuntu.com/questions/527166/how-to-set-subl-protocol-handler-with-unity
-# https://github.com/metricfu/metric_fu/wiki/Custom-Prefix-Configuration-(Ubuntu,-Sublime,-and-Firefox)
+#
+# == Usage
+#
+# 1. Open firefox about:config
+# 2. Set "network.protocol-handler.expose.subl" to false
+# 3. When firefox asks what program to use select this script
+#
+# @see https://askubuntu.com/questions/527166/how-to-set-subl-protocol-handler-with-unity
+# @see https://github.com/metricfu/metric_fu/wiki/Custom-Prefix-Configuration-(Ubuntu,-Sublime,-and-Firefox)
 
 set -e
 unset CDPATH

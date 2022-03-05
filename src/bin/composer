@@ -80,7 +80,7 @@ if test ! -f "$composer_bin" || test ! -x "$composer_bin"; then
     exit 1
 fi
 
-echo "Using $composer_bin"
+# echo "Using $composer_bin"
 
 # Disable the warning about having xdebug enabled
 # https://getcomposer.org/doc/03-cli.md#composer-disable-xdebug-warn

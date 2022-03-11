@@ -70,3 +70,6 @@ fi
 if [ -f ~/bin/hub.bash_completion.sh ]; then
     . ~/bin/hub.bash_completion.sh
 fi
+
+# https://learn.hashicorp.com/tutorials/terraform/install-cli?in=terraform/aws-get-started
+complete -C /usr/bin/terraform terraform

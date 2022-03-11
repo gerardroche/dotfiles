@@ -53,12 +53,6 @@ done
 if test -z "$SKIP_DEPS"; then
     echo "Install dependencies ..."
 
-    if test ! -f /etc/apt/sources.list.d/yarn.list; then
-        ecoh "Adding Yarn apt key..."
-        curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-        echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-    fi
-
     sudo apt-get update
 
     #command -v audacity >/dev/null 2>&1 || sudo apt-get install audacity pavucontrol
@@ -88,7 +82,6 @@ if test -z "$SKIP_DEPS"; then
     command -v unzip >/dev/null 2>&1 || sudo apt-get install unzip
     command -v wmctrl  >/dev/null 2>&1 || sudo apt-get install wmctrl
     command -v xclip >/dev/null 2>&1 || sudo apt-get install xclip
-    command -v yarn >/dev/null 2>&1 || sudo apt-get install yarn
     command -v zstd >/dev/null 2>&1 || sudo apt-get install zstd
 
     dpkg -l | grep git-extras >/dev/null 2>&1 || sudo apt-get install git-extras
@@ -127,7 +120,9 @@ if test -z "$SKIP_SUBMODULES"; then
     git submodule update
     echo
     echo "Update submodules ..."
-    git submodule foreach 'git fetch --all --prune && git merge --ff-only origin/master || true'
+    git submodule foreach 'git fetch --all --prune || true'
+    git submodule foreach 'git pull --ff-only origin master || true'
+    git submodule foreach 'git pull --ff-only origin develop || true'
 fi
 
 echo "Configure symlinks ..."
@@ -160,18 +155,6 @@ setup-keybindings
 # Composer
 composer config --global notify-on-install false
 composer config --global github-expose-hostname false
-
-packages="$(composer global show --direct)"
-
-# Note: packages are installed seperatly because Composer chokes when it tries
-# to install all of the packages at the same time.
-echo "$packages" | grep -q "vimeo/psalm" || composer global require --dev "vimeo/psalm"
-# echo "$packages" | grep -q "friendsofphp/php-cs-fixer" || composer global require --dev "friendsofphp/php-cs-fixer"
-# echo "$packages" | grep -q "laravel/installer" || composer global require --dev "laravel/installer"
-# echo "$packages" | grep -q "phan/phan" || composer global require --dev "phan/phan"
-# echo "$packages" | grep -q "phpmd/phpmd" || composer global require --dev "phpmd/phpmd"
-
-composer global update -vvv -W
 
 sudo apt-get autoclean
 sudo apt-get autoremove

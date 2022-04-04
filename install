@@ -156,8 +156,9 @@ setup-keybindings
 composer config --global notify-on-install false
 composer config --global github-expose-hostname false
 
-sudo apt-get autoclean
-sudo apt-get autoremove
+# Cleanup
+# sudo apt-get autoclean
+# sudo apt-get autoremove
 
 echo "Force re-generation of font information cache files..."
 fc-cache -f

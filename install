@@ -34,8 +34,7 @@ create_home_dir_symlink() {
     fi
 }
 
-cd "$SOURCE_PATH"
-echo "command: cd $SOURCE_PATH"
+cd "$SOURCE_PATH" && echo "Switched to '$PWD'"
 
 SKIP_DEPS=
 SKIP_SUBMODULES=
@@ -65,6 +64,7 @@ if test -z "$SKIP_DEPS"; then
     command -v figlet >/dev/null 2>&1 || sudo apt-get install figlet
     command -v firefox >/dev/null 2>&1 || sudo apt-get install firefox firefox-locale-en
     command -v flake8 >/dev/null 2>&1 || sudo apt-get install python-flake8
+    command -v getfacl >/dev/null 2>&1 || sudo apt-get install acl
     command -v gimp >/dev/null 2>&1 || sudo apt-get install gimp
     command -v git >/dev/null 2>&1 || sudo apt-get install git
     command -v gitk >/dev/null 2>&1 || sudo apt-get install gitk
@@ -140,7 +140,7 @@ ln -sfv ~/.dotfiles/vendor/php-build/php-build/bin/php-build  ~/bin/php-build
 ln -sfnv ./.dotfiles/vendor/nvm-sh/nvm ~/.nvm
 
 # Quick hacky fixes for rbenv
-mkdir -p ~/.rbenv/plugins
+mkdir -pv ~/.rbenv/plugins
 touch ~/.rbenv/plugins/ruby-build
 rm ~/.rbenv/plugins/ruby-build
 ln -sfv ~/.dotfiles/vendor/rbenv/ruby-build ~/.rbenv/plugins/ruby-build
@@ -155,10 +155,6 @@ setup-keybindings
 # Composer
 composer config --global notify-on-install false
 composer config --global github-expose-hostname false
-
-# Cleanup
-# sudo apt-get autoclean
-# sudo apt-get autoremove
 
 echo "Force re-generation of font information cache files..."
 fc-cache -f

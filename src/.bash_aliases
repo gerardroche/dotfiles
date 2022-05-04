@@ -88,6 +88,8 @@ alias gll='git ll'
 alias glog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 alias gls='git ls'
 alias gm="git m"
+alias gmod='git merge --ff-only origin/develop'
+alias gmom='git merge --ff-only origin/master'
 alias go70='git checkout PHP-7.0'
 alias go71='git checkout PHP-7.1'
 alias go72='git checkout PHP-7.2'

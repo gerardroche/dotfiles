@@ -79,14 +79,14 @@ export PHP_CS_FIXER_FUTURE_MODE=1
 # https://github.com/creationix/nvm/issues/617
 export NVM_DIR="$(readlink -nf ~/.nvm)"
 
-export NPM_CONFIG_AUDIT=1
-
 # Use the alias "reloadnvm" when you want to use nvm, this avoids having to load
 # nvm every time a shell is started. The "reloadnvm" alias has the advantage of
 # executing "nvm use" after nvm is loaded to select any local npm version.
-# if test -s "$NVM_DIR/nvm.sh"; then
-#     . "$NVM_DIR/nvm.sh"
-# fi
+if test -s "$NVM_DIR/nvm.sh"; then
+    . "$NVM_DIR/nvm.sh"
+fi
+
+export NPM_CONFIG_AUDIT=1
 
 # Fix Gem issue (I can't remember exactly what the issue was)
 unset GEM_HOME

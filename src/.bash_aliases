@@ -142,6 +142,7 @@ alias p='phpunit --no-coverage'
 alias pcov='phpunit --coverage-html build/coverage'
 alias pop='gpop'
 alias pp='phpunit'
+alias ppp='phpunit --coverage-html build/coverage-full'
 alias q='exit'
 alias rebaseandcontinue='git add . && git rebase --continue'
 alias reloadaliases="source ~/.bash_aliases && source ~/.bash_aliases-private"

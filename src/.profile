@@ -68,6 +68,7 @@ export XDEBUG_CONFIG="idekey=netbeans-xdebug"
 # Sublime
 export DEBUGBAR_EDITOR=sublime
 export IGNITION_EDITOR=sublime
+export IGNITION_SHARING_ENABLED=0
 
 # If you don't need BC kept on CLI level, you might use PHP_CS_FIXER_FUTURE_MODE
 # to start using options that would be default in next MAJOR release.

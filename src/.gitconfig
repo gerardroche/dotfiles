@@ -35,6 +35,8 @@
 	lsmybranches = "!git lsbranches | grep \"`git config user.name`\" | grep \"refs/head\""
 	m = merge
 	mt = mergetool
+	rh = reset --hard
+	resethard = reset --hard
 	r = rebase
 	s = status
 	t			= "!f() { git tag -l | sort -V | tail; }; f"

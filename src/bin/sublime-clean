@@ -78,8 +78,8 @@ fi
 
 rmdir_if_empty() {
     if test -d "$1"; then
-        echo "rmdir_if_empty: removing empty directory, '$1'"
         rmdir "$1" || true
+        echo "removed empty directory '$1'"
     fi
 }
 
@@ -98,16 +98,24 @@ rm -rfv ~/.config/sublime-text*/Packages/User/Package\ Control.cache/
 rm -rfv ~/.config/sublime-text*/Packages/User/SublimeLinter/*.tmTheme
 rm -rfv ~/.config/sublime-text*/Packages/User/UnitTesting/
 rm -rfv ~/.config/sublime-text*/Settings/
+rmdir_if_empty ~/.config/sublime-text-3/Lib/python3.3/
+rmdir_if_empty ~/.config/sublime-text-3/Lib/python3.8/
 rmdir_if_empty ~/.config/sublime-text-3/Lib/python33/
 rmdir_if_empty ~/.config/sublime-text-3/Lib/python38/
 rmdir_if_empty ~/.config/sublime-text-3/Lib/
 rmdir_if_empty ~/.config/sublime-text-3/Packages/User/Color\ Highlighter/
 rmdir_if_empty ~/.config/sublime-text-3/Packages/User/SublimeLinter/
+rmdir_if_empty ~/.config/sublime-text/Lib/python3.3/
+rmdir_if_empty ~/.config/sublime-text/Lib/python3.8/
 rmdir_if_empty ~/.config/sublime-text/Lib/python33/
 rmdir_if_empty ~/.config/sublime-text/Lib/python38/
 rmdir_if_empty ~/.config/sublime-text/Lib/
 rmdir_if_empty ~/.config/sublime-text/Packages/User/Color\ Highlighter/
 rmdir_if_empty ~/.config/sublime-text/Packages/User/SublimeLinter/
+
+# ST4 caches
+rm -rfv ~/.cache/sublime-text/Cache/
+rm -rfv ~/.cache/sublime-text/Index/
 
 # OSX ST3
 rm -rfv ~/Library/Application\ Support/Sublime\ Text\ 3/Backup/

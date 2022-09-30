@@ -15,7 +15,6 @@ find_regular_files_with_byte_order_marks() {
     done
 }
 
-
 # MYPY #########################################################################
 
 mypyp3() {
@@ -33,30 +32,6 @@ mypyp38() {
 mypyall() {
     mypyp38 $@
 }
-
-mypysublp3() {
-    echo "$(python3 --version) $(python3 -m mypy --version)"
-    MYPYPATH=$PROJECTS_PATH/sublime/sublime-mypy-stubs python3 -m mypy --show-error-codes $@
-}
-
-mypysublp36() {
-    echo "$(python3.6 --version) $(python3.6 -m mypy --version)"
-    MYPYPATH=$PROJECTS_PATH/sublime/sublime-mypy-stubs python3.6 -m mypy --show-error-codes $@
-}
-
-mypysublp38() {
-    echo "$(python3.8 --version) $(python3.8 -m mypy --version)"
-    MYPYPATH=$PROJECTS_PATH/sublime/sublime-mypy-stubs python3.8 -m mypy --show-error-codes $@
-}
-
-mypysubl() {
-   mypysublp3 $@
-}
-
-mypysublall() {
-   mypysublp3 $@
-}
-
 
 # FLAKE8 #######################################################################
 

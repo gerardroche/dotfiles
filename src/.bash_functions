@@ -60,7 +60,7 @@ internet_use_full() {
 }
 
 gk_default() {
-    gitk --branches -n 800 --date-order
+    gitk --branches -n 100 --date-order
 }
 
 gka_default() {

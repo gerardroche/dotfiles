@@ -66,10 +66,10 @@ if [ -f ~/.rbenv/completions/rbenv.bash ]; then
     . ~/.rbenv/completions/rbenv.bash
 fi
 
-# hub https://github.com/github/hub
-if [ -f ~/bin/hub.bash_completion.sh ]; then
-    . ~/bin/hub.bash_completion.sh
-fi
+# # hub https://github.com/github/hub
+# if [ -f ~/bin/hub.bash_completion.sh ]; then
+#     . ~/bin/hub.bash_completion.sh
+# fi
 
 # https://learn.hashicorp.com/tutorials/terraform/install-cli?in=terraform/aws-get-started
 complete -C /usr/bin/terraform terraform

@@ -15,8 +15,6 @@ find_regular_files_with_byte_order_marks() {
     done
 }
 
-# MYPY #########################################################################
-
 mypyp3() {
     echo "$(python3 --version) $(python3 -m mypy --version)" && python3 -m mypy $@
 }
@@ -32,8 +30,6 @@ mypyp38() {
 mypyall() {
     mypyp38 $@
 }
-
-# FLAKE8 #######################################################################
 
 flake8p3() {
     python3 -m flake8 --version && python3 -m flake8 $@
@@ -60,16 +56,12 @@ internet_use_full() {
 }
 
 gk_default() {
-    gitk --branches -n 100 --date-order
-}
-
-gka_default() {
-    gitk --branches --date-order
+    gitk -n 100 --branches --date-order
 }
 
 gk_current() {
     cmd=gitk
-    cmd+=" -n 800"
+    cmd+=" -n 500"
     cmd+=" --date-order"
     cmd+=" master"
     cmd+=" $(git rev-parse --abbrev-ref HEAD)"
@@ -86,9 +78,9 @@ gk_current() {
 
 gk_branches() {
     cmd=gitk
-    cmd+=" -n 800"
-    cmd+=" --date-order"
+    cmd+=" -n 500"
     cmd+=" --branches"
+    cmd+=" --date-order"
     cmd+=" master"
     cmd+=" $(git rev-parse --abbrev-ref HEAD)"
     for remote in $(git remote); do
@@ -106,18 +98,10 @@ tmuxrenamewindow() {
     tmux rename-window $@
 }
 
-tmr() {
-    tmuxrenamewindow $@
-}
-
 # Create a new directory and enter it
 # Source: https://github.com/mathiasbynens/dotfiles
 mkd() {
     mkdir -p "$@" && cd "$@"
-}
-
-new() {
-    git_create_branch $@
 }
 
 phpserver() {
@@ -138,42 +122,6 @@ rbenv() {
         *)
             command rbenv "$cmd" "$@";;
     esac
-}
-
-appconsole() {
-    if test -f ./bin/appconsole; then
-        cmd=./bin/appconsole
-    elif test -f ./vendor/bin/appconsole; then
-        cmd=./vendor/bin/appconsole
-    else
-        cmd=appconsole
-    fi
-
-    command "$cmd" "$@"
-}
-
-dbtasks() {
-    if test -f ./bin/dbtasks; then
-        cmd=./bin/dbtasks
-    elif test -f ./vendor/bin/dbtasks; then
-        cmd=./vendor/bin/dbtasks
-    else
-        cmd=dbtasks
-    fi
-
-    command "$cmd" "$@"
-}
-
-pdoc() {
-    if test -f ./bin/pdoc; then
-        cmd=./bin/pdoc
-    elif test -f ./vendor/bin/pdoc; then
-        cmd=./vendor/bin/pdoc
-    else
-        cmd=pdoc
-    fi
-
-    command "$cmd" "$@"
 }
 
 phptinstalldeps() {
@@ -493,9 +441,4 @@ c() {
 
 v() {
     cd "$VENDOR_PATH/$1"
-}
-
-wslsshadd() {
-    eval $(ssh-add -s)
-    ssh-add ~/.ssh/id_rsa
 }

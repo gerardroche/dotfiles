@@ -2,8 +2,6 @@
 
 My configuration files for bash, vim, git, and more. :zap: :zap:
 
-![Screenshot](screenshot.png)
-
 ## Installation
 
 **Install at your own risk. All bets are off!**

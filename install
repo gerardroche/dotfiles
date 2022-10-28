@@ -149,14 +149,17 @@ if test -f ~/.dotfiles-private/install; then
     ~/.dotfiles-private/install
 fi
 
+echo "Configure Ubuntu (settings) ..."
 setup-settings
+
+echo "Configure Ubuntu (key bindings) ..."
 setup-keybindings
 
 # Composer
 composer config --global notify-on-install false
 composer config --global github-expose-hostname false
 
-echo "Force re-generation of font information cache files..."
+echo "Force re-generation of font information cache files ..."
 fc-cache -f
 
 echo

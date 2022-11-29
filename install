@@ -78,7 +78,6 @@ if test -z "$SKIP_DEPS"; then
     command -v tmux >/dev/null 2>&1 || sudo apt-get install tmux
     command -v tree >/dev/null 2>&1 || sudo apt-get install tree
     command -v tuxguitar >/dev/null 2>&1 || sudo apt-get install tuxguitar tuxguitar-alsa tuxguitar-oss tuxguitar-jsa
-    command -v ubuntustudio-installer >/dev/null 2>&1 || sudo apt-get install ubuntustudio-installer
     command -v unzip >/dev/null 2>&1 || sudo apt-get install unzip
     command -v wmctrl  >/dev/null 2>&1 || sudo apt-get install wmctrl
     command -v xclip >/dev/null 2>&1 || sudo apt-get install xclip
@@ -89,8 +88,13 @@ if test -z "$SKIP_DEPS"; then
     dpkg -l | grep ubuntu-restricted-extras >/dev/null 2>&1 || sudo apt-get install ubuntu-restricted-extras
     dpkg -l | grep vim.gtk >/dev/null 2>&1 || sudo apt-get install vim.gtk
 
-    # Required for Git interactive.singlekey to work. See https://superuser.com/a/817688.
+    # Git single key behaviour (interactive.singlekey setting).
+    # See https://superuser.com/a/817688/
     dpkg -l | grep libterm-readkey-perl >/dev/null 2>&1 || sudo apt-get install libterm-readkey-perl
+
+    # Ubuntu Studio Installer.
+    # See https://ubuntustudio.org/ubuntu-studio-installer/
+    command -v ubuntustudio-installer >/dev/null 2>&1 || sudo apt-get install ubuntustudio-installer
 
     # Fonts.
     dpkg -l | grep fonts-firacode >/dev/null 2>&1 || sudo apt-get install fonts-firacode

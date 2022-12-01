@@ -54,7 +54,6 @@ if test -z "$SKIP_DEPS"; then
 
     sudo apt-get update
 
-    #command -v audacity >/dev/null 2>&1 || sudo apt-get install audacity pavucontrol
     command -v bsdtar >/dev/null 2>&1 || sudo apt-get install libarchive-tools
     command -v chromium-browser >/dev/null 2>&1 || sudo apt-get install chromium-browser
     command -v cmake  >/dev/null 2>&1 || sudo apt-get install cmake
@@ -63,7 +62,6 @@ if test -z "$SKIP_DEPS"; then
     command -v dconf-editor >/dev/null 2>&1 || sudo apt-get install dconf-editor
     command -v figlet >/dev/null 2>&1 || sudo apt-get install figlet
     command -v firefox >/dev/null 2>&1 || sudo apt-get install firefox firefox-locale-en
-    command -v flake8 >/dev/null 2>&1 || sudo apt-get install python-flake8
     command -v getfacl >/dev/null 2>&1 || sudo apt-get install acl
     command -v gimp >/dev/null 2>&1 || sudo apt-get install gimp
     command -v git >/dev/null 2>&1 || sudo apt-get install git
@@ -84,7 +82,6 @@ if test -z "$SKIP_DEPS"; then
     command -v zstd >/dev/null 2>&1 || sudo apt-get install zstd
 
     dpkg -l | grep git-extras >/dev/null 2>&1 || sudo apt-get install git-extras
-    dpkg -l | grep php-pcov >/dev/null 2>&1 || sudo apt-get install php-pcov
     dpkg -l | grep ubuntu-restricted-extras >/dev/null 2>&1 || sudo apt-get install ubuntu-restricted-extras
     dpkg -l | grep vim.gtk >/dev/null 2>&1 || sudo apt-get install vim.gtk
 
@@ -92,29 +89,32 @@ if test -z "$SKIP_DEPS"; then
     # See https://superuser.com/a/817688/
     dpkg -l | grep libterm-readkey-perl >/dev/null 2>&1 || sudo apt-get install libterm-readkey-perl
 
-    # Ubuntu Studio Installer.
-    # See https://ubuntustudio.org/ubuntu-studio-installer/
-    command -v ubuntustudio-installer >/dev/null 2>&1 || sudo apt-get install ubuntustudio-installer
-
     # Fonts.
     dpkg -l | grep fonts-firacode >/dev/null 2>&1 || sudo apt-get install fonts-firacode
     dpkg -l | grep fonts-inconsolata >/dev/null 2>&1 || sudo apt-get install fonts-inconsolata
     dpkg -l | grep ttf-anonymous-pro >/dev/null 2>&1 || sudo apt-get install ttf-anonymous-pro
     dpkg -l | grep ttf-mscorefonts-installer >/dev/null 2>&1 || sudo apt-get install ttf-mscorefonts-installer
-    dpkg -l | grep ttf-ubuntu-font-family >/dev/null 2>&1 || sudo apt-get install ttf-ubuntu-font-family
 
-    # Python developer tools.
-    pip3 install --upgrade --user flake8
-    pip3 install --upgrade --user flake8-docstrings
-    pip3 install --upgrade --user pydocstyle
-    pip3 install --upgrade --user mypy
-    pip3 install --upgrade --user gcovr
+    if test "x$(lsb_release -r | cut -f2)" = "x20.04"; then
+        dpkg -l | grep ttf-ubuntu-font-family >/dev/null 2>&1 || sudo apt-get install ttf-ubuntu-font-family
+    fi
 
-    python3.8 -m pip install --upgrade --user flake8
-    python3.8 -m pip install --upgrade --user flake8-docstrings
-    python3.8 -m pip install --upgrade --user pydocstyle
-    python3.8 -m pip install --upgrade --user mypy
-    python3.8 -m pip install --upgrade --user gcovr
+    if test "x$(lsb_release -r | cut -f2)" = "x20.04"; then
+        # Python developer tools.
+        command -v flake8 >/dev/null 2>&1 || sudo apt-get install python-flake8
+
+        pip3 install --upgrade --user flake8
+        pip3 install --upgrade --user flake8-docstrings
+        pip3 install --upgrade --user pydocstyle
+        pip3 install --upgrade --user mypy
+        pip3 install --upgrade --user gcovr
+
+        python3.8 -m pip install --upgrade --user flake8
+        python3.8 -m pip install --upgrade --user flake8-docstrings
+        python3.8 -m pip install --upgrade --user pydocstyle
+        python3.8 -m pip install --upgrade --user mypy
+        python3.8 -m pip install --upgrade --user gcovr
+    fi
 fi
 
 if test -z "$SKIP_SUBMODULES"; then
@@ -154,26 +154,10 @@ if test -f ~/.dotfiles-private/install; then
 fi
 
 echo "Configure Ubuntu (settings) ..."
-setup-settings
+"$SOURCE_PATH"/src/bin/setup-settings
 
 echo "Configure Ubuntu (key bindings) ..."
-setup-keybindings
-
-# Composer
-composer config --global notify-on-install false
-composer config --global github-expose-hostname false
+"$SOURCE_PATH"/src/bin/setup-keybindings
 
 echo "Force re-generation of font information cache files ..."
 fc-cache -f
-
-echo
-echo "The following tools need to be installed manually:"
-echo "* GitHub CLI https://github.com/cli/cli/blob/trunk/docs/install_linux.md"
-echo "* Hub: https://github.com/github/hub"
-echo "* AWS CLI https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html"
-echo "* LMMS: https://lmms.io/download"
-echo
-echo "The following fonts need to be installed manually:"
-echo "* Hasklig (Source Code Pro font with ligatures) https://github.com/i-tu/Hasklig"
-echo "* Monoid (lagature font) https://github.com/larsenwork/monoid"
-echo

@@ -39,10 +39,10 @@
 	resethard = reset --hard
 	r = rebase
 	s = status
-	t			= "!f() { git tag -l | sort -V | tail; }; f"
-	w			= "!f() { git commit -m \"$*\"; }; f"
-	wa			= "!f() { git add -A . && git commit -m \":metal: $*\"; }; f"
-	zap			= "!f() { git add -A . && git commit -m \":zap: KAPOW\"; }; f"
+	t = "!f() { git tag -l | sort -V | tail; }; f"
+	w = "!f() { git commit -m \"$*\"; }; f"
+	wa = "!f() { git add -A . && git commit -m \":metal: $*\"; }; f"
+	zap = "!f() { git add -A . && git commit -m \":zap: KAPOW\"; }; f"
     add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
     edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; vim `f`"
 
@@ -76,7 +76,7 @@
 
 	excludesfile = ~/.gitexcludes
 	editor = /usr/bin/vim
-	hooksPath = /home/gerard/.githooks
+	hooksPath = ~/.githooks
 	autocrlf = input
 
 [diff]
@@ -131,7 +131,9 @@
 
 [commit]
 	gpgSign = true
+
 ; [checkout]
 ; 	defaultRemote = origin
+
 [og]
 	showsignature = true

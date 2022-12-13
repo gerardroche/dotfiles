@@ -30,10 +30,10 @@ gsettings set org.gnome.nautilus.preferences default-folder-viewer 'list-view'
 gsettings set org.gnome.nautilus.preferences show-hidden-files true
 gsettings set org.gnome.shell.overrides workspaces-only-on-primary false
 gsettings set org.gnome.system.location enabled false
-gsettings set org.gtk.Settings.FileChooser show-hidden true
-gsettings set org.gtk.gtk4.Settings.FileChooser show-hidden true
 
 if test "x$(lsb_release -r | cut -f2)" = "x22.04"; then
     gsettings set org.gnome.shell.extensions.dash-to-dock dock-position 'BOTTOM'
     gsettings set org.gnome.shell.extensions.dash-to-dock extend-height false
+    gsettings set org.gtk.Settings.FileChooser show-hidden true
+    gsettings set org.gtk.gtk4.Settings.FileChooser show-hidden true
 fi

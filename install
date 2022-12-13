@@ -161,3 +161,5 @@ echo "Configure Ubuntu (key bindings) ..."
 
 echo "Force re-generation of font information cache files ..."
 fc-cache -f
+
+echo "Done"

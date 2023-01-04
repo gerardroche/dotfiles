@@ -29,7 +29,7 @@ call plug#load('vim-sensible')
 " Plug 'tpope/vim-rails'
 " Plug 'tpope/vim-scriptease'
 
-" Plug 'lyokha/vim-xkbswitch'
+"Plug 'lyokha/vim-xkbswitch'
 " Plug 'rlue/vim-barbaric'
 
 Plug 'airblade/vim-gitgutter'

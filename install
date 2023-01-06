@@ -34,6 +34,10 @@ create_home_dir_symlink() {
     fi
 }
 
+is_ubuntu_20_04() {
+    test "x$(lsb_release -r | cut -f2)" = "x20.04"
+}
+
 cd "$SOURCE_PATH" && echo "Switched to '$PWD'"
 
 SKIP_DEPS=
@@ -95,20 +99,21 @@ if test -z "$SKIP_DEPS"; then
     dpkg -l | grep ttf-anonymous-pro >/dev/null 2>&1 || sudo apt-get install ttf-anonymous-pro
     dpkg -l | grep ttf-mscorefonts-installer >/dev/null 2>&1 || sudo apt-get install ttf-mscorefonts-installer
 
-    if test "x$(lsb_release -r | cut -f2)" = "x20.04"; then
+    if is_ubuntu_20_04; then
         dpkg -l | grep ttf-ubuntu-font-family >/dev/null 2>&1 || sudo apt-get install ttf-ubuntu-font-family
     fi
 
-    if test "x$(lsb_release -r | cut -f2)" = "x20.04"; then
-        # Python developer tools.
+    if is_ubuntu_20_04; then
         command -v flake8 >/dev/null 2>&1 || sudo apt-get install python-flake8
+    fi
 
-        pip3 install --upgrade --user flake8
-        pip3 install --upgrade --user flake8-docstrings
-        pip3 install --upgrade --user pydocstyle
-        pip3 install --upgrade --user mypy
-        pip3 install --upgrade --user gcovr
+    pip3 install --upgrade --user flake8
+    pip3 install --upgrade --user flake8-docstrings
+    pip3 install --upgrade --user pydocstyle
+    pip3 install --upgrade --user mypy
+    pip3 install --upgrade --user gcovr
 
+    if is_ubuntu_20_04; then
         python3.8 -m pip install --upgrade --user flake8
         python3.8 -m pip install --upgrade --user flake8-docstrings
         python3.8 -m pip install --upgrade --user pydocstyle

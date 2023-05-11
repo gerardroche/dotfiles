@@ -184,11 +184,19 @@ let g:php_sql_query = 1
 let g:syntastic_python_flake8_exec = '~/.local/bin/flake8'
 " let g:syntastic_python_mypy_exec = '~/.local/bin/mypy'
 let g:syntastic_debug = 0
-if exists('$TMUX')
-    let g:test#strategy = 'vimux'
-endif
-let g:test#php#phpunit#options = '--no-coverage'
-let g:test#preserve_screen = 0
+
+"let g:test#enabled_runners = ["php#pest"]
+"let g:test#php#runner="pest"
+
+"let g:test#php#phpunit#options = '--no-coverage'
+
+"let g:test#strategy = 'vimux'
+"let g:VimuxRunnerIndex = 'mx'
+" if exists('$TMUX')
+"     let g:test#strategy = 'vimux'
+" endif
+let g:test#preserve_screen = 1
+
 let g:vim_markdown_conceal = 0
 let g:vim_markdown_folding_disabled = 1
 let g:multi_cursor_exit_from_visual_mode = 0

@@ -89,9 +89,10 @@ update_symlinks() {
     ln -vnfs "$(get_latest_version_for 7.3)" ~/.phpenv/versions/7.3
     ln -vnfs "$(get_latest_version_for 7.4)" ~/.phpenv/versions/7.4
     ln -vnfs "$(get_latest_version_for 7.4)" ~/.phpenv/versions/7
-    ln -vnfs "$(get_latest_version_for 8.0)" ~/.phpenv/versions/8.0
+    ln -vnfs "$(get_latest_version_for 8.0)" ~/.phpenv/versions/8.0 || true
     ln -vnfs "$(get_latest_version_for 8.1)" ~/.phpenv/versions/8.1
-    ln -vnfs "$(get_latest_version_for 8.1)" ~/.phpenv/versions/8
+    ln -vnfs "$(get_latest_version_for 8.2)" ~/.phpenv/versions/8.2
+    ln -vnfs "$(get_latest_version_for 8.2)" ~/.phpenv/versions/8
 
     # Create ~/bin version symlinks
     for version_path in ~/.phpenv/versions/[0-9]*; do

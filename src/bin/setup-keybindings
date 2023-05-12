@@ -38,20 +38,31 @@ gsettings set org.gnome.desktop.input-sources xkb-options "['caps:escape']"
 
 # Launching applications
 ########################
-# Fix launch Calculator focus issues. The dedicated calculator and www
-# (browser) media keys definitions don't work.
-gsettings set org.gnome.settings-daemon.plugins.media-keys calculator "['']"
-# Fix launch Firefox focus issues.
-gsettings set org.gnome.settings-daemon.plugins.media-keys www "['']"
-# A list of custom media key paths is required.
-# TODO This should be automatically updated by gsettings_set_media_number_key().
-gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/']"
-gsettings_set_media_number_key 0 "Calculator"  "gnome-calculator"   "Calculator"
-gsettings_set_media_number_key 1 "Firefox"     "firefox"            "<Super>b"
-gsettings_set_media_number_key 2 "Sublime"     "subl"               "<Super>e"
-gsettings_set_media_number_key 3 "Files"       "nautilus"           "<Super>f"
 
-gsettings set org.gnome.settings-daemon.plugins.media-keys terminal "['<Super>t']"
+if test "x$(lsb_release -r | cut -f2)" = "x22.04"; then
+
+    gsettings set org.gnome.settings-daemon.plugins.media-keys home "['<Super>f']"
+    gsettings set org.gnome.settings-daemon.plugins.media-keys terminal "['<Super>t']"
+    gsettings set org.gnome.settings-daemon.plugins.media-keys www "['<Super>b']"
+
+    gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
+    gsettings_set_media_number_key 0 "Sublime" "subl" "<Super>e"
+
+else
+    # Fix launch Calculator focus issues. The dedicated calculator and www
+    # (browser) media keys definitions don't work.
+    gsettings set org.gnome.settings-daemon.plugins.media-keys calculator "['']"
+    # Fix launch Firefox focus issues.
+    gsettings set org.gnome.settings-daemon.plugins.media-keys www "['']"
+    # A list of custom media key paths is required.
+    # TODO This should be automatically updated by gsettings_set_media_number_key().
+    gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/']"
+    gsettings_set_media_number_key 0 "Calculator"  "gnome-calculator"   "Calculator"
+    gsettings_set_media_number_key 1 "Firefox"     "firefox"            "<Super>b"
+    gsettings_set_media_number_key 2 "Sublime"     "subl"               "<Super>e"
+    gsettings_set_media_number_key 3 "Files"       "nautilus"           "<Super>f"
+    gsettings set org.gnome.settings-daemon.plugins.media-keys terminal "['<Super>t']"
+fi
 
 # Window management: Switching.
 ###############################

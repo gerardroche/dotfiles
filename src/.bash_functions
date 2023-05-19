@@ -124,6 +124,21 @@ rbenv() {
     esac
 }
 
+pyenv() {
+    local command
+    command="${1:-}"
+    if [ "$#" -gt 0 ]; then
+        shift
+    fi
+
+    case "$command" in
+        rehash|shell)
+            eval "$(pyenv "sh-$command" "$@")";;
+        *)
+            command pyenv "$command" "$@";;
+    esac
+}
+
 phptinstalldeps() {
     # dpkg -l | grep postgresql >/dev/null 2>&1 || sudo apt-get install postgresql
     # dpkg -l | grep postgresql-contrib >/dev/null 2>&1 || sudo apt-get install postgresql-contrib

@@ -34,7 +34,7 @@ if test -z "$TMUX"; then
             # User first!
             PATH="$HOME/bin"
 
-            # PHP: Composer global packages.
+            # PHP
             PATH="$PATH:$HOME/.config/composer/vendor/bin"
 
             # NPM
@@ -44,6 +44,10 @@ if test -z "$TMUX"; then
             PATH="$PATH:$HOME/.rbenv/shims"
             PATH="$PATH:$HOME/.rbenv/bin"
             PATH="$PATH:$HOME/.gems/bin"
+
+            # Python
+            PATH="$PATH:$HOME/.pyenv/shims"
+            PATH="$PATH:$HOME/.pyenv/bin"
 
             # Local
             PATH="$PATH:$HOME/.local/bin"
@@ -97,7 +101,10 @@ export NPM_CONFIG_AUDIT=1
 # Fix Gem issue (I can't remember exactly what the issue was)
 unset GEM_HOME
 
-# Customisations.
+# Python
+export PYENV_ROOT="$HOME/.pyenv"
+
+# Private.
 if [ -f ~/.profile-private ]; then
     . ~/.profile-private
 fi

@@ -89,7 +89,8 @@
 
 [help]
 
-	autocorrect = 1
+    autocorrect = 1
+
 [interactive]
 
 	singlekey = true

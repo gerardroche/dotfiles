@@ -158,9 +158,6 @@ if test -f ~/.dotfiles-private/install; then
     ~/.dotfiles-private/install
 fi
 
-# Fix location.
-ln -s ~/tox.ini ~/.config/ || true
-
 echo "Configure Ubuntu (settings) ..."
 "$SOURCE_PATH"/src/bin/setup-settings
 

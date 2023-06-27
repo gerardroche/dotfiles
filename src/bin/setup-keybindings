@@ -8,16 +8,16 @@ echo "Configuring keybindings ..."
 
 # Creates a custom media key.
 gsettings_set_media_number_key() {
-    n="$1"
+    idx="$1"
     name="$2"
-    cmd="$3"
+    command="$3"
     binding="$4"
 
     key="org.gnome.settings-daemon.plugins.media-keys.custom-keybinding"
-    path="/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom$n/"
+    path="/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom$idx/"
 
     gsettings set "$key:$path" name "$name"
-    gsettings set "$key:$path" command "$cmd"
+    gsettings set "$key:$path" command "$command"
     gsettings set "$key:$path" binding "$binding"
 }
 
@@ -45,8 +45,12 @@ if test "x$(lsb_release -r | cut -f2)" = "x22.04"; then
     gsettings set org.gnome.settings-daemon.plugins.media-keys terminal "['<Super>t']"
     gsettings set org.gnome.settings-daemon.plugins.media-keys www "['<Super>b']"
 
-    gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
+    gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/']"
+
     gsettings_set_media_number_key 0 "Sublime" "subl" "<Super>e"
+    gsettings_set_media_number_key 1 "RhythmboxPlayPause" "/usr/bin/rhythmbox-client --play-pause" "AudioPlay"
+    gsettings_set_media_number_key 2 "RhythmboxNext" "/usr/bin/rhythmbox-client --next" "AudioNext"
+    gsettings_set_media_number_key 3 "RhythmboxPrevious" "/usr/bin/rhythmbox-client --previous" "AudioPrev"
 
 else
     # Fix launch Calculator focus issues. The dedicated calculator and www

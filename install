@@ -70,6 +70,7 @@ if test -z "$SKIP_DEPS"; then
     command -v gimp >/dev/null 2>&1 || sudo apt-get install gimp
     command -v git >/dev/null 2>&1 || sudo apt-get install git
     command -v gitk >/dev/null 2>&1 || sudo apt-get install gitk
+    command -v gnome-extensions  >/dev/null 2>&1 || sudo apt-get install gnome-extensions
     command -v htop >/dev/null 2>&1 || sudo apt-get install htop
     command -v jq >/dev/null 2>&1 || sudo apt-get install jq
     command -v lcov >/dev/null 2>&1 || sudo apt-get install lcov

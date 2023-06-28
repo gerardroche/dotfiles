@@ -4,10 +4,7 @@ set -e
 unset CDPATH
 unset IFS
 
-echo "Configuring keybindings ..."
-
-# Creates a custom media key.
-gsettings_set_media_number_key() {
+create_custom_media_key() {
     idx="$1"
     name="$2"
     command="$3"
@@ -21,65 +18,80 @@ gsettings_set_media_number_key() {
     gsettings set "$key:$path" binding "$binding"
 }
 
-# Disable some Ubuntu Gnome shortcuts so that I can use them elsewhere. If
-# Ubuntu Gnome has a keyboard shortcut mapped then application don't receive the
-# key event. When you want to use a key binding in an application you need to
-# disable the shortcut that Gnome has set.
+echo "Configuring keybindings ..."
+
+######################################
+# Clear default shortcuts used later #
+######################################
+
+# If Ubuntu Gnome has a keyboard shortcut mapped then application don't receive
+# the key event. When you want to use a key binding in an application you need
+# to disable the shortcut that Gnome has set.
 
 gsettings set org.gnome.desktop.wm.keybindings toggle-shaded "[]"
 gsettings set org.gnome.desktop.wm.preferences action-middle-click-titlebar "none"
 gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver "['']"
-# gsettings set org.gnome.settings-daemon.plugins.media-keys video-out "['']"
 gsettings set org.gnome.shell.keybindings focus-active-notification "[]"
 gsettings set org.gnome.shell.keybindings toggle-message-tray "[]"
+
+# Remove <Super>p binding so that it can used for something else.
+gsettings set org.gnome.mutter.keybindings switch-monitor "['XF86Display']"
+
+#########
+# Misc. #
+#########
 
 # CapsLock -> Escape.
 gsettings set org.gnome.desktop.input-sources xkb-options "['caps:escape']"
 
-# Launching applications
-########################
+#############
+# Launchers #
+#############
 
 if test "x$(lsb_release -r | cut -f2)" = "x22.04"; then
-
     gsettings set org.gnome.settings-daemon.plugins.media-keys home "['<Super>f']"
     gsettings set org.gnome.settings-daemon.plugins.media-keys terminal "['<Super>t']"
     gsettings set org.gnome.settings-daemon.plugins.media-keys www "['<Super>b']"
 
+    # TODO this is hardcoded, it should be updated when create_custom_media_key() is called.
     gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/']"
 
-    gsettings_set_media_number_key 0 "Sublime" "subl" "<Super>e"
-    gsettings_set_media_number_key 1 "RhythmboxPlayPause" "/usr/bin/rhythmbox-client --play-pause" "AudioPlay"
-    gsettings_set_media_number_key 2 "RhythmboxNext" "/usr/bin/rhythmbox-client --next" "AudioNext"
-    gsettings_set_media_number_key 3 "RhythmboxPrevious" "/usr/bin/rhythmbox-client --previous" "AudioPrev"
+    create_custom_media_key 0 "Sublime" "subl" "<Super>e"
+    create_custom_media_key 1 "RhythmboxPlayPause" "/usr/bin/rhythmbox-client --play-pause" "AudioPlay"
+    create_custom_media_key 2 "RhythmboxNext" "/usr/bin/rhythmbox-client --next" "AudioNext"
+    create_custom_media_key 3 "RhythmboxPrevious" "/usr/bin/rhythmbox-client --previous" "AudioPrev"
 
 else
-    # Fix launch Calculator focus issues. The dedicated calculator and www
-    # (browser) media keys definitions don't work.
-    gsettings set org.gnome.settings-daemon.plugins.media-keys calculator "['']"
-    # Fix launch Firefox focus issues.
-    gsettings set org.gnome.settings-daemon.plugins.media-keys www "['']"
-    # A list of custom media key paths is required.
-    # TODO This should be automatically updated by gsettings_set_media_number_key().
-    gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/']"
-    gsettings_set_media_number_key 0 "Calculator"  "gnome-calculator"   "Calculator"
-    gsettings_set_media_number_key 1 "Firefox"     "firefox"            "<Super>b"
-    gsettings_set_media_number_key 2 "Sublime"     "subl"               "<Super>e"
-    gsettings_set_media_number_key 3 "Files"       "nautilus"           "<Super>f"
     gsettings set org.gnome.settings-daemon.plugins.media-keys terminal "['<Super>t']"
+
+    # TODO this is hardcoded, it should be updated when create_custom_media_key() is called.
+    gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/']"
+
+    # Fix launch Calculator focus issues. Note that the calculator media key
+    # doesn't work. A custom media key launcher is created below.
+    gsettings set org.gnome.settings-daemon.plugins.media-keys calculator "['']"
+
+    # Fix launch Firefox focus issues. Note that the www browser media key
+    # doesn't work. A custom media key launcher is created below.
+    gsettings set org.gnome.settings-daemon.plugins.media-keys www "['']"
+
+    create_custom_media_key 0 "Calculator"  "gnome-calculator"   "Calculator"
+    create_custom_media_key 1 "Firefox"     "firefox"            "<Super>b"
+    create_custom_media_key 2 "Sublime"     "subl"               "<Super>e"
+    create_custom_media_key 3 "Files"       "nautilus"           "<Super>f"
 fi
 
-# Window management: Switching.
-###############################
-# gsettings set org.gnome.desktop.wm.keybindings  switch-applications         "['<Alt>Tab']"
-# gsettings set org.gnome.desktop.wm.keybindings  switch-group                "['<Alt>Above_Tab']"
+#################
+# Window Tiling #
+#################
 
-# Window management
-###################
+# Tiling assistant maps can currently only be set manually.
+gsettings set org.gnome.mutter.keybindings      toggle-tiled-left       []
+gsettings set org.gnome.desktop.wm.keybindings  unmaximize              []
+gsettings set org.gnome.desktop.wm.keybindings  maximize                []
+gsettings set org.gnome.mutter.keybindings      toggle-tiled-right      []
+gsettings set org.gnome.desktop.wm.keybindings  move-to-center          []
 
-gsettings set org.gnome.mutter.keybindings      toggle-tiled-left           "['<Super>h']"
-gsettings set org.gnome.desktop.wm.keybindings  unmaximize                  "['<Super>j']"
-gsettings set org.gnome.desktop.wm.keybindings  maximize                    "['<Super>k']"
-gsettings set org.gnome.mutter.keybindings      toggle-tiled-right          "['<Super>l']"
 
 gsettings set org.gnome.desktop.wm.keybindings  move-to-workspace-up        "['<Super><Ctrl>k']"
 gsettings set org.gnome.desktop.wm.keybindings  move-to-workspace-down      "['<Super><Ctrl>j']"
@@ -89,19 +101,12 @@ gsettings set org.gnome.desktop.wm.keybindings  switch-to-workspace-down    "['<
 gsettings set org.gnome.desktop.wm.keybindings  switch-to-workspace-up      "['<Super><Shift>k']"
 gsettings set org.gnome.desktop.wm.keybindings  move-to-monitor-right       "['<Super><Shift>l', '<Super><Shift>Right']"
 
-gsettings set org.gnome.desktop.wm.keybindings  maximize-horizontally       "['<Super>minus']"      # Same as "<Super>_" (underscore)
-gsettings set org.gnome.desktop.wm.keybindings  maximize-vertically         "['<Super>backslash']"  # Same as "<Super>|" (pipe)
+gsettings set org.gnome.desktop.wm.keybindings  maximize-horizontally       "['<Super>minus']"      # i.e <Super>_ (underscore)
+gsettings set org.gnome.desktop.wm.keybindings  maximize-vertically         "['<Super>backslash']"  # i.e <Super>| (pipe)
 gsettings set org.gnome.desktop.wm.keybindings  minimize                    "['<Super>m']"
-gsettings set org.gnome.desktop.wm.keybindings  move-to-center              "['<Super>c']"
 gsettings set org.gnome.desktop.wm.keybindings  toggle-fullscreen           "['<Super>u']"
 
-
-gsettings set org.gnome.desktop.wm.keybindings  move-to-corner-nw              "['<Super>Insert']"
-gsettings set org.gnome.desktop.wm.keybindings  move-to-corner-sw              "['<Super>Delete']"
-gsettings set org.gnome.desktop.wm.keybindings  move-to-corner-ne              "['<Super>Page_Up']"
-gsettings set org.gnome.desktop.wm.keybindings  move-to-corner-se              "['<Super>Page_Down']"
-
-# gsettings set org.gnome.desktop.wm.keybindings  move-to-side-e              "['<Super>2']"
-# gsettings set org.gnome.desktop.wm.keybindings  move-to-side-s              "['<Super>2']"
-# gsettings set org.gnome.desktop.wm.keybindings  move-to-side-n              "['<Super>2']"
-# gsettings set org.gnome.desktop.wm.keybindings  move-to-side-w              "['<Super>1']"
+gsettings set org.gnome.desktop.wm.keybindings  move-to-corner-nw           "['<Super>Insert']"
+gsettings set org.gnome.desktop.wm.keybindings  move-to-corner-sw           "['<Super>Delete']"
+gsettings set org.gnome.desktop.wm.keybindings  move-to-corner-ne           "['<Super>Page_Up']"
+gsettings set org.gnome.desktop.wm.keybindings  move-to-corner-se           "['<Super>Page_Down']"

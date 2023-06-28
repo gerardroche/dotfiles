@@ -133,8 +133,5 @@
 [commit]
 	gpgSign = true
 
-; [checkout]
-; 	defaultRemote = origin
-
 [og]
 	showsignature = true

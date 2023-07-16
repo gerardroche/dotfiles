@@ -508,14 +508,14 @@ vnoremap <F1> <ESC>
 " }}}
 " Mappings: Disable arrow keys {{{
 " http://stevelosh.com/blog/2010/09/coming-home-to-vim/
-nnoremap <up> <nop>
-nnoremap <down> <nop>
-nnoremap <left> <nop>
-nnoremap <right> <nop>
-inoremap <up> <nop>
-inoremap <down> <nop>
-inoremap <left> <nop>
-inoremap <right> <nop>
+" nnoremap <up> <nop>
+" nnoremap <down> <nop>
+" nnoremap <left> <nop>
+" nnoremap <right> <nop>
+" inoremap <up> <nop>
+" inoremap <down> <nop>
+" inoremap <left> <nop>
+" inoremap <right> <nop>
 " noremap h <NOP>
 " noremap j <NOP>
 " noremap k <NOP>

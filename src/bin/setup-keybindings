@@ -52,6 +52,7 @@ if test "x$(lsb_release -r | cut -f2)" = "x22.04"; then
     gsettings set org.gnome.settings-daemon.plugins.media-keys home "['<Super>f']"
     gsettings set org.gnome.settings-daemon.plugins.media-keys terminal "['<Super>t']"
     gsettings set org.gnome.settings-daemon.plugins.media-keys www "['<Super>b']"
+    gsettings set org.freedesktop.ibus.panel.emoji hotkey "[]"
 
     # TODO this is hardcoded, it should be updated when create_custom_media_key() is called.
     gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/']"

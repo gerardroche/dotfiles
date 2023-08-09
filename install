@@ -145,6 +145,10 @@ for file in "$SOURCE_PATH"/src/*; do
     create_home_dir_symlink "$file"
 done
 
+# .config/ symlinks
+rm -rf ~/.config/kitty
+ln -s $SOURCE_PATH/src/.config/kitty $HOME/.config/kitty
+
 ln -sfv ~/.dotfiles/vendor/paulirish/git-open/git-open ~/bin/git-open
 ln -sfv ~/.dotfiles/vendor/php-build/php-build/bin/php-build  ~/bin/php-build
 ln -sfnv ./.dotfiles/vendor/nvm-sh/nvm ~/.nvm

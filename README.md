@@ -1,8 +1,6 @@
 # dotfiles
 
-My configuration files for bash, vim, git, and more. :zap: :zap:
-
-**Warning: Install at your own risk. All bets are off!**
+My configuration files for bash, vim, git, and more. :zap: :zap: KAPOW.
 
 ## Thanks
 
@@ -14,6 +12,7 @@ My configuration files for bash, vim, git, and more. :zap: :zap:
 * https://github.com/Firewall/dotfiles
 * https://github.com/garybernhardt/dotfiles
 * https://github.com/holman/dotfiles
+* https://github.com/jessarcher/dotfile
 * https://github.com/mathiasbynens/dotfiles
 * https://github.com/matthewmccullough/dotfiles
 * https://github.com/matthewmccullough/scripts

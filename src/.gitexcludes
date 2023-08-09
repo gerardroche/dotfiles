@@ -64,3 +64,5 @@ tags
 todo*.md
 .phpenv
 .*ods#
+
+tmp/test*.php

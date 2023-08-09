@@ -1,9 +1,3 @@
-
-" Plugins {{{
-
-" Use Vim settings, rather than Vi settings (much better!).
-" This must be first, because it changes other options as a side effect.
-" Avoid side effects when it was already reset.
 if &compatible
     set nocompatible
 endif
@@ -12,25 +6,15 @@ if !has('nvim')
     set encoding=utf-8
 endif
 
+" Plugins {{{
+
 call plug#begin('~/.vim/plugged')
+
+Plug 'tpope/vim-sensible'
 
 " Load vim-sensible now so settings can be overridden
 " https://github.com/junegunn/vim-plug/issues/68
-Plug 'tpope/vim-sensible'
 call plug#load('vim-sensible')
-
-" Plug 'StanAngeloff/php.vim', { 'for': 'php' }
-" Plug 'ervandew/supertab'
-" Plug 'honza/vim-snippets'
-" Plug 'othree/html5.vim', { 'for': 'html' }
-" Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
-" Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
-" Plug 'tpope/vim-eunuch'
-" Plug 'tpope/vim-rails'
-" Plug 'tpope/vim-scriptease'
-
-"Plug 'lyokha/vim-xkbswitch'
-" Plug 'rlue/vim-barbaric'
 
 Plug 'airblade/vim-gitgutter'
 Plug 'benmills/vimux'
@@ -40,9 +24,8 @@ Plug 'easymotion/vim-easymotion'
 Plug 'janko-m/vim-test'
 Plug 'machakann/vim-highlightedyank'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-" Plug 'scrooloose/syntastic'
-"Plug 'terryma/vim-multiple-cursors'
-Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+Plug 'terryma/vim-multiple-cursors'
+" Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-characterize'
 Plug 'tpope/vim-commentary'
@@ -57,10 +40,12 @@ Plug 'wellle/targets.vim'
 Plug 'tpope/vim-unimpaired'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'justinmk/vim-sneak'
+" Plug 'voldikss/vim-floaterm'
 
 " Colour schemes
 Plug 'lifepillar/vim-solarized8'
 Plug 'morhetz/gruvbox'
+Plug 'dracula/vim', { 'as': 'dracula' }
 
 call plug#end()
 
@@ -119,7 +104,7 @@ endif
 set showcmd
 set showtabline=1
 set sidescroll=1
-set sidescrolloff=12
+set sidescrolloff=8
 set smarttab
 set softtabstop=4
 set spelllang=en_gb,en,en_us
@@ -170,46 +155,20 @@ let g:airline_symbols.paste = 'ρ'
 let g:airline_symbols.whitespace = ''
 let g:ctrlp_follow_symlinks = 1
 let g:ctrlp_show_hidden = 1
-let g:gitgutter_highlight_lines = 0
-let g:gitgutter_map_keys = 1
-let g:gitgutter_sign_column_always = 0
+" let g:gitgutter_highlight_lines = 0
+" let g:gitgutter_map_keys = 1
+" let g:gitgutter_sign_column_always = 0
 let g:php_baselib = 1
 let g:php_folding = 0
 let g:php_sql_query = 1
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_jump = 0
-"let g:syntastic_auto_loc_list = 0
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
-"let g:syntastic_php_checkers = ['php']
-let g:syntastic_python_flake8_exec = '~/.local/bin/flake8'
-" let g:syntastic_python_mypy_exec = '~/.local/bin/mypy'
-let g:syntastic_debug = 0
-
-"let g:test#enabled_runners = ["php#pest"]
-"let g:test#php#runner="pest"
-
-"let g:test#php#phpunit#options = '--no-coverage'
-
-"let g:test#strategy = 'vimux'
-"let g:VimuxRunnerIndex = 'mx'
-" if exists('$TMUX')
-"     let g:test#strategy = 'vimux'
-" endif
-let g:test#preserve_screen = 1
-
 let g:vim_markdown_conceal = 0
 let g:vim_markdown_folding_disabled = 1
 let g:multi_cursor_exit_from_visual_mode = 0
-let g:barbaric_default = "xkb:gb:extd:eng"
 let g:multi_cursor_select_all_word_key = '<A-n>'
-" let g:barbaric_default = "libpinyin"
-" let g:sneak#s_next = 1
-let g:sneak#label = 0
 let g:sneak#use_ic_scs = 1
 
 " }}}
-" Visual {{{
+" UI {{{
 
 syntax enable
 
@@ -247,7 +206,7 @@ let g:solarized_termcolors=16
 let g:solarized_termtrans=1 " Fix some tmux colour issues
 
 " colorscheme solarized8_dark
-colorscheme gruvbox
+colorscheme dracula
 
 " Make the sign column background the same
 " colour as the colorscheme background.
@@ -457,7 +416,7 @@ map <leader><bar> <C-w><bar>
 map <leader>_ <C-w>_
 
 " Test
-nnoremap <leader>t :silent :TestNearest<CR>
+nnoremap <leader>t :TestNearest<CR>
 nnoremap <leader>T :silent :TestFile<CR>
 nnoremap <leader>a :silent :TestSuite<CR>
 nnoremap <leader>l :silent :TestLast<CR>

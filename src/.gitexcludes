@@ -65,4 +65,9 @@ todo*.md
 .phpenv
 .*ods#
 
+# Laravel
+.env.*.bak
+.env.testing
+.nvmrc
+database/schema.sql
 tmp/test*.php

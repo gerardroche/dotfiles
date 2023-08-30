@@ -153,11 +153,16 @@ done
 rm -rf ~/.config/kitty
 ln -s $SOURCE_PATH/src/.config/kitty $HOME/.config/kitty
 
+# git-open
 ln -sfv ~/.dotfiles/vendor/paulirish/git-open/git-open ~/bin/git-open
+
+# php-build
 ln -sfv ~/.dotfiles/vendor/php-build/php-build/bin/php-build  ~/bin/php-build
+
+# nvm
 ln -sfnv ./.dotfiles/vendor/nvm-sh/nvm ~/.nvm
 
-# Quick hacky fixes for rbenv
+# rbenv - quick hacky fixes
 mkdir -pv ~/.rbenv/plugins
 touch ~/.rbenv/plugins/ruby-build
 rm ~/.rbenv/plugins/ruby-build
@@ -175,5 +180,10 @@ echo "Configure Ubuntu (key bindings) ..."
 
 echo "Force re-generation of font information cache files ..."
 fc-cache -f
+
+# Remove old unused files.
+if test -f ~/.bowerrc; then
+    rm -v ~/.bowerrc
+fi
 
 echo "Done"

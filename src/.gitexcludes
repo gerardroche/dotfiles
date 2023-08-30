@@ -9,7 +9,6 @@
 .netrwhist
 Session.vim
 [._]*.s[a-w][a-z]
-#[._]s[a-w][a-z]
 
 # Netbeans
 /nbproject/
@@ -47,27 +46,14 @@ Session.vim
 TAGS
 tags
 
-# PHP
-#ext/opcache/jit/zend_jit_x86.c
-#ext/opcache/minilua
-#*.post
-#*php/php-src/.env*
-#.phan/
-#.php-version
-#.php_cs.cache
-#php/php-src/php.sublime-project
-
-# Dotfiles
-#.env
-.tmux
-.todo*
-todo*.md
-.phpenv
+# Misc.
 .*ods#
-
-# Laravel
 .env.*.bak
 .env.testing
 .nvmrc
+.phpenv
+.tmux
+.todo*
 database/schema.sql
 tmp/test*.php
+todo*.md

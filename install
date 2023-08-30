@@ -126,14 +126,17 @@ fi
 
 if test -z "$SKIP_SUBMODULES"; then
     echo
-    echo "Install submodules ..."
+    echo "Initialising submodules ..."
     git submodule init
+    echo
+    echo "Updating submodules ..."
     git submodule update
     echo
+    echo "Pruning submodules ..."
+    git submodule foreach 'git prune'
+    echo
     echo "Update submodules ..."
-    git submodule foreach 'git fetch --all --prune || true'
-    git submodule foreach 'git pull --ff-only origin master || true'
-    git submodule foreach 'git pull --ff-only origin develop || true'
+    git submodule foreach 'git pull --ff-only'
 fi
 
 echo "Configure symlinks ..."

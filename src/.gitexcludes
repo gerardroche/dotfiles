@@ -46,14 +46,15 @@ Session.vim
 TAGS
 tags
 
-# Misc.
-.*ods#
-.env.*.bak
-.env.testing
-.nvmrc
-.phpenv
-.tmux
-.todo*
-database/schema.sql
-tmp/test*.php
-todo*.md
+# # # Misc.
+# # .*ods#
+# # .env.*.bak
+# # .env.testing
+# # .nvmrc
+# # .phpenv
+# # .todo*
+# # database/schema.sql
+# # tmp/test*.php
+# # todo*.md
+
+# # .tmux

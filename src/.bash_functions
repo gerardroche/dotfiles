@@ -56,12 +56,12 @@ internet_use_full() {
 }
 
 gk_default() {
-    gitk -n 100 --branches --date-order
+    gitk --max-count=300 --all --date-order
 }
 
 gk_current() {
     cmd=gitk
-    cmd+=" -n 500"
+    cmd+=" --max-count=300"
     cmd+=" --date-order"
     cmd+=" master"
     cmd+=" $(git rev-parse --abbrev-ref HEAD)"
@@ -78,8 +78,8 @@ gk_current() {
 
 gk_branches() {
     cmd=gitk
-    cmd+=" -n 500"
-    cmd+=" --branches"
+    cmd+=" --max-count=300"
+    cmd+=" --all"
     cmd+=" --date-order"
     cmd+=" master"
     cmd+=" $(git rev-parse --abbrev-ref HEAD)"

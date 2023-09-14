@@ -11,7 +11,6 @@ endif
 call plug#begin('~/.vim/plugged')
 
 Plug 'tpope/vim-sensible'
-
 " Load vim-sensible now so settings can be overridden
 " https://github.com/junegunn/vim-plug/issues/68
 call plug#load('vim-sensible')
@@ -24,8 +23,10 @@ Plug 'easymotion/vim-easymotion'
 Plug 'janko-m/vim-test'
 Plug 'machakann/vim-highlightedyank'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+
 "Plug 'terryma/vim-multiple-cursors'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-characterize'
 Plug 'tpope/vim-commentary'
@@ -40,7 +41,13 @@ Plug 'wellle/targets.vim'
 Plug 'tpope/vim-unimpaired'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'justinmk/vim-sneak'
-" Plug 'voldikss/vim-floaterm'
+Plug 'voldikss/vim-floaterm'
+
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+"Plug 'nvim-tree/nvim-web-devicons'
+"Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.*' }
 
 " Colour schemes
 Plug 'lifepillar/vim-solarized8'
@@ -50,6 +57,7 @@ Plug 'dracula/vim', { 'as': 'dracula' }
 call plug#end()
 
 " }}}
+
 " Options {{{
 
 set autoindent
@@ -61,7 +69,6 @@ set complete-=i
 set cursorline
 set display+=lastline
 set errorbells
-set nowrapscan
 set expandtab
 set foldmethod=marker
 set foldopen+=jump
@@ -74,16 +81,19 @@ set formatoptions-=t
 set hidden
 set hlsearch
 set ignorecase
-set smartcase
 set incsearch
 set laststatus=1
 set linebreak
 set list
+set nowrapscan
+set smartcase
+
 if (&termencoding ==# 'utf-8' || &encoding ==# 'utf-8') && version >= 700
     set listchars=tab:▸\ ,trail:•,extends:❯,precedes:❮
 else
     set listchars=tab:>\ ,trail:-,extends:>,precedes:<
 endif
+
 set modeline
 set mouse=a
 set nobackup
@@ -96,11 +106,13 @@ set relativenumber
 set scrolloff=8
 set shiftround
 set shiftwidth=4
+
 if (&termencoding ==# 'utf-8' || &encoding ==# 'utf-8') && version >= 700
     set showbreak=↪\
 else
     set showbreak=\ +
 endif
+
 set showcmd
 set showtabline=1
 set sidescroll=1
@@ -111,10 +123,13 @@ set spelllang=en_gb,en,en_us
 set splitbelow
 set splitright
 set tabstop=4
+set tags^=./.git/tags;
 set textwidth=80
+
 " Fixes escape key delays
 " https://www.johnhawthorn.com/2012/09/vi-escape-delays
 " set timeoutlen=1000 ttimeoutlen=0
+
 set ttyfast
 set updatetime=100
 set wildignore+=*.bak,*~,*.o,*.h,*.info,*.swp,*.obj
@@ -122,14 +137,14 @@ set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
 set wildignore+=*.log
 set wildignore+=*.pyc
 set wildignore+=*.sublime-workspace
-set wildignore+=*/build
 set wildignore+=*/CodeCoverage/Report
+set wildignore+=*/build
 set wildignore+=*/data
 set wildignore+=*/public/assets
 set wildignore+=*/tmp
+set wildignore+=*/vendor/*/*/Tests
 set wildignore+=*/vendor/*/*/build
 set wildignore+=*/vendor/*/*/test
-set wildignore+=*/vendor/*/*/Tests
 set wildignore+=*/vendor/*/*/tests
 set wildignore+=*/vendor/*/*/tmp
 set wildignore+=*/vendor/*/*/vendor
@@ -138,36 +153,40 @@ set wildignore+=.git,.hg,.svn
 set wildignore+=composer.lock,bower_components,node_modules
 set wildmenu
 set wildmode=longest:full
-set tags^=./.git/tags;
 
 " }}}
+
 " Options (Plugins) {{{
 
 let NERDTreeMinimalUI = 1
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-let g:airline_symbols.crypt = '🔒'
-let g:airline_symbols.linenr = ''
-let g:airline_symbols.maxlinenr = ''
-let g:airline_symbols.branch = '⎇ '
-let g:airline_symbols.paste = 'ρ'
-let g:airline_symbols.whitespace = ''
+
+" if !exists('g:airline_symbols')
+"     let g:airline_symbols = {}
+" endif
+" let g:airline_symbols.crypt = '🔒'
+" let g:airline_symbols.linenr = ''
+" let g:airline_symbols.maxlinenr = ''
+" let g:airline_symbols.branch = '⎇ '
+" let g:airline_symbols.paste = 'ρ'
+" let g:airline_symbols.whitespace = ''
+
 let g:ctrlp_follow_symlinks = 1
 let g:ctrlp_show_hidden = 1
-" let g:gitgutter_highlight_lines = 0
-" let g:gitgutter_map_keys = 1
-" let g:gitgutter_sign_column_always = 0
+
 let g:php_baselib = 1
 let g:php_folding = 0
 let g:php_sql_query = 1
+
 let g:vim_markdown_conceal = 0
 let g:vim_markdown_folding_disabled = 1
-let g:multi_cursor_exit_from_visual_mode = 0
-let g:multi_cursor_select_all_word_key = '<A-n>'
+
+" let g:multi_cursor_exit_from_visual_mode = 0
+" let g:multi_cursor_select_all_word_key = '<A-n>'
+
 let g:sneak#use_ic_scs = 1
 
 " }}}
+
 " UI {{{
 
 syntax enable
@@ -206,7 +225,8 @@ let g:solarized_termcolors=16
 let g:solarized_termtrans=1 " Fix some tmux colour issues
 
 " colorscheme solarized8_dark
-colorscheme dracula
+colorscheme gruvbox
+" colorscheme dracula
 
 " Make the sign column background the same
 " colour as the colorscheme background.
@@ -233,6 +253,7 @@ hi SpellLocal term=underline guifg=#000000 guibg=#FF0000
 hi SpellRare term=reverse guifg=#000000 guibg=#FF0000
 
 " }}}
+
 " Commands {{{
 
 " Runs the current file through PHPUnit via tmux.
@@ -306,6 +327,7 @@ endfunction
 command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
 
 " }}}
+
 " Autocommands {{{
 filetype plugin indent on
 
@@ -325,6 +347,7 @@ autocmd Filetype gitcommit setlocal spell textwidth=72
 " https://jordaneldredge.com/blog/setting-up-php-completion-in-vim/
 " autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
 "}}}
+
 " Mappings {{{
 
 let mapleader=","
@@ -439,6 +462,15 @@ nnoremap <F10> :call DumpColorSchemeInfo()<CR>
 " map <M-f> iHelloM-f
 " map <M-k> iHelloM-k
 
+" Find files using Telescope command-line sugar.
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+nnoremap <leader>oka :silent !gitk --all&<CR>
+nnoremap <leader>okd :silent !gitk --max-count=200 --all --date-order&<CR>
+
 " Mappings: Typos {{{
 " Don't care if I typo when saving or quitting!
 " http://git.io/vTBOa
@@ -481,7 +513,3 @@ vnoremap <F1> <ESC>
 " noremap l <NOP>
 " }}}
 " }}}
-
-
-command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
-" autocmd VimEnter * WipeReg

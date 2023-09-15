@@ -94,7 +94,7 @@ gk_branches() {
     $cmd
 }
 
-tmuxrenamewindow() {
+trw() {
     tmux rename-window $@
 }
 
@@ -102,12 +102,6 @@ tmuxrenamewindow() {
 # Source: https://github.com/mathiasbynens/dotfiles
 mkd() {
     mkdir -p "$@" && cd "$@"
-}
-
-phpserver() {
-    local ip=localhost
-    local port="${1:-4000}"
-    php -S "${ip}:${port}"
 }
 
 rbenv() {

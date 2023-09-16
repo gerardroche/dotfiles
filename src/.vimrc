@@ -44,10 +44,14 @@ Plug 'justinmk/vim-sneak'
 Plug 'voldikss/vim-floaterm'
 
 Plug 'nvim-lua/plenary.nvim'
+
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+"Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+"Plug 'JoosepAlviste/nvim-ts-context-commentstring'
+
 "Plug 'nvim-tree/nvim-web-devicons'
 "Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.*' }
+Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
 
 " Colour schemes
 Plug 'lifepillar/vim-solarized8'
@@ -193,9 +197,9 @@ syntax enable
 
 " Fixes insert and replace mode cursor shape in terminal
 " https://github.com/neovim/neovim/issues/2475
-let &t_SI = "\<Esc>[5 q"
-let &t_SR = "\<Esc>[5 q"
-let &t_EI = "\<Esc>[2 q"
+" let &t_SI = "\<Esc>[5 q"
+" let &t_SR = "\<Esc>[5 q"
+" let &t_EI = "\<Esc>[2 q"
 
 set t_Co=256
 

@@ -10,15 +10,12 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'tpope/vim-sensible'
 " Load vim-sensible now so settings can be overridden
 " https://github.com/junegunn/vim-plug/issues/68
+Plug 'tpope/vim-sensible'
 call plug#load('vim-sensible')
 
-"Plug 'nvim-tree/nvim-web-devicons'
-"Plug 'ryanoasis/vim-devicons'
 "Plug 'terryma/vim-multiple-cursors'
-Plug 'airblade/vim-gitgutter'
 Plug 'benmills/vimux'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'easymotion/vim-easymotion'
@@ -34,6 +31,7 @@ Plug 'tpope/vim-characterize'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-ragtag'
@@ -45,13 +43,20 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'voldikss/vim-floaterm'
 Plug 'wellle/targets.vim'
 
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-"Plug 'nvim-treesitter/nvim-treesitter-textobjects'
-"Plug 'JoosepAlviste/nvim-ts-context-commentstring'
-
 "Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
+"Plug 'nvim-tree/nvim-web-devicons'
+"Plug 'ryanoasis/vim-devicons'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-context'
+
+if has('nvim')
+    Plug 'lewis6991/gitsigns.nvim'
+    Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+else
+    Plug 'airblade/vim-gitgutter'
+endif
 
 " Colour schemes
 Plug 'lifepillar/vim-solarized8'
@@ -64,15 +69,12 @@ call plug#end()
 
 " Options {{{
 
-set colorcolumn=80
-set guicursor=
-set signcolumn=yes
-
 set autoindent
 set autoread
 set autowrite
 set backspace=indent,eol,start
 set belloff=
+set colorcolumn=80
 set complete-=i
 set cursorline
 set display+=lastline
@@ -86,6 +88,7 @@ set formatoptions+=l
 set formatoptions+=q
 set formatoptions+=r
 set formatoptions-=t
+set guicursor=
 set hidden
 set hlsearch
 set ignorecase
@@ -100,7 +103,6 @@ set noshowmode
 set noswapfile
 set novisualbell
 set nowrap
-set nowrapscan
 set number
 set relativenumber
 set scrolloff=8
@@ -110,6 +112,7 @@ set showcmd
 set showtabline=1
 set sidescroll=1
 set sidescrolloff=8
+set signcolumn=yes
 set smartcase
 set smarttab
 set softtabstop=4
@@ -118,7 +121,7 @@ set splitbelow
 set splitright
 set tabstop=4
 set tags^=./.git/tags;
-set textwidth=80
+set textwidth=72
 set ttyfast
 set updatetime=100
 set wildignore+=*.bak,*~,*.o,*.h,*.info,*.swp,*.obj
@@ -141,11 +144,8 @@ set wildignore+=.DS_Store
 set wildignore+=.git,.hg,.svn
 set wildignore+=composer.lock,bower_components,node_modules
 set wildmenu
-set wildmode=longest:full
-
-" Fixes escape key delays
-" https://www.johnhawthorn.com/2012/09/vi-escape-delays
-" set timeoutlen=1000 ttimeoutlen=0
+set wildmode=longest:full,full
+set wrapscan
 
 if (&termencoding ==# 'utf-8' || &encoding ==# 'utf-8') && version >= 700
     set listchars=tab:▸\ ,trail:•,extends:❯,precedes:❮
@@ -158,6 +158,10 @@ endif
 " }}}
 
 " Options - Plugins {{{
+
+let g:gitgutter_sign_added = '|'
+let g:gitgutter_sign_modified = '|'
+let g:gitgutter_sign_removed = '_'
 
 let NERDTreeMinimalUI=1
 let NERDTreeShowHidden=1
@@ -177,7 +181,9 @@ let g:vim_markdown_folding_disabled = 1
 
 " Look and Feel {{{
 
-syntax enable
+if has("syntax")
+    syntax enable
+endif
 
 " Fixes insert and replace mode cursor shape in terminal
 " https://github.com/neovim/neovim/issues/2475
@@ -237,6 +243,13 @@ hi SpellLocal term=underline guifg=#000000 guibg=#FF0000
 hi SpellRare term=reverse guifg=#000000 guibg=#FF0000
 
 " }}}
+
+" Nvim Lui {{{
+    if has('nvim')
+        lua require('user')
+    endif
+" }}}
+
 
 " Commands {{{
 

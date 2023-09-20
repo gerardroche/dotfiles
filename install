@@ -96,7 +96,6 @@ if test -z "$SKIP_DEPS"; then
     dpkg -l | grep libterm-readkey-perl >/dev/null 2>&1 || sudo apt-get install libterm-readkey-perl
 
     # Fonts.
-    dpkg -l | grep fonts-firacode >/dev/null 2>&1 || sudo apt-get install fonts-firacode
     dpkg -l | grep fonts-inconsolata >/dev/null 2>&1 || sudo apt-get install fonts-inconsolata
     dpkg -l | grep ttf-anonymous-pro >/dev/null 2>&1 || sudo apt-get install ttf-anonymous-pro
     dpkg -l | grep ttf-mscorefonts-installer >/dev/null 2>&1 || sudo apt-get install ttf-mscorefonts-installer

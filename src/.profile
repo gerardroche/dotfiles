@@ -67,22 +67,6 @@ export GPG_TTY=$(tty)
 export PROJECTS_PATH=~/projects
 export VENDOR_PATH=~/vendor
 
-# Sublime
-export DEBUGBAR_EDITOR=sublime
-export IGNITION_EDITOR=sublime
-export IGNITION_SHARING_ENABLED=0
-
-# PHAN
-export PHAN_DISABLE_XDEBUG_WARN=1
-
-# If you don't need BC kept on CLI level, you might use PHP_CS_FIXER_FUTURE_MODE
-# to start using options that would be default in next MAJOR release.
-# https://github.com/FriendsOfPhp/PHP-CS-Fixer
-export PHP_CS_FIXER_FUTURE_MODE=1
-
-# XDEBUG
-export XDEBUG_CONFIG="idekey=netbeans-xdebug"
-
 # Make sure nvm dir path is resolved if it's a symlink.
 # Fixes "When NVM_DIR is a symlink nvm_ls breaks"
 # https://github.com/creationix/nvm/issues/617

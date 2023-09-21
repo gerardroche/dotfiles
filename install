@@ -161,6 +161,11 @@ ln -sfv ~/.dotfiles/vendor/php-build/php-build/bin/php-build  ~/bin/php-build
 # nvm
 ln -sfnv ./.dotfiles/vendor/nvm-sh/nvm ~/.nvm
 
+# nvim
+if test ! -e ~/.config/nvim; then
+    ln -sfv ~/.vim ~/.config/nvim
+fi
+
 # rbenv - quick hacky fixes
 mkdir -pv ~/.rbenv/plugins
 touch ~/.rbenv/plugins/ruby-build

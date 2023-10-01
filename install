@@ -75,6 +75,7 @@ if test -z "$SKIP_DEPS"; then
     command -v jq >/dev/null 2>&1 || sudo apt-get install jq
     command -v kitty >/dev/null 2>&1 || sudo apt-get install kitty
     command -v lcov >/dev/null 2>&1 || sudo apt-get install lcov
+    command -v multitail >/dev/null 2>&1 || sudo apt-get install multitail
     command -v netstat >/dev/null 2>&1 || sudo apt-get install net-tools
     command -v pip3 >/dev/null 2>&1 || sudo apt-get install python3-pip
     command -v rename >/dev/null 2>&1 || sudo apt-get install rename

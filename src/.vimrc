@@ -77,6 +77,7 @@ call plug#end()
 
 " Options {{{
 
+"set wildmenu
 set autoindent
 set autoread
 set autowrite
@@ -88,8 +89,8 @@ set cursorline
 set display+=lastline
 set errorbells
 set expandtab
-set foldmethod=marker
-set foldopen+=jump
+set foldlevelstart=99
+set foldmethod=syntax
 set formatoptions+=c
 set formatoptions+=j
 set formatoptions+=l
@@ -151,7 +152,6 @@ set wildignore+=*/vendor/*/*/vendor
 set wildignore+=.DS_Store
 set wildignore+=.git,.hg,.svn
 set wildignore+=composer.lock,bower_components,node_modules
-set wildmenu
 set wildmode=longest:full,full
 set wrapscan
 
@@ -179,7 +179,7 @@ let g:airline_theme = 'dracula'
 let g:ctrlp_follow_symlinks = 1
 let g:ctrlp_show_hidden = 1
 let g:php_baselib = 1
-let g:php_folding = 0
+let g:php_folding = 1
 let g:php_sql_query = 1
 let g:sneak#use_ic_scs = 1
 let g:vim_markdown_conceal = 0
@@ -360,7 +360,9 @@ nnoremap <leader>oka :silent !gitk --all&<CR>
 nnoremap <leader>okd :silent !gitk --max-count=200 --all --date-order&<CR>
 noremap <leader>D :call ShowFileInNERDTree()<CR>
 noremap <leader>d :NERDTreeToggle<CR>
-noremap <leader>r :registers<CR>
+"noremap <leader>r :registers<CR>
+
+noremap <leader>r :source ~/.vimrc<CR>
 
 nnoremap <C-d> <C-d>zz
 nnoremap <C-l> :nohlsearch<CR>

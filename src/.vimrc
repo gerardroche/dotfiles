@@ -48,20 +48,29 @@ Plug 'wellle/targets.vim'
 "Plug 'ryanoasis/vim-devicons'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+
+" Syntax Highlighting
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-context'
+if has('nvim')
+    Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+endif
 
+" LSP
+Plug 'williamboman/mason.nvim'
+Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'neovim/nvim-lspconfig'
 
+" Completion
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 
+" Git
 if has('nvim')
     Plug 'lewis6991/gitsigns.nvim'
-    Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 else
     Plug 'airblade/vim-gitgutter'
 endif

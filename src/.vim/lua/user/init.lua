@@ -30,6 +30,9 @@ require('lspconfig').volar.setup({
 -- Tailwind CSS
 require('lspconfig').tailwindcss.setup({})
 
+-- Python
+require('lspconfig').pylsp.setup({})
+
 vim.keymap.set('n', '<Leader>gr', '<cmd>lua vim.diagnostic.open_float()<CR>')
 vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
 vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>')

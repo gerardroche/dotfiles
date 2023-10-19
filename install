@@ -88,6 +88,7 @@ if test -z "$SKIP_DEPS"; then
     command -v xclip >/dev/null 2>&1 || sudo apt-get install xclip
     command -v zstd >/dev/null 2>&1 || sudo apt-get install zstd
 
+    dpkg -l | grep "ii  locales " >/dev/null 2>&1 || sudo apt-get install locales
     dpkg -l | grep git-extras >/dev/null 2>&1 || sudo apt-get install git-extras
     dpkg -l | grep ubuntu-restricted-extras >/dev/null 2>&1 || sudo apt-get install ubuntu-restricted-extras
     dpkg -l | grep vim.gtk >/dev/null 2>&1 || sudo apt-get install vim.gtk
@@ -187,6 +188,9 @@ echo "Configure Ubuntu (key bindings) ..."
 
 echo "Force re-generation of font information cache files ..."
 fc-cache -f
+
+echo "Generate some locales ..."
+locale-gen en_GB.UTF-8 en_US.UTF-8 en_IE.UTF-8
 
 # Remove old unused files.
 if test -f ~/.bowerrc; then

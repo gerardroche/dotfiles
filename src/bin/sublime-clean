@@ -86,6 +86,8 @@ rmdir_if_empty() {
 echo "cleaning sublime text 3 installation..."
 
 # ST3 & ST4
+rm -rfv ~/.cache/sublime-text*/Crash\ Reports/
+rm -rfv ~/.cache/sublime-text*/Package\ Storage/
 rm -rfv ~/.config/sublime-text*/Backup/
 rm -rfv ~/.config/sublime-text*/Cache/
 rm -rfv ~/.config/sublime-text*/Index/
@@ -110,6 +112,7 @@ rmdir_if_empty ~/.config/sublime-text/Lib/python3.8/
 rmdir_if_empty ~/.config/sublime-text/Lib/python33/
 rmdir_if_empty ~/.config/sublime-text/Lib/python38/
 rmdir_if_empty ~/.config/sublime-text/Lib/
+rmdir_if_empty ~/.config/sublime-text/Log/
 rmdir_if_empty ~/.config/sublime-text/Packages/User/Color\ Highlighter/
 rmdir_if_empty ~/.config/sublime-text/Packages/User/SublimeLinter/
 

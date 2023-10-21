@@ -4,8 +4,6 @@ set -e
 unset CDPATH
 unset IFS
 
-echo "Configuring settings ..."
-
 gsettings set com.canonical.Unity.Lenses remote-content-search 'none'
 gsettings set com.ubuntu.touch.network gps false
 gsettings set com.ubuntu.update-manager show-details true

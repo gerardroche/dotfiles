@@ -18,8 +18,6 @@ create_custom_media_key() {
     gsettings set "$key:$path" binding "$binding"
 }
 
-echo "Configuring keybindings ..."
-
 ######################################
 # Clear default shortcuts used later #
 ######################################

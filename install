@@ -6,39 +6,58 @@ unset IFS
 readonly SOURCE="$(readlink -nf "$0")"
 readonly SOURCE_PATH="$(dirname "$SOURCE")"
 
+checked_symlink() {
+    source="$1"
+    destination="$2"
+
+    if test -e "$destination"; then
+        if test "$source" != "$(readlink -f "$destination")"; then
+            echo
+            echo >&2 "Error: Destination file '$destination' already exists."
+            echo >&2 "       Cannot create a symbolic link:"
+            echo >&2 "       '$source' -> '$destination'"
+            echo
+        fi
+    elif test ! -e "$source"; then
+        echo >&2 "Error: Source file or directory '$source' does not exist. Cannot create a symbolic link."
+    elif test -d "$source"; then
+        ln -sfnv "$source" "$destination"
+    elif test -f "$source"; then
+        ln -sfv "$source" "$destination"
+    else
+        echo
+        echo >&2 "Error: Source '$source' must be a regular file or directory."
+        echo >&2 "       Cannot create symlink."
+        echo
+    fi
+}
+
 create_home_dir_symlink() {
-    target="$1"
-    target_basename="$(basename "$target")"
+    source="$1"
+    source_basename="$(basename "$source")"
 
-    if test "x$target_basename" = "x."; then
+    if test "x$source_basename" = "x."; then
         return
     fi
 
-    if test "x$target_basename" = "x.."; then
+    if test "x$source_basename" = "x.."; then
         return
     fi
 
-    if test "x$HOME/$target_basename" = "x$SOURCE_PATH"; then
+    if test "x$HOME/$source_basename" = "x$SOURCE_PATH"; then
         echo >&2 "$0:create_home_dir_symlink() cannot link to self"
         exit 1
     fi
 
-    from="./${target#$HOME/}"
-    to="$HOME/$target_basename"
-
-    if test -L "$to" -o ! -e "$to"; then
-        ln -sfnv "$from" "$to"
-    else
-        echo >&2 "=> NOTICE Could not create home directory symlink."
-        echo >&2 "          File already exists. Move the existing file and rerun the install script. \"$from\" -> \"$to\""
-    fi
+    destination="$HOME/$source_basename"
+    checked_symlink "$source" "$destination"
 }
 
 is_ubuntu_20_04() {
     test "x$(lsb_release -r | cut -f2)" = "x20.04"
 }
 
-cd "$SOURCE_PATH" && echo "Switched to '$PWD'"
+cd "$SOURCE_PATH"
 
 SKIP_DEPS=
 SKIP_SUBMODULES=
@@ -46,6 +65,7 @@ while test "$#" != 0; do
     case "$1" in
         --skip-dep*) SKIP_DEPS=true ;;
         --skip-sub*) SKIP_SUBMODULES=true ;;
+        --skip-upd*) SKIP_DEPS=true; SKIP_SUBMODULES=true ;;
         --) shift; break ;; # standard end of options list
         -*) echo >&2 "$0: unknown option '$1'"; exit 1 ;;
         *) echo >&2 "$0: unknown argument '$1'"; exit 1 ;;
@@ -54,8 +74,6 @@ while test "$#" != 0; do
 done
 
 if test -z "$SKIP_DEPS"; then
-    echo "Install dependencies ..."
-
     sudo apt-get update
 
     command -v bsdtar >/dev/null 2>&1 || sudo apt-get install libarchive-tools
@@ -128,21 +146,11 @@ if test -z "$SKIP_DEPS"; then
 fi
 
 if test -z "$SKIP_SUBMODULES"; then
-    echo
-    echo "Initialising submodules ..."
     git submodule init
-    echo
-    echo "Updating submodules ..."
     git submodule update
-    echo
-    echo "Pruning submodules ..."
     git submodule foreach 'git prune'
-    echo
-    echo "Update submodules ..."
     git submodule foreach 'git pull --ff-only'
 fi
-
-echo "Configure symlinks ..."
 
 for file in "$SOURCE_PATH/src/".*; do
     create_home_dir_symlink "$file"
@@ -152,49 +160,24 @@ for file in "$SOURCE_PATH"/src/*; do
     create_home_dir_symlink "$file"
 done
 
-# .config/ symlinks
-rm -rf ~/.config/kitty
-ln -s $SOURCE_PATH/src/.config/kitty $HOME/.config/kitty
+checked_symlink ~/.dotfiles/vendor/paulirish/git-open/git-open ~/bin/git-open
+checked_symlink ~/.dotfiles/vendor/php-build/php-build/bin/php-build  ~/bin/php-build
+checked_symlink ~/.dotfiles/vendor/nvm-sh/nvm ~/.nvm
+checked_symlink ~/.dotfiles/src/.vim ~/.config/nvim
 
-# git-open
-ln -sfv ~/.dotfiles/vendor/paulirish/git-open/git-open ~/bin/git-open
-
-# php-build
-ln -sfv ~/.dotfiles/vendor/php-build/php-build/bin/php-build  ~/bin/php-build
-
-# nvm
-ln -sfnv ./.dotfiles/vendor/nvm-sh/nvm ~/.nvm
-
-# nvim
-if test ! -e ~/.config/nvim; then
-    ln -sfv ~/.vim ~/.config/nvim
-fi
-
-# rbenv - quick hacky fixes
-mkdir -pv ~/.rbenv/plugins
-touch ~/.rbenv/plugins/ruby-build
-rm ~/.rbenv/plugins/ruby-build
-ln -sfv ~/.dotfiles/vendor/rbenv/ruby-build ~/.rbenv/plugins/ruby-build
+test -d ~/.rbenv/plugins || mkdir -pv ~/.rbenv/plugins
+checked_symlink ~/.dotfiles/vendor/rbenv/ruby-build ~/.rbenv/plugins/ruby-build
 
 if test -f ~/.dotfiles-private/install; then
     ~/.dotfiles-private/install
 fi
 
-echo "Configure Ubuntu (settings) ..."
 "$SOURCE_PATH"/src/bin/setup-settings
-
-echo "Configure Ubuntu (key bindings) ..."
 "$SOURCE_PATH"/src/bin/setup-keybindings
 
-echo "Force re-generation of font information cache files ..."
-fc-cache -f
-
-echo "Generate some locales ..."
-locale-gen en_GB.UTF-8 en_US.UTF-8 en_IE.UTF-8
+# fc-cache -f
 
 # Remove old unused files.
-if test -f ~/.bowerrc; then
+if test -e ~/.bowerrc; then
     rm -v ~/.bowerrc
 fi
-
-echo "Done"

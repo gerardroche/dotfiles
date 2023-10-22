@@ -74,6 +74,8 @@ while test "$#" != 0; do
 done
 
 if test -z "$SKIP_DEPS"; then
+    sudo apt-get autoclean
+    sudo apt-get autoremove
     sudo apt-get update
 
     command -v bsdtar >/dev/null 2>&1 || sudo apt-get install libarchive-tools
@@ -124,25 +126,16 @@ if test -z "$SKIP_DEPS"; then
         dpkg -l | grep ttf-ubuntu-font-family >/dev/null 2>&1 || sudo apt-get install ttf-ubuntu-font-family
     fi
 
-    if is_ubuntu_20_04; then
-        command -v flake8 >/dev/null 2>&1 || sudo apt-get install python-flake8
-    fi
+    # PIP
+    python3 -m pip install --upgrade --user pip
 
-    python3 -m pip install --upgrade pip
+    # Tools.
+    python3 -m pip install --upgrade --user flake8
+    python3 -m pip install --upgrade --user flake8-docstrings
+    python3 -m pip install --upgrade --user gcovr
+    python3 -m pip install --upgrade --user mypy
+    python3 -m pip install --upgrade --user pydocstyle
 
-    pip3 install --upgrade --user flake8
-    pip3 install --upgrade --user flake8-docstrings
-    pip3 install --upgrade --user pydocstyle
-    pip3 install --upgrade --user mypy
-    pip3 install --upgrade --user gcovr
-
-    if is_ubuntu_20_04; then
-        python3.8 -m pip install --upgrade --user flake8
-        python3.8 -m pip install --upgrade --user flake8-docstrings
-        python3.8 -m pip install --upgrade --user pydocstyle
-        python3.8 -m pip install --upgrade --user mypy
-        python3.8 -m pip install --upgrade --user gcovr
-    fi
 fi
 
 if test -z "$SKIP_SUBMODULES"; then
@@ -175,7 +168,7 @@ fi
 "$SOURCE_PATH"/src/bin/setup-settings
 "$SOURCE_PATH"/src/bin/setup-keybindings
 
-# fc-cache -f
+fc-cache -f
 
 # Remove old unused files.
 if test -e ~/.bowerrc; then

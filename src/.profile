@@ -86,7 +86,7 @@ export NPM_CONFIG_FUND=false
 unset GEM_HOME
 
 # Python
-export PYENV_ROOT="$HOME/.pyenv"
+export PYENV_ROOT="$(readlink -nf ~/.pyenv)"
 
 # Private.
 if [ -f ~/.profile-private ]; then

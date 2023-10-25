@@ -80,8 +80,7 @@ if test -s "$NVM_DIR/nvm.sh"; then
 fi
 
 # NPM
-#export NPM_CONFIG_AUDIT=1
-export NPM_CONFIG_FUND=
+export NPM_CONFIG_FUND=false
 
 # Fix Gem issue (I can't remember exactly what the issue was)
 unset GEM_HOME

@@ -8,14 +8,6 @@
 # for ssh logins, install and configure the libpam-umask package.
 umask 022
 
-# if running bash
-if [ -n "$BASH_VERSION" ]; then
-    # include .bashrc if it exists
-    if [ -f "$HOME/.bashrc" ]; then
-        . "$HOME/.bashrc"
-    fi
-fi
-
 # Check that we are not in a Tmux session before populating PATH. This works
 # around Tmux duplicating PATH entries every time a Tmux session is created.
 # http://unix.stackexchange.com/questions/4965/keep-duplicates-out-of-path-on-source/4973#4973
@@ -72,13 +64,6 @@ export VENDOR_PATH=~/vendor
 # https://github.com/creationix/nvm/issues/617
 export NVM_DIR="$(readlink -nf ~/.nvm)"
 
-# Use the alias "reloadnvm" when you want to use nvm, this avoids having to load
-# nvm every time a shell is started. The "reloadnvm" alias has the advantage of
-# executing "nvm use" after nvm is loaded to select any local npm version.
-if test -s "$NVM_DIR/nvm.sh"; then
-    . "$NVM_DIR/nvm.sh"
-fi
-
 # NPM
 export NPM_CONFIG_FUND=false
 
@@ -91,4 +76,12 @@ export PYENV_ROOT="$(readlink -nf ~/.pyenv)"
 # Private.
 if [ -f ~/.profile-private ]; then
     . ~/.profile-private
+fi
+
+# if running bash
+if [ -n "$BASH_VERSION" ]; then
+    # include .bashrc if it exists
+    if [ -f "$HOME/.bashrc" ]; then
+        . "$HOME/.bashrc"
+    fi
 fi

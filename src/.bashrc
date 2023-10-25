@@ -197,18 +197,18 @@ if ! shopt -oq posix; then
     fi
 fi
 
-# If running nvm.
+# Customisations.
+if [ -f ~/.bashrc-private ]; then
+    . ~/.bashrc-private
+fi
+
+# If running nvm, load it.
 if [ -n "$NVM_DIR" ]; then
-    if [ -f "$NVM_DIR/nvm.sh" ]; then
-        . "$NVM_DIR/nvm.sh" --no-use
+    if [ -s "$NVM_DIR/nvm.sh" ]; then
+        . "$NVM_DIR/nvm.sh"
     fi
 fi
 
 # Fix CTRL-S in Vim.
 # https://stackoverflow.com/questions/13648237/ctrls-horizontal-split-not-working-with-command-t-in-vim
 stty start undef stop undef
-
-# Customisations.
-if [ -f ~/.bashrc-private ]; then
-    . ~/.bashrc-private
-fi

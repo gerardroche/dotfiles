@@ -72,20 +72,21 @@ if [ "$color_prompt" = yes ]; then
     GIT_PS1_SHOWUNTRACKEDFILES="y"
     GIT_PS1_SHOWUPSTREAM="verbose name git"
 
-    PS1_VERSION_COLOR="\[\e[37m\]"
-    PS1_VERSION_LABEL_COLOR="\[\e[38m\]"
-    PS1_PWD_COLOR="\[\e[34m\]"
-    PS1_ERROR_COLOR="\[\e[31m\]"
-    PS1_CLEAR_COLOR="\[\e[0m\]"
+    PS1CC="\[\e[0m\]"   # clear color
+    PS1CE="\[\e[31m\]"  # error color
+    PS1CL="\[\e[38m\]"  # version label color
+    PS1CP="\[\e[34m\]"  # pwd color
+    PS1CV="\[\e[37m\]"  # version color
 
     do_prompt_command() {
-        last_status=$?
-        ver_info=""
+        exit_status=$?
+        prompt="$(if test $exit_status = 0;then echo "${PS1CP}\$${PS1CC}";else echo "${PS1CE}💥${PS1CC}";fi)"
 
+        # ver_info=""
         # # PHP
         # if test -f composer.json; then
         #     php_version=$(php -v 2>&1 | grep --color=never -oe "^PHP\s*[0-9.]\+" | awk '{print $2}')
-        #     ver_info="${ver_info} ${PS1_VERSION_LABEL_COLOR}${PS1_CLEAR_COLOR}${PS1_VERSION_COLOR}${php_version}${PS1_CLEAR_COLOR}${PS1_VERSION_LABEL_COLOR}${PS1_CLEAR_COLOR}"
+        #     ver_info="${ver_info} ${PS1CL}${PS1CC}${PS1CV}${php_version}${PS1CC}${PS1CL}${PS1CC}"
         # fi
 
         # # NODE
@@ -97,38 +98,36 @@ if [ "$color_prompt" = yes ]; then
         #     fi
 
         #     npm_version=$(npm --version 2>/dev/null)
-        #     ver_info="${ver_info}/${PS1_VERSION_LABEL_COLOR}${PS1_CLEAR_COLOR}${PS1_VERSION_COLOR}${npm_version}${PS1_CLEAR_COLOR}${PS1_VERSION_LABEL_COLOR}${PS1_CLEAR_COLOR}"
+        #     ver_info="${ver_info}/${PS1CL}${PS1CC}${PS1CV}${npm_version}${PS1CC}${PS1CL}${PS1CC}"
 
         #     node_version=$(node -v 2>/dev/null | sed -e 's/v//')
-        #     ver_info="${ver_info}/${PS1_VERSION_LABEL_COLOR}${PS1_CLEAR_COLOR}${PS1_VERSION_COLOR}${node_version}${PS1_CLEAR_COLOR}${PS1_VERSION_LABEL_COLOR}${PS1_CLEAR_COLOR}"
+        #     ver_info="${ver_info}/${PS1CL}${PS1CC}${PS1CV}${node_version}${PS1CC}${PS1CL}${PS1CC}"
         # fi
 
         # Ruby
         # if test -f Gemfile; then
         #     ruby_version=$(rbenv version-name)
-        #     ver_info="${ver_info}${PS1_VERSION_LABEL_COLOR}ruby${PS1_CLEAR_COLOR}  ${PS1_VERSION_COLOR}${ruby_version}${PS1_CLEAR_COLOR}${PS1_VERSION_LABEL_COLOR}${PS1_CLEAR_COLOR}"
+        #     ver_info="${ver_info}${PS1CL}ruby${PS1CC}  ${PS1CV}${ruby_version}${PS1CC}${PS1CL}${PS1CC}"
 
         #     # Rails
         #     if test -f bin/rails; then
         #         rails_version=$(rails --version | sed -e 's/Rails //')
-        #         ver_info="${ver_info}/${PS1_VERSION_LABEL_COLOR}rails ${PS1_CLEAR_COLOR}${PS1_VERSION_COLOR}${rails_version}${PS1_CLEAR_COLOR}${PS1_VERSION_LABEL_COLOR}${PS1_CLEAR_COLOR}"
+        #         ver_info="${ver_info}/${PS1CL}rails ${PS1CC}${PS1CV}${rails_version}${PS1CC}${PS1CL}${PS1CC}"
         #     fi
         # fi
 
-        PS1_PREV_PWD="$PWD"
+        # PS1_PREV_PWD="$PWD"
 
-        # Format versions.
-        if test -n "$ver_info"; then
-            ver_info=" $(echo "$ver_info" | sed -e 's/ //')"
-        fi
+        # # Format versions.
+        # if test -n "$ver_info"; then
+        #     ver_info=" $(echo "$ver_info" | sed -e 's/ //')"
+        # fi
 
-        __git_ps1 "${PS1_PWD_COLOR}╭─ \w${PS1_CLEAR_COLOR}$ver_info " \
-                  "\n${PS1_PWD_COLOR}╰─${PS1_CLEAR_COLOR}$(if test $last_status = 0;then echo "${PS1_PWD_COLOR}\$${PS1_CLEAR_COLOR}";else echo "${PS1_ERROR_COLOR} 💥${PS1_CLEAR_COLOR}";fi) " \
-                  "(%s)"
+        __git_ps1 "${PS1CP}╭─ \w${PS1CC} " \
+                "\n${PS1CP}╰─${PS1CC} $prompt " "(%s)"
     }
 
     PROMPT_COMMAND=do_prompt_command
-    # PROMPT_COMMAND='__git_ps1 "╭─ \w" "\n╰$(if test $? = 0;then echo "\$";else echo "\[\e[31m\]\$\[\e[0m\]";fi) " " ⎇  %s"'
 
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '

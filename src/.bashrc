@@ -64,6 +64,7 @@ if [ "$color_prompt" = yes ]; then
     # Default PS1
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 
+    # See /usr/lib/git-core/git-sh-prompt
     GIT_PS1_DESCRIBE_STYLE="describe"
     GIT_PS1_SHOWCOLORHINTS="y"
     GIT_PS1_SHOWDIRTYSTATE="y"

@@ -18,8 +18,8 @@ if test -z "$TMUX"; then
     ORIG_PATH="$PATH"
 
     case "$PATH" in
-        # Path has already been updated!
         "$HOME/bin:"*)
+            # Path has already been updated!
             ;;
         *)
 
@@ -83,5 +83,17 @@ if [ -n "$BASH_VERSION" ]; then
     # include .bashrc if it exists
     if [ -f "$HOME/.bashrc" ]; then
         . "$HOME/.bashrc"
+    fi
+fi
+
+# I want node via nvm to be available globally, i.e., no need to install node
+# globally by some other means. In order for this to work, nvm must be loaded
+# at system startup, but also when bash or tmux session starts, see bashrc.
+if test -z "$TMUX"; then
+    # If running nvm, load it.
+    if [ -n "$NVM_DIR" ]; then
+        if [ -s "$NVM_DIR/nvm.sh" ]; then
+            . "$NVM_DIR/nvm.sh"
+        fi
     fi
 fi

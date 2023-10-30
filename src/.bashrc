@@ -72,63 +72,22 @@ if [ "$color_prompt" = yes ]; then
     GIT_PS1_SHOWUNTRACKEDFILES="y"
     GIT_PS1_SHOWUPSTREAM="verbose name git"
 
-    PS1CC="\[\e[0m\]"   # clear color
+    # 31=RED 32=GREEN 33=ORANGE 34=BLUE 35=MAGENTA 36=TEAK 37=WHITE 38=SILVER
+    PS1CC="\[\e[0m\]"   # clear
     PS1CE="\[\e[31m\]"  # error color
     PS1CL="\[\e[38m\]"  # version label color
-    PS1CP="\[\e[34m\]"  # pwd color
+    PS1CP="\[\e[34m\]"  # prompt color
+    PS1CD="\[\e[34m\]"  # pwd color
     PS1CV="\[\e[37m\]"  # version color
 
     do_prompt_command() {
         exit_status=$?
         prompt="$(if test $exit_status = 0;then echo "${PS1CP}\$${PS1CC}";else echo "${PS1CE}💥${PS1CC}";fi)"
-
-        # ver_info=""
-        # # PHP
-        # if test -f composer.json; then
-        #     php_version=$(php -v 2>&1 | grep --color=never -oe "^PHP\s*[0-9.]\+" | awk '{print $2}')
-        #     ver_info="${ver_info} ${PS1CL}${PS1CC}${PS1CV}${php_version}${PS1CC}${PS1CL}${PS1CC}"
-        # fi
-
-        # # NODE
-        # if test -f package.json; then
-        #     if test "x$PWD" != "x$PS1_PREV_PWD"; then
-        #         if test -f .nvmrc; then
-        #             nvm use
-        #         fi
-        #     fi
-
-        #     npm_version=$(npm --version 2>/dev/null)
-        #     ver_info="${ver_info}/${PS1CL}${PS1CC}${PS1CV}${npm_version}${PS1CC}${PS1CL}${PS1CC}"
-
-        #     node_version=$(node -v 2>/dev/null | sed -e 's/v//')
-        #     ver_info="${ver_info}/${PS1CL}${PS1CC}${PS1CV}${node_version}${PS1CC}${PS1CL}${PS1CC}"
-        # fi
-
-        # Ruby
-        # if test -f Gemfile; then
-        #     ruby_version=$(rbenv version-name)
-        #     ver_info="${ver_info}${PS1CL}ruby${PS1CC}  ${PS1CV}${ruby_version}${PS1CC}${PS1CL}${PS1CC}"
-
-        #     # Rails
-        #     if test -f bin/rails; then
-        #         rails_version=$(rails --version | sed -e 's/Rails //')
-        #         ver_info="${ver_info}/${PS1CL}rails ${PS1CC}${PS1CV}${rails_version}${PS1CC}${PS1CL}${PS1CC}"
-        #     fi
-        # fi
-
-        # PS1_PREV_PWD="$PWD"
-
-        # # Format versions.
-        # if test -n "$ver_info"; then
-        #     ver_info=" $(echo "$ver_info" | sed -e 's/ //')"
-        # fi
-
-        __git_ps1 "${PS1CP}╭─ \w${PS1CC} " \
-                "\n${PS1CP}╰─${PS1CC} $prompt " "(%s)"
+        __git_ps1 "${PS1CD}╭─ \w${PS1CC} " \
+                "\n${PS1CD}╰─${PS1CC} $prompt " "on %s"
     }
 
     PROMPT_COMMAND=do_prompt_command
-
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi

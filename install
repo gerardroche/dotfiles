@@ -6,32 +6,6 @@ unset IFS
 readonly SOURCE="$(readlink -nf "$0")"
 readonly SOURCE_PATH="$(dirname "$SOURCE")"
 
-checked_symlink() {
-    source="$1"
-    destination="$2"
-
-    if test -e "$destination"; then
-        if test "$source" != "$(readlink -f "$destination")"; then
-            echo
-            echo >&2 "Error: Destination file '$destination' already exists."
-            echo >&2 "       Cannot create a symbolic link:"
-            echo >&2 "       '$source' -> '$destination'"
-            echo
-        fi
-    elif test ! -e "$source"; then
-        echo >&2 "Error: Source file or directory '$source' does not exist. Cannot create a symbolic link."
-    elif test -d "$source"; then
-        ln -sfnv "$source" "$destination"
-    elif test -f "$source"; then
-        ln -sfv "$source" "$destination"
-    else
-        echo
-        echo >&2 "Error: Source '$source' must be a regular file or directory."
-        echo >&2 "       Cannot create symlink."
-        echo
-    fi
-}
-
 create_home_dir_symlink() {
     source="$1"
     source_basename="$(basename "$source")"
@@ -50,7 +24,7 @@ create_home_dir_symlink() {
     fi
 
     destination="$HOME/$source_basename"
-    checked_symlink "$source" "$destination"
+    checked-symlink "$source" "$destination"
 }
 
 is_ubuntu_20_04() {
@@ -153,13 +127,13 @@ for file in "$SOURCE_PATH"/src/*; do
     create_home_dir_symlink "$file"
 done
 
-checked_symlink ~/.dotfiles/vendor/paulirish/git-open/git-open ~/bin/git-open
-checked_symlink ~/.dotfiles/vendor/php-build/php-build/bin/php-build  ~/bin/php-build
-checked_symlink ~/.dotfiles/vendor/nvm-sh/nvm ~/.nvm
-checked_symlink ~/.dotfiles/src/.vim ~/.config/nvim
+checked-symlink ~/.dotfiles/vendor/paulirish/git-open/git-open ~/bin/git-open
+checked-symlink ~/.dotfiles/vendor/php-build/php-build/bin/php-build  ~/bin/php-build
+checked-symlink ~/.dotfiles/vendor/nvm-sh/nvm ~/.nvm
+checked-symlink ~/.dotfiles/src/.vim ~/.config/nvim
 
 test -d ~/.rbenv/plugins || mkdir -pv ~/.rbenv/plugins
-checked_symlink ~/.dotfiles/vendor/rbenv/ruby-build ~/.rbenv/plugins/ruby-build
+checked-symlink ~/.dotfiles/vendor/rbenv/ruby-build ~/.rbenv/plugins/ruby-build
 
 if test -f ~/.dotfiles-private/install; then
     ~/.dotfiles-private/install

@@ -86,6 +86,7 @@ alias gk='gk_default&'
 alias gka='gitk --all&'
 alias gkb='gk_branches&'
 alias gl='git l'
+alias gla='git la'
 alias gll='git ll'
 alias glog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 alias gls='git ls'

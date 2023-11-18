@@ -23,5 +23,6 @@ My configuration files for bash, vim, git, and more. :zap: :zap: KAPOW.
 * https://github.com/samholman/dotfiles
 * https://github.com/skwp/dotfiles
 * https://tbaggery.com/2011/08/08/effortless-ctags-with-git.html
+* https://github.com/tmux-plugins/tmux-sensible
 
 &lt;3

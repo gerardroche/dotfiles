@@ -58,3 +58,5 @@ tags
 # # todo*.md
 
 # # .tmux
+
+/.phpactor.json

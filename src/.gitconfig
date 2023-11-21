@@ -43,10 +43,11 @@
 	ffnext = "!f() { git log HEAD...$1 --pretty=%H | tail -1 | xargs git merge --ff-only; }; f"
 	hi5 = "!f() { git commit -m \"^5 $*\"; }; f"
 	l = log --oneline --no-decorate -11
+	ll = log --oneline --no-decorate -42
 	la = "!f() { git log --all --pretty=format:\"%C(auto)%h %s %n%<(1)        %D\" --date=short --decorate --graph -n "${1:-10}"; }; f"
 	lg = log --graph
 	lk = log --graph --topo-order --abbrev-commit --date=short --decorate --all --boundary --pretty=format:'%Cgreen%ad %Cred%h%Creset -%C(yellow)%d%Creset %s %Cblue[%cn]%Creset'
-	ll = "!f() { git log --pretty=format:\"%C(auto)%h %s %n        %cn <%ae> %ad%n        %D\" --decorate --date=short --graph -n "${1:-7}"; }; f"
+	lj = "!f() { git log --pretty=format:\"%C(auto)%h %s %n        %cn <%ae> %ad%n        %D\" --decorate --date=short --graph -n "${1:-7}"; }; f"
 	lo = log --oneline
 	lp = log --patch
 	ls = "!f() { git log --oneline --decorate; }; f"

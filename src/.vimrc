@@ -354,7 +354,7 @@ autocmd FocusLost * silent! wall
 
 " Better git commit messages.
 " http://robots.thoughtbot.com/5-useful-tips-for-a-better-commit-message
-autocmd Filetype gitcommit setlocal spell textwidth=72
+autocmd Filetype gitcommit setlocal spell spellcapcheck= textwidth=72
 
 " Better completions.
 " https://jordaneldredge.com/blog/setting-up-php-completion-in-vim/

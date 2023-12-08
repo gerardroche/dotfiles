@@ -115,8 +115,7 @@ fi
 if test -z "$SKIP_SUBMODULES"; then
     git submodule init
     git submodule update
-    git submodule foreach 'git prune'
-    git submodule foreach 'git pull --ff-only'
+    git submodule foreach 'echo "\n\n\n\nUpdating $PWD" && git branch && git checkout master && git pull --ff-only origin master --set-upstream && git prune' || true
 fi
 
 for file in "$SOURCE_PATH/src/".*; do

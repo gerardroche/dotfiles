@@ -142,8 +142,3 @@ fi
 "$SOURCE_PATH"/src/bin/setup-keybindings
 
 fc-cache -f
-
-# Remove old unused files.
-if test -e ~/.bowerrc; then
-    rm -v ~/.bowerrc
-fi

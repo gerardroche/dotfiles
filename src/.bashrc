@@ -72,19 +72,19 @@ if [ "$color_prompt" = yes ]; then
     GIT_PS1_SHOWUNTRACKEDFILES="y"
     GIT_PS1_SHOWUPSTREAM="verbose name git"
 
-    # 31=RED 32=GREEN 33=ORANGE 34=BLUE 35=MAGENTA 36=TEAK 37=WHITE 38=SILVER
-    PS1CC="\[\e[0m\]"   # clear
-    PS1CE="\[\e[31m\]"  # error color
-    PS1CL="\[\e[38m\]"  # version label color
-    PS1CP="\[\e[34m\]"  # prompt color
-    PS1CD="\[\e[34m\]"  # pwd color
-    PS1CV="\[\e[37m\]"  # version color
+    # https://gkarthiks.github.io/quick-commands-cheat-sheet/bash_command.html
+    # https://tldp.org/HOWTO/Bash-Prompt-HOWTO/x329.html
+    PSCOLOR_CLR="\[\033[0m\]"       # clear
+    PSCOLOR_CWD="\[\033[34m\]"      # current working directory e.g. \w
+    PSCOLOR_ERR="\[\033[41;30m\]"   # error
+    PSCOLOR_PMT="\[\033[34m\]"      # prompt
 
     do_prompt_command() {
         exit_status=$?
-        prompt="$(if test $exit_status = 0;then echo "${PS1CP}\$${PS1CC}";else echo "${PS1CE}💥${PS1CC}";fi)"
-        __git_ps1 "${PS1CD}╭─ \w${PS1CC} " \
-                "\n${PS1CD}╰─${PS1CC} $prompt " "on %s"
+
+        prompt="$(if test $exit_status = 0;then echo "${PSCOLOR_PMT}❯${PSCOLOR_CLR}";else echo "${PSCOLOR_ERR}❯${PSCOLOR_CLR}";fi)"
+
+        __git_ps1 "${PSCOLOR_CWD}\w${PSCOLOR_CLR} " "\n$prompt " "%s"
     }
 
     PROMPT_COMMAND=do_prompt_command

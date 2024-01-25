@@ -35,6 +35,10 @@ gsettings set org.gnome.shell.keybindings toggle-message-tray "[]"
 # Remove <Super>p binding so that it can used for something else.
 gsettings set org.gnome.mutter.keybindings switch-monitor "['XF86Display']"
 
+# Remove <Super>o binding so that it can used for something else.
+# Original: ['<Super>o', 'XF86RotationLockToggle']
+gsettings set org.gnome.settings-daemon.plugins.media-keys rotate-video-lock-static "[]"
+
 #########
 # Misc. #
 #########

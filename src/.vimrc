@@ -79,6 +79,8 @@ endif
 Plug 'lifepillar/vim-solarized8'
 Plug 'morhetz/gruvbox'
 Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'ku1ik/vim-monokai'
+Plug 'sainnhe/sonokai'
 
 call plug#end()
 
@@ -230,12 +232,15 @@ let g:molokai_original=0
 let g:rehash256=1
 let g:solarized_termcolors=16
 let g:solarized_termtrans=1 " Fix some tmux colour issues
+let g:sonokai_better_performance = 1
 
 set background=dark
 
 " colorscheme dracula
-" colorscheme solarized8_dark
 colorscheme gruvbox
+" colorscheme monokai
+" colorscheme solarized8_dark
+" colorscheme sonokai
 
 " Sign column background === colorscheme background.
 silent! highlight SignColumn ctermbg=bg guibg=bg

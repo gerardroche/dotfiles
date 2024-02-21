@@ -154,3 +154,5 @@
 	showsignature = true
 [fetch]
 	prune = true
+[branch]
+	sort = -committerdate

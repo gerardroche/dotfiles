@@ -9,6 +9,7 @@ DESTINATION="$2"
 
 if test -e "$DESTINATION"; then
     RESOLVED_DESTINATION="$(readlink -f "$DESTINATION")"
+
     if test "$SOURCE" != "$RESOLVED_DESTINATION"; then
         RESOLVED_SOURCE="$(readlink -f "$SOURCE")"
         if test "$RESOLVED_SOURCE" != "$RESOLVED_DESTINATION"; then
@@ -21,6 +22,7 @@ if test -e "$DESTINATION"; then
             echo
         fi
     fi
+
 elif test ! -e "$SOURCE"; then
     echo >&2 "Error: Source file or directory '$SOURCE' does not exist. Cannot create a symbolic link."
 elif test -d "$SOURCE"; then

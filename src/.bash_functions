@@ -347,7 +347,8 @@ c() {
         return
     fi
 
-    if [[ "$PWD" = "$PROJECTS_PATH"/* ]]; then # we are within a project; go to its root
+    # we are within a project; go to its root
+    if [[ "$PWD" = "$PROJECTS_PATH"/* ]]; then
 
         path="$PWD"
         projects_path_depth=
@@ -375,8 +376,8 @@ c() {
 
             return
         fi
-    else # we are not within a project; go to projects path
-
+    else
+        # we are not within a project; go to projects path
         cd "$PROJECTS_PATH"
     fi
 }

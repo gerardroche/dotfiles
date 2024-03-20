@@ -1,5 +1,4 @@
 [advice]
-
 	statusHints = false
 	detachedHead = false
 
@@ -69,90 +68,56 @@
 	zap = "!f() { git add -A . && git commit -m \":zap: KAPOW\"; }; f"
 
 [bash]
-
 	showDirtyState = true
-
+[branch]
+    sort = -committerdate
 [color]
-
 	ui = auto
-
 [color "branch"]
-
 	current = green
 	remote = blue
-
 [color "diff"]
-
 	frag = cyan
 	func = cyan reverse
 	meta = dim reverse
  	new = green
 	old = red
 	whitespace = red reverse
-
 [color "interactive"]
-
 	prompt = blue reverse
-
+[commit]
+    gpgSign = true
 [core]
-
+    autocrlf = input
 	excludesfile = ~/.gitexcludes
 	editor = vim
 	hooksPath = ~/.githooks
-	autocrlf = input
-
+[include]
+    path = ~/.gitconfig-private
 [diff]
-
 	mnemonicprefix = true
-
+[fetch]
+    prune = true
 [flake8]
-
 	strict = true
-
 [help]
-
 	autocorrect = 10
-
 [interactive]
-
 	singlekey = true
-
 [merge]
-
 	branchdesc = true
 	log = 65
 	stat = true
 	summary = true
-
 [mergetool]
-
 	keepBackup = false
-
+[og]
+    showsignature = true
 [push]
-
 	default = simple
 	followTags = true
-
 [status]
-
 	showUntrackedFiles = all
-
 [url "https://github"]
-
 	# Because "git://" urls are causing major performance issues (ubuntu)
 	insteadOf = git://github
-
-[user]
-
-	name = Gerard Roche
-	email = gerardroche@users.noreply.github.com
-	signingKey = 5A9C047B8E53DC92
-
-[commit]
-	gpgSign = true
-[og]
-	showsignature = true
-[fetch]
-	prune = true
-[branch]
-	sort = -committerdate

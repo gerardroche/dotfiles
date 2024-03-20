@@ -135,9 +135,9 @@ reload() {
     update_configs
 }
 
-readonly VERSION="1.0.2"
-readonly PREFIX="$HOME/.phpenv"
-readonly PHP_BUILD_BIN="$HOME/bin/php-build"
+VERSION="1.0.3"
+PREFIX="$HOME/.phpenv"
+PHP_BUILD_BIN="$HOME/bin/php-build"
 
 if test ! -f "$PHP_BUILD_BIN" || test ! -x "$PHP_BUILD_BIN"; then
     echo >&2 "$(basename "$0"): $(basename "$PHP_BUILD_BIN") not found"

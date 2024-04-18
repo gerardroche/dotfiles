@@ -121,3 +121,5 @@
 [url "https://github"]
 	# Because "git://" urls are causing major performance issues (ubuntu)
 	insteadOf = git://github
+[init]
+	defaultBranch = master

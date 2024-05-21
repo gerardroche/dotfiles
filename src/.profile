@@ -55,9 +55,8 @@ if test -z "$TMUX"; then
 fi
 
 export EDITOR=vi
+
 export GPG_TTY=$(tty)
-export PROJECTS_PATH=~/projects
-export VENDOR_PATH=~/vendor
 
 # Make sure nvm dir path is resolved if it's a symlink.
 # Fixes "When NVM_DIR is a symlink nvm_ls breaks"
@@ -67,11 +66,12 @@ export NVM_DIR="$(readlink -nf ~/.nvm)"
 # NPM
 export NPM_CONFIG_FUND=false
 
-# Fix Gem issue (I can't remember exactly what the issue was)
-unset GEM_HOME
-
 # Python
 export PYENV_ROOT="$(readlink -nf ~/.pyenv)"
+
+# Ruby
+# Fix Gem issue (I can't remember exactly what the issue was)
+unset GEM_HOME
 
 # Private.
 if [ -f ~/.profile-private ]; then
@@ -86,9 +86,8 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-# I want node via nvm to be available globally, i.e., no need to install node
-# globally by some other means. In order for this to work, nvm must be loaded
-# at system startup, but also when bash or tmux session starts, see bashrc.
+# I want nvm node to be available globally. In order for this to work, nvm must
+# be loaded at startup, but also when bash or tmux session starts, see bashrc.
 if test -z "$TMUX"; then
     # If running nvm, load it.
     if [ -n "$NVM_DIR" ]; then

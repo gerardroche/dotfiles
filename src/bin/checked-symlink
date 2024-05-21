@@ -7,31 +7,56 @@ unset IFS
 SOURCE="$1"
 DESTINATION="$2"
 
-if test -e "$DESTINATION"; then
-    RESOLVED_DESTINATION="$(readlink -f "$DESTINATION")"
+# echo "checked-symlink $SOURCE -> $DESTINATION"
 
-    if test "$SOURCE" != "$RESOLVED_DESTINATION"; then
-        RESOLVED_SOURCE="$(readlink -f "$SOURCE")"
-        if test "$RESOLVED_SOURCE" != "$RESOLVED_DESTINATION"; then
-            echo
-            echo >&2 "Error: Destination file '$DESTINATION' already exists."
-            echo >&2 "       Cannot create a symbolic link:"
-            echo >&2 "       '$SOURCE' <- '$DESTINATION'"
-            echo >&2 "       '$SOURCE' != '$DESTINATION"
-            echo >&2 "       '$RESOLVED_SOURCE' != '$RESOLVED_DESTINATION"
-            echo
-        fi
+if test -z "$SOURCE"; then
+    echo >&2 "$(basename "$0"): missing source operand"
+    return
+fi
+
+if test -z "$DESTINATION"; then
+    echo >&2 "$(basename "$0"): missing destination operand after '$SOURCE'"
+    return
+fi
+
+if test ! -e "$SOURCE"; then
+    echo >&2 "$(basename "$0"): cannot stat '$SOURCE': No such file or directory"
+    return
+fi
+
+if test -e "$DESTINATION"; then
+
+    # if test "x$SOURCE" = "x$DESTINATION"; then
+    #     return
+    # fi
+
+    RESOLVED_DESTINATION="$(readlink -f "$DESTINATION")"
+    # if test "x$SOURCE" = "x$RESOLVED_DESTINATION"; then
+    #     return
+    # fi
+
+    RESOLVED_SOURCE="$(readlink -f "$SOURCE")"
+
+    if test "x$RESOLVED_SOURCE" = "x$RESOLVED_DESTINATION"; then
+        return
     fi
 
-elif test ! -e "$SOURCE"; then
-    echo >&2 "Error: Source file or directory '$SOURCE' does not exist. Cannot create a symbolic link."
-elif test -d "$SOURCE"; then
-    ln -sfnv "$SOURCE" "$DESTINATION"
-elif test -f "$SOURCE"; then
-    ln -sfv "$SOURCE" "$DESTINATION"
-else
-    echo
-    echo >&2 "Error: Source '$SOURCE' must be a regular file or directory."
-    echo >&2 "       Cannot create symlink."
-    echo
+    echo >&2 "$(basename "$0"): cannot create symlink $DESTINATION -> $SOURCE"
+    echo >&2 "$(basename "$0"):     Destination already exists!"
+    echo >&2 "$(basename "$0"):     Expect: $RESOLVED_SOURCE"
+    echo >&2 "$(basename "$0"):     Actual: $RESOLVED_DESTINATION"
+
+    return
 fi
+
+if test -d "$SOURCE"; then
+    ln -sfnv "$SOURCE" "$DESTINATION"
+    return
+fi
+
+if test -f "$SOURCE"; then
+    ln -sfv "$SOURCE" "$DESTINATION"
+    return
+fi
+
+echo >&2 "$(basename "$0"): could not create link '$SOURCE' -> '$DESTINATION'"

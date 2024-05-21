@@ -3,8 +3,9 @@
 set -e
 unset CDPATH
 unset IFS
-readonly SOURCE="$(readlink -nf "$0")"
-readonly SOURCE_PATH="$(dirname "$SOURCE")"
+
+SOURCE="$(readlink -nf "$0")"
+SOURCE_PATH="$(dirname "$SOURCE")"
 
 create_home_dir_symlink() {
     source="$1"
@@ -31,7 +32,14 @@ is_ubuntu_20_04() {
     test "x$(lsb_release -r | cut -f2)" = "x20.04"
 }
 
-cd "$SOURCE_PATH"
+# https://askubuntu.com/a/182695
+has_apt_repository() {
+    find /etc/apt/ -name *.list \
+        | xargs cat \
+        | grep ^[[:space:]]*deb \
+        | grep -v deb-src \
+        | grep "/$1/" >/dev/null 2>&1
+}
 
 SKIP_DEPS=
 SKIP_SUBMODULES=
@@ -47,13 +55,22 @@ while test "$#" != 0; do
     shift
 done
 
-if test -z "$SKIP_DEPS"; then
-    sudo apt-get autoclean
-    sudo apt-get autoremove
-    sudo apt-get update
+cd "$SOURCE_PATH"
 
+if test -z "$SKIP_DEPS"; then
+    sudo apt-get autoclean -q
+    sudo apt-get autoremove -q
+
+    # if ! has_apt_repository "neovim-ppa/stable"; then
+    #     sudo add-apt-repository ppa:neovim-ppa/stable
+    # fi
+
+    sudo apt-get update -q
+
+    # command -v nvim >/dev/null 2>&1 || sudo apt-get install neovim
     command -v bsdtar >/dev/null 2>&1 || sudo apt-get install libarchive-tools
     command -v chromium-browser >/dev/null 2>&1 || sudo apt-get install chromium-browser
+    command -v clang >/dev/null 2>&1 || sudo apt-get installclang
     command -v cmake  >/dev/null 2>&1 || sudo apt-get install cmake
     command -v ctags >/dev/null 2>&1 || sudo apt-get install exuberant-ctags
     command -v curl >/dev/null 2>&1 || sudo apt-get install curl
@@ -71,16 +88,24 @@ if test -z "$SKIP_DEPS"; then
     command -v lcov >/dev/null 2>&1 || sudo apt-get install lcov
     command -v multitail >/dev/null 2>&1 || sudo apt-get install multitail
     command -v netstat >/dev/null 2>&1 || sudo apt-get install net-tools
+    command -v pass >/dev/null 2>&1 || sudo apt-get install pass
     command -v pip3 >/dev/null 2>&1 || sudo apt-get install python3-pip
     command -v rename >/dev/null 2>&1 || sudo apt-get install rename
+    command -v rg >/dev/null 2>&1 || sudo apt-get install ripgrep
     command -v sqlite3 >/dev/null 2>&1 || sudo apt-get install sqlite3
+    command -v tar >/dev/null 2>&1 || sudo apt-get install tar
     command -v tmux >/dev/null 2>&1 || sudo apt-get install tmux
     command -v tree >/dev/null 2>&1 || sudo apt-get install tree
-    command -v tuxguitar >/dev/null 2>&1 || sudo apt-get install tuxguitar tuxguitar-alsa tuxguitar-oss tuxguitar-jsa
     command -v unzip >/dev/null 2>&1 || sudo apt-get install unzip
+    command -v wl-copy >/dev/null 2>&1 || sudo apt-get install wl-clipboard
     command -v wmctrl  >/dev/null 2>&1 || sudo apt-get install wmctrl
     command -v xclip >/dev/null 2>&1 || sudo apt-get install xclip
     command -v zstd >/dev/null 2>&1 || sudo apt-get install zstd
+
+    if ! is_ubuntu_20_04; then
+        command -v btop >/dev/null 2>&1 || sudo apt-get install btop
+        command -v xournalpp >/dev/null 2>&1 || sudo apt-get install xournalpp
+    fi
 
     dpkg -l | grep "ii  locales " >/dev/null 2>&1 || sudo apt-get install locales
     dpkg -l | grep git-extras >/dev/null 2>&1 || sudo apt-get install git-extras
@@ -103,7 +128,7 @@ if test -z "$SKIP_DEPS"; then
     # PIP
     python3 -m pip install --upgrade --user pip
 
-    # Tools.
+    # Python tools.
     python3 -m pip install --upgrade --user flake8
     python3 -m pip install --upgrade --user flake8-docstrings
     python3 -m pip install --upgrade --user gcovr
@@ -118,27 +143,37 @@ if test -z "$SKIP_SUBMODULES"; then
     git submodule foreach 'echo "\n\n\n\nUpdating $PWD" && git branch && git checkout master && git pull --ff-only origin master --set-upstream && git prune' || true
 fi
 
-for file in "$SOURCE_PATH/src/".*; do
-    create_home_dir_symlink "$file"
+# Add home links.
+for path in "$SOURCE_PATH/src/".[^.]* "$SOURCE_PATH"/src/*; do
+    create_home_dir_symlink "$path"
 done
 
-for file in "$SOURCE_PATH"/src/*; do
-    create_home_dir_symlink "$file"
-done
-
+# Add vendor links.
+checked-symlink ~/.dotfiles/vendor/nvm-sh/nvm ~/.nvm
 checked-symlink ~/.dotfiles/vendor/paulirish/git-open/git-open ~/bin/git-open
 checked-symlink ~/.dotfiles/vendor/php-build/php-build/bin/php-build  ~/bin/php-build
-checked-symlink ~/.dotfiles/vendor/nvm-sh/nvm ~/.nvm
-checked-symlink ~/.dotfiles/src/.vim ~/.config/nvim
+checked-symlink ~/.dotfiles/vendor/pyenv/pyenv ~/.pyenv
+checked-symlink ~/.dotfiles/vendor/rbenv/rbenv ~/.rbenv
 
+# Add vendor rbenv plugin links.
+# Ensure rbenv plugins directory exists.
 test -d ~/.rbenv/plugins || mkdir -pv ~/.rbenv/plugins
 checked-symlink ~/.dotfiles/vendor/rbenv/ruby-build ~/.rbenv/plugins/ruby-build
+
+# Legacy patch.
+if test "x$(readlink -f ~/.config/nvim)" = "x$(readlink -f ~/.dotfiles/src/.vim)"; then
+    rm ~/.config/nvim
+fi
+
+# Nvim links.
+checked-symlink ~/.dotfiles/src/nvim ~/.config/nvim
 
 if test -f ~/.dotfiles-private/install; then
     ~/.dotfiles-private/install
 fi
 
-"$SOURCE_PATH"/src/bin/setup-settings
-"$SOURCE_PATH"/src/bin/setup-keybindings
+~/bin/setup-settings
+~/bin/setup-keybindings
 
+# Build font cache.
 fc-cache -f

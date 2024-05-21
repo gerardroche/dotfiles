@@ -32,45 +32,104 @@ complete -F __dotfiles_completion_projects c
 complete -F __dotfiles_completion_projects mx
 complete -F __dotfiles_completion_vendors v
 
-# Git Aliases http://stackoverflow.com/a/15009611
+# Git Aliases
+# http://stackoverflow.com/a/15009611
 if [ -f /usr/share/bash-completion/completions/git ]; then
     . /usr/share/bash-completion/completions/git
 
     if test "x$(lsb_release -r | cut -f2)" = "x20.04"; then
         __git_complete g _git
+        __git_complete got _git
     else
         __git_complete g _git_main
+        __git_complete got _git_main
     fi
 
     __git_complete d _git_diff
     __git_complete db _git_branch
+    __git_complete ds _git_diff
     __git_complete ga _git_add
+    __git_complete gaa _git_add
     __git_complete gal _git_add
+    __git_complete gap _git_add
+    __git_complete gau _git_add
     __git_complete gb _git_branch
+    __git_complete gbD _git_branch
+    __git_complete gbM _git_branch
+    __git_complete gba _git_branch
+    __git_complete gbd _git_branch
+    __git_complete gbm _git_branch
     __git_complete gc _git_commit
     __git_complete gca _git_commit
-    __git_complete gconext _git_merge
+    __git_complete gcb _git_checkout
+    __git_complete gci _git_commit
+    __git_complete gcm _git_commit
+    __git_complete gcp _git_cherry_pick
+    __git_complete gcv _git_commit
+    __git_complete gd _git_diff
+    __git_complete gdc _git_diff
+    __git_complete gds _git_diff
+    __git_complete gdw _git_diff
     __git_complete gf _git_fetch
     __git_complete gff _git_merge
-    __git_complete gffnext _git_merge
+    __git_complete gffod _git_merge
+    __git_complete gffom _git_merge
+    __git_complete gffum _git_merge
+    __git_complete gfg _git_fetch
+    __git_complete gfo _git_fetch
+    __git_complete gfp _git_fetch
+    __git_complete gfu _git_fetch
     __git_complete gl _git_log
     __git_complete glg _git_log
+    __git_complete glk _git_log
     __git_complete gll _git_log
-    __git_complete gls _git_log
+    __git_complete glo _git_log
+    __git_complete glp _git_log
+    __git_complete glt _git_log
     __git_complete gm _git_merge
+    __git_complete gmod _git_merge
+    __git_complete gmom _git_merge
+    __git_complete gmt _git_mergetool
     __git_complete go _git_checkout
-    __git_complete gp _git_cherry_pick
+    __git_complete gob _git_checkout
+    __git_complete god _git_checkout
+    __git_complete gom _git_checkout
+    __git_complete gp _git_pull
+    __git_complete gpff _git_pull
+    __git_complete gpffg _git_pull
+    __git_complete gpffo _git_pull
+    __git_complete gpffp _git_pull
+    __git_complete gpffu _git_pull
+    __git_complete gpop _git_stash
+    __git_complete gpt _git_push
     __git_complete gr _git_rebase
+    __git_complete gra _git_rebase
     __git_complete grb _git_rebase
+    __git_complete grc _git_rebase
+    __git_complete grd _git_rebase
+    __git_complete gre _git_reset
+    __git_complete grh _git_reset
     __git_complete gri _git_rebase
+    __git_complete grv _git_remote
+    __git_complete gs _git_status
+    __git_complete gsl _git_stash
+    __git_complete gss _git_stash
+    __git_complete pop _git_stash
+    __git_complete push _git_push
     __git_complete s _git_status
+    __git_complete sta _git_stash
 
 fi
 
-# rbenv https://github.com/rbenv/rbenv
+# https://github.com/rbenv/rbenv
 if [ -f ~/.rbenv/completions/rbenv.bash ]; then
     . ~/.rbenv/completions/rbenv.bash
 fi
 
+# https://github.com/pyenv/pyenv
+if [ -f ~/.pyenv/completions/pyenv.bash ]; then
+    . ~/.pyenv/completions/pyenv.bash
+fi
+
 # https://learn.hashicorp.com/tutorials/terraform/install-cli?in=terraform/aws-get-started
-complete -C /usr/bin/terraform terraform
+# complete -C /usr/bin/terraform terraform

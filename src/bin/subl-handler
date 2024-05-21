@@ -1,18 +1,18 @@
 #!/bin/sh
 #
-# == Usage
+# == Setup
 #
 # 1. Open firefox about:config
 # 2. Set "network.protocol-handler.expose.subl" to false
 # 3. When firefox asks what program to use select this script
 #
-# @see https://askubuntu.com/questions/527166/how-to-set-subl-protocol-handler-with-unity
+# @see https://askubuntu.com/a/919825
 # @see https://github.com/metricfu/metric_fu/wiki/Custom-Prefix-Configuration-(Ubuntu,-Sublime,-and-Firefox)
 
 set -e
 unset CDPATH
 unset IFS
 
-file="$(echo "$1" | sed "s/^subl\:\/\/open?url=file\:\/\///;s/%2F/\//g;s/&line=/:/;s/&column=/:/")"
+SUBL_FILE="$(echo "$1" | sed "s/^subl\:\/\/open?url=file\:\/\///;s/%2F/\//g;s/&line=/:/;s/&column=/:/")"
 
-subl "$file"
+subl "$SUBL_FILE"

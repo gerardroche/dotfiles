@@ -1,5 +1,4 @@
 set guioptions-=e
-" set guioptions-=m
 set guioptions-=r
 set guioptions-=R
 set guioptions-=t

@@ -4,68 +4,102 @@
 
 [alias]
 
-	a = add
-	aa = add --all
-	add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
-	al = add .
-	aliases = config --get-regexp alias
-	ap = add --patch
-	au = add --update
-	b = branch
-	bD = branch --delete --force
-	bM = branch --move --force
-	ba = branch --all
-	bd = branch --delete
-	bm = branch --move
-	c = commit
-	ca = commit --all
-	cam = commit --amend
-	cb = checkout -b
-	cd = checkout develop
-	changes = "!f() { git log --no-merges $1 --not $2 --format=\"%h %s%+b\"; }; f"
-	ci = commit --interactive
-	cl = "!f() { git log --oneline --no-decorate master..HEAD; }; f"
-	cm = checkout master
-	cm = commit --message
-	co = checkout
-	conext = "!f() { git log HEAD...$1 --pretty=%H | tail -1 | xargs git checkout; }; f"
-	contributors = shortlog --summary --numbered # List contributors with number of commits https://github.com/mathiasbynens/dotfiles/blob/e32bc6cc07e1e25ba0821c3c20b488ead2133e0a/.gitconfig
-	coprev = checkout HEAD^
-	ctags = "!.git/hooks/ctags"
-	cv = commit --verbose
-	d = diff
-	dc = diff --cached
-	ds = diff --staged
-	dw = diff --word-diff
-	edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; vim `f`"
-	f = fetch
-	ffnext = "!f() { git log HEAD...$1 --pretty=%H | tail -1 | xargs git merge --ff-only; }; f"
-	hi5 = "!f() { git commit -m \"^5 $*\"; }; f"
-	l = log --oneline --no-decorate -11
-	ll = log --oneline --no-decorate -42
-	la = "!f() { git log --all --pretty=format:\"%C(auto)%h %s %n%<(1)        %D\" --date=short --decorate --graph -n "${1:-10}"; }; f"
-	lg = log --graph
-	lk = log --graph --topo-order --abbrev-commit --date=short --decorate --all --boundary --pretty=format:'%Cgreen%ad %Cred%h%Creset -%C(yellow)%d%Creset %s %Cblue[%cn]%Creset'
-	lj = "!f() { git log --pretty=format:\"%C(auto)%h %s %n        %cn <%ae> %ad%n        %D\" --decorate --date=short --graph -n "${1:-7}"; }; f"
-	lo = log --oneline
-	lp = log --patch
-	ls = "!f() { git log --oneline --decorate; }; f"
-	lsallmybranches = "!git lsbranches | grep \"`git config user.name`\" | grep -v \"refs/stash\""
-	lsbranches = "for-each-ref --format=' %(authorname) %09 %(refname)' --sort=authorname"
-	lsmybranches = "!git lsbranches | grep \"`git config user.name`\" | grep \"refs/head\""
-	lt = log --topo-order
-	m = merge
-	mt = mergetool
-	o = checkout
-	ob = checkout -b
-	r = rebase
-	resethard = reset --hard
-	rh = reset --hard
-	s = status
-	t = "!f() { git tag -l | sort -V | tail; }; f"
-	w = "!f() { git commit -m \"$*\"; }; f"
-	wa = "!f() { git add -A . && git commit -m \":metal: $*\"; }; f"
-	zap = "!f() { git add -A . && git commit -m \":zap: KAPOW\"; }; f"
+    a = add
+    aa = add .
+    al = add --all
+    ap = add --patch
+    au = add --update
+
+    b = branch
+    bD = branch --delete --force
+    bM = branch --move --force
+    ba = branch --all
+    bd = branch --delete
+    bm = branch --move
+
+    c = commit
+    ca = commit --amend
+    cb = checkout -b
+    ci = commit --interactive
+    cm = commit --message
+    cp = cherry-pick --no-commit
+    cv = commit --verbose
+
+    d = diff
+    dc = diff --cached
+    ds = diff --staged
+    dw = diff --word-diff
+
+    f = fetch
+    ff = merge --ff-only
+    ffne = "!f() { git log HEAD...$1 --pretty=%H | tail -1 | xargs git merge --ff-only; }; f"
+    ffod = merge --ff-only origin/develop
+    ffom = merge --ff-only origin/master
+    ffum = merge --ff-only upstream/master
+    fg = fetch gerardroche
+    fo = fetch origin
+    fp = fetch --prune
+    fu = fetch upstream
+
+    l = log --oneline --no-decorate -11
+    lg = log --graph
+    lk = log --graph --topo-order --abbrev-commit --date=short --decorate --all --boundary --pretty=format:'%Cgreen%ad %Cred%h%Creset -%C(yellow)%d%Creset %s %Cblue[%cn]%Creset'
+    ll = log --oneline --no-decorate -42
+    lo = log --oneline
+    lp = log --patch
+    lt = log --topo-order
+
+    m = merge
+    mod = merge --ff-only origin/develop
+    mom = merge --ff-only origin/master
+    mt = mergetool
+
+    o = checkout
+    ob = checkout -b
+    od = checkout develop
+    om = checkout master
+
+    p = pull
+    pff = pull --ff-only
+    pffg = pull --ff-only gerardroche
+    pffo = pull --ff-only origin
+    pffp = pull --ff-only --prune
+    pffu = pull --ff-only upstream
+    pop = stash pop
+    pt = push --tags
+
+    r = rebase
+    ra = rebase --abort
+    rb = rebase
+    rc = rebase --continue
+    rd = rebase develop
+    re = reset
+    rh = reset --hard
+    ri = rebase -i
+    rv = remote -v
+
+    s = status
+    sl = stash list
+    ss = stash save --include-untracked
+
+    add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
+    aliases = config --get-regexp alias
+    branch-delete-merged = "!git branch-list-merged | xargs git branch -d"
+    branch-list-merged = "!git branch --merged develop | grep -v -E '(develop|origin|master)'"
+    changes = "!f() { git log --no-merges $1 --not $2 --format=\"%h %s%+b\"; }; f"
+    cleanfull = clean -dxf
+    conext = "!f() { git log HEAD...$1 --pretty=%H | tail -1 | xargs git checkout; }; f"
+    contributors = shortlog --summary --numbered # List contributors with number of commits https://github.com/mathiasbynens/dotfiles/blob/e32bc6cc07e1e25ba0821c3c20b488ead2133e0a/.gitconfig
+    coprev = checkout HEAD^
+    ctags = "!.git/hooks/ctags"
+    edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; vim `f`"
+    lsallmybranches = "!git lsbranches | grep \"`git config user.name`\" | grep -v \"refs/stash\""
+    lsbranches = "for-each-ref --format=' %(authorname) %09 %(refname)' --sort=authorname"
+    lsmybranches = "!git lsbranches | grep \"`git config user.name`\" | grep \"refs/head\""
+    tags-list = "!f() { git tag -l | sort -V | tail; }; f"
+    w = "!f() { git commit -m \"$*\"; }; f"
+    wa = "!f() { git add -A . && git commit -m \":metal: $*\"; }; f"
+    zap = "!f() { git add -A . && git commit -m \":zap: KAPOW\"; }; f"
 
 [bash]
 	showDirtyState = true
@@ -89,8 +123,8 @@
     gpgSign = true
 [core]
     autocrlf = input
+    editor = nvim
 	excludesfile = ~/.gitexcludes
-	editor = vim
 	hooksPath = ~/.githooks
 [include]
     path = ~/.gitconfig-private
@@ -118,8 +152,8 @@
 	followTags = true
 [status]
 	showUntrackedFiles = all
-[url "https://github"]
-	# Because "git://" urls are causing major performance issues (ubuntu)
-	insteadOf = git://github
+# [url "https://github"]
+# 	# Because "git://" urls are causing major performance issues (ubuntu)
+# 	insteadOf = git://github
 [init]
 	defaultBranch = master

@@ -4,8 +4,8 @@
 [submodule "vendor/rbenv/ruby-build"]
 	path = vendor/rbenv/ruby-build
 	url = https://github.com/rbenv/ruby-build.git
-[submodule "src/.rbenv"]
-	path = src/.rbenv
+[submodule "vendor/rbenv/rbenv"]
+	path = vendor/rbenv/rbenv
 	url = https://github.com/rbenv/rbenv.git
 [submodule "vendor/php-build/php-build"]
 	path = vendor/php-build/php-build
@@ -13,3 +13,6 @@
 [submodule "vendor/nvm-sh/nvm"]
 	path = vendor/nvm-sh/nvm
 	url = https://github.com/nvm-sh/nvm.git
+[submodule "vendor/pyenv/pyenv"]
+	path = vendor/pyenv/pyenv
+	url = https://github.com/pyenv/pyenv.git

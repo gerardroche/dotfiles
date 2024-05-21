@@ -81,9 +81,7 @@ if [ "$color_prompt" = yes ]; then
 
     do_prompt_command() {
         exit_status=$?
-
         prompt="$(if test $exit_status = 0;then echo "${PSCOLOR_PMT}❯${PSCOLOR_CLR}";else echo "${PSCOLOR_ERR}❯${PSCOLOR_CLR}";fi)"
-
         __git_ps1 "${PSCOLOR_CWD}\w${PSCOLOR_CLR} " "\n$prompt " "%s"
     }
 
@@ -167,7 +165,3 @@ if [ -n "$NVM_DIR" ]; then
         . "$NVM_DIR/nvm.sh"
     fi
 fi
-
-# Fix CTRL-S in Vim.
-# https://stackoverflow.com/questions/13648237/ctrls-horizontal-split-not-working-with-command-t-in-vim
-stty start undef stop undef

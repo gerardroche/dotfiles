@@ -1,9 +1,0 @@
-#!/bin/sh
-
-set -e
-unset CDPATH
-unset IFS
-
-if test -d .git; then
-    .git/hooks/ctags >/dev/null 2>&1 &
-fi

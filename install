@@ -28,10 +28,6 @@ create_home_dir_symlink() {
     checked-symlink "$source" "$destination"
 }
 
-is_ubuntu_20_04() {
-    test "x$(lsb_release -r | cut -f2)" = "x20.04"
-}
-
 # https://askubuntu.com/a/182695
 has_apt_repository() {
     find /etc/apt/ -name *.list \
@@ -67,8 +63,10 @@ if test -z "$SKIP_DEPS"; then
 
     sudo apt-get update -q
 
+    # command -v eza  >/dev/null 2>&1 || sudo apt-get install eza
     # command -v nvim >/dev/null 2>&1 || sudo apt-get install neovim
     command -v bsdtar >/dev/null 2>&1 || sudo apt-get install libarchive-tools
+    command -v btop >/dev/null 2>&1 || sudo apt-get install btop
     command -v chromium-browser >/dev/null 2>&1 || sudo apt-get install chromium-browser
     command -v clang >/dev/null 2>&1 || sudo apt-get installclang
     command -v cmake  >/dev/null 2>&1 || sudo apt-get install cmake
@@ -77,6 +75,7 @@ if test -z "$SKIP_DEPS"; then
     command -v dconf-editor >/dev/null 2>&1 || sudo apt-get install dconf-editor
     command -v figlet >/dev/null 2>&1 || sudo apt-get install figlet
     command -v firefox >/dev/null 2>&1 || sudo apt-get install firefox firefox-locale-en
+    command -v fzf  >/dev/null 2>&1 || sudo apt-get install fzf
     command -v getfacl >/dev/null 2>&1 || sudo apt-get install acl
     command -v gimp >/dev/null 2>&1 || sudo apt-get install gimp
     command -v git >/dev/null 2>&1 || sudo apt-get install git
@@ -100,15 +99,13 @@ if test -z "$SKIP_DEPS"; then
     command -v wl-copy >/dev/null 2>&1 || sudo apt-get install wl-clipboard
     command -v wmctrl  >/dev/null 2>&1 || sudo apt-get install wmctrl
     command -v xclip >/dev/null 2>&1 || sudo apt-get install xclip
+    command -v xournalpp >/dev/null 2>&1 || sudo apt-get install xournalpp
     command -v zstd >/dev/null 2>&1 || sudo apt-get install zstd
-
-    if ! is_ubuntu_20_04; then
-        command -v btop >/dev/null 2>&1 || sudo apt-get install btop
-        command -v xournalpp >/dev/null 2>&1 || sudo apt-get install xournalpp
-    fi
 
     dpkg -l | grep "ii  locales " >/dev/null 2>&1 || sudo apt-get install locales
     dpkg -l | grep git-extras >/dev/null 2>&1 || sudo apt-get install git-extras
+    dpkg -l | grep gnome-shell-extension-manager >/dev/null 2>&1 || sudo apt-get install gnome-shell-extension-manager
+    dpkg -l | grep gnome-shell-extensions >/dev/null 2>&1 || sudo apt-get install gnome-shell-extensions
     dpkg -l | grep ubuntu-restricted-extras >/dev/null 2>&1 || sudo apt-get install ubuntu-restricted-extras
     dpkg -l | grep vim.gtk >/dev/null 2>&1 || sudo apt-get install vim.gtk
 
@@ -120,10 +117,6 @@ if test -z "$SKIP_DEPS"; then
     dpkg -l | grep fonts-inconsolata >/dev/null 2>&1 || sudo apt-get install fonts-inconsolata
     dpkg -l | grep ttf-anonymous-pro >/dev/null 2>&1 || sudo apt-get install ttf-anonymous-pro
     dpkg -l | grep ttf-mscorefonts-installer >/dev/null 2>&1 || sudo apt-get install ttf-mscorefonts-installer
-
-    if is_ubuntu_20_04; then
-        dpkg -l | grep ttf-ubuntu-font-family >/dev/null 2>&1 || sudo apt-get install ttf-ubuntu-font-family
-    fi
 
     # PIP
     python3 -m pip install --upgrade --user pip
@@ -160,13 +153,8 @@ checked-symlink ~/.dotfiles/vendor/rbenv/rbenv ~/.rbenv
 test -d ~/.rbenv/plugins || mkdir -pv ~/.rbenv/plugins
 checked-symlink ~/.dotfiles/vendor/rbenv/ruby-build ~/.rbenv/plugins/ruby-build
 
-# Legacy patch.
-if test "x$(readlink -f ~/.config/nvim)" = "x$(readlink -f ~/.dotfiles/src/.vim)"; then
-    rm ~/.config/nvim
-fi
-
 # Nvim links.
-checked-symlink ~/.dotfiles/src/nvim ~/.config/nvim
+checked-symlink ~/.dotfiles/src/.nvim ~/.config/nvim
 
 if test -f ~/.dotfiles-private/install; then
     ~/.dotfiles-private/install

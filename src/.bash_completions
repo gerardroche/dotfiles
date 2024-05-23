@@ -37,13 +37,8 @@ complete -F __dotfiles_completion_vendors v
 if [ -f /usr/share/bash-completion/completions/git ]; then
     . /usr/share/bash-completion/completions/git
 
-    if test "x$(lsb_release -r | cut -f2)" = "x20.04"; then
-        __git_complete g _git
-        __git_complete got _git
-    else
-        __git_complete g _git_main
-        __git_complete got _git_main
-    fi
+    __git_complete g _git_main
+    __git_complete got _git_main
 
     __git_complete d _git_diff
     __git_complete db _git_branch

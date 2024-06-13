@@ -1,3 +1,11 @@
+# https://www.gnu.org/software/bash/manual/html_node/Readline-Init-File-Syntax.html
+
+set bell-style none
+set convert-meta off
+set input-meta on
+set meta-flag on
+set output-meta on
+
 # Make Tab autocomplete regardless of filename case.
 # If set to On, readline performs filename matching and completion in a
 # case-insensitive fashion.
@@ -8,6 +16,7 @@ set completion-ignore-case on
 # words which have more than one possible completion cause the matches to be
 # listed immediately instead of ringing the bell.
 set show-all-if-ambiguous on
+set show-all-if-unmodified on
 
 # Immediately add a trailing slash when autocompleting symlinks to directories.
 # If set to On, completed names which are symbolic links to directories have a
@@ -21,6 +30,8 @@ set mark-symlinked-directories on
 # search.
 "\e[B": history-search-forward
 "\e[A": history-search-backward
+"\e[C": forward-char
+"\e[D": backward-char
 
 # Ctrl+Left/Ctrl+Right for moving on the readline by word.
 # Move forward/backward to the end/start of the next/current-or-previous word.
@@ -39,7 +50,7 @@ set match-hidden-files off
 # Show all autocomplete results at once.
 # If set to On, readline uses an internal more-like pager to display a screenful
 # of possible completions at a time.
-set page-completions on
+set page-completions off
 
 # If there are more than 200 possible completions for a word, ask to show them
 # all.
@@ -67,3 +78,4 @@ set visible-stats on
 # completion that match characters after point in the word being completed, so
 # portions of the word following the cursor are not duplicated.
 set skip-completed-text on
+set colored-stats on

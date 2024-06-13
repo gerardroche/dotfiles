@@ -1,102 +1,84 @@
-
-__dotfiles_completion_reply_with() {
-    compopt -o nospace
-    COMPREPLY=( $( compgen -W "$1" -- "${COMP_WORDS[COMP_CWORD]}"  ) )
-}
-
-# Filters non alnum characters; replaces them with underscores
-__filter_completions() {
-    echo "$(echo "$1" | sed "s/[^a-zA-Z0-9\\/\\._-]/_/g")"
-}
-
-__dotfiles_completion_projects() {
-    COMPREPLY=( $( compgen -W "$(__filter_completions "$(projects)")" -- "${COMP_WORDS[COMP_CWORD]}"  ) )
-}
-
-__dotfiles_completion_vendors() {
-    COMPREPLY=( $( compgen -W "$(__filter_completions "$(vendors)")" -- "${COMP_WORDS[COMP_CWORD]}"  ) )
-}
-
-__dotfiles_completion_phpenv() {
-    if test "$COMP_CWORD" = 1; then
-        __dotfiles_completion_reply_with "install versions" 2>/dev/null
-    elif test "$COMP_CWORD" = 2; then
-        if test "${COMP_WORDS[1]}" = "install"; then
-            __dotfiles_completion_reply_with "$(phpenv install --complete)" 2>/dev/null
-        fi
-    fi
-}
-
-complete -F __dotfiles_completion_phpenv phpenv
-complete -F __dotfiles_completion_projects c
-complete -F __dotfiles_completion_projects mx
-complete -F __dotfiles_completion_vendors v
-
-# Git Aliases
-# http://stackoverflow.com/a/15009611
+# https://git-scm.com
 if [ -f /usr/share/bash-completion/completions/git ]; then
     . /usr/share/bash-completion/completions/git
 
     __git_complete g _git_main
+
     __git_complete got _git_main
+    __git_complete gti _git_main
 
     __git_complete d _git_diff
     __git_complete db _git_branch
     __git_complete ds _git_diff
+    __git_complete dw _git_diff
+    __git_complete pop _git_stash
+    __git_complete push _git_push
+    __git_complete s _git_status
+    __git_complete sta _git_stash
+
     __git_complete ga _git_add
     __git_complete gaa _git_add
     __git_complete gal _git_add
     __git_complete gap _git_add
     __git_complete gau _git_add
+
     __git_complete gb _git_branch
-    __git_complete gbD _git_branch
-    __git_complete gbM _git_branch
     __git_complete gba _git_branch
     __git_complete gbd _git_branch
     __git_complete gbm _git_branch
+
     __git_complete gc _git_commit
     __git_complete gca _git_commit
+    __git_complete gcad _git_commit
+    __git_complete gcam _git_commit
     __git_complete gcb _git_checkout
     __git_complete gci _git_commit
     __git_complete gcm _git_commit
     __git_complete gcp _git_cherry_pick
     __git_complete gcv _git_commit
+
     __git_complete gd _git_diff
     __git_complete gdc _git_diff
     __git_complete gds _git_diff
     __git_complete gdw _git_diff
+
     __git_complete gf _git_fetch
     __git_complete gff _git_merge
     __git_complete gffod _git_merge
     __git_complete gffom _git_merge
+    __git_complete gffud _git_merge
     __git_complete gffum _git_merge
-    __git_complete gfg _git_fetch
     __git_complete gfo _git_fetch
     __git_complete gfp _git_fetch
     __git_complete gfu _git_fetch
+
     __git_complete gl _git_log
     __git_complete glg _git_log
     __git_complete glk _git_log
     __git_complete gll _git_log
     __git_complete glo _git_log
     __git_complete glp _git_log
+    __git_complete gls _git_log
     __git_complete glt _git_log
+
     __git_complete gm _git_merge
+    __git_complete gmff _git_merge
     __git_complete gmod _git_merge
     __git_complete gmom _git_merge
     __git_complete gmt _git_mergetool
+
     __git_complete go _git_checkout
     __git_complete gob _git_checkout
     __git_complete god _git_checkout
     __git_complete gom _git_checkout
+
     __git_complete gp _git_pull
     __git_complete gpff _git_pull
-    __git_complete gpffg _git_pull
     __git_complete gpffo _git_pull
-    __git_complete gpffp _git_pull
     __git_complete gpffu _git_pull
     __git_complete gpop _git_stash
     __git_complete gpt _git_push
+
     __git_complete gr _git_rebase
     __git_complete gra _git_rebase
     __git_complete grb _git_rebase
@@ -106,25 +88,10 @@ if [ -f /usr/share/bash-completion/completions/git ]; then
     __git_complete grh _git_reset
     __git_complete gri _git_rebase
     __git_complete grv _git_remote
+
     __git_complete gs _git_status
     __git_complete gsl _git_stash
     __git_complete gss _git_stash
-    __git_complete pop _git_stash
-    __git_complete push _git_push
-    __git_complete s _git_status
-    __git_complete sta _git_stash
+    __git_complete gss _git_stash
 
 fi
-
-# https://github.com/rbenv/rbenv
-if [ -f ~/.rbenv/completions/rbenv.bash ]; then
-    . ~/.rbenv/completions/rbenv.bash
-fi
-
-# https://github.com/pyenv/pyenv
-if [ -f ~/.pyenv/completions/pyenv.bash ]; then
-    . ~/.pyenv/completions/pyenv.bash
-fi
-
-# https://learn.hashicorp.com/tutorials/terraform/install-cli?in=terraform/aws-get-started
-# complete -C /usr/bin/terraform terraform

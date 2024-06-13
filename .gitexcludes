@@ -19,8 +19,8 @@ Session.vim
 /.settings/
 
 # Sublime Text
-*.sublime-workspace
 *.sublime-project
+*.sublime-workspace
 
 # PhpStorm
 .idea
@@ -38,13 +38,12 @@ Session.vim
 .mypy_cache/
 
 # Packages
+*.tar
+*.tar.gz
 *.zip
 
 # Tags
 .TAGS
 .tags
-TAGS
 /tags
-
-# PHP
-/.phpactor.json
+TAGS

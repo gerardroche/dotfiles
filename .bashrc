@@ -16,11 +16,8 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
-
-# No less history (~/.lesshst file)
-export LESSHISTFILE=-
+HISTSIZE=5000
+HISTFILESIZE=10000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -28,7 +25,7 @@ shopt -s checkwinsize
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
-shopt -s globstar
+# shopt -s globstar
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -67,6 +64,7 @@ if [ "$color_prompt" = yes ]; then
     # See /usr/lib/git-core/git-sh-prompt
     GIT_PS1_DESCRIBE_STYLE="describe"
     GIT_PS1_SHOWCOLORHINTS="y"
+    GIT_PS1_SHOWCONFLICTSTATE="y"
     GIT_PS1_SHOWDIRTYSTATE="y"
     GIT_PS1_SHOWSTASHSTATE="y"
     GIT_PS1_SHOWUNTRACKEDFILES="y"
@@ -74,15 +72,13 @@ if [ "$color_prompt" = yes ]; then
 
     # https://gkarthiks.github.io/quick-commands-cheat-sheet/bash_command.html
     # https://tldp.org/HOWTO/Bash-Prompt-HOWTO/x329.html
-    PSCOLOR_CLR="\[\033[0m\]"       # clear
-    PSCOLOR_CWD="\[\033[34m\]"      # current working directory e.g. \w
-    PSCOLOR_ERR="\[\033[41;30m\]"   # error
-    PSCOLOR_PMT="\[\033[34m\]"      # prompt
+    PSC_C="\[\033[0m\]"       # clear
+    PSC_W="\[\033[34m\]"      # cwd
+    PSC_E="\[\033[41;30m\]"   # error
+    PSC_P="\[\033[34m\]"      # prompt
 
     do_prompt_command() {
-        exit_status=$?
-        prompt="$(if test $exit_status = 0;then echo "${PSCOLOR_PMT}❯${PSCOLOR_CLR}";else echo "${PSCOLOR_ERR}❯${PSCOLOR_CLR}";fi)"
-        __git_ps1 "${PSCOLOR_CWD}\w${PSCOLOR_CLR} " "\n$prompt " "%s"
+        __git_ps1 "$PSC_W\w$PSC_C " "\n\$(if [ \$? == 0 ];then echo \"$PSC_P❯$PSC_C\";else echo \"$PSC_E❯$PSC_C\";fi) " "%s"
     }
 
     PROMPT_COMMAND=do_prompt_command
@@ -126,6 +122,10 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
+if [ -f ~/.bash_aliases-private ]; then
+    . ~/.bash_aliases-private
+fi
+
 # Function definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_functions, instead of adding them here directly.
@@ -133,6 +133,10 @@ fi
 
 if [ -f ~/.bash_functions ]; then
     . ~/.bash_functions
+fi
+
+if [ -f ~/.bash_functions-private ]; then
+    . ~/.bash_functions-private
 fi
 
 # enable programmable completion features (you don't need to enable
@@ -146,22 +150,23 @@ if ! shopt -oq posix; then
         . /etc/bash_completion
     fi
 
-    # Enable custom programmable completion features.
-    # You may want to put all your additions into a separate file like
-    # ~/.bash_completions, i
+    # Enable custom programmable completion features. You may want to put all
+    # your additions into a separate file like ~/.bash_completions.
+
     if [ -f ~/.bash_completions ]; then
         . ~/.bash_completions
     fi
+
+    if [ -f ~/.bash_completions-private ]; then
+        . ~/.bash_completions-private
+    fi
 fi
 
-# Customisations.
+export EDITOR=vi
+export GPG_TTY=$(tty)
+export LESSHISTFILE=-
+export SUDO_EDITOR="$EDITOR"
+
 if [ -f ~/.bashrc-private ]; then
     . ~/.bashrc-private
-fi
-
-# If running nvm, load it.
-if [ -n "$NVM_DIR" ]; then
-    if [ -s "$NVM_DIR/nvm.sh" ]; then
-        . "$NVM_DIR/nvm.sh"
-    fi
 fi

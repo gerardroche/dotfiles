@@ -4,10 +4,8 @@
 # operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile ~/.gitignore_global
 
-/src/.vim/plugged/
-/src/bin/git-open
-/src/bin/php-build
-/src/bin/php[0-9]*
-/src/bin/subl
-/src/bin/subl3
-/src/bin/subl4
+/.vim/.netrwhist
+/.vim/autoload/plug.vim.old
+/.vim/plugged/
+/bin/git-open
+/bin/php-build

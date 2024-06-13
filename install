@@ -4,46 +4,16 @@ set -e
 unset CDPATH
 unset IFS
 
-SOURCE="$(readlink -nf "$0")"
-SOURCE_PATH="$(dirname "$SOURCE")"
+# Support for Ubuntu 22.04 will be removed soon.
+if [ "$(echo "$(lsb_release -rs) 22.04" | awk '{print ($1 >= $2)}')" != 1 ]; then
+    echo >&2 "Ubuntu $(lsb_release -rs) is not supported; >= 22.04 supported"
+    exit 1
+fi
 
-create_home_dir_symlink() {
-    source="$1"
-    source_basename="$(basename "$source")"
-
-    if test "x$source_basename" = "x."; then
-        return
-    fi
-
-    if test "x$source_basename" = "x.."; then
-        return
-    fi
-
-    if test "x$HOME/$source_basename" = "x$SOURCE_PATH"; then
-        echo >&2 "$0:create_home_dir_symlink() cannot link to self"
-        exit 1
-    fi
-
-    destination="$HOME/$source_basename"
-    checked-symlink "$source" "$destination"
-}
-
-# https://askubuntu.com/a/182695
-has_apt_repository() {
-    find /etc/apt/ -name *.list \
-        | xargs cat \
-        | grep ^[[:space:]]*deb \
-        | grep -v deb-src \
-        | grep "/$1/" >/dev/null 2>&1
-}
-
-SKIP_DEPS=
-SKIP_SUBMODULES=
+export DOTFILES_UPDATE=true
 while test "$#" != 0; do
     case "$1" in
-        --skip-dep*) SKIP_DEPS=true ;;
-        --skip-sub*) SKIP_SUBMODULES=true ;;
-        --skip-upd*) SKIP_DEPS=true; SKIP_SUBMODULES=true ;;
+        --no-update) export DOTFILES_UPDATE= ;;
         --) shift; break ;; # standard end of options list
         -*) echo >&2 "$0: unknown option '$1'"; exit 1 ;;
         *) echo >&2 "$0: unknown argument '$1'"; exit 1 ;;
@@ -51,117 +21,45 @@ while test "$#" != 0; do
     shift
 done
 
-cd "$SOURCE_PATH"
+echo '__________.__              .___       __________
+\______   \  | _____     __| _/____   \______   \__ __  ____   ____   ___________
+ |    |  _/  | \__  \   / __ |/ __ \   |       _/  |  \/    \ /    \_/ __ \_  __ \
+ |    |   \  |__/ __ \_/ /_/ \  ___/   |    |   \  |  /   |  \   |  \  ___/|  | \/
+ |______  /____(____  /\____ |\___  >  |____|_  /____/|___|  /___|  /\___  >__|
+        \/          \/      \/    \/          \/           \/     \/     \/
+'
 
-if test -z "$SKIP_DEPS"; then
-    sudo apt-get autoclean -q
-    sudo apt-get autoremove -q
+DOTFILES="$(dirname "$(readlink -nf -- "$0")")"
+DOTFILES_PRIVATE="$DOTFILES-private"
 
-    # if ! has_apt_repository "neovim-ppa/stable"; then
-    #     sudo add-apt-repository ppa:neovim-ppa/stable
-    # fi
-
-    sudo apt-get update -q
-
-    # command -v eza  >/dev/null 2>&1 || sudo apt-get install eza
-    # command -v nvim >/dev/null 2>&1 || sudo apt-get install neovim
-    command -v bsdtar >/dev/null 2>&1 || sudo apt-get install libarchive-tools
-    command -v btop >/dev/null 2>&1 || sudo apt-get install btop
-    command -v chromium-browser >/dev/null 2>&1 || sudo apt-get install chromium-browser
-    command -v clang >/dev/null 2>&1 || sudo apt-get installclang
-    command -v cmake  >/dev/null 2>&1 || sudo apt-get install cmake
-    command -v ctags >/dev/null 2>&1 || sudo apt-get install exuberant-ctags
-    command -v curl >/dev/null 2>&1 || sudo apt-get install curl
-    command -v dconf-editor >/dev/null 2>&1 || sudo apt-get install dconf-editor
-    command -v figlet >/dev/null 2>&1 || sudo apt-get install figlet
-    command -v firefox >/dev/null 2>&1 || sudo apt-get install firefox firefox-locale-en
-    command -v fzf  >/dev/null 2>&1 || sudo apt-get install fzf
-    command -v getfacl >/dev/null 2>&1 || sudo apt-get install acl
-    command -v gimp >/dev/null 2>&1 || sudo apt-get install gimp
-    command -v git >/dev/null 2>&1 || sudo apt-get install git
-    command -v gitk >/dev/null 2>&1 || sudo apt-get install gitk
-    command -v gnome-extensions  >/dev/null 2>&1 || sudo apt-get install gnome-extensions
-    command -v htop >/dev/null 2>&1 || sudo apt-get install htop
-    command -v jq >/dev/null 2>&1 || sudo apt-get install jq
-    command -v kitty >/dev/null 2>&1 || sudo apt-get install kitty
-    command -v lcov >/dev/null 2>&1 || sudo apt-get install lcov
-    command -v multitail >/dev/null 2>&1 || sudo apt-get install multitail
-    command -v netstat >/dev/null 2>&1 || sudo apt-get install net-tools
-    command -v pass >/dev/null 2>&1 || sudo apt-get install pass
-    command -v pip3 >/dev/null 2>&1 || sudo apt-get install python3-pip
-    command -v rename >/dev/null 2>&1 || sudo apt-get install rename
-    command -v rg >/dev/null 2>&1 || sudo apt-get install ripgrep
-    command -v sqlite3 >/dev/null 2>&1 || sudo apt-get install sqlite3
-    command -v tar >/dev/null 2>&1 || sudo apt-get install tar
-    command -v tmux >/dev/null 2>&1 || sudo apt-get install tmux
-    command -v tree >/dev/null 2>&1 || sudo apt-get install tree
-    command -v unzip >/dev/null 2>&1 || sudo apt-get install unzip
-    command -v wl-copy >/dev/null 2>&1 || sudo apt-get install wl-clipboard
-    command -v wmctrl  >/dev/null 2>&1 || sudo apt-get install wmctrl
-    command -v xclip >/dev/null 2>&1 || sudo apt-get install xclip
-    command -v xournalpp >/dev/null 2>&1 || sudo apt-get install xournalpp
-    command -v zstd >/dev/null 2>&1 || sudo apt-get install zstd
-
-    dpkg -l | grep "ii  locales " >/dev/null 2>&1 || sudo apt-get install locales
-    dpkg -l | grep git-extras >/dev/null 2>&1 || sudo apt-get install git-extras
-    dpkg -l | grep gnome-shell-extension-manager >/dev/null 2>&1 || sudo apt-get install gnome-shell-extension-manager
-    dpkg -l | grep gnome-shell-extensions >/dev/null 2>&1 || sudo apt-get install gnome-shell-extensions
-    dpkg -l | grep ubuntu-restricted-extras >/dev/null 2>&1 || sudo apt-get install ubuntu-restricted-extras
-    dpkg -l | grep vim.gtk >/dev/null 2>&1 || sudo apt-get install vim.gtk
-
-    # Git single key behaviour (interactive.singlekey setting).
-    # See https://superuser.com/a/817688/
-    dpkg -l | grep libterm-readkey-perl >/dev/null 2>&1 || sudo apt-get install libterm-readkey-perl
-
-    # Fonts.
-    dpkg -l | grep fonts-inconsolata >/dev/null 2>&1 || sudo apt-get install fonts-inconsolata
-    dpkg -l | grep ttf-anonymous-pro >/dev/null 2>&1 || sudo apt-get install ttf-anonymous-pro
-    dpkg -l | grep ttf-mscorefonts-installer >/dev/null 2>&1 || sudo apt-get install ttf-mscorefonts-installer
-
-    # PIP
-    python3 -m pip install --upgrade --user pip
-
-    # Python tools.
-    python3 -m pip install --upgrade --user flake8
-    python3 -m pip install --upgrade --user flake8-docstrings
-    python3 -m pip install --upgrade --user gcovr
-    python3 -m pip install --upgrade --user mypy
-    python3 -m pip install --upgrade --user pydocstyle
-
+if [ -n "$DOTFILES_UPDATE" ]; then
+    sudo apt update -qy
 fi
 
-if test -z "$SKIP_SUBMODULES"; then
-    git submodule init
-    git submodule update
-    git submodule foreach 'echo "\n\n\n\nUpdating $PWD" && git branch && git checkout master && git pull --ff-only origin master --set-upstream && git prune' || true
+"$DOTFILES/bin/lni" "$DOTFILES/.bash_aliases" "$HOME/.bash_aliases"
+"$DOTFILES/bin/lni" "$DOTFILES/.bash_completions" "$HOME/.bash_completions"
+"$DOTFILES/bin/lni" "$DOTFILES/.bash_functions" "$HOME/.bash_functions"
+"$DOTFILES/bin/lni" "$DOTFILES/.bash_login" "$HOME/.bash_login"
+"$DOTFILES/bin/lni" "$DOTFILES/.bash_logout" "$HOME/.bash_logout"
+"$DOTFILES/bin/lni" "$DOTFILES/.bash_profile" "$HOME/.bash_profile"
+"$DOTFILES/bin/lni" "$DOTFILES/.bashrc" "$HOME/.bashrc"
+"$DOTFILES/bin/lni" "$DOTFILES/.editorconfig" "$HOME/.editorconfig"
+"$DOTFILES/bin/lni" "$DOTFILES/.gitconfig" "$HOME/.gitconfig"
+"$DOTFILES/bin/lni" "$DOTFILES/.gitexcludes" "$HOME/.gitexcludes"
+"$DOTFILES/bin/lni" "$DOTFILES/.inputrc" "$HOME/.inputrc"
+"$DOTFILES/bin/lni" "$DOTFILES/.profile" "$HOME/.profile"
+"$DOTFILES/bin/lni" "$DOTFILES/.vim" "$HOME/.vim"
+"$DOTFILES/bin/lni" "$DOTFILES/.vimrc" "$HOME/.vimrc"
+"$DOTFILES/bin/lni" "$DOTFILES/bin" "$HOME/bin"
+"$DOTFILES/bin/lni" "$DOTFILES_PRIVATE/.bash_aliases" "$HOME/.bash_aliases-private" 2>/dev/null || true
+"$DOTFILES/bin/lni" "$DOTFILES_PRIVATE/.bash_completions" "$HOME/.bash_completions-private" 2>/dev/null || true
+"$DOTFILES/bin/lni" "$DOTFILES_PRIVATE/.bash_functions" "$HOME/.bash_functions-private" 2>/dev/null || true
+"$DOTFILES/bin/lni" "$DOTFILES_PRIVATE/.bashrc" "$HOME/.bashrc-private" 2>/dev/null || true
+"$DOTFILES/bin/lni" "$DOTFILES_PRIVATE/.gitconfig" "$HOME/.gitconfig-private" 2>/dev/null || true
+"$DOTFILES/bin/lni" "$DOTFILES_PRIVATE/.profile" "$HOME/.profile-private" 2>/dev/null || true
+
+if [ -f "$DOTFILES_PRIVATE/install" ]; then
+    "$DOTFILES_PRIVATE/install"
 fi
 
-# Add home links.
-for path in "$SOURCE_PATH/src/".[^.]* "$SOURCE_PATH"/src/*; do
-    create_home_dir_symlink "$path"
-done
-
-# Add vendor links.
-checked-symlink ~/.dotfiles/vendor/nvm-sh/nvm ~/.nvm
-checked-symlink ~/.dotfiles/vendor/paulirish/git-open/git-open ~/bin/git-open
-checked-symlink ~/.dotfiles/vendor/php-build/php-build/bin/php-build  ~/bin/php-build
-checked-symlink ~/.dotfiles/vendor/pyenv/pyenv ~/.pyenv
-checked-symlink ~/.dotfiles/vendor/rbenv/rbenv ~/.rbenv
-
-# Add vendor rbenv plugin links.
-# Ensure rbenv plugins directory exists.
-test -d ~/.rbenv/plugins || mkdir -pv ~/.rbenv/plugins
-checked-symlink ~/.dotfiles/vendor/rbenv/ruby-build ~/.rbenv/plugins/ruby-build
-
-# Nvim links.
-checked-symlink ~/.dotfiles/src/.nvim ~/.config/nvim
-
-if test -f ~/.dotfiles-private/install; then
-    ~/.dotfiles-private/install
-fi
-
-~/bin/setup-settings
-~/bin/setup-keybindings
-
-# Build font cache.
-fc-cache -f
+echo "Finished installation."

@@ -1,0 +1,157 @@
+# vim: noexpandtab
+
+[advice]
+	statusHints = false
+	detachedHead = false
+
+[alias]
+
+	a = add
+	aa = add .
+	amc = !git add --all && git commit --amend --reuse-message=HEAD
+	al = add --all
+	ap = add --patch
+	au = add --update
+
+	b = branch
+	ba = branch --all --verbose
+	bd = branch --delete --force
+	bm = branch --move --force
+
+	c = commit
+	ca = commit --amend
+	cad = commit --amend --all
+	cam = commit --all --message
+	cb = checkout -b
+	ci = commit --interactive
+	cm = commit --message
+	cp = cherry-pick --no-commit
+	cv = commit --verbose
+
+	d = diff
+	dc = diff --cached
+	ds = diff --staged
+	dw = diff --word-diff
+
+	f = fetch
+	ff = merge --ff-only
+	ffod = merge --ff-only origin/develop
+	ffom = merge --ff-only origin/master
+	ffud = merge --ff-only upstream/develop
+	ffum = merge --ff-only upstream/master
+	fo = fetch origin
+	fp = fetch --prune
+	fu = fetch upstream
+
+	l = log --oneline --graph --decorate -11
+	lg = log --graph
+	lk = log --graph --topo-order --abbrev-commit --date=short --decorate --all --boundary --pretty=format:'%Cgreen%ad %Cred%h%Creset -%C(yellow)%d%Creset %s %Cblue[%cn]%Creset'
+	ll = log --oneline
+	lo = log --oneline --no-decorate
+	lp = log --patch
+	ls = log --oneline --graph --decorate
+	lt = log --topo-order
+
+	m = merge
+	mff = merge --ff-only
+	mod = merge --ff-only origin/develop
+	mt = mergetool
+	mom = merge --ff-only origin/master
+
+	o = checkout
+	ob = checkout -b
+	od = checkout develop
+	om = checkout master
+
+	p = pull
+	pff = pull --ff-only
+	pffo = pull --ff-only --prune origin
+	pffu = pull --ff-only --prune upstream
+	pop = stash pop
+	pt = push --tags
+
+	r = rebase
+	ra = rebase --abort
+	rb = rebase
+	rc = rebase --continue
+	rd = rebase develop
+	re = reset
+	rh = reset --hard
+	ri = rebase -i
+	rv = remote -v
+
+	s = status
+	sl = stash list
+	ss = stash save --include-untracked
+
+	add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
+	aliases = config --get-regexp alias
+	clean-full = clean -dxf
+	ctags = !.git/hooks/ctags
+	delete-merged-branches = "!git branch-list-merged | xargs git branch -d"
+	edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; vim `f`"
+	ls-all-my-branches = "!git lsbranches | grep \"`git config user.name`\" | grep -v \"refs/stash\""
+	ls-branches = "for-each-ref --format=' %(authorname) %09 %(refname)' --sort=authorname"
+	ls-changes = "!f() { git log --no-merges $1 --not $2 --format=\"%h %s%+b\"; }; f"
+	ls-context = "!f() { git log HEAD...$1 --pretty=%H | tail -1 | xargs git checkout; }; f"
+	ls-contributors = shortlog --summary --numbered
+	ls-merged-branches = "!git branch --merged develop | grep -v -E '(develop|origin|master)'"
+	ls-my-branches = "!git lsbranches | grep \"`git config user.name`\" | grep \"refs/head\""
+	ls-tags = "!f() { git tag -l | sort -V | tail; }; f"
+	w = "!f() { [ -n \"$*\" ] && git commit -m \"$*\" || git commit; }; f"
+	wa = "!f() { git add -A . && git commit -m \"$(echo "$*" | sed 's/^$/:'"$(shuf -n 1 -e heart wink kiss love money pray rock smile victory wish yes)"':/')\"; }; f"
+
+[bash]
+	showDirtyState = true
+
+[branch]
+	sort = -committerdate
+
+[color]
+	ui = auto
+
+[commit]
+	gpgSign = true
+
+[core]
+	autocrlf = input
+	editor = vi
+	excludesfile = ~/.gitexcludes
+	hooksPath = ~/.githooks
+
+[include]
+	path = ~/.gitconfig-private
+
+[diff]
+	mnemonicprefix = true
+
+[fetch]
+	prune = true
+
+[help]
+	autocorrect = 10
+
+[interactive]
+	singleKey = true
+
+[merge]
+	branchdesc = true
+	log = 65
+	stat = true
+	summary = true
+
+[mergetool]
+	keepBackup = false
+
+[og]
+	showsignature = true
+
+[push]
+	default = simple
+	followTags = true
+
+[status]
+	showUntrackedFiles = all
+
+[init]
+	defaultBranch = master

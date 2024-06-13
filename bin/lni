@@ -1,0 +1,86 @@
+#!/bin/sh
+
+set -e
+unset CDPATH
+unset IFS
+
+if [ "$#" = 0 ] || [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
+    cat <<USAGE
+Usage: lni [OPTIONS] TARGET LINK_NAME
+
+Make links between files. An 'ln' decorator (improved ln).
+
+Options
+
+    -h, --help
+           display this help and exit
+
+Description
+
+    1. Check TARGET is not blank.
+
+    2. Check LINK_NAME is not blank.
+
+    3. Check TARGET exists (regardless of type).
+
+    4. If LINK_NAME is already a symlink and it points to the same location as
+    the TARGET, nothing is done. All symlinks are resolved recursively for the
+    LINK_NAME and TARGET before comparing their location.
+
+    5. If LINK_NAME exists (regardless of type), it is backed up.
+
+    6. If TARGET exists and is a regular file, e.g., not a directory, a symbolic
+    link is created from LINK_NAME -> TARGET. If the destination exists, it is
+    backed up (see #5) and removed before creating the symlink.
+
+    7. If TARGET exists and is a directory, a symbolic link is created from
+    LINK_NAME -> TARGET. LINK_NAME is not dereferenced. If the destination
+    exists, it is backed up (see #5) and removed before creating the symlink.
+
+USAGE
+    exit 0
+fi
+
+TARGET="$1"
+LINK_NAME="$2"
+
+# 1
+if [ -z "$TARGET" ]; then
+    echo >&2 "lni: missing target operand"
+    exit 1
+fi
+
+# 2
+if [ -z "$LINK_NAME" ]; then
+    echo >&2 "lni: missing link name operand"
+    exit 1
+fi
+
+# 3
+if [ ! -e "$TARGET" ]; then
+    echo >&2 "lni: cannot stat '$TARGET': No such file or directory"
+    exit 1
+fi
+
+# 4
+if [ -h "$LINK_NAME" ] && [ "$(readlink -nf -- "$LINK_NAME")" = "$(readlink -nf -- "$TARGET")" ]; then
+    echo "symlink '$LINK_NAME' -> '$TARGET' already exists"
+    exit 0
+fi
+
+# 5
+if [ -e "$LINK_NAME" ]; then
+    mv -v --backup=numbered "$LINK_NAME" "$LINK_NAME.bak"
+fi
+
+# 6
+if [ -f "$TARGET" ]; then
+    ln -sfv "$TARGET" "$LINK_NAME"
+    exit 0
+fi
+
+# 7
+if [ -d "$TARGET" ]; then
+    ln -sfnv "$TARGET" "$LINK_NAME"
+    exit 0
+fi

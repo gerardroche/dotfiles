@@ -84,6 +84,8 @@
 	sl = stash list
 	ss = stash save --include-untracked
 
+	t = tag
+
 	add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
 	aliases = config --get-regexp alias
 	clean-full = clean -dxf

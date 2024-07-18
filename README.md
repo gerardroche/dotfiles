@@ -15,9 +15,7 @@ My setup and configurations for Ubuntu 24.04.
 You need Ubuntu 24.04. See [the instructions](https://ubuntu.com/tutorials/install-ubuntu-desktop#1-overview) on how to install.
 
 1. Clone or download the dotfiles to `~/.dotfiles`
-1. Run the install script. The install script can be run repeatedly.
-    - Existing files that obstruct will be backed up.
-    - Submodules will be updated during subsequent runs.
+1. Run the install script. The install script can be run repeatedly. Existing files that obstruct will be backed up.
 
 ```sh
 git clone https://github.com/gerardroche/dotfiles.git ~/.dotfiles && cd ~/.dotfiles && ./install

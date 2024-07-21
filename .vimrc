@@ -31,7 +31,9 @@ Plug 'christoomey/vim-tmux-navigator'
 "Plug 'ctrlpvim/ctrlp.vim'
 
 " https://github.com/gruvbox-community/gruvbox
-"Plug 'gruvbox-community/gruvbox'
+" https://github.com/morhetz/gruvbox
+" Plug 'morhetz/gruvbox'
+Plug 'gruvbox-community/gruvbox'
 
 " https://github.com/junegunn/fzf
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -47,9 +49,6 @@ Plug 'mg979/vim-visual-multi'
 
 " https://github.com/michaeljsmith/vim-indent-object
 Plug 'michaeljsmith/vim-indent-object'
-
-" https://github.com/morhetz/gruvbox
-Plug 'morhetz/gruvbox'
 
 " https://github.com/preservim/nerdtree
 Plug 'preservim/nerdtree'

@@ -8,7 +8,7 @@ if [ "$#" = 0 ] || [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
     cat <<USAGE
 Usage: lni [OPTIONS] TARGET LINK_NAME
 
-Make links between files. An 'ln' decorator (improved ln).
+Make links between files (an improved ln command).
 
 Options
 

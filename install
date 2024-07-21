@@ -4,17 +4,19 @@ set -e
 unset CDPATH
 unset IFS
 
-# Support for Ubuntu 22.04 will be removed soon.
+# Requires Ubuntu 22.04 and 24.04.
+# Note: support for Ubuntu 22.04 will be removed soon.
 if [ "$(echo "$(lsb_release -rs) 22.04" | awk '{print ($1 >= $2)}')" != 1 ]; then
     echo >&2 "Ubuntu $(lsb_release -rs) is not supported; >= 22.04 supported"
     exit 1
 fi
 
-export DOTFILES_UPDATE=true
-while test "$#" != 0; do
+export DOTFILES_UPDATE=1
+
+while [ "$#" != 0 ]; do
     case "$1" in
         --no-update) export DOTFILES_UPDATE= ;;
-        --) shift; break ;; # standard end of options list
+        --) shift; break ;;
         -*) echo >&2 "$0: unknown option '$1'"; exit 1 ;;
         *) echo >&2 "$0: unknown argument '$1'"; exit 1 ;;
     esac
@@ -57,9 +59,10 @@ fi
 "$DOTFILES/bin/lni" "$DOTFILES_PRIVATE/.bashrc" "$HOME/.bashrc-private" 2>/dev/null || true
 "$DOTFILES/bin/lni" "$DOTFILES_PRIVATE/.gitconfig" "$HOME/.gitconfig-private" 2>/dev/null || true
 "$DOTFILES/bin/lni" "$DOTFILES_PRIVATE/.profile" "$HOME/.profile-private" 2>/dev/null || true
+"$DOTFILES/bin/lni" "$DOTFILES_PRIVATE/bin" "$HOME/bin-private" || true
 
 if [ -f "$DOTFILES_PRIVATE/install" ]; then
     "$DOTFILES_PRIVATE/install"
 fi
 
-echo "Finished installation."
+echo "Done!"

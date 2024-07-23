@@ -109,26 +109,29 @@ endif
 " let &t_EI = "\<Esc>[2 q"
 
 set background=dark
-let g:gruvbox_italic=1
 
-if exists("g:gruvbox_sign_column")
-    let g:gruvbox_sign_column="none"
-endif
+" let g:gruvbox_bold=1
+let g:gruvbox_color_column="none"
+let g:gruvbox_improved_warnings=1
+let g:gruvbox_italic=1
+let g:gruvbox_sign_column="none"
 
 silent! colorscheme gruvbox
 
+" if !exists("g:gruvbox_sign_column")
+"     hi GruvboxAquaSign ctermbg=NONE guibg=NONE
+"     hi GruvboxGreenSign ctermbg=NONE guibg=NONE
+"     hi GruvboxRedSign ctermbg=NONE guibg=NONE
+" endif
+
+hi FoldColumn ctermbg=NONE guibg=NONE
+hi Folded ctermbg=NONE guibg=NONE
 hi Normal ctermbg=NONE guibg=NONE
 hi SignColumn ctermbg=NONE guibg=NONE
-hi SpellBad ctermbg=234 ctermfg=darkred cterm=NONE
-hi SpellCap ctermbg=172 ctermfg=fg cterm=NONE
-hi SpellLocal ctermbg=66 ctermfg=fg cterm=NONE
-hi SpellRare ctermbg=234 ctermfg=darkred cterm=NONE
-
-if !exists("g:gruvbox_sign_column")
-    hi GruvboxAquaSign ctermbg=NONE guibg=NONE
-    hi GruvboxGreenSign ctermbg=NONE guibg=NONE
-    hi GruvboxRedSign ctermbg=NONE guibg=NONE
-endif
+hi SpellBad ctermbg=NONE ctermfg=167 cterm=underline
+hi SpellCap ctermbg=NONE ctermfg=142 cterm=bold,italic
+hi SpellLocal ctermbg=NONE ctermfg=108 cterm=underline
+hi SpellRare ctermbg=NONE ctermfg=175 cterm=underline
 
 set autoindent
 set autoread
@@ -213,6 +216,7 @@ nnoremap <Leader>r :w<CR>:source ~/.vimrc<CR>:noh<CR>
 nnoremap <Leader>si vii:sort u<CR>
 nnoremap <Leader>ss vip:sort u<CR>
 nnoremap <Leader>ur :noh<CR>
+nnoremap <Leader>zz <C-w>\|<C-w>_
 nnoremap J mzJ`z
 nnoremap N Nzzzv
 nnoremap Q <nop>

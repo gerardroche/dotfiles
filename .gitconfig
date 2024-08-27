@@ -23,9 +23,9 @@
 	cad = commit --amend --all
 	cam = commit --all --message
 	cb = checkout -b
+	ch = cherry-pick --no-commit
 	ci = commit --interactive
 	cm = commit --message
-	cp = cherry-pick --no-commit
 	cv = commit --verbose
 
 	d = diff

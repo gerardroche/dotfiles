@@ -32,6 +32,7 @@ if [ -f /usr/share/bash-completion/completions/git ]; then
     __git_complete gcad _git_commit
     __git_complete gcam _git_commit
     __git_complete gcb _git_checkout
+    __git_complete gch _git_cherry_pick
     __git_complete gci _git_commit
     __git_complete gcm _git_commit
     __git_complete gcp _git_cherry_pick

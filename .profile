@@ -20,26 +20,23 @@ case "$PATH" in
     "$HOME/bin:"*) ;;
     *":$HOME/bin:"*) ;;
     *)
-        # Append original path after new entries.
+        # Store PATH to be appended last.
         __TMP_PATH__="$PATH"
 
-        PATH=""
+        # 1. User's private bin.
+        PATH="$HOME/bin-private"
 
-        # User's private bin.
-        PATH="$PATH:$HOME/bin-private"
-
-        # User's bin.
+        # 2. User's bin.
         PATH="$PATH:$HOME/bin"
 
-        # User's local bin.
+        # 3. User's local bin.
         PATH="$PATH:$HOME/.local/bin"
 
-        # Append original path.
+        # Add original PATH last.
         PATH="$PATH:$__TMP_PATH__"
+        unset __TMP_PATH__
 
         export PATH
-
-        unset __TMP_PATH__
         ;;
 esac
 

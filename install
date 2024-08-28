@@ -4,18 +4,15 @@ set -e
 unset CDPATH
 unset IFS
 
-# Requires Ubuntu 22.04 and 24.04.
-# Note: support for Ubuntu 22.04 will be removed soon.
+# Supports Ubuntu >= 22.04
+# @deprecated Support for Ubuntu 22.04.
 if [ "$(echo "$(lsb_release -rs) 22.04" | awk '{print ($1 >= $2)}')" != 1 ]; then
     echo >&2 "Ubuntu $(lsb_release -rs) is not supported; >= 22.04 supported"
     exit 1
 fi
 
-export DOTFILES_UPDATE=1
-
 while [ "$#" != 0 ]; do
     case "$1" in
-        --no-update) export DOTFILES_UPDATE= ;;
         --) shift; break ;;
         -*) echo >&2 "$0: unknown option '$1'"; exit 1 ;;
         *) echo >&2 "$0: unknown argument '$1'"; exit 1 ;;
@@ -34,9 +31,7 @@ echo '__________.__              .___       __________
 DOTFILES="$(dirname "$(readlink -nf -- "$0")")"
 DOTFILES_PRIVATE="$DOTFILES-private"
 
-if [ -n "$DOTFILES_UPDATE" ]; then
-    sudo apt update -qy
-fi
+sudo apt update -qy
 
 "$DOTFILES/bin/lni" "$DOTFILES/.bash_aliases" "$HOME/.bash_aliases"
 "$DOTFILES/bin/lni" "$DOTFILES/.bash_completions" "$HOME/.bash_completions"

@@ -84,7 +84,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 
 " https://github.com/wellle/targets.vim
-Plug 'wellle/targets.vim'
+" Plug 'wellle/targets.vim'
 
 call plug#end()
 
@@ -194,6 +194,8 @@ function! TrimWhiteSpace()
     call cursor(l, c)
 endfunction
 
+command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
+
 autocmd BufWritePre * call TrimWhiteSpace()
 autocmd Filetype gitcommit setlocal spell spellcapcheck=
 autocmd FocusLost * silent! wall
@@ -212,7 +214,8 @@ nnoremap <Leader>ep :vsplit ~/.vimrc<CR>
 nnoremap <Leader>ff :FZF!<CR>
 nnoremap <Leader>fg :call fzf#run({'source': 'git ls-files --exclude-standard --cached --others'})<CR>
 nnoremap <Leader>qq :qa<CR>
-nnoremap <Leader>r :w<CR>:source ~/.vimrc<CR>:noh<CR>
+nnoremap <Leader>rr :reg<CR>
+nnoremap <Leader>rs :w<CR>:source ~/.vimrc<CR>:noh<CR>
 nnoremap <Leader>si vii:sort u<CR>
 nnoremap <Leader>ss vip:sort u<CR>
 nnoremap <Leader>ur :noh<CR>

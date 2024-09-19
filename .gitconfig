@@ -112,6 +112,11 @@
 [color]
 	ui = auto
 
+[color "diff"]
+	meta = reverse
+	frag = cyan
+	func = blue reverse
+
 [commit]
 	gpgSign = true
 

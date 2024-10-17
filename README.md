@@ -9,7 +9,7 @@ You need [Ubuntu 24.04](https://ubuntu.com/tutorials/install-ubuntu-desktop#1-ov
 
 Clone or download the dotfiles to `~/.dotfiles` and run the install script.
 
-The installer can be run repeatedly; existing files will be backed up.
+The installer can be run repeatedly; blocking files will be backed up.
 
 ```sh
 git clone https://github.com/gerardroche/dotfiles.git ~/.dotfiles && cd ~/.dotfiles && ./install
@@ -57,6 +57,7 @@ ealiases
 ebashrc
 ecompletions
 efunctions
+egitconfig
 epaliases
 epbashrc
 epcompletions

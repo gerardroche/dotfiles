@@ -14,15 +14,20 @@ You need [Ubuntu 24.04](https://ubuntu.com/tutorials/install-ubuntu-desktop#1-ov
 
 Clone or download the dotfiles to `~/.dotfiles` and run the install script.
 
-The installer can be run repeatedly; blocking files will be backed up.
-
 ```sh
 git clone https://github.com/gerardroche/dotfiles.git ~/.dotfiles && cd ~/.dotfiles && ./install
 ```
 
+The installer will:
+
+- install the included software
+- symlink the necessary dotfiles
+
+The installer can be run repeatedly; blocking files will be backed up.
+
 ### Optional private dotfiles
 
-Setup optional private dotfiles in a separate repository at `~/.dotfiles-private`. The following are supported.
+Setup optional private dotfiles in a separate repository at `~/.dotfiles-private`.
 
 ```sh
 ~/.dotfile-private/.bash_aliases
@@ -34,7 +39,7 @@ Setup optional private dotfiles in a separate repository at `~/.dotfiles-private
 ~/.dotfile-private/bin
 ```
 
-If private dotfiles exist, they are symlinked to the home directory by the installer and sourced by the main dotfiles.
+If a private dotfile exists it will be symlinked into the home directory by the installer and sourced by the main dotfiles.
 
 ```sh
 ~/.dotfile-private/.bash_aliases -> ~/.bash_aliases-private
@@ -46,25 +51,21 @@ If private dotfiles exist, they are symlinked to the home directory by the insta
 ~/.dotfile-private/bin -> ~/bin-private
 ```
 
-There are several related aliases to reload various bash files:
+Here are some related aliases to reload and edit dotfiles.
 
-```sh
-reloadaliases
-reloadbashrc
-reloadcompletions
-reloadfunctions
-```
-
-And aliases to edit bash files:
-
-```sh
-ealiases
-ebashrc
-ecompletions
-efunctions
-egitconfig
-epaliases
-epbashrc
-epcompletions
-epfunctions
+| Alias                 | Description |
+| --------------------- | ----------- |
+| reloadaliases         | Reload `.bash_aliases` and `.bash_aliases-private` |
+| reloadbashrc          | Reload `.bashrc` and `.bashrc-private` |
+| reloadcompletions     | Reload `.bash_completions` and `.bash_completions-private` |
+| reloadfunctions       | Reload `.bash_functions` and `.bash_functions-private` |
+| ealiases              | Edit `.bash_aliases` |
+| ebashrc               | Edit `.bashrc` |
+| ecompletions          | Edit `.bash_completions` |
+| efunctions            | Edit `.bash_functions` |
+| egitconfig            | Edit `.gitconfig` |
+| epaliases             | Edit `.bash_aliases-private` |
+| epbashrc              | Edit `.bashrc-private` |
+| epcompletions         | Edit `.bash_completions-private` |
+| epfunctions           | Edit `.bash_functions-private` |
 ```

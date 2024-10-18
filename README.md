@@ -51,7 +51,7 @@ If a private dotfile exists it will be symlinked into the home directory by the 
 ~/.dotfile-private/bin -> ~/bin-private
 ```
 
-Here are some related aliases to reload and edit dotfiles.
+Aliases to edit and reload dotfiles.
 
 | Alias                 | Description |
 | --------------------- | ----------- |
@@ -68,4 +68,3 @@ Here are some related aliases to reload and edit dotfiles.
 | epbashrc              | Edit `.bashrc-private` |
 | epcompletions         | Edit `.bash_completions-private` |
 | epfunctions           | Edit `.bash_functions-private` |
-```

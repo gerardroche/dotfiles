@@ -11,15 +11,6 @@ if [ "$(echo "$(lsb_release -rs) 22.04" | awk '{print ($1 >= $2)}')" != 1 ]; the
     exit 1
 fi
 
-while [ "$#" != 0 ]; do
-    case "$1" in
-        --) shift; break ;;
-        -*) echo >&2 "$0: unknown option '$1'"; exit 1 ;;
-        *) echo >&2 "$0: unknown argument '$1'"; exit 1 ;;
-    esac
-    shift
-done
-
 echo '__________.__              .___       __________
 \______   \  | _____     __| _/____   \______   \__ __  ____   ____   ___________
  |    |  _/  | \__  \   / __ |/ __ \   |       _/  |  \/    \ /    \_/ __ \_  __ \

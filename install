@@ -33,6 +33,9 @@ DOTFILES_PRIVATE="$DOTFILES-private"
 
 sudo apt update -qy
 
+command -v git >/dev/null 2>&1 || sudo apt install git
+command -v gitk >/dev/null 2>&1 || sudo apt install gitk
+
 "$DOTFILES/bin/lni" "$DOTFILES/.bash_aliases" "$HOME/.bash_aliases"
 "$DOTFILES/bin/lni" "$DOTFILES/.bash_completions" "$HOME/.bash_completions"
 "$DOTFILES/bin/lni" "$DOTFILES/.bash_functions" "$HOME/.bash_functions"

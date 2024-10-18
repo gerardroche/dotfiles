@@ -3,6 +3,11 @@
 - Website: [www.gerardroche.com](https://www.gerardroche.com)
 - X: [@gerardroche_](https://x.com/gerardroche_)
 
+## What's included
+
+- [git](https://www.git-scm.com/) - A distributed version control system.
+- [gitk](https://git-scm.com/docs/gitk) - The Git repository browser.
+
 ## Setup
 
 You need [Ubuntu 24.04](https://ubuntu.com/tutorials/install-ubuntu-desktop#1-overview).

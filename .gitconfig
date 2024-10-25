@@ -125,7 +125,6 @@
 	autocrlf = input
 	editor = vi
 	excludesfile = ~/.gitexcludes
-	hooksPath = ~/.githooks
 
 [include]
 	path = ~/.gitconfig-private
@@ -138,6 +137,9 @@
 
 [help]
 	autocorrect = 10
+
+[init]
+	defaultBranch = master
 
 [interactive]
 	singleKey = true
@@ -160,6 +162,3 @@
 
 [status]
 	showUntrackedFiles = all
-
-[init]
-	defaultBranch = master

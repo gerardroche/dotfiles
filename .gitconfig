@@ -92,6 +92,7 @@
 	ctags = !.git/hooks/ctags
 	delete-merged-branches = "!git branch-list-merged | xargs git branch -d"
 	edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; vim `f`"
+	initx = "!git init \"$@\" && echo \"# Handle line endings automatically for files detected as text and leave all\n# files detected as binary untouched.\n* text=auto\" > .gitattributes"
 	ls-all-my-branches = "!git lsbranches | grep \"`git config user.name`\" | grep -v \"refs/stash\""
 	ls-branches = "for-each-ref --format=' %(authorname) %09 %(refname)' --sort=authorname"
 	ls-changes = "!f() { git log --no-merges $1 --not $2 --format=\"%h %s%+b\"; }; f"

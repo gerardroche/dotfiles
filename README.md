@@ -5,8 +5,9 @@
 
 ## What's included
 
-- [git](https://www.git-scm.com/) - A distributed version control system.
-- [gitk](https://git-scm.com/docs/gitk) - The Git repository browser.
+- [Vim](https://github.com/vim/vim) - Vi IMproved, a programmer's text editor.
+- [Git](https://www.git-scm.com/) - A distributed version control system.
+- [GitK](https://git-scm.com/docs/gitk) - The Git repository browser.
 
 ## Setup
 

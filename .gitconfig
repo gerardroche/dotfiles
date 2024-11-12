@@ -26,6 +26,7 @@
 	ch = cherry-pick --no-commit
 	ci = commit --interactive
 	cm = commit --message
+	co = checkout
 	cv = commit --verbose
 
 	d = diff

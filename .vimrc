@@ -158,7 +158,6 @@ set noerrorbells
 set nonumber
 set norelativenumber
 set noruler
-set noshowmode
 set noswapfile
 set nowrap
 set nowritebackup
@@ -166,6 +165,8 @@ set scrolloff=8
 set shiftround
 set shiftwidth=4
 set shortmess+=I
+set showcmd
+set showmode
 set sidescroll=1
 set sidescrolloff=8
 set signcolumn=yes

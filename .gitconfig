@@ -93,7 +93,7 @@
 	ctags = !.git/hooks/ctags
 	delete-merged-branches = "!git branch-list-merged | xargs git branch -d"
 	edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; vim `f`"
-	initx = "!git init \"$@\" && echo \"# Handle line endings automatically for files detected as text and leave all\n# files detected as binary untouched.\n* text=auto\" > .gitattributes"
+	init-repo = "!git init \"$@\" && echo \"# Handle line endings automatically for files detected as text and leave all\n# files detected as binary untouched.\n* text=auto\" > .gitattributes"
 	ls-all-my-branches = "!git lsbranches | grep \"`git config user.name`\" | grep -v \"refs/stash\""
 	ls-branches = "for-each-ref --format=' %(authorname) %09 %(refname)' --sort=authorname"
 	ls-changes = "!f() { git log --no-merges $1 --not $2 --format=\"%h %s%+b\"; }; f"
@@ -103,7 +103,7 @@
 	ls-my-branches = "!git lsbranches | grep \"`git config user.name`\" | grep \"refs/head\""
 	ls-tags = "!f() { git tag -l | sort -V | tail; }; f"
 	w = "!f() { [ -n \"$*\" ] && git commit -m \"$*\" || git commit; }; f"
-	wa = "!f() { git add -A . && git commit -m \"$(echo "$*" | sed 's/^$/:'"$(shuf -n 1 -e heart wink kiss love money pray rock smile victory wish yes)"':/')\"; }; f"
+	wa = "!f() { git add -A . && git commit -m \"$(echo "$*" | sed 's/^$/wip '"$(shuf -n 1 -e 1 2 3 4 5 6 7 8 9)"'/')\"; }; f"
 
 [bash]
 	showDirtyState = true

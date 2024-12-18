@@ -52,7 +52,7 @@ command -v vim.gtk3 >/dev/null 2>&1 || sudo apt install vim.gtk3
 "$DOTFILES/bin/lni" "$DOTFILES_PRIVATE/bin" "$HOME/bin-private" || true
 
 if [ -f "$DOTFILES_PRIVATE/install" ]; then
-    "$DOTFILES_PRIVATE/install"
+    ( cd "$DOTFILES_PRIVATE" && "$DOTFILES_PRIVATE/install" )
 fi
 
 echo "Done!"

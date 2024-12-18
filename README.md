@@ -11,24 +11,31 @@
 
 ## Setup
 
-You need [Ubuntu 24.04](https://ubuntu.com/tutorials/install-ubuntu-desktop#1-overview).
+Requires [Ubuntu 24.04](https://ubuntu.com/tutorials/install-ubuntu-desktop#1-overview).
 
-Clone or download the dotfiles to `~/.dotfiles` and run the install script.
+Clone or download to `~/.dotfiles`.
 
 ```sh
-git clone https://github.com/gerardroche/dotfiles.git ~/.dotfiles && cd ~/.dotfiles && ./install
+git clone https://github.com/gerardroche/dotfiles.git ~/.dotfiles
 ```
 
-The installer will:
+Run the install script.
 
-- install the included software
-- symlink the necessary dotfiles
+```sh
+cd ~/.dotfiles
+./install
+```
 
-The installer can be run repeatedly; blocking files will be backed up.
+This will:
+
+- Install the software like Vim, Git, Gitk.
+- Symlink the necessary files. Any existing files will be moved out of the way.
+
+The installer can be run repeatedly.
 
 ### Optional private dotfiles
 
-Setup optional private dotfiles in a separate repository at `~/.dotfiles-private`.
+Optional private dotfiles can be placed in `~/.dotfiles-private`:
 
 ```sh
 ~/.dotfile-private/.bash_aliases
@@ -40,7 +47,7 @@ Setup optional private dotfiles in a separate repository at `~/.dotfiles-private
 ~/.dotfile-private/bin
 ```
 
-If a private dotfile exists it will be symlinked into the home directory by the installer and sourced by the main dotfiles.
+If a private dotfile exist they are symlinked into the home directory and sourced by the main dotfiles:
 
 ```sh
 ~/.dotfile-private/.bash_aliases -> ~/.bash_aliases-private
@@ -52,7 +59,7 @@ If a private dotfile exists it will be symlinked into the home directory by the 
 ~/.dotfile-private/bin -> ~/bin-private
 ```
 
-Aliases to edit and reload dotfiles.
+Some aliases to edit and reload various dotfiles:
 
 | Alias                 | Description |
 | --------------------- | ----------- |

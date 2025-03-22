@@ -103,7 +103,7 @@
 	ls-my-branches = "!git lsbranches | grep \"`git config user.name`\" | grep \"refs/head\""
 	ls-tags = "!f() { git tag -l | sort -V | tail; }; f"
 	w = "!f() { [ -n \"$*\" ] && git commit -m \"$*\" || git commit; }; f"
-	wa = "!f() { git add -A . && git commit -m \"$(echo "$*" | sed 's/^$/wip '"$(shuf -n 1 -e 1 2 3 4 5 6 7 8 9)"'/')\"; }; f"
+	wa = "!f() { git add -A . && git commit -m \"$(echo "$*" | sed 's/^$/update '"$(shuf -n 1 -e 1 2 3 4 5 6 7 8 9)"'/')\"; }; f"
 
 [bash]
 	showDirtyState = true

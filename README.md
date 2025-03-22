@@ -1,19 +1,24 @@
-# Gerard's dotfiles
+# dotfiles
 
-- Website: [www.gerardroche.com](https://www.gerardroche.com)
-- X: [@gerardroche_](https://x.com/gerardroche_)
+Hi, I'm Gerard.
+
+I'm a programmer and software developer.
+
+My [website](https://www.gerardroche.com/?ref=github.com/gerardroche/dotfiles).
+
+Follow me on [X](https://x.com/gerardroche_/?ref=www.gerardroche.com).
 
 ## What's included
 
 - [Vim](https://github.com/vim/vim) - Vi IMproved, a programmer's text editor.
 - [Git](https://www.git-scm.com/) - A distributed version control system.
-- [GitK](https://git-scm.com/docs/gitk) - The Git repository browser.
+- [Gitk](https://git-scm.com/docs/gitk) - The Git repository browser.
 
 ## Setup
 
 Requires [Ubuntu 24.04](https://ubuntu.com/tutorials/install-ubuntu-desktop#1-overview).
 
-Clone or download to `~/.dotfiles`.
+Clone to `~/.dotfiles`.
 
 ```sh
 git clone https://github.com/gerardroche/dotfiles.git ~/.dotfiles
@@ -26,16 +31,11 @@ cd ~/.dotfiles
 ./install
 ```
 
-This will:
+The installer can be run repeatedly. It will symlink the necessary files. Any existing files will be moved out of the way.
 
-- Install the software like Vim, Git, Gitk.
-- Symlink the necessary files. Any existing files will be moved out of the way.
+### Optional private files
 
-The installer can be run repeatedly.
-
-### Optional private dotfiles
-
-Optional private dotfiles can be placed in `~/.dotfiles-private`:
+Optional private files can be placed in `~/.dotfiles-private`:
 
 ```sh
 ~/.dotfile-private/.bash_aliases
@@ -47,7 +47,7 @@ Optional private dotfiles can be placed in `~/.dotfiles-private`:
 ~/.dotfile-private/bin
 ```
 
-If a private dotfile exist they are symlinked into the home directory and sourced by the main dotfiles:
+If a private file exists it is symlinked into the home directory and sourced by the main files:
 
 ```sh
 ~/.dotfile-private/.bash_aliases -> ~/.bash_aliases-private
@@ -59,7 +59,7 @@ If a private dotfile exist they are symlinked into the home directory and source
 ~/.dotfile-private/bin -> ~/bin-private
 ```
 
-Some aliases to edit and reload various dotfiles:
+Some aliases:
 
 | Alias                 | Description |
 | --------------------- | ----------- |

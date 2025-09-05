@@ -6,7 +6,7 @@ I'm a programmer and software developer.
 
 My [website](https://www.gerardroche.com/?ref=github.com/gerardroche/dotfiles).
 
-Follow me on [X](https://x.com/gerardroche_/?ref=www.gerardroche.com).
+I'm on [X](https://x.com/gerardroche_/?ref=www.gerardroche.com).
 
 ## What's included
 
@@ -30,9 +30,11 @@ cd ~/.dotfiles
 ./install
 ```
 
-Existing files in the way will be moved out of the way. The installer can be run repeatedly.
+Existing files will be moved out of the way.
 
-### Private files (optional)
+The installer can be run repeatedly.
+
+## Private configurations (optional)
 
 Private files can be placed in `~/.dotfiles-private/`.
 
@@ -48,7 +50,9 @@ If private files exist they are symlinked in the home directory and sourced by t
 ~/.dotfile-private/bin -> ~/bin-private
 ```
 
-#### Editing
+## Configuration aliases
+
+### Editing
 
 | Alias                 | Description |
 | --------------------- | ----------- |
@@ -62,7 +66,7 @@ If private files exist they are symlinked in the home directory and sourced by t
 | epcompletions         | Edit `.bash_completions-private` |
 | epfunctions           | Edit `.bash_functions-private` |
 
-#### Reloading
+### Reloading
 
 | Alias                 | Description |
 | --------------------- | ----------- |

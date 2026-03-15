@@ -126,7 +126,7 @@ silent! colorscheme gruvbox
 
 hi FoldColumn ctermbg=NONE guibg=NONE
 hi Folded ctermbg=NONE guibg=NONE
-hi Normal ctermbg=NONE guibg=NONE
+hi Normal ctermbg=NONE
 hi SignColumn ctermbg=NONE guibg=NONE
 hi SpellBad ctermbg=NONE ctermfg=167 cterm=underline
 hi SpellCap ctermbg=NONE ctermfg=142 cterm=bold,italic

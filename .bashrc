@@ -58,10 +58,10 @@ fi
 
 if [ "$color_prompt" = yes ]; then
 
-    # Default PS1
+    # Default PS1 (when Git is not used)
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 
-    # See /usr/lib/git-core/git-sh-prompt
+    # Git prompt settings (see /usr/lib/git-core/git-sh-prompt)
     GIT_PS1_DESCRIBE_STYLE="describe"
     GIT_PS1_SHOWCOLORHINTS="y"
     GIT_PS1_SHOWCONFLICTSTATE="y"
@@ -70,15 +70,9 @@ if [ "$color_prompt" = yes ]; then
     GIT_PS1_SHOWUNTRACKEDFILES="y"
     GIT_PS1_SHOWUPSTREAM="verbose name git"
 
-    # https://gkarthiks.github.io/quick-commands-cheat-sheet/bash_command.html
-    # https://tldp.org/HOWTO/Bash-Prompt-HOWTO/x329.html
-    PSC_C="\[\033[0m\]"       # clear
-    PSC_W="\[\033[34m\]"      # cwd
-    PSC_E="\[\033[41;30m\]"   # error
-    PSC_P="\[\033[34m\]"      # prompt
-
+    # Function to display prompt
     do_prompt_command() {
-        __git_ps1 "$PSC_W\w$PSC_C " "\n\$(if [ \$? == 0 ];then echo \"$PSC_P❯$PSC_C\";else echo \"$PSC_E❯$PSC_C\";fi) " "%s"
+        __git_ps1 "\[\033[34m\]\w\[\033[0m\] " "\n\$(if [ \$? -eq 0 ];then printf \"\$\";else printf \"\[\033[41;97m\][\$?] ✘ Error \[\033[0m\]\n\$\";fi) " "%s"
     }
 
     PROMPT_COMMAND=do_prompt_command

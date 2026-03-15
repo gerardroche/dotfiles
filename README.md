@@ -6,8 +6,6 @@ I'm a programmer and software developer.
 
 My [website](https://www.gerardroche.com/?ref=github.com/gerardroche/dotfiles).
 
-I'm on [X](https://x.com/gerardroche_/?ref=www.gerardroche.com).
-
 ## What's included
 
 - [Vim](https://github.com/vim/vim)

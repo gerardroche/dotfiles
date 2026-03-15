@@ -21,12 +21,16 @@ echo '__________.__              .___       __________
 DOTFILES="$(dirname "$(readlink -nf -- "$0")")"
 DOTFILES_PRIVATE="$DOTFILES-private"
 
+echo "\\nInstalling packages ...\\n"
+
 sudo apt update -qy
 
 command -v git >/dev/null 2>&1 || sudo apt install git
 command -v gitk >/dev/null 2>&1 || sudo apt install gitk
 command -v vim >/dev/null 2>&1 || sudo apt install vim
 command -v vim.gtk3 >/dev/null 2>&1 || sudo apt install vim.gtk3
+
+echo "\\nSymlinking dotfiles ...\\n"
 
 "$DOTFILES/bin/lni" "$DOTFILES/.bash_aliases" "$HOME/.bash_aliases"
 "$DOTFILES/bin/lni" "$DOTFILES/.bash_completions" "$HOME/.bash_completions"
@@ -55,4 +59,4 @@ if [ -f "$DOTFILES_PRIVATE/install" ]; then
     ( cd "$DOTFILES_PRIVATE" && "$DOTFILES_PRIVATE/install" )
 fi
 
-echo "Done!"
+echo "\\nDone.\\n"

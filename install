@@ -10,28 +10,19 @@ if [ "$(echo "$(lsb_release -rs) 24.04" | awk '{print ($1 >= $2)}')" != 1 ]; the
     exit 1
 fi
 
-echo '__________.__              .___       __________
-\______   \  | _____     __| _/____   \______   \__ __  ____   ____   ___________
- |    |  _/  | \__  \   / __ |/ __ \   |       _/  |  \/    \ /    \_/ __ \_  __ \
- |    |   \  |__/ __ \_/ /_/ \  ___/   |    |   \  |  /   |  \   |  \  ___/|  | \/
- |______  /____(____  /\____ |\___  >  |____|_  /____/|___|  /___|  /\___  >__|
-        \/          \/      \/    \/          \/           \/     \/     \/
-'
-
 DOTFILES="$(dirname "$(readlink -nf -- "$0")")"
 DOTFILES_PRIVATE="$DOTFILES-private"
 
-echo "\\nInstalling packages ...\\n"
-
+echo "Updating packages ..."
 sudo apt update -qy
 
+echo "Installing packages ..."
 command -v git >/dev/null 2>&1 || sudo apt install git
 command -v gitk >/dev/null 2>&1 || sudo apt install gitk
 command -v vim >/dev/null 2>&1 || sudo apt install vim
 command -v vim.gtk3 >/dev/null 2>&1 || sudo apt install vim-gtk3
 
-echo "\\nSymlinking dotfiles ...\\n"
-
+echo "Linking dotfiles ..."
 "$DOTFILES/bin/lni" "$DOTFILES/.bash_aliases" "$HOME/.bash_aliases"
 "$DOTFILES/bin/lni" "$DOTFILES/.bash_completions" "$HOME/.bash_completions"
 "$DOTFILES/bin/lni" "$DOTFILES/.bash_functions" "$HOME/.bash_functions"

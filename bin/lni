@@ -64,7 +64,7 @@ fi
 
 # 4
 if [ -h "$LINK_NAME" ] && [ "$(readlink -nf -- "$LINK_NAME")" = "$(readlink -nf -- "$TARGET")" ]; then
-    echo "symlink '$LINK_NAME' -> '$TARGET' already exists"
+    echo "LINK: '$LINK_NAME' -> '$TARGET' already exists"
     exit 0
 fi
 

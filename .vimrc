@@ -146,6 +146,8 @@ set formatoptions+=l
 set formatoptions+=q
 set formatoptions+=r
 set formatoptions-=t
+set grepformat=%f:%l:%c:%m
+set grepprg=rg\ --vimgrep\ --smart-case
 set hidden
 set hlsearch
 set ignorecase

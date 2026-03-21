@@ -187,10 +187,6 @@ set wildmenu
 set wildmode=longest:full,full
 set wrapscan
 
-" let g:ctrlp_follow_symlinks = 1
-" let g:ctrlp_show_hidden = 1
-let g:sneak#use_ic_scs = 1
-
 function! TrimWhiteSpace()
     let l = line(".")
     let c = col(".")
@@ -204,6 +200,7 @@ autocmd BufWritePre * call TrimWhiteSpace()
 autocmd Filetype gitcommit setlocal spell spellcapcheck=
 autocmd FocusLost * silent! wall
 
+let g:sneak#use_ic_scs=1
 let mapleader=","
 let maplocalleader="<Bslash>"
 nnoremap <C-d> <C-d>zz

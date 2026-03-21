@@ -138,6 +138,7 @@ set autoread
 set autowrite
 set backspace=indent,eol,start
 set clipboard=unnamedplus
+set cursorline
 set expandtab
 set formatoptions+=c
 set formatoptions+=j

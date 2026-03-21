@@ -200,6 +200,7 @@ autocmd BufWritePre * call TrimWhiteSpace()
 autocmd Filetype gitcommit setlocal spell spellcapcheck=
 autocmd FocusLost * silent! wall
 
+let g:NERDTreeShowHidden=1
 let g:sneak#use_ic_scs=1
 let mapleader=","
 let maplocalleader="<Bslash>"

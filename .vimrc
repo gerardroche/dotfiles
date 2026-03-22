@@ -187,16 +187,13 @@ set wildmenu
 set wildmode=longest:full,full
 set wrapscan
 
-function! TrimWhiteSpace()
-    let l = line(".")
-    let c = col(".")
-    %s/\s\+$//e
-    call cursor(l, c)
-endfunction
+augroup TrimTrailingWS
+  autocmd!
+  autocmd BufWritePre * keeppatterns %s/\s\+$//e
+augroup END
 
 command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
 
-autocmd BufWritePre * call TrimWhiteSpace()
 autocmd Filetype gitcommit setlocal spell spellcapcheck=
 autocmd FocusLost * silent! wall
 

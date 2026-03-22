@@ -222,6 +222,7 @@ nnoremap <Leader>rs :w<CR>:source ~/.vimrc<CR>:noh<CR>
 nnoremap <Leader>si vii:sort u<CR>
 nnoremap <Leader>ss vip:sort u<CR>
 nnoremap <Leader>zz <C-w>\|<C-w>_
+nnoremap <Space> :
 nnoremap J mzJ`z
 nnoremap N Nzzzv
 nnoremap Q <nop>

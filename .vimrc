@@ -183,6 +183,7 @@ set splitright
 set tabstop=4
 set textwidth=72
 set ttyfast
+set updatetime=100
 set wildmenu
 set wildmode=longest:full,full
 set wrapscan

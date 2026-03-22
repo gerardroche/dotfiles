@@ -192,7 +192,7 @@ augroup TrimTrailingWS
   autocmd BufWritePre * keeppatterns %s/\s\+$//e
 augroup END
 
-autocmd Filetype gitcommit setlocal spell spellcapcheck=
+autocmd Filetype gitcommit setlocal spell spellcapcheck= spelllang=en_gb
 autocmd FocusLost * if &modified | silent! wall | endif
 
 command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor

@@ -187,13 +187,12 @@ set wildmenu
 set wildmode=longest:full,full
 set wrapscan
 
-augroup TrimTrailingWS
+augroup MyAutoCmds
   autocmd!
   autocmd BufWritePre * keeppatterns %s/\s\+$//e
+  autocmd Filetype gitcommit setlocal textwidth=72 spell spellcapcheck= spelllang=en_gb
+  autocmd FocusLost * if &modified | silent! wall | endif
 augroup END
-
-autocmd Filetype gitcommit setlocal textwidth=72 spell spellcapcheck= spelllang=en_gb
-autocmd FocusLost * if &modified | silent! wall | endif
 
 command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
 

@@ -193,7 +193,7 @@ augroup TrimTrailingWS
 augroup END
 
 autocmd Filetype gitcommit setlocal spell spellcapcheck=
-autocmd FocusLost * silent! wall
+autocmd FocusLost * if &modified | silent! wall | endif
 
 command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
 

@@ -27,12 +27,7 @@ Plug 'airblade/vim-gitgutter'
 " https://github.com/christoomey/vim-tmux-navigator
 Plug 'christoomey/vim-tmux-navigator'
 
-" https://github.com/ctrlpvim/ctrlp.vim
-"Plug 'ctrlpvim/ctrlp.vim'
-
 " https://github.com/gruvbox-community/gruvbox
-" https://github.com/morhetz/gruvbox
-" Plug 'morhetz/gruvbox'
 Plug 'gruvbox-community/gruvbox'
 
 " https://github.com/junegunn/fzf
@@ -82,9 +77,6 @@ Plug 'tpope/vim-surround'
 
 " https://github.com/tpope/vim-unimpaired
 Plug 'tpope/vim-unimpaired'
-
-" https://github.com/wellle/targets.vim
-" Plug 'wellle/targets.vim'
 
 call plug#end()
 

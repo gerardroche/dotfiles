@@ -207,11 +207,12 @@ nnoremap <Leader>en :vsplit ~/.vimrc<CR>
 nnoremap <Leader>ep :vsplit ~/.vimrc<CR>
 nnoremap <Leader>ff :FZF!<CR>
 nnoremap <Leader>fg :call fzf#run({'source': 'git ls-files --exclude-standard --cached --others'})<CR>
-nnoremap <Leader>qq :qa<CR>
+nnoremap <Leader>q :qa<CR>
 nnoremap <Leader>rr :reg<CR>
 nnoremap <Leader>rs :w<CR>:source ~/.vimrc<CR>:noh<CR>
 nnoremap <Leader>si vii:sort u<CR>
 nnoremap <Leader>ss vip:sort u<CR>
+nnoremap <Leader>w :w<CR>
 nnoremap <Leader>zz <C-w>\|<C-w>_
 nnoremap <Space> :
 nnoremap <silent> <Leader>l :noh<CR>

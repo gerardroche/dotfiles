@@ -129,7 +129,6 @@ set autoindent
 set autoread
 set autowrite
 set backspace=indent,eol,start
-set clipboard=unnamedplus
 set cursorline
 set expandtab
 set formatoptions+=c
@@ -175,10 +174,14 @@ set splitright
 set tabstop=4
 set textwidth=72
 set ttyfast
-set updatetime=100
+set updatetime=300
 set wildmenu
 set wildmode=longest:full,full
 set wrapscan
+
+if has('clipboard')
+    set clipboard=unnamedplus
+endif
 
 augroup MyAutoCmds
   autocmd!

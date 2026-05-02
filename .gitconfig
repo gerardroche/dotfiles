@@ -65,6 +65,7 @@
 	om = checkout master
 
 	p = pull
+	pa = "!git push --all && git push --tags"
 	pff = pull --ff-only
 	pffo = pull --ff-only --prune origin
 	pffu = pull --ff-only --prune upstream

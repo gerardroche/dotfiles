@@ -8,7 +8,7 @@
 
 	a = add
 	aa = add .
-	amc = !git add --all && git commit --amend --reuse-message=HEAD
+	amc = "!git add --all && git commit --amend --reuse-message=HEAD"
 	al = add --all
 	ap = add --patch
 	au = add --update

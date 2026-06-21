@@ -46,8 +46,8 @@
 
 	l = log --oneline --graph --decorate -11
 	lg = log --graph
-	lk = log --graph --topo-order --abbrev-commit --date=short --decorate --all --boundary --pretty=format:'%Cgreen%ad %Cred%h%Creset -%C(yellow)%d%Creset %s %Cblue[%cn]%Creset'
-	ll = log --oneline
+	lk = log --graph --topo-order --abbrev-commit --date=short --decorate --all --boundary --pretty=format:'%C(green)%ad %C(red)%h%Creset -%C(yellow)%d%Creset %s %Cblue[%cn]%Creset'
+	ll = log --oneline --graph --decorate --pretty=format:'%C(yellow)%h%Creset %C(cyan)%ad%Creset %C(green)%an%Creset %s %C(auto)%d%Creset' --date=short -11
 	lo = log --oneline --no-decorate
 	lp = log --patch
 	ls = log --oneline --graph --decorate

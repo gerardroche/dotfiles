@@ -13,7 +13,6 @@ if [ -f /usr/share/bash-completion/completions/git ]; then
     __git_complete ds _git_diff
     __git_complete dw _git_diff
     __git_complete pop _git_stash
-    __git_complete push _git_push
     __git_complete s _git_status
     __git_complete sta _git_stash
 

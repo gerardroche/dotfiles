@@ -122,9 +122,6 @@
 	frag = cyan
 	func = blue reverse
 
-[commit]
-	gpgSign = true
-
 [core]
 	autocrlf = input
 	editor = vi

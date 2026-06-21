@@ -44,7 +44,7 @@ echo "Linking dotfiles ..."
 "$DOTFILES/bin/lni" "$DOTFILES_PRIVATE/.bashrc" "$HOME/.bashrc-private" 2>/dev/null || true
 "$DOTFILES/bin/lni" "$DOTFILES_PRIVATE/.gitconfig" "$HOME/.gitconfig-private" 2>/dev/null || true
 "$DOTFILES/bin/lni" "$DOTFILES_PRIVATE/.profile" "$HOME/.profile-private" 2>/dev/null || true
-"$DOTFILES/bin/lni" "$DOTFILES_PRIVATE/bin" "$HOME/bin-private" || true
+"$DOTFILES/bin/lni" "$DOTFILES_PRIVATE/bin" "$HOME/bin-private" 2>/dev/null || true
 
 if [ -f "$DOTFILES_PRIVATE/install" ]; then
     ( cd "$DOTFILES_PRIVATE" && "$DOTFILES_PRIVATE/install" )

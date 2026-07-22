@@ -35,6 +35,7 @@
 	dw = diff --word-diff
 
 	f = fetch
+	fa = fetch --all
 	ff = merge --ff-only
 	ffod = merge --ff-only origin/develop
 	ffom = merge --ff-only origin/master

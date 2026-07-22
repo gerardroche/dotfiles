@@ -67,7 +67,7 @@
 
 	p = pull
 	pa = "!git push --all && git push --tags"
-	par = "!for r in $(git remote); do echo \"Pushing $r ...\" && git push \"$r\" --all && git push \"$r\" --tags; done"
+	par = "!for r in $(git remote); do echo \"git push remote '$r' ...\" && git push \"$r\" --all && git push \"$r\" --tags; done"
 	pff = pull --ff-only
 	pffo = pull --ff-only --prune origin
 	pffu = pull --ff-only --prune upstream

@@ -78,4 +78,6 @@ set visible-stats on
 # completion that match characters after point in the word being completed, so
 # portions of the word following the cursor are not duplicated.
 set skip-completed-text on
+
+# Coloring for Bash 4 tab completions.
 set colored-stats on

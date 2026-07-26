@@ -57,7 +57,6 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-
     # Default PS1 (when Git is not used)
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 
@@ -80,17 +79,6 @@ else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
 unset color_prompt force_color_prompt
-
-# NOTE: This is commented out because it prevents the title being set via the
-# title() function. See the functions definition file: bash_functions.
-# If this is an xterm set the title to user@host:dir
-# case "$TERM" in
-# xterm*|rxvt*)
-#     PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-#     ;;
-# *)
-#     ;;
-# esac
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -144,8 +132,7 @@ if ! shopt -oq posix; then
         . /etc/bash_completion
     fi
 
-    # Enable custom programmable completion features. You may want to put all
-    # your additions into a separate file like ~/.bash_completions.
+    # Enable custom programmable completion features.
 
     if [ -f ~/.bash_completions ]; then
         . ~/.bash_completions

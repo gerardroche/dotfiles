@@ -48,5 +48,3 @@ echo "Linking dotfiles ..."
 if [ -f "$DOTFILES_PRIVATE/install" ]; then
     ( cd "$DOTFILES_PRIVATE" && "$DOTFILES_PRIVATE/install" )
 fi
-
-echo "\\nDone.\\n"

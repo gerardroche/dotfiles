@@ -4,7 +4,7 @@ unset CDPATH
 unset IFS
 
 # Supports Ubuntu >= 24.04
-if [ "$(echo "$(lsb_release -rs) 24.04" | awk '{print ($1 >= $2)}')" != 1 ]; then
+if [ "$(echo "$(lsb_release -rs 2>/dev/null) 24.04" | awk '{print ($1 >= $2)}')" != 1 ]; then
     echo >&2 "Ubuntu $(lsb_release -rs) is not supported; requires >= 24.04"
     exit 1
 fi

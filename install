@@ -9,6 +9,13 @@ if [ "$(echo "$(lsb_release -rs 2>/dev/null) 24.04" | awk '{print ($1 >= $2)}')"
     exit 1
 fi
 
+for cmd in readlink; do
+    command -v "$cmd" >/dev/null 2>&1 || {
+        printf >&2 'Missing command: %s\n' "$cmd"
+        exit 1
+    }
+done
+
 DOTFILES="$(dirname "$(readlink -nf -- "$0")")"
 DOTFILES_PRIVATE="$DOTFILES-private"
 

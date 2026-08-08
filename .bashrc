@@ -144,7 +144,7 @@ if ! shopt -oq posix; then
 fi
 
 export EDITOR=vim
-export GPG_TTY=$(tty)
+export GPG_TTY="$(tty)"
 export LESSHISTFILE=-
 export SUDO_EDITOR="$EDITOR"
 

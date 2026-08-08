@@ -91,6 +91,13 @@ endif
 
 set background=dark
 
+" Git gutter colours
+" https://github.com/airblade/vim-gitgutter#signs-colours-and-symbols
+highlight! link SignColumn LineNr
+highlight GitGutterAdd    guifg=#009900 ctermfg=2
+highlight GitGutterChange guifg=#bbbb00 ctermfg=3
+highlight GitGutterDelete guifg=#ff2222 ctermfg=1
+
 let g:gruvbox_color_column="none"
 let g:gruvbox_improved_warnings=1
 let g:gruvbox_italic=1

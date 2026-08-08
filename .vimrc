@@ -85,10 +85,6 @@ if exists('+termguicolors')
     set termguicolors
 endif
 
-if &t_Co != 256
-    set t_Co=256
-endif
-
 set background=dark
 
 " Git gutter colours

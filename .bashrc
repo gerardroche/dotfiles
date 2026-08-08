@@ -4,11 +4,8 @@ case $- in
 esac
 
 HISTCONTROL=ignoreboth
-
+HISTSIZE=25000
 shopt -s histappend
-
-HISTSIZE=5000
-HISTFILESIZE=10000
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"

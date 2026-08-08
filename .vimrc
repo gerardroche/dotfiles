@@ -206,30 +206,25 @@ let maplocalleader="<Bslash>"
 nnoremap <C-d> <C-d>zz
 nnoremap <C-u> <C-u>zz
 nnoremap <C-w>z <C-w>\|<C-w>_
-nnoremap <Leader><Leader> :NERDTreeFind<CR>
-nnoremap <Leader><Space> :FZF<CR>
 nnoremap <Leader>d :NERDTreeToggle<CR>
-nnoremap <Leader>ek :vsplit ~/.vimrc<CR>/mapleader<CR>zzzv:noh<CR>
-nnoremap <Leader>en :vsplit ~/.vimrc<CR>
-nnoremap <Leader>ep :vsplit ~/.vimrc<CR>
+nnoremap <Leader>ev :vsplit ~/.vimrc<CR>
+nnoremap <Leader>fa :Files<CR>
 nnoremap <Leader>ff :FZF!<CR>
 nnoremap <Leader>fg :call fzf#run({'source': 'git ls-files --exclude-standard --cached --others'})<CR>
-nnoremap <Leader>q :qa<CR>
-nnoremap <Leader>rr :reg<CR>
-nnoremap <Leader>rs :w<CR>:source ~/.vimrc<CR>:noh<CR>
 nnoremap <Leader>si vii:sort u<CR>
 nnoremap <Leader>ss vip:sort u<CR>
-nnoremap <Leader>w :w<CR>
 nnoremap <Leader>zz <C-w>\|<C-w>_
-nnoremap <Space> :
-nnoremap <silent> <Leader>l :noh<CR>
+nnoremap <leader>sl vip:!sort -u -t- -k2<CR>
+nnoremap <silent> <Leader>l :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
+nnoremap <silent> <Leader>rv :w<CR>:source ~/.vimrc<CR>
 nnoremap J mzJ`z
 nnoremap N Nzzzv
 nnoremap Q <nop>
 nnoremap n nzzzv
-noremap <C-s> :w<CR><Esc>
+noremap <C-s> :w<CR><Cmd>nohlsearch<CR>
 noremap <Leader>P "+P
 noremap <Leader>Y "+Y
 noremap <Leader>p "+p
+noremap <Leader>w :w<CR><Cmd>nohlsearch<CR>
 noremap <Leader>y "+y
 vnoremap <Leader>ss :sort u<CR>

@@ -88,21 +88,8 @@ if &t_Co != 256
     set t_Co=256
 endif
 
-" if (&term =~ '256color' || &term =~ 'xterm-kitty') && !has('nvim')
-"   " disable Background Color Erase (BCE) so that color schemes
-"   " render properly when inside 256-color tmux and GNU screen.
-"   " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
-"   set t_ut=
-" endif
-
-" " I Beam cursor in Insert and Replace mode.
-" let &t_SI = "\<Esc>[5 q"
-" let &t_SR = "\<Esc>[5 q"
-" let &t_EI = "\<Esc>[2 q"
-
 set background=dark
 
-" let g:gruvbox_bold=1
 let g:gruvbox_color_column="none"
 let g:gruvbox_improved_warnings=1
 let g:gruvbox_italic=1
@@ -194,8 +181,10 @@ command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | 
 
 let g:NERDTreeShowHidden=1
 let g:sneak#use_ic_scs=1
+
 let mapleader=","
 let maplocalleader="<Bslash>"
+
 nnoremap <C-d> <C-d>zz
 nnoremap <C-u> <C-u>zz
 nnoremap <C-w>z <C-w>\|<C-w>_

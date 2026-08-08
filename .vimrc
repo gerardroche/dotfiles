@@ -105,20 +105,19 @@ let g:gruvbox_sign_column="none"
 
 silent! colorscheme gruvbox
 
-" if !exists("g:gruvbox_sign_column")
-"     hi GruvboxAquaSign ctermbg=NONE guibg=NONE
-"     hi GruvboxGreenSign ctermbg=NONE guibg=NONE
-"     hi GruvboxRedSign ctermbg=NONE guibg=NONE
-" endif
-
-hi FoldColumn ctermbg=NONE guibg=NONE
-hi Folded ctermbg=NONE guibg=NONE
-hi Normal ctermbg=NONE
-hi SignColumn ctermbg=NONE guibg=NONE
-hi SpellBad ctermbg=NONE ctermfg=167 cterm=underline
-hi SpellCap ctermbg=NONE ctermfg=142 cterm=bold,italic
-hi SpellLocal ctermbg=NONE ctermfg=108 cterm=underline
-hi SpellRare ctermbg=NONE ctermfg=175 cterm=underline
+if get(g:, 'colors_name', '') ==# 'gruvbox'
+    hi FoldColumn ctermbg=NONE guibg=NONE
+    hi Folded ctermbg=NONE guibg=NONE
+    hi GruvboxAquaSign ctermbg=NONE guibg=NONE
+    hi GruvboxGreenSign ctermbg=NONE guibg=NONE
+    hi GruvboxRedSign ctermbg=NONE guibg=NONE
+    hi Normal ctermbg=NONE
+    hi SignColumn ctermbg=NONE guibg=NONE
+    hi SpellBad ctermbg=NONE ctermfg=168 cterm=underline
+    hi SpellCap ctermbg=NONE ctermfg=142 cterm=bold,italic
+    hi SpellLocal ctermbg=NONE ctermfg=108 cterm=underline
+    hi SpellRare ctermbg=NONE ctermfg=175 cterm=underline
+endif
 
 set autoindent
 set autoread

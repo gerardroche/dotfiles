@@ -193,8 +193,6 @@ augroup MyAutoCmds
   " autocmd FocusLost * if &modified | silent! wall | endif
 augroup END
 
-command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
-
 let g:NERDTreeShowHidden=1
 let g:sneak#use_ic_scs=1
 

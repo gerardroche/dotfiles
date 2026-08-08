@@ -5,6 +5,10 @@ esac
 
 HISTCONTROL=ignoreboth
 HISTSIZE=25000
+export EDITOR=vim
+export GPG_TTY="$(tty)"
+export LESSHISTFILE=-
+export SUDO_EDITOR="$EDITOR"
 shopt -s histappend
 
 # make less more friendly for non-text input files, see lesspipe(1)
@@ -80,11 +84,6 @@ if ! shopt -oq posix; then
         . ~/.bash_completions-private
     fi
 fi
-
-export EDITOR=vim
-export GPG_TTY="$(tty)"
-export LESSHISTFILE=-
-export SUDO_EDITOR="$EDITOR"
 
 if [ -f ~/.bashrc-private ]; then
     . ~/.bashrc-private

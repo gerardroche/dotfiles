@@ -32,6 +32,7 @@ Plug 'gruvbox-community/gruvbox'
 
 " https://github.com/junegunn/fzf
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 " https://github.com/justinmk/vim-sneak
 Plug 'justinmk/vim-sneak'

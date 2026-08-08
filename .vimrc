@@ -190,7 +190,7 @@ augroup MyAutoCmds
   autocmd!
   autocmd BufWritePre * keeppatterns %s/\s\+$//e
   autocmd FileType gitcommit setlocal textwidth=72 spell spellcapcheck= spelllang=en_gb
-  autocmd FocusLost * if &modified | silent! wall | endif
+  " autocmd FocusLost * if &modified | silent! wall | endif
 augroup END
 
 command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor

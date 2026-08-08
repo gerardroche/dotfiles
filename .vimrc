@@ -189,7 +189,7 @@ endif
 augroup MyAutoCmds
   autocmd!
   autocmd BufWritePre * keeppatterns %s/\s\+$//e
-  autocmd Filetype gitcommit setlocal textwidth=72 spell spellcapcheck= spelllang=en_gb
+  autocmd FileType gitcommit setlocal textwidth=72 spell spellcapcheck= spelllang=en_gb
   autocmd FocusLost * if &modified | silent! wall | endif
 augroup END
 

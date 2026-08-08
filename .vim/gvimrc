@@ -1,0 +1,2 @@
+set background=dark
+highlight Normal guibg=#000000 guifg=#ffffff

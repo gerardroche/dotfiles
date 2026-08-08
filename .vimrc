@@ -178,6 +178,14 @@ if has('clipboard')
     set clipboard=unnamedplus
 endif
 
+" Prefer SGR for modern terminals (supports >223 columns)
+if has("mouse_sgr")
+    set ttymouse=sgr
+" Fallback to xterm2 for older setups
+elseif &term =~ '^screen\|^tmux'
+    set ttymouse=xterm2
+endif
+
 augroup MyAutoCmds
   autocmd!
   autocmd BufWritePre * keeppatterns %s/\s\+$//e

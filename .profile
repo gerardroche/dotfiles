@@ -8,14 +8,6 @@
 # for ssh logins, install and configure the libpam-umask package.
 # umask 022
 
-# if running bash
-if [ -n "$BASH_VERSION" ]; then
-    # include .bashrc if it exists
-    if [ -f "$HOME/.bashrc" ]; then
-        . "$HOME/.bashrc"
-    fi
-fi
-
 case "$PATH" in
     "$HOME/bin:"*) ;;
     *":$HOME/bin:"*) ;;
@@ -42,4 +34,12 @@ esac
 
 if [ -f "$HOME/.profile-private" ]; then
     . "$HOME/.profile-private"
+fi
+
+# if running bash
+if [ -n "$BASH_VERSION" ]; then
+    # include .bashrc if it exists
+    if [ -f "$HOME/.bashrc" ]; then
+        . "$HOME/.bashrc"
+    fi
 fi

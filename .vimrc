@@ -182,11 +182,13 @@ if has('clipboard')
 endif
 
 " Prefer SGR for modern terminals (supports >223 columns)
-if has("mouse_sgr")
-    set ttymouse=sgr
-" Fallback to xterm2 for older setups
-elseif &term =~ '^screen\|^tmux'
-    set ttymouse=xterm2
+if !has('nvim')
+    if has("mouse_sgr")
+        set ttymouse=sgr
+    " Fallback to xterm2 for older setups
+    elseif &term =~ '^screen\|^tmux'
+        set ttymouse=xterm2
+    endif
 endif
 
 augroup MyAutoCmds

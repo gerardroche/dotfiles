@@ -143,6 +143,7 @@ set mouse=a
 set nobackup
 set noerrorbells
 set nosmartindent
+set nospell
 set noswapfile
 set nowrap
 set nowritebackup
@@ -166,7 +167,6 @@ set signcolumn=yes
 set smartcase
 set smarttab
 set softtabstop=4
-set spell
 set spelllang=en_gb,en
 set tabstop=4
 set textwidth=72

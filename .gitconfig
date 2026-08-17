@@ -91,6 +91,7 @@
 	t = tag
 
 	add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
+	alias = "!f() { git config --get-regexp alias | grep "    $1";  }; f"
 	aliases = config --get-regexp alias
 	clean-full = clean -dxf
 	ctags = "!.git/hooks/ctags"

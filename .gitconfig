@@ -157,9 +157,6 @@
 [mergetool]
 	keepBackup = false
 
-[og]
-	showsignature = true
-
 [push]
 	default = simple
 	followTags = true

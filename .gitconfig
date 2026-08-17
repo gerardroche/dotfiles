@@ -51,7 +51,7 @@
 	ll = log --oneline --graph --decorate --pretty=format:'%C(yellow)%h%Creset %C(cyan)%ad%Creset %C(green)%an%Creset %s %C(auto)%d%Creset' --date=short -11
 	lo = log --oneline --no-decorate
 	lp = log --patch
-	ls = log --oneline --graph --decorate
+	ls = log --show-signature
 	lt = log --topo-order
 
 	m = merge

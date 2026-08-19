@@ -161,6 +161,7 @@ set shortmess+=o
 set shortmess+=t
 set showcmd
 set showmode
+set scrolloff=1
 set sidescroll=1
 set sidescrolloff=2
 set signcolumn=yes

@@ -218,6 +218,7 @@ nnoremap <Leader>fg :call fzf#run({'source': 'git ls-files --exclude-standard --
 nnoremap <Leader>si vii:sort u<CR>
 nnoremap <Leader>ss vip:sort u<CR>
 nnoremap <Leader>zz <C-w>\|<C-w>_
+nnoremap <Leader>t vip:!pandoc -t commonmark_x<CR>
 nnoremap <leader>sl vip:!sort -u -t- -k2<CR>
 nnoremap <silent> <Leader>l :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 nnoremap <silent> <Leader>rv :w<CR>:source ~/.vimrc<CR>

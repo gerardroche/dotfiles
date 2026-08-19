@@ -207,25 +207,15 @@ let g:netrw_liststyle = 3
 let mapleader=","
 let maplocalleader="<Bslash>"
 
-nnoremap <C-d> <C-d>zz
-nnoremap <C-u> <C-u>zz
-nnoremap <C-w>z <C-w>\|<C-w>_
 nnoremap <Leader>d :NERDTreeToggle<CR>
 nnoremap <Leader>ev :vsplit ~/.vimrc<CR>
 nnoremap <Leader>fa :Files<CR>
-nnoremap <Leader>ff :FZF!<CR>
-nnoremap <Leader>fg :call fzf#run({'source': 'git ls-files --exclude-standard --cached --others'})<CR>
 nnoremap <Leader>si vii:sort u<CR>
 nnoremap <Leader>ss vip:sort u<CR>
-nnoremap <Leader>zz <C-w>\|<C-w>_
 nnoremap <Leader>t vip:!pandoc -t commonmark_x<CR>
 nnoremap <leader>sl vip:!sort -u -t- -k2<CR>
 nnoremap <silent> <Leader>l :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 nnoremap <silent> <Leader>rv :w<CR>:source ~/.vimrc<CR>
-nnoremap J mzJ`z
-nnoremap N Nzzzv
-nnoremap Q <nop>
-nnoremap n nzzzv
 noremap <C-s> :w<CR><Cmd>nohlsearch<CR>
 noremap <Leader>P "+P
 noremap <Leader>Y "+Y

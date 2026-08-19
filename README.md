@@ -1,10 +1,6 @@
 # dotfiles
 
-Hi, I'm Gerard.
-
-I'm a programmer and software developer.
-
-My [website](https://www.gerardroche.com/?ref=github.com/gerardroche/dotfiles).
+My personal configuration files for Bash, Git, and Vim.
 
 ## What's included
 
@@ -16,27 +12,31 @@ My [website](https://www.gerardroche.com/?ref=github.com/gerardroche/dotfiles).
 
 Requires [Ubuntu 24.04](https://ubuntu.com/desktop).
 
+Clone the repository:
+
 ```sh
 git clone https://github.com/gerardroche/dotfiles.git ~/.dotfiles
 ```
 
-```sh
-cd ~/.dotfiles
-```
+Run the installer:
 
 ```sh
-./install
+cd ~/.dotfiles && ./install
 ```
 
-Existing files will be moved out of the way.
+The installer moves existing files out of the way so the installer can be run repeatedly.
 
-The installer can be run repeatedly.
+Updates use the installer:
 
-## Private configurations (optional)
+```sh
+cd ~/.dotfiles && git pull --ff-only && ./install
+```
 
-Private files can be placed in `~/.dotfiles-private/`.
+## Private dotfiles
 
-If private files exist they are symlinked in the home directory and sourced by the main files:
+Private files are optional and can be placed in your own private dotfiles at `~/.dotfiles-private/`.
+
+When private dotfiles exist, they are symlinked into place by appending "-private" and included by the main dotfiles:
 
 ```sh
 ~/.dotfile-private/.bash_aliases -> ~/.bash_aliases-private
@@ -48,7 +48,7 @@ If private files exist they are symlinked in the home directory and sourced by t
 ~/.dotfile-private/bin -> ~/bin-private
 ```
 
-## Configuration aliases
+## Aliases
 
 ### Editing
 

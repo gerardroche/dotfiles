@@ -70,7 +70,6 @@ if [ -f /usr/share/bash-completion/completions/git ]; then
     __git_complete gmt _git_mergetool
 
     __git_complete go _git_checkout
-    __git_complete gob _git_checkout
     __git_complete god _git_checkout
     __git_complete gom _git_checkout
 

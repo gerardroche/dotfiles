@@ -61,7 +61,6 @@
 	mom = merge --ff-only origin/master
 
 	o = checkout
-	ob = checkout -b
 	od = checkout develop
 	om = checkout master
 

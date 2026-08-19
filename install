@@ -29,6 +29,7 @@ command -v vim >/dev/null 2>&1 || sudo apt install -yqqq vim
 command -v vim.gtk3 >/dev/null 2>&1 || sudo apt install -yqqq vim-gtk3
 
 echo "Linking dotfiles ..."
+
 "$DOTFILES/bin/lni" "$DOTFILES/.bash_aliases" "$HOME/.bash_aliases"
 "$DOTFILES/bin/lni" "$DOTFILES/.bash_completions" "$HOME/.bash_completions"
 "$DOTFILES/bin/lni" "$DOTFILES/.bash_functions" "$HOME/.bash_functions"
@@ -36,6 +37,7 @@ echo "Linking dotfiles ..."
 "$DOTFILES/bin/lni" "$DOTFILES/.bash_logout" "$HOME/.bash_logout"
 "$DOTFILES/bin/lni" "$DOTFILES/.bash_profile" "$HOME/.bash_profile"
 "$DOTFILES/bin/lni" "$DOTFILES/.bashrc" "$HOME/.bashrc"
+"$DOTFILES/bin/lni" "$DOTFILES/.config/nvim" "$HOME/.config/nvim"
 "$DOTFILES/bin/lni" "$DOTFILES/.editorconfig" "$HOME/.editorconfig"
 "$DOTFILES/bin/lni" "$DOTFILES/.gitconfig" "$HOME/.gitconfig"
 "$DOTFILES/bin/lni" "$DOTFILES/.gitexcludes" "$HOME/.gitexcludes"

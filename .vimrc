@@ -30,54 +30,57 @@ Plug 'christoomey/vim-tmux-navigator'
 " https://github.com/gruvbox-community/gruvbox
 Plug 'gruvbox-community/gruvbox'
 
+" https://github.com/iamcco/markdown-preview.nvim
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+
 " https://github.com/junegunn/fzf
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 " https://github.com/justinmk/vim-sneak
-Plug 'justinmk/vim-sneak'
+" Plug 'justinmk/vim-sneak'
 
 " https://github.com/machakann/vim-highlightedyank
-Plug 'machakann/vim-highlightedyank'
+" Plug 'machakann/vim-highlightedyank'
 
 " https://github.com/mg979/vim-visual-multi
 Plug 'mg979/vim-visual-multi'
 
 " https://github.com/michaeljsmith/vim-indent-object
-Plug 'michaeljsmith/vim-indent-object'
+" Plug 'michaeljsmith/vim-indent-object'
 
 " https://github.com/preservim/nerdtree
-Plug 'preservim/nerdtree'
+" Plug 'preservim/nerdtree'
 
 " https://github.com/ryanoasis/vim-devicons
-Plug 'ryanoasis/vim-devicons'
+" Plug 'ryanoasis/vim-devicons'
 
 " https://github.com/tpope/vim-abolish
-Plug 'tpope/vim-abolish'
+" Plug 'tpope/vim-abolish'
 
 " https://github.com/tpope/vim-characterize
-Plug 'tpope/vim-characterize'
+" Plug 'tpope/vim-characterize'
 
 " https://github.com/tpope/vim-commentary
 Plug 'tpope/vim-commentary'
 
 " https://github.com/tpope/vim-dispatch
-Plug 'tpope/vim-dispatch'
+" Plug 'tpope/vim-dispatch'
 
 " https://github.com/tpope/vim-endwise
-Plug 'tpope/vim-endwise'
+" Plug 'tpope/vim-endwise'
 
 " https://github.com/tpope/vim-fugitive
-Plug 'tpope/vim-fugitive'
+" Plug 'tpope/vim-fugitive'
 
-" https://github.com/tpope/vim-repeat
-Plug 'tpope/vim-repeat'
+" " https://github.com/tpope/vim-repeat
+" Plug 'tpope/vim-repeat'
 
 " https://github.com/tpope/vim-surround
 Plug 'tpope/vim-surround'
 
 " https://github.com/tpope/vim-unimpaired
-Plug 'tpope/vim-unimpaired'
+" Plug 'tpope/vim-unimpaired'
 
 call plug#end()
 
@@ -99,7 +102,7 @@ let g:gruvbox_improved_warnings=1
 let g:gruvbox_italic=1
 let g:gruvbox_sign_column="none"
 
-silent! colorscheme gruvbox
+" silent! colorscheme gruvbox
 
 if get(g:, 'colors_name', '') ==# 'gruvbox'
     hi FoldColumn ctermbg=NONE guibg=NONE
@@ -199,15 +202,26 @@ augroup MyAutoCmds
   " autocmd FocusLost * if &modified | silent! wall | endif
 augroup END
 
-let g:NERDTreeShowHidden=1
-let g:sneak#use_ic_scs=1
+" let g:NERDTreeShowHidden=1
+" let g:sneak#use_ic_scs=1
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
 
 let mapleader=","
 let maplocalleader="<Bslash>"
 
-nnoremap <Leader>d :NERDTreeToggle<CR>
+" nnoremap <C-d> <C-d>zz
+" nnoremap <C-u> <C-u>zz
+" nnoremap <C-w>z <C-w>\|<C-w>_
+" nnoremap <Leader>ff :FZF!<CR>
+" nnoremap <Leader>fg :call fzf#run({'source': 'git ls-files --exclude-standard --cached --others'})<CR>
+" nnoremap <Leader>zz <C-w>\|<C-w>_
+" nnoremap J mzJ`z
+" nnoremap N Nzzzv
+" nnoremap Q <nop>
+" nnoremap n nzzzv
+nnoremap <Leader>de :Lexplore<CR>
+nnoremap <Leader>dr :let @/=expand("%:t") \| execute 'Lexplore' expand("%:h") \| normal n<CR>
 nnoremap <Leader>ev :vsplit ~/.vimrc<CR>
 nnoremap <Leader>fa :Files<CR>
 nnoremap <Leader>si vii:sort u<CR>
@@ -223,3 +237,51 @@ noremap <Leader>p "+p
 noremap <Leader>w :w<CR><Cmd>nohlsearch<CR>
 noremap <Leader>y "+y
 vnoremap <Leader>ss :sort u<CR>
+
+function! ZEditNote()
+    let l:file = system('z pick')
+    if !empty(l:file)
+        execute 'edit ' . fnameescape(l:file)
+    endif
+endfunction
+
+function! ZEditBacklinkNote()
+    let l:id = matchstr(expand('%:t'), '\d\{14\}')
+    if !empty(l:id)
+        let l:file = system('z backlinks ' . l:id)
+        if !empty(l:file)
+            execute 'edit ' . fnameescape(l:file)
+        endif
+    endif
+endfunction
+
+function! ZEditLinkNote()
+    let l:id = matchstr(getline('.'), '\d\{14\}')
+    if !empty(l:id)
+        let l:file = glob(expand('~/notes') . '/**/' . l:id . '*.md')
+        if !empty(l:file)
+            execute 'edit ' . fnameescape(l:file)
+        endif
+    endif
+endfunction
+
+function! ZPromoteNote()
+    if expand('%:p') !~ '/inbox/'
+        echo "Not an inbox note"
+        return
+    endif
+    write
+    let l:file = expand('%:p')
+    let l:new = substitute(l:file, '/inbox/', '/permanent/', '')
+    call rename(l:file, l:new)
+    execute 'edit ' . fnameescape(l:new)
+endfunction
+
+" nnoremap <silent> <Leader>zf :Files ~/notes<CR>
+" nnoremap <silent> <Leader>zg :Rg ~/notes<CR>
+" nnoremap <silent> <Leader>zn viw"zy:e ~/notes/<C-r>z.md<CR>
+nnoremap <silent> <Leader>zb :call ZEditBacklinkNote()<CR>
+nnoremap <silent> <Leader>zi Go<C-r><C-o>=system('z pick-link')<CR><Esc>:redraw!<CR>^
+nnoremap <silent> <Leader>zl :call ZEditNote()<CR>
+nnoremap <silent> <Leader>zo :call ZEditLinkNote()<CR>
+nnoremap <silent> <Leader>zp :call ZPromoteNote()<CR>

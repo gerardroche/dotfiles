@@ -211,9 +211,9 @@ nnoremap <Leader>d :NERDTreeToggle<CR>
 nnoremap <Leader>ev :vsplit ~/.vimrc<CR>
 nnoremap <Leader>fa :Files<CR>
 nnoremap <Leader>si vii:sort u<CR>
+nnoremap <Leader>sl vip:!sort -u -t- -k2<CR>
 nnoremap <Leader>ss vip:sort u<CR>
 nnoremap <Leader>t vip:!pandoc -t commonmark_x --columns=120<CR>
-nnoremap <leader>sl vip:!sort -u -t- -k2<CR>
 nnoremap <silent> <Leader>l :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 nnoremap <silent> <Leader>rv :w<CR>:source ~/.vimrc<CR>
 noremap <C-s> :w<CR><Cmd>nohlsearch<CR>

@@ -151,6 +151,7 @@ set number
 set relativenumber
 set ruler
 set scrolloff=1
+set scrolloff=5
 set shiftround
 set shiftwidth=4
 set shortmess+=I
@@ -161,7 +162,6 @@ set shortmess+=o
 set shortmess+=t
 set showcmd
 set showmode
-set scrolloff=1
 set sidescroll=1
 set sidescrolloff=2
 set signcolumn=yes

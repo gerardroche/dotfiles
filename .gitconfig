@@ -139,7 +139,7 @@
 	prune = true
 
 [help]
-	autocorrect = 10
+	autocorrect = prompt
 
 [init]
 	defaultBranch = master

@@ -169,6 +169,8 @@ set smartcase
 set smarttab
 set softtabstop=4
 set spelllang=en_gb,en
+set splitbelow
+set splitright
 set tabstop=4
 set textwidth=72
 set ttimeout

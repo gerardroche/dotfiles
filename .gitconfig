@@ -8,16 +8,14 @@
 
 	a = add
 	aa = add .
-	amc = "!git add --all && git commit --amend --reuse-message=HEAD"
 	al = add --all
+	amc = "!git add --all && git commit --amend --reuse-message=HEAD"
 	ap = add --patch
 	au = add --update
-
 	b = branch
 	ba = branch --all --verbose
 	bd = branch --delete --force
 	bm = branch --move --force
-
 	c = commit
 	ca = commit --amend
 	cad = commit --amend --all
@@ -28,23 +26,21 @@
 	cm = commit --message
 	co = checkout
 	cv = commit --verbose
-
 	d = diff
 	dc = diff --cached
+	dcwd = diff -- ':(glob)*'
 	ds = diff --staged
 	dw = diff --word-diff
-
 	f = fetch
 	fa = fetch --all
 	ff = merge --ff-only
 	ffod = merge --ff-only origin/develop
+	ffom = "!git merge --ff-only origin/$(git default-branch)"
 	ffud = merge --ff-only upstream/develop
+	ffum = "!git merge --ff-only upstream/$(git symbolic-ref --short refs/remotes/upstream/HEAD | sed 's|^upstream/||')"
 	fo = fetch origin
 	fp = fetch --prune
 	fu = fetch upstream
-	fffom = "!git merge --ff-only origin/$(git symbolic-ref --short refs/remotes/origin/HEAD | sed 's|^origin/||')"
-	ffum = "!git merge --ff-only upstream/$(git symbolic-ref --short refs/remotes/upstream/HEAD | sed 's|^upstream/||')"
-
 	l = log --oneline --graph --decorate -11
 	lg = log --graph
 	lk = log --graph --topo-order --abbrev-commit --date=short --decorate --all --boundary --pretty=format:'%C(green)%ad %C(red)%h%Creset -%C(yellow)%d%Creset %s %Cblue[%cn]%Creset'
@@ -53,17 +49,16 @@
 	lp = log --patch
 	ls = log --show-signature
 	lt = log --topo-order
-
 	m = merge
 	mff = merge --ff-only
+	mncs = merge --no-commit --squash
 	mod = merge --ff-only origin/develop
+	mom = "!git merge --ff-only origin/$(git default-branch)"
 	mt = mergetool
-	mom = "!git merge --ff-only origin/$(git symbolic-ref --short refs/remotes/origin/HEAD | sed 's|^origin/||')"
-
+	o = "!f() { if [ $# -eq 0 ]; then git switch -; else git switch \"$@\"; fi; }; f"
 	o = switch
 	od = switch develop
-	om = "!git switch $(git symbolic-ref --short refs/remotes/origin/HEAD | sed 's|^origin/||')"
-
+	om = "!git switch $(git default-branch)"
 	p = pull --ff-only
 	pa = "!git push --all && git push --tags"
 	pff = pull --ff-only
@@ -71,7 +66,6 @@
 	pffu = pull --ff-only --prune upstream
 	pop = stash pop
 	pt = push --tags
-
 	r = rebase
 	ra = rebase --abort
 	rb = rebase
@@ -81,12 +75,12 @@
 	rh = reset --hard
 	ri = rebase -i
 	rv = remote -v
-
 	s = status
+	scwd = status ':(glob)*'
 	sl = stash list
 	ss = stash save --include-untracked
-
 	t = tag
+	um = "!git switch \"$(git default-branch)\" && git merge --ff-only \"origin/$(git default-branch)\" && git switch -"
 
 	add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
 	alias = "!f() { git config --get-regexp alias | grep "    $1";  }; f"
@@ -108,6 +102,7 @@
 	wctags = "!.git/hooks/ctags"
 	wdelete-merged-branches = "!git ls-merged-branches | xargs -r git branch -d"
 	wunpushed = log @{u}.. --oneline
+	default-branch = "!f() { git symbolic-ref --short refs/remotes/origin/HEAD | sed 's|^origin/||'; }; f"
 
 [bash]
 	showDirtyState = true
@@ -133,6 +128,9 @@
 
 [diff]
 	mnemonicprefix = true
+	colorMoved = zebra
+	algorithm = histogram
+	renames = true
 
 [fetch]
 	prune = true
@@ -145,6 +143,9 @@
 
 [interactive]
 	singleKey = true
+
+[log]
+	date = relative
 
 [merge]
 	branchdesc = true

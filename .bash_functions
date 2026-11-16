@@ -1,9 +1,3 @@
-
-launch_gitk() {
-    command gitk "$@" &
-    disown
-}
-
 reloadaliases() {
     source ~/.bash_aliases
     [ -f ~/.bash_aliases-private ] && source ~/.bash_aliases-private

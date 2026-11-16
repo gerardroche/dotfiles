@@ -2,31 +2,20 @@
 if [ -f /usr/share/bash-completion/completions/git ]; then
     . /usr/share/bash-completion/completions/git
 
-    # Add Git alias completions
-    __git_complete g _git_main
-
-    __git_complete got _git_main
-    __git_complete gti _git_main
-
     __git_complete d _git_diff
     __git_complete db _git_branch
     __git_complete ds _git_diff
     __git_complete dw _git_diff
-    __git_complete pop _git_stash
-    __git_complete s _git_status
-    __git_complete sta _git_stash
-
+    __git_complete g _git_main
     __git_complete ga _git_add
     __git_complete gaa _git_add
     __git_complete gal _git_add
     __git_complete gap _git_add
     __git_complete gau _git_add
-
     __git_complete gb _git_branch
     __git_complete gba _git_branch
     __git_complete gbd _git_branch
     __git_complete gbm _git_branch
-
     __git_complete gc _git_commit
     __git_complete gca _git_commit
     __git_complete gcad _git_commit
@@ -38,12 +27,10 @@ if [ -f /usr/share/bash-completion/completions/git ]; then
     __git_complete gco _git_checkout
     __git_complete gcp _git_cherry_pick
     __git_complete gcv _git_commit
-
     __git_complete gd _git_diff
     __git_complete gdc _git_diff
     __git_complete gds _git_diff
     __git_complete gdw _git_diff
-
     __git_complete gf _git_fetch
     __git_complete gff _git_merge
     __git_complete gffod _git_merge
@@ -53,7 +40,6 @@ if [ -f /usr/share/bash-completion/completions/git ]; then
     __git_complete gfo _git_fetch
     __git_complete gfp _git_fetch
     __git_complete gfu _git_fetch
-
     __git_complete gl _git_log
     __git_complete glg _git_log
     __git_complete glk _git_log
@@ -62,24 +48,22 @@ if [ -f /usr/share/bash-completion/completions/git ]; then
     __git_complete glp _git_log
     __git_complete gls _git_log
     __git_complete glt _git_log
-
     __git_complete gm _git_merge
     __git_complete gmff _git_merge
+    __git_complete gmncs _git_merge
     __git_complete gmod _git_merge
     __git_complete gmom _git_merge
     __git_complete gmt _git_mergetool
-
     __git_complete go _git_checkout
     __git_complete god _git_checkout
-    __git_complete gom _git_checkout
-
+    __git_complete gom _git_switch
+    __git_complete got _git_main
     __git_complete gp _git_pull
     __git_complete gpff _git_pull
     __git_complete gpffo _git_pull
     __git_complete gpffu _git_pull
     __git_complete gpop _git_stash
     __git_complete gpt _git_push
-
     __git_complete gr _git_rebase
     __git_complete gra _git_rebase
     __git_complete grb _git_rebase
@@ -89,12 +73,13 @@ if [ -f /usr/share/bash-completion/completions/git ]; then
     __git_complete grh _git_reset
     __git_complete gri _git_rebase
     __git_complete grv _git_remote
-
     __git_complete gs _git_status
     __git_complete gsl _git_stash
     __git_complete gss _git_stash
-    __git_complete gss _git_stash
-
     __git_complete gss _git_tag
+    __git_complete gti _git_main
+    __git_complete pop _git_stash
+    __git_complete s _git_status
+    __git_complete sta _git_stash
 
 fi

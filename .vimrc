@@ -217,7 +217,7 @@ let g:sneak#use_ic_scs=1
 let mapleader=","
 let maplocalleader="<Bslash>"
 
-nnoremap <Leader>d :NERDTreeToggle<CR>
+nnoremap <Leader>de :Lexplore<CR>
 nnoremap <Leader>ev :vsplit ~/.vimrc<CR>
 nnoremap <Leader>fa :Files<CR>
 nnoremap <Leader>si vii:sort u<CR>

@@ -30,6 +30,9 @@ Plug 'christoomey/vim-tmux-navigator'
 " https://github.com/gruvbox-community/gruvbox
 Plug 'gruvbox-community/gruvbox'
 
+" https://github.com/iamcco/markdown-preview.nvim
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+
 " https://github.com/junegunn/fzf
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'

@@ -204,10 +204,15 @@ augroup MyAutoCmds
   " autocmd FocusLost * if &modified | silent! wall | endif
 augroup END
 
+let $BAT_STYLE = 'full'
 let g:NERDTreeShowHidden=1
-let g:sneak#use_ic_scs=1
+let g:fzf_buffers_options = ['--style=full']
+let g:fzf_layout = { 'popup': '100%,100%' }
+let g:fzf_vim = {}
+let g:fzf_vim.options = ['--style=full']
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
+let g:sneak#use_ic_scs=1
 
 let mapleader=","
 let maplocalleader="<Bslash>"
